@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -7,6 +7,7 @@ import AlarmIcon from "@material-ui/icons/Alarm";
 import AppleIcon from "@material-ui/icons/Apple";
 import AllInboxIcon from "@material-ui/icons/AllInbox";
 import DragAndDropComponent from "./DragAndDropComponent";
+import SelectSchemaDialog from "./SelectSchemaDialog";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,8 +52,20 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-export default function CentralButtonGroup2(){
+export default function CentralButtonGroup2(props){
     const classes = useStyles();
+    const [isOpenSchemaDialog, setIsOpenSchemaDialog] = useState(false);
+    const [selectedValue, setSelectedValue] = useState();
+  
+    const handleClickOpen = () => {
+      setIsOpenSchemaDialog(true);
+    };
+  
+    const handleClose = (value) => {
+      setIsOpenSchemaDialog(false);
+      setSelectedValue(value);
+    };
+  
 
     return(
         <Box className={classes.outerBox}>
@@ -62,12 +75,15 @@ export default function CentralButtonGroup2(){
                     <Button
                     variant="contained"
                     color="default"
+                    onClick ={handleClickOpen }
                     className={classes.button}
                     startIcon={<AppleIcon />}
                     >
                         Load Schema from Repo
                     </Button>
                 </Box>
+                <SelectSchemaDialog selectedValue={selectedValue} isOpenSchemaDialog={isOpenSchemaDialog} onClose={handleClose} schemaDescriptions={props.schemaDescriptions} />
+                
                 <Box className={classes.boxElement}>
                     <Button
                     variant="contained"

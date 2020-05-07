@@ -86,7 +86,6 @@ export default function TableComponent02(props){
     const classes = useStyles();
 
     return(
-    <div>
       <Grid className={classes.container} container xs={3}>
         <Grid item container className={classes.header_row}>
                 
@@ -118,14 +117,12 @@ export default function TableComponent02(props){
         </Grid>
         <Divider className={classes.divider}/>
         <Grid item container className={classes.body}>
-         {props.data.tableItems.map(element => {return <TableSubComponent03 data ={element}/>})}
-             
+         {props.data.tableItems.map(element => {return <TableSubComponent03 data ={element}/>})}  
         </Grid>   
         <Grid container item className={classes.footer_row}>
           <AddCircleIcon/>
           <Typography className={classes.actionLink} onClick={(event)=>{alert("Boooo!")}}>InsertRow</Typography>
         </Grid> 
       </Grid>  
-    </div>
     )
 }

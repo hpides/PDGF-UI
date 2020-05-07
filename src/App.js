@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Header from "./Header";
 import CentralButtonGroup from "./CentralButtonGroup";
@@ -23,7 +23,7 @@ import CustomDialogExample02 from "./CustomDialogExample02";
 import DefaultVariablesComponent02 from "./DefaultVariablesComponent02";
 import {customSystemVariable, customSystemVariables, generatorDescriptions, generatorDescription, schemaDescriptions, schemaDescriptionShort} from "./data.js";
 import {dummyText} from "./data.js";
-import {tableDataLong} from "./data.js";
+import {tableDataLong_2_Array} from "./data.js";
 import LandingPage from "./pages/LandingPage";
 import EditorPage from "./pages/EditorPage";
 import SimpleDialogExample from "./SimpleDialogExample";
@@ -36,24 +36,37 @@ import GeneratorDetailsForRepoElementShortVersion from "./FormGeneratorDetailsRe
 
 import PaddingDropDownElement from "./PaddingDropDownElement";
 
-
-
 import props from 'prop-types';
 import PropsTest from "./PropsTest";
 
 
 
 function App() {
+  const initialData = tableDataLong_2_Array;
+  const [data, setData] = useState(initialData);
+  const initialSchemaDescriptions = schemaDescriptions;
+  const [schema, setSchema] = useState(initialSchemaDescriptions);
+  const initialStateSchemaSelectionDialog = "closed";
+  const [isOpenSchemaSelectionDialog, setIsOpenSchemaSelectionDialog] = useState(initialStateSchemaSelectionDialog); 
+  
+  
+  
   return (
     <>
-    <LandingPage/>
-
+    <LandingPage schemaDescriptions={schema} stateSchemaSelectionDialog={isOpenSchemaSelectionDialog}/>
+  
     <div style={{height: "40px",}}/>
 
-    <EditorPage/>
+    <EditorPage data={data}/>
 
     <div style={{height: "200px",}}/>
     
+
+
+
+
+
+    {/*
     <SimpleDialogExample data={schemaDescriptions}/>
    
     <div style={{height: "50px",}}/>
@@ -77,7 +90,7 @@ function App() {
     
     <div style={{height: "400px", background: "white"}}/>
 
-{/*}
+
     <Grid xs={4}>
     <GeneratorDetailsForRepoElementShortVersion/>
     </Grid>
@@ -94,14 +107,14 @@ function App() {
     <GeneratorDetailsForRepoElementShortVersion/>
     </Grid>
 
-  */}
+  
     <div style={{height: "50px",}}/>
 
 
     <input style={{fontSize: "16px", width: "30ch", backgroundColor: "white", }} type="text" placeholder="Test this, bitch!"/>
 
     <div>
-        <TableComponent02 data ={tableDataLong}/>
+        <TableComponent02 data ={data}/>
       </div>
 
 

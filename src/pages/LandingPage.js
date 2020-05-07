@@ -7,7 +7,7 @@ import BodyLP from "../BodyLp";
 
 
 
-export default function LandingPage(){
+export default function LandingPage(props){
     
     
     
@@ -15,7 +15,7 @@ export default function LandingPage(){
         <div styles={{height: "100vh", width: "100vw", background: "white", padding: "5px" }}>
         <Header/>
         <SubHeader/>
-        <BodyLP/>
+        <BodyLP schemaDescriptions={props.schemaDescriptions} stateSchemaSelectionDialog={props.stateSchemaSelectionDialog}/>
         <Footer/>
         </div>
     )

@@ -5,12 +5,13 @@ import Footer from "../Footer";
 import BodyEditor from "../BodyEditor";
 
 
-export default function EditorPage(){
+export default function EditorPage(props){
     return(
-        <div styles={{height: "100vh", width: "100vw", background: "white", padding: "5px" }}>
+        <div styles={{height: "120vh", width: "100vw", background: "white", padding: "5px" }}>
         <Header/>
-        <BodyEditor/>
+        <BodyEditor data={props.data}/>
         <Footer/>
+        <div>Here is where the footer should be ending!</div>
         </div>
     )
 }

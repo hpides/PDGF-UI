@@ -109,3 +109,110 @@ export const customSystemVariables = [
             {fieldName: "Gender", generator: "Gen", isKey: "false"},
          ]
       };
+
+
+
+      export const tableDataLong_1_Array = [{
+         tableName: "TestItem", 
+         tableSize: "1", 
+         tableItems: [
+            {fieldName: "Name", generator: "Gen01", isKey: "true"},
+            {fieldName: "Street", generator: "Gen", isKey: "false"},
+            {fieldName: "Postcode", generator: "Gen", isKey: "false"},
+            {fieldName: "Country", generator: "Gen", isKey: "false"},
+            {fieldName: "IBAN", generator: "Gen", isKey: "false"},
+            {fieldName: "Salary", generator: "Gen", isKey: "false"},
+            {fieldName: "Gender", generator: "Gen", isKey: "false"},
+         ]
+      }];
+
+
+      export const tableDataLong_2_Array = [{
+         tableName: "Table A", 
+         tableSize: "1", 
+         tableItems: [
+            {fieldName: "Name", generator: "Gen01", isKey: "true"},
+            {fieldName: "Street", generator: "Gen", isKey: "false"},
+            {fieldName: "Postcode", generator: "Gen", isKey: "false"},
+            {fieldName: "Country", generator: "Gen", isKey: "false"},
+            {fieldName: "IBAN", generator: "Gen", isKey: "false"},
+            {fieldName: "Salary", generator: "Gen", isKey: "false"},
+            {fieldName: "Gender", generator: "Gen", isKey: "false"},
+         ]
+         },
+         {
+         tableName: "Table B", 
+         tableSize: "22", 
+         tableItems: [
+            {fieldName: "Name", generator: "Gen01", isKey: "true"},
+            {fieldName: "Street", generator: "Gen", isKey: "false"},
+            {fieldName: "Postcode", generator: "Gen", isKey: "false"},
+            {fieldName: "Country", generator: "Gen", isKey: "false"},
+            {fieldName: "IBAN", generator: "Gen", isKey: "false"},
+            {fieldName: "Salary", generator: "Gen", isKey: "false"},
+            {fieldName: "Gender", generator: "Gen", isKey: "false"},
+         ]
+         }
+      ];
+
+
+
+
+      export const tableDataLong_5_Array = [{
+         tableName: "Table A", 
+         tableSize: "111", 
+         tableItems: [
+            {fieldName: "Name", generator: "Gen01", isKey: "true"},
+            {fieldName: "Street", generator: "Gen", isKey: "false"},
+            {fieldName: "Postcode", generator: "Gen", isKey: "false"},
+            {fieldName: "Country", generator: "Gen", isKey: "false"},
+            {fieldName: "IBAN", generator: "Gen", isKey: "false"},
+            {fieldName: "Salary", generator: "Gen", isKey: "false"},
+            {fieldName: "Gender", generator: "Gen", isKey: "false"},
+         ]
+         },
+         {
+         tableName: "Table B", 
+         tableSize: "222", 
+         tableItems: [
+            {fieldName: "Name", generator: "Gen01", isKey: "true"},
+            {fieldName: "Street", generator: "Gen", isKey: "false"},
+            {fieldName: "Postcode", generator: "Gen", isKey: "false"},
+            {fieldName: "Country", generator: "Gen", isKey: "false"},
+            {fieldName: "IBAN", generator: "Gen", isKey: "false"},
+            {fieldName: "Salary", generator: "Gen", isKey: "false"},
+            {fieldName: "Gender", generator: "Gen", isKey: "false"},
+         ]
+         },
+         {
+            tableName: "Table C", 
+            tableSize: "333", 
+            tableItems: [
+               {fieldName: "Name", generator: "Gen01", isKey: "true"},
+               {fieldName: "Street", generator: "Gen", isKey: "false"},
+               {fieldName: "Postcode", generator: "Gen", isKey: "false"},
+            ]
+            },
+            {
+            tableName: "Table D", 
+            tableSize: "444", 
+            tableItems: [
+               
+               {fieldName: "Salary", generator: "Gen", isKey: "false"},
+               {fieldName: "Gender", generator: "Gen", isKey: "false"},
+            ]
+            },
+            {
+               tableName: "Table E", 
+               tableSize: "555", 
+               tableItems: [
+                  {fieldName: "Name", generator: "Gen01", isKey: "true"},
+                  {fieldName: "Street", generator: "Gen", isKey: "false"},
+                  {fieldName: "Postcode", generator: "Gen", isKey: "false"},
+                  {fieldName: "Country", generator: "Gen", isKey: "false"},
+                  {fieldName: "IBAN", generator: "Gen", isKey: "false"},
+                  {fieldName: "Salary", generator: "Gen", isKey: "false"},
+                  {fieldName: "Gender", generator: "Gen", isKey: "false"},
+               ]
+               },
+      ];
