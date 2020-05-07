@@ -1,0 +1,75 @@
+import React from 'react';
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Box";
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+
+const useStyles = makeStyles((theme) => ({
+   container: {
+      background: "lightgrey",display: "flex",
+      flexDirection: "column",
+      width: " 220px",
+      padding: "10px",
+      margin: "10px",
+  },
+  textField: {
+      width: "220px",
+      height: "40px",
+      margin: "0px",
+  },
+  input: {
+    height: "40px",
+  },
+  inputName: {
+    fontSize: 18,
+  },
+  inputRoot: {
+    fontSize: 20,
+    height: "40px",
+
+  },
+  labelRoot: {
+    fontSize: 20,
+  },
+  labelFocused: {
+  },
+}));
+
+export default function CustomVariablesSubComponent(props) {
+  const classes = useStyles();
+
+  return (
+      <>
+      <div className={classes.container}>
+      <TextField 
+        className={classes.textFieldName} 
+        id="name" 
+        //defaultValue = "Variabe Name"
+        value={props.input.name}  
+        variant="filled" 
+        InputProps={{ 
+          className: classes.inputName
+        }}/>
+      <TextField 
+        className={classes.textField} 
+        id="value" 
+        //defaultValue = "Variable Value" 
+        value = {props.input.value}
+        variant="filled" 
+        InputProps={{ 
+          className: classes.input
+        }}/>
+      <TextField 
+        className={classes.textField} 
+        id="type" 
+        //defaultValue = "Variable Type" 
+        value = {props.input.type}
+        variant="filled" 
+        InputProps={{ 
+          className: classes.input
+        }}/>
+      </div>
+      </>
+  );
+}
