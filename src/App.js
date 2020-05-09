@@ -7,11 +7,9 @@ import EditorButtonGroup from "./EditorButtonGroup";
 import DefaultVariablesComponent from "./DefaultVariablesComponent";
 import CustomVariablesContainer from "./CustomVariablesContainer";
 import CustomVariablesSubComponent from "./CustomVariablesSubComponent";
-import TableComponent from "./deprecated/TableComponent";
-import TableComponent02 from "./TableComponent02";
-import TableSubComponent from "./deprecated/TableSubComponent";
+import TableComponent from "./TableComponent"
 import TableSubComponent02 from "./deprecated/TableSubComponent02";
-import TableSubComponent03 from "./TableSubComponent03";
+import TableSubComponent from "./TableSubComponent";
 import Grid from "@material-ui/core/Grid";
 
 import CustomDialogExample from "./CustomDialogExample";
@@ -21,9 +19,7 @@ import GeneratorCardForRepo from "./GeneratorCardForRepo";
 import GeneratorCardForRepo02 from "./GeneratorCardForRepo02";
 import CustomDialogExample02 from "./CustomDialogExample02";
 import DefaultVariablesComponent02 from "./DefaultVariablesComponent02";
-import {customSystemVariable, customSystemVariables, generatorDescriptions, generatorDescription, schemaDescriptions, schemaDescriptionShort} from "./data.js";
-import {dummyText} from "./data.js";
-import {tableDataLong_2_Array} from "./data.js";
+import {customSystemVariable, customSystemVariables, generatorDescriptions, generatorDescription, schemaDescriptions, schemaDescriptionShort, tableDataLong_2_Array, emptySchema, dummyText} from "./data.js";
 import LandingPage from "./pages/LandingPage";
 import EditorPage from "./pages/EditorPage";
 import SimpleDialogExample from "./SimpleDialogExample";
@@ -38,6 +34,7 @@ import PaddingDropDownElement from "./PaddingDropDownElement";
 
 import props from 'prop-types';
 import PropsTest from "./PropsTest";
+import DistributionInputElement from "./DistributionInputElement";
 
 
 
@@ -48,6 +45,8 @@ function App() {
   const [schema, setSchema] = useState(initialSchemaDescriptions);
   const initialStateSchemaSelectionDialog = "closed";
   const [isOpenSchemaSelectionDialog, setIsOpenSchemaSelectionDialog] = useState(initialStateSchemaSelectionDialog); 
+  const initialCurrentSchema = emptySchema;
+  const [currentSchema, setCurrentSchema] = useState(initialCurrentSchema);
   
   
   
@@ -57,14 +56,13 @@ function App() {
   
     <div style={{height: "40px",}}/>
 
-    <EditorPage data={data}/>
+    <EditorPage data={data} currentSchema={currentSchema}/>
 
-    <div style={{height: "200px",}}/>
+    <div style={{height: "100px",}}/>
     
+    <DistributionInputElement/>
 
-
-
-
+    <div style={{height: "100px",}}/>
 
     {/*
     <SimpleDialogExample data={schemaDescriptions}/>
@@ -114,7 +112,7 @@ function App() {
     <input style={{fontSize: "16px", width: "30ch", backgroundColor: "white", }} type="text" placeholder="Test this, bitch!"/>
 
     <div>
-        <TableComponent02 data ={data}/>
+        <TableComponent data ={data}/>
       </div>
 
 
@@ -145,7 +143,7 @@ function App() {
 
       {/*}
       <div>
-        <TableSubComponent03/>
+        <TableSubComponent/>
       </div>
   */}
 

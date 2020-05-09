@@ -47,6 +47,7 @@ export default function CustomVariablesSubComponent(props) {
         id="name" 
         //defaultValue = "Variabe Name"
         value={props.input.name}  
+        onChange = {(event) => {props.customSystemVariableNameChangedHandler(event, props.input.variableId)}}
         variant="filled" 
         InputProps={{ 
           className: classes.inputName
@@ -56,6 +57,7 @@ export default function CustomVariablesSubComponent(props) {
         id="value" 
         //defaultValue = "Variable Value" 
         value = {props.input.value}
+        onChange = {(event) => {props.customSystemVariableValueChangedHandler(event, props.input.variableId)}}
         variant="filled" 
         InputProps={{ 
           className: classes.input
@@ -65,6 +67,7 @@ export default function CustomVariablesSubComponent(props) {
         id="type" 
         //defaultValue = "Variable Type" 
         value = {props.input.type}
+        onChange = {(event) => {props.customSystemVariableTypeChangedHandler(event, props.input.variableId)}}
         variant="filled" 
         InputProps={{ 
           className: classes.input

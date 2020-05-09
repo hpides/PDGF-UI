@@ -216,3 +216,44 @@ export const customSystemVariables = [
                ]
                },
       ];
+
+
+
+export const emptySchema = {
+                  uid: "",
+                  info: {
+                     schemaName: "Unnamed",
+                     description: "not yet described",
+                     author: "john doe",
+                     lastEdited: "",
+                  },
+                  tables: 
+                     [
+                        {
+                           tableName: "Table 1", 
+                           tableSize: 10, 
+                           tableId: 1,
+                           rowCounter: 1,
+                           tableItems: [
+                              {tableId: 0, rowId: 0, fieldName: "Enter Name", generator: "Gen01", isKey: "false"},
+                           ],
+                        }
+                     ],
+                  functions: {},
+                  variables: {
+                     defaultVariables: [
+                        {variableId: 1, name: "Root-Seed", value: "123456789", type: "number"},
+                        {variableId: 2, name: "ScalingFactor", value: "1", type: "number"},
+                        {variableId: 3, name: "RNG", value: "DefaultRNG", type: "string"}
+                     ],
+                     customVariables: [
+                        {variableId: 0, name: "Umtauschkurs EUR-USD", value: "0.97", type: "double"},
+                     ],
+                  }
+}
+
+
+
+
+
+

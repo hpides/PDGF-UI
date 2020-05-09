@@ -5,6 +5,8 @@ import TextField from '@material-ui/core/TextField';
 import Typography from "@material-ui/core/Typography";
 import CustomVariablesSubComponent from "./CustomVariablesSubComponent";
 import {shadows} from "@material-ui/system";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,8 +43,21 @@ export default function CustomVariablesContainer(props){
         <Box className={classes.container} boxShadow={3}>
                 <Typography className={classes.containerLabel}>Custom System Variables</Typography>  
                 <div>
-                {data.map(element => {return <CustomVariablesSubComponent input = {element}/>})}
-                </div>   
+                {props.variables.customVariables.map(element => {return <CustomVariablesSubComponent 
+                                                                          input = {element} 
+                                                                          customSystemVariableNameChangedHandler={props.customSystemVariableNameChangedHandler}
+                                                                          customSystemVariableValueChangedHandler={props.customSystemVariableValueChangedHandler}
+                                                                          customSystemVariableTypeChangedHandler={props.customSystemVariableTypeChangedHandler}                                                                        
+                                                                          />})}
+                </div> 
+                <div style={{display: "flex", flexDirection: "row", justifyContent: "flex-start", alignContent: "flex-start",}}>
+                  <IconButton onClick={() => {props.addCustomVariableHandler()}}>
+                    <AddCircleIcon/>
+                  </IconButton>
+                  <Typography 
+                    className={classes.actionLink} 
+                    onClick={() => {props.addCustomVariableHandler()}}>InsertVariable</Typography>
+                </div>  
         </Box>
         </div>
     )

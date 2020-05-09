@@ -11,6 +11,7 @@ import Divider from "@material-ui/core/Divider";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -42,19 +43,22 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function TableSubComponent03(props){
+export default function TableSubComponent(props){
     const classes = useStyles();
 
     return(
     <Grid container className={classes.container}>
         <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed}>
         <div style={{display: "flex", justifyContent: "center", width: "40px", height: "40px" }}>
-            <VpnKeyIcon className={classes.icon}/>
+            <IconButton>
+                <VpnKeyIcon className={classes.icon}/>
+            </IconButton>
         </div>
         </Grid>
 
         <Grid container item style={{width: "200px"}} className={classes.framed}>
-        <Input defaultValue="Enter Field Name" value={props.data.fieldName}/>
+        <Input defaultValue="Enter Field Name" value={props.data.fieldName} onChange={(event) =>
+             {alert("event: " + event.target.value + " tableId: " + props.data.tableId + " rowId: " + props.data.rowId); props.fieldNameChangedHandler(event, props.data.tableId, props.data.rowId)}}/>
         </Grid>
 
         <Grid container item style={{width: "150px"}} className={classes.framed}>
@@ -65,13 +69,17 @@ export default function TableSubComponent03(props){
 
         <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed}>
         <div style={{display: "flex", justifyContent: "center", width: "40px", height: "40px" }}>
-            <BuildIcon className={classes.icon} />
+            <IconButton>
+                <BuildIcon className={classes.icon} />
+            </IconButton>    
         </div>
         </Grid>
 
         <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed}>
         <div style={{display: "flex", justifyContent: "center", width: "40px", height: "40px" }}>
-            <DeleteIcon className={classes.icon}/>
+            <IconButton>
+                <DeleteIcon className={classes.icon}/>
+            </IconButton>    
         </div>
         </Grid>
 

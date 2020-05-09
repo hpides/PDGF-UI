@@ -8,12 +8,15 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
 import Divider from "@material-ui/core/Divider";
 import {makeStyles} from "@material-ui/core/styles";
-import TableSubComponent03 from "./TableSubComponent03";
+import TableSubComponent from "./TableSubComponent";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
     container: {
         background: "white",
         padding: "10px",
+        minWidth: "300px"
+
 
     },
     item: {
@@ -82,11 +85,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function TableComponent02(props){
+export default function TableComponent(props){
     const classes = useStyles();
 
+
+
+
     return(
-      <Grid className={classes.container} container xs={3}>
+      <Grid className={classes.container} container xs={4}>
         <Grid item container className={classes.header_row}>
                 
                 <TextField 
@@ -94,6 +100,7 @@ export default function TableComponent02(props){
                   label="Table Name" 
                   placeholder="Enter Table Name"
                   fullWidth
+                  
                   InputProps={{
                     classes: {
                       input: classes.resizeFont,
@@ -104,24 +111,33 @@ export default function TableComponent02(props){
                       inputLabel: classes.resizeLabel,
                     },
                   }} 
-                  value={props.data.tableName}/>
+                  value={props.data.tableName}
+                  onChange={(event) => {console.log("Wert: " + event.target.value + "TableId: " + props.data.tableId); props.tableNameChangedHandler(event, props.data.tableId)}}/>
+
                 <div>
                 <TextField 
                     className={classes.sizeField}
                     label="Size in Rows" 
                     value={props.data.tableSize}
+                    onChange={(event)=> {props.tableSizeChangedHandler(event, props.data.tableId)}}
                  />
-                <CloseIcon/>  
+                <IconButton aria-label="delete table" onClick={() => {props.deleteTableHandler(props.data.tableId)}}> 
+                   <CloseIcon />
+                </IconButton>
                 </div>  
                 
         </Grid>
         <Divider className={classes.divider}/>
         <Grid item container className={classes.body}>
-         {props.data.tableItems.map(element => {return <TableSubComponent03 data ={element}/>})}  
+         {props.data.tableItems.map(element => {return <TableSubComponent data ={element} fieldNameChangedHandler={props.fieldNameChangedHandler}/>})}  
         </Grid>   
         <Grid container item className={classes.footer_row}>
-          <AddCircleIcon/>
-          <Typography className={classes.actionLink} onClick={(event)=>{alert("Boooo!")}}>InsertRow</Typography>
+          <IconButton onClick={() => {props.addTableRowHandler(props.data.tableId, "99")}}>
+            <AddCircleIcon/>
+          </IconButton>
+          <Typography 
+            className={classes.actionLink} 
+            onClick={() => {props.addTableRowHandler(props.data.tableId, "99")}}>InsertRow</Typography>
         </Grid> 
       </Grid>  
     )

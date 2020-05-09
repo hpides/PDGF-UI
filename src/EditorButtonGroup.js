@@ -41,7 +41,7 @@ const LightTooltip = withStyles((theme) => ({
   },
 }))(Tooltip);
 
-export default function EditorButtonGroup() {
+export default function EditorButtonGroup(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -64,6 +64,7 @@ export default function EditorButtonGroup() {
             color="default"
             className={classes.button}
             startIcon={<AddCircleIcon className={classes.icon}/>}
+            onClick={props.addNewTableHandler}
         />
       </LightTooltip>
 

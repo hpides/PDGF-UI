@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function SchemaNameElement(){
+export default function SchemaNameElement(props){
     const classes = useStyles();
     return(
         <Grid className={classes.container}>
@@ -48,6 +48,8 @@ export default function SchemaNameElement(){
                 className={classes.textField} 
                 variant="outlined" 
                 label="Schema Name"
+                value={props.schemaName}
+                onChange = {(event) => {props.schemaNameChangedHandler(event)}}
                 InputProps={{ classes: { root: classes.inputRoot } }}
                 InputLabelProps={{
                     classes: {
