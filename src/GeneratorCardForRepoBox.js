@@ -8,14 +8,16 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from "@material-ui/icons/Search";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles({
-  root: {
-    width: 275,
-    height: 175,
-    '&:hover': {
-        background: "yellow",
-      }
+    root: {
+        minWidth: 275,
+        margin: 5,
+        background: "white",
+        '&:hover': {
+          background: "lightgrey",
+        }  
   },
   bullet: {
     display: 'inline-block',
@@ -38,15 +40,15 @@ const useStyles = makeStyles({
     
   },
   inner_container_top: {
-    background: "white",
+    background: "inherit",
     padding: "5px"
   },
   inner_container_middle: {
-    background: "white",
+    background: "inherit",
     padding: "5px"
   },
   inner_container_bottom: {
-    background: "white",
+    background: "inherit",
     padding: "5px"
   },
 });
@@ -55,20 +57,20 @@ export default function GeneratorCardForRepo(props) {
   const classes = useStyles();
 
   return (
-      <div style={{height: "170px", width: "200px", margin: "3px"}}>
-        <Grid container classeName={classes.container} direction="column" xs={12} style={{background: "white", padding: "4px",}}>
-            <Grid container item className={classes.inner_container_top} xs={12} direction="row" justify="space-between" style={{background: "white"}}>
-                <Grid container item xs={9} style={{background: "white"}}>
+      <Box className={classes.root} onClick={()=>{alert("My Name is " + props.data.name + "!")}} style={{height: "170px", width: "200px", margin: "3px"}}>
+        <Grid container classeName={classes.container} direction="column" xs={12} style={{background: "inherit", padding: "4px",}}>
+            <Grid container item className={classes.inner_container_top} xs={12} direction="row" justify="space-between" style={{background: "inherit"}}>
+                <Grid container item xs={9} style={{background: "inherit"}}>
                     <Typography className={classes.name} color="textSecondary"  >
                         {props.data.name}
                     </Typography >
                 </Grid>
-                <Grid container item className={classes.inner_container_middle} xs={3} style={{background: "white"}} display="flex" direction="row" justify="flex-end">
+                <Grid container item className={classes.inner_container_middle} xs={3} style={{background: "inherit"}} display="flex" direction="row" justify="flex-end">
                     <SearchIcon/>
               {/*}     <DeleteIcon/> */}
                 </Grid>
             </Grid>
-            <Grid container item style={{background: "white"}}>
+            <Grid container item style={{background: "inherit"}}>
                 <Typography className={classes.description} color="textSecondary" variant="h5" component="h2" >
                 {props.data.description}
                 </Typography >
@@ -79,6 +81,6 @@ export default function GeneratorCardForRepo(props) {
                 </Typography>
             </Grid>
         </Grid>
-      </div>
+      </Box>
   );
 }

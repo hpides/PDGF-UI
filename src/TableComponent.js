@@ -129,16 +129,26 @@ export default function TableComponent(props){
         </Grid>
         <Divider className={classes.divider}/>
         <Grid item container className={classes.body}>
-         {props.data.tableItems.map(element => {return <TableSubComponent data ={element} fieldNameChangedHandler={props.fieldNameChangedHandler}/>})}  
+         {props.data.tableItems.map(element => {return <TableSubComponent 
+                                                            data ={element} 
+                                                            fieldNameChangedHandler={props.fieldNameChangedHandler}
+                                                            deleteTableRowHandler={props.deleteTableRowHandler}
+                                                            fairy = {props.fairy}
+                                                            handleClickOpenGeneratorDialog = {props.handleClickOpenGeneratorDialog}
+                                                            handleCloseGeneratorDialog = {props.handleCloseGeneratorDialog}
+                                                            isOpenGeneratorDialog = {props.isOpenGeneratorDialog}
+                                                            />})}  
         </Grid>   
         <Grid container item className={classes.footer_row}>
-          <IconButton onClick={() => {props.addTableRowHandler(props.data.tableId, "99")}}>
+          <IconButton onClick={() => {props.addTableRowHandler(props.data.tableId)}}>
             <AddCircleIcon/>
           </IconButton>
           <Typography 
             className={classes.actionLink} 
-            onClick={() => {props.addTableRowHandler(props.data.tableId, "99")}}>InsertRow</Typography>
+            onClick={() => {props.addTableRowHandler(props.data.tableId)}}>InsertRow</Typography>
         </Grid> 
       </Grid>  
+
+     
     )
 }

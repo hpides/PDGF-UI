@@ -3,6 +3,8 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Box";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from "@material-ui/icons/Close";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +44,10 @@ export default function CustomVariablesSubComponent(props) {
   return (
       <>
       <div className={classes.container}>
+      <div> 
+      <IconButton aria-label="delete table" onClick={() => {props.deleteCustomSystemVariableHandler(props.input.variableId)}}> 
+        <CloseIcon />
+      </IconButton></div>   
       <TextField 
         className={classes.textFieldName} 
         id="name" 

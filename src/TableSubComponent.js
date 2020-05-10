@@ -12,6 +12,8 @@ import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
 import IconButton from "@material-ui/core/IconButton";
+import {generatorDescriptions} from "./data";
+import DialogGeneratorSelection from "./DialogGeneratorSelection";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -57,14 +59,19 @@ export default function TableSubComponent(props){
         </Grid>
 
         <Grid container item style={{width: "200px"}} className={classes.framed}>
-        <Input defaultValue="Enter Field Name" value={props.data.fieldName} onChange={(event) =>
-             {alert("event: " + event.target.value + " tableId: " + props.data.tableId + " rowId: " + props.data.rowId); props.fieldNameChangedHandler(event, props.data.tableId, props.data.rowId)}}/>
+            <Input 
+                defaultValue="Enter Field Name" 
+                value={props.data.fieldName} 
+                onChange={(event) =>
+                {props.fieldNameChangedHandler(event, props.data.tableId, props.data.rowId)}}
+            />
         </Grid>
 
         <Grid container item style={{width: "150px"}} className={classes.framed}>
-        <form className={classes.root} noValidate autoComplete="off">
-        <Input defaultValue="Enter Generator" value={props.data.generator}/>
-        </form>
+            <Button
+                onClick ={() => {props.handleClickOpenGeneratorDialog()}}>
+                    Select Generator
+            </Button> 
         </Grid>
 
         <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed}>
@@ -77,13 +84,17 @@ export default function TableSubComponent(props){
 
         <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed}>
         <div style={{display: "flex", justifyContent: "center", width: "40px", height: "40px" }}>
-            <IconButton>
+            
+            <IconButton onClick={() => {props.deleteTableRowHandler(props.data.tableId, props.data.rowId)}}>
                 <DeleteIcon className={classes.icon}/>
             </IconButton>    
         </div>
-        </Grid>
-
+        </Grid> 
                
     </Grid>
+
+
+
+         
     )
 }

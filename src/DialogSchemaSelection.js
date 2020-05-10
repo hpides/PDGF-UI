@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SelectSchemaDialog(props) {
+export default function DialogSchemaSelection(props) {
   const classes = useStyles();
   const { onClose, selectedValue, isOpenSchemaDialog, schemaDescriptions } = props;
 

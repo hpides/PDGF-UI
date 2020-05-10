@@ -65,6 +65,36 @@ export const customSystemVariables = [
 
  
 
+
+export const rawGeneratorDescriptions = [
+   {name: "Id", description: "Generates consecutive Ids from 0 or any given minimum value.", examples: "0,1,2,3,4,..."},
+   {name: "Double", description: "Generate a 64bit floating point values between min and max..", examples: "0,1,2,3,4,..."},
+   {name: "Long", description: "Generates a 64Bit integer value between min and max.", examples: "0,1,2,3,4,..."},
+   {name: "Date-Time", description: "Generates dates within a specified time range.", examples: "0,1,2,3,4,..."},
+   {name: "Random String", description: "Generates strings in a size range with a specified set of characters.", examples: "0,1,2,3,4,..."},
+   {name: "Random-Sentence", description: "Generates a sentence within a size range with pseudo grammar.", examples: "0,1,2,3,4,..."},
+   {name: "Dict-List", description: "Uses a dictionary to generate single values or lists.", examples: "0,1,2,3,4,..."},
+   {name: "Reference", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,..."},
+   {name: "Sequential", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,..."},
+
+]
+
+
+
+export const rawGeneratorList = [
+   "Id", 
+   "Double", 
+   "Long", 
+   "Date-Time", 
+   "Random String", 
+   "Random-Sentence", 
+   "Random-Sentence", 
+   "Reference", 
+   "Sequential",
+]
+
+
+
  export const tableItemsLong = [
     {fieldName: "Name", generator: "Gen01", isKey: "true"},
     {fieldName: "Street", generator: "Gen", isKey: "false"},
@@ -235,7 +265,11 @@ export const emptySchema = {
                            tableId: 1,
                            rowCounter: 1,
                            tableItems: [
-                              {tableId: 0, rowId: 0, fieldName: "Enter Name", generator: "Gen01", isKey: "false"},
+                              {tableId: 1, 
+                                 rowId: 1, 
+                                 fieldName: "Enter Name", 
+                                 generator: "Gen01", 
+                                 isKey: "false"},
                            ],
                         }
                      ],
@@ -255,5 +289,36 @@ export const emptySchema = {
 
 
 
-
+export const emptySchema2 = {
+   uid: "007",
+   info: {
+      schemaName: "EmptySchema2",
+      description: "i am empty and hollow and shallow",
+      author: "john doe",
+      lastEdited: "today",
+   },
+   tables: 
+      [
+         {
+            tableName: "Origin", 
+            tableSize: 10, 
+            tableId: 1,
+            rowCounter: 1,
+            tableItems: [
+               {tableId: 1, rowId: 1, fieldName: "Enter Name", generator: "Gen01", isKey: "false"},
+            ],
+         }
+      ],
+   functions: {},
+   variables: {
+      defaultVariables: [
+         {variableId: 1, name: "Root-Seed", value: "123456789", type: "number"},
+         {variableId: 2, name: "ScalingFactor", value: "1", type: "number"},
+         {variableId: 3, name: "RNG", value: "DefaultRNG", type: "string"}
+      ],
+      customVariables: [
+         {variableId: 0, name: "Umtauschkurs EUR-USD", value: "0.97", type: "double"},
+      ],
+   }
+}
 

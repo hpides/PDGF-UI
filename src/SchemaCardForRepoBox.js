@@ -52,7 +52,7 @@ export default function SchemaCardForRepoBox(props) {
   const classes = useStyles();
 
   return (
-    <Box className={classes.root}>
+    <Box className={classes.root} onClick={()=>{alert("My Name is " + props.input.name + "!")}}>
         <Grid container classeName={classes.container} xs={12}>
           <Grid container item className={classes.inner_container_left} xs={3} flexDirection="row" justify="flex-start">
             <Grid container item>

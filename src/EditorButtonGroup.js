@@ -10,6 +10,7 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import SaveIcon from "@material-ui/icons/Save";
 import BuildIcon from "@material-ui/icons/Build";
 import HelpIcon from "@material-ui/icons/Help";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -99,17 +100,28 @@ export default function EditorButtonGroup(props) {
                 <MenuItem onClick={handleClose}>Export PDGF-XML</MenuItem>
                 <MenuItem onClick={handleClose}>Export JSON</MenuItem>
         </Menu>
+        
         <LightTooltip title="Show help">
         <Button
             variant="contained"
             color="default"
+            onClick={()=>{props.fairy()}}
             className={classes.button}
             startIcon={<HelpIcon className={classes.icon}/>}
         />
         </LightTooltip>
 
+        <LightTooltip title="Reset Editor">
+        <Button
+            variant="contained"
+            color="default"
+            className={classes.button}
+            startIcon={<DeleteIcon className={classes.icon}/>}
+            onClick={()=>{props.resetEditor()}}
+        />
+        </LightTooltip>
+
       </ButtonGroup>
-      
     </div>
   );
 }

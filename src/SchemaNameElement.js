@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import InfoIcon from '@material-ui/icons/Info';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,14 +37,14 @@ const useStyles = makeStyles((theme) => ({
 export default function SchemaNameElement(props){
     const classes = useStyles();
     return(
-        <Grid className={classes.container}>
+        <Grid container xs={12} display="flex" direction="row" justify="flex-start" className={classes.container}>
             {/* <Grid item>
             <Typography variant="h5">
                 Schema Name: 
             </Typography>
             </Grid>
             */}
-            <Grid item>
+            <Grid item >
             <form className={classes.root} noValidate autoComplete="off">
             <TextField 
                 className={classes.textField} 
@@ -59,6 +61,11 @@ export default function SchemaNameElement(props){
                 }}
             />
             </form>
+            </Grid>
+            <Grid item  >
+                <IconButton>
+                  <InfoIcon/>
+                </IconButton>
             </Grid>
         </Grid>
     )

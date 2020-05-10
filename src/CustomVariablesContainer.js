@@ -47,7 +47,8 @@ export default function CustomVariablesContainer(props){
                                                                           input = {element} 
                                                                           customSystemVariableNameChangedHandler={props.customSystemVariableNameChangedHandler}
                                                                           customSystemVariableValueChangedHandler={props.customSystemVariableValueChangedHandler}
-                                                                          customSystemVariableTypeChangedHandler={props.customSystemVariableTypeChangedHandler}                                                                        
+                                                                          customSystemVariableTypeChangedHandler={props.customSystemVariableTypeChangedHandler}
+                                                                          deleteCustomSystemVariableHandler ={props.deleteCustomSystemVariableHandler}                                                                        
                                                                           />})}
                 </div> 
                 <div style={{display: "flex", flexDirection: "row", justifyContent: "flex-start", alignContent: "flex-start",}}>
