@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "row",
         height: "40px",
         width: " 600px",
-        background: "inherit",
     },
     textField01: {
     },
@@ -50,8 +49,8 @@ export default function TableSubComponent(props){
     const classes = useStyles();
 
     return(
-    <Grid container className={classes.container} styles={{display: "flex", flexDirection: "row", justifyContent: "flex-end", alignItems: "center"}} xs={12}>
-        <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed} xs={1}>
+    <Grid container className={classes.container}>
+        <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed}>
         <div style={{display: "flex", justifyContent: "center", width: "40px", height: "40px" }}>
             <IconButton>
                 <VpnKeyIcon className={classes.icon}/>
@@ -59,7 +58,7 @@ export default function TableSubComponent(props){
         </div>
         </Grid>
 
-        <Grid container item style={{width: "200px"}} className={classes.framed}xs={6}>
+        <Grid container item style={{width: "200px"}} className={classes.framed}>
             <Input 
                 defaultValue="Enter Field Name" 
                 value={props.data.fieldName} 
@@ -68,14 +67,14 @@ export default function TableSubComponent(props){
             />
         </Grid>
 
-        <Grid container item style={{width: "150px"}} className={classes.framed}xs={3}>
+        <Grid container item style={{width: "150px"}} className={classes.framed}>
             <Button
                 onClick ={() => {props.handleClickOpenGeneratorDialog()}}>
-                    Generator
+                    Select Generator
             </Button> 
         </Grid>
 
-        <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed} xs={1}>
+        <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed}>
         <div style={{display: "flex", justifyContent: "center", width: "40px", height: "40px" }}>
             <IconButton>
                 <BuildIcon className={classes.icon} />
@@ -83,7 +82,7 @@ export default function TableSubComponent(props){
         </div>
         </Grid>
 
-        <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed} xs={1}>
+        <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed}>
         <div style={{display: "flex", justifyContent: "center", width: "40px", height: "40px" }}>
             
             <IconButton onClick={() => {props.deleteTableRowHandler(props.data.tableId, props.data.rowId)}}>

@@ -95,6 +95,35 @@ export const rawGeneratorList = [
 
 
 
+export const dictionaryList = [
+   "Vornamen",
+   "Nachnamen",
+   "Strassennamen",
+   "Ort",
+   "PLZ",
+   "Telefon-Nummern",
+   "IBAN",
+   "Länder",
+   "Sozialversicherungs-Nummern",
+   "Steuer-Nummern",
+   "Bankunternehmen",
+]
+
+
+export const localeList = [
+   "en_IN",
+   "en_NZ",
+   "en_UK",
+   "en_US",
+   "en_IE",
+   "de_AT",
+   "de_DE",
+   "de_LU",
+   "de_CH"
+]
+
+
+
  export const tableItemsLong = [
     {fieldName: "Name", generator: "Gen01", isKey: "true"},
     {fieldName: "Street", generator: "Gen", isKey: "false"},
@@ -249,8 +278,11 @@ export const rawGeneratorList = [
 
 
 
-export const emptySchema = {
-                  uid: "",
+export const emptySchema0 = {
+                  uids: {
+                     schemaUid: "007",
+                     tableCounter: 1,
+                  },
                   info: {
                      schemaName: "Unnamed",
                      description: "not yet described",
@@ -280,32 +312,41 @@ export const emptySchema = {
                         {variableId: 2, name: "ScalingFactor", value: "1", type: "number"},
                         {variableId: 3, name: "RNG", value: "DefaultRNG", type: "string"}
                      ],
-                     customVariables: [
-                        {variableId: 0, name: "Umtauschkurs EUR-USD", value: "0.97", type: "double"},
-                     ],
+                     customVariables:
+                        {variableCounter: 0,
+                        variableItems: [
+                           {variableId: 0, 
+                           name: "Enter Variable Name", 
+                           value: "Enter Value", 
+                           type: "Enter Type"},
+                        ],
+                     },
                   }
 }
 
 
 
 
-export const emptySchema2 = {
-   uid: "007",
+export const emptySchema = {
+   uids: {
+      schemaUid: "date-seconds-randomThreeLetters",
+      tableCounter: 1,
+   },
    info: {
-      schemaName: "EmptySchema2",
-      description: "i am empty and hollow and shallow",
+      schemaName: "Enter Schema Name",
+      description: "This is a description of the empty schema:         .Thank you for your attention.",
       author: "john doe",
       lastEdited: "today",
    },
    tables: 
       [
          {
-            tableName: "Origin", 
+            tableName: "Table 1", 
             tableSize: 10, 
             tableId: 1,
             rowCounter: 1,
             tableItems: [
-               {tableId: 1, rowId: 1, fieldName: "Enter Name", generator: "Gen01", isKey: "false"},
+               {tableId: 1, rowId: 1, fieldName: "Enter Table Name", generator: "Gen01", isKey: "false"},
             ],
          }
       ],
@@ -316,9 +357,15 @@ export const emptySchema2 = {
          {variableId: 2, name: "ScalingFactor", value: "1", type: "number"},
          {variableId: 3, name: "RNG", value: "DefaultRNG", type: "string"}
       ],
-      customVariables: [
-         {variableId: 0, name: "Umtauschkurs EUR-USD", value: "0.97", type: "double"},
-      ],
+      customVariables:
+         {variableCounter: 1,
+         variableItems: [
+            {variableId: 1, 
+            name: "Enter Variable Name", 
+            value: "Enter Value", 
+            type: "Enter Type"},
+         ],
+      },
    }
 }
 

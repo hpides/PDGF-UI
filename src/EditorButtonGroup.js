@@ -105,7 +105,6 @@ export default function EditorButtonGroup(props) {
         <Button
             variant="contained"
             color="default"
-            onClick={()=>{props.fairy()}}
             className={classes.button}
             startIcon={<HelpIcon className={classes.icon}/>}
         />

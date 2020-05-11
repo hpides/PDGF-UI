@@ -12,11 +12,11 @@ const useStyles = makeStyles((theme) => ({
       background: "lightgrey",display: "flex",
       flexDirection: "column",
       width: " 220px",
-      padding: "10px",
+      padding: "5px",
       margin: "10px",
   },
   textField: {
-      width: "220px",
+      width: "240px",
       height: "40px",
       margin: "0px",
   },
@@ -44,27 +44,32 @@ export default function CustomVariablesSubComponent(props) {
   return (
       <>
       <div className={classes.container}>
-      <div> 
-      <IconButton aria-label="delete table" onClick={() => {props.deleteCustomSystemVariableHandler(props.input.variableId)}}> 
-        <CloseIcon />
-      </IconButton></div>   
-      <TextField 
+      <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center",}}>
+      <div style={{width: "200px", padding: "0", margin: "0"}}>
+        <TextField 
         className={classes.textFieldName} 
         id="name" 
         //defaultValue = "Variabe Name"
         value={props.input.name}  
         onChange = {(event) => {props.customSystemVariableNameChangedHandler(event, props.input.variableId)}}
-        variant="filled" 
+        //variant="filled" 
         InputProps={{ 
           className: classes.inputName
         }}/>
+      </div>
+      <div style={{display: "flex", width: "30px", }}>  
+      <IconButton aria-label="delete table" onClick={() => {props.deleteCustomSystemVariableHandler(props.input.variableId)}}> 
+        <CloseIcon />
+      </IconButton> 
+      </div>
+      </div>  
       <TextField 
         className={classes.textField} 
         id="value" 
         //defaultValue = "Variable Value" 
         value = {props.input.value}
         onChange = {(event) => {props.customSystemVariableValueChangedHandler(event, props.input.variableId)}}
-        variant="filled" 
+        //variant="filled" 
         InputProps={{ 
           className: classes.input
         }}/>
@@ -74,7 +79,7 @@ export default function CustomVariablesSubComponent(props) {
         //defaultValue = "Variable Type" 
         value = {props.input.type}
         onChange = {(event) => {props.customSystemVariableTypeChangedHandler(event, props.input.variableId)}}
-        variant="filled" 
+        //variant="filled" 
         InputProps={{ 
           className: classes.input
         }}/>

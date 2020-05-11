@@ -1,5 +1,6 @@
 import React from "react";
 import CentralButtonGroup from "./CentralButtonGroup";
+import SimpleDialogExample05 from "./SimpleDialogExample05";
 
 
 export default function BodyLP(props){
@@ -9,6 +10,7 @@ export default function BodyLP(props){
                 schemaDescriptions={props.schemaDescriptions} 
                 stateSchemaSelectionDialog={props.stateSchemaSelectionDialog}
                 />
+            <SimpleDialogExample05/>
         </div>
     )
 }

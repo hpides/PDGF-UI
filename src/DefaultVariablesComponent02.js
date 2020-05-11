@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
   containerLabel: {
     position: "relative",
     top: "0px",
-    fontSize: 20,
+    fontSize: 21,
+    fontWeight: 500,
   },
 
   textField: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "5px",
     marginLeft: "auto",
     marginRight: "auto",
-    width: "200px",
+    width: "240px",
   },
 
   inputRoot: {

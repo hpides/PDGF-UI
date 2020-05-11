@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import EditorButtonGroup from "./EditorButtonGroup";
 import DefaultVariablesComponent02 from "./DefaultVariablesComponent02";
 import CustomVariablesContainer from "./CustomVariablesContainer";
-import {customSystemVariables, emptySchema, emptySchema2, generatorDescriptions, rawGeneratorDescriptions} from "./data.js"; 
+import {customSystemVariables, emptySchema, emptySchema0, generatorDescriptions, rawGeneratorDescriptions} from "./data.js"; 
 import SchemaNameElement from "./SchemaNameElement";
 import TableComponent from "./TableComponent";
 import Button from "@material-ui/core/Button";
@@ -20,42 +20,32 @@ export default function BodyEditor(props){
     const [isOpenVariablePlate, setIsOpenVariablePlate] = useState(inititalStateIsOpenVariablePlate);
     const initialCurrentSchemaLocal = props.currentSchema;
     const [currentSchemaLocal, setCurrentSchemaLocal] = useState(initialCurrentSchemaLocal);
-    const initialTableCount = 2; 
-    const [tableCounter, setTableCounter] = useState(initialTableCount);
     const defaultTableSize = 10;
-    const [fairyDust, setFairyDust] = useState("nextone: isOpenGeneratorDialog");
     const [isOpenGeneratorDialog, setIsOpenGeneratorDialog] = useState(false);
     const [isOpenRawGeneratorDialog, setIsOpenRawGeneratorDialog] = useState(false);
 
 
 
-    const fairy = () => {
-        alert("Current Fairy Dust Color: " + fairyDust);
-        return null
-    }
-
-
-
-
     const addNewTableHandler = () => {
         let schemaNew = {...currentSchemaLocal};
-        let newTableName = "Table " + tableCounter;
+        let tableCounter = parseInt(schemaNew.uids.tableCounter);
+        let newTableName = "Table " + (tableCounter+1);
         let newTableJSON = {          
                 tableName: newTableName, 
                 tableSize: defaultTableSize, 
-                tableId: tableCounter,
+                tableId: (tableCounter+1),
                 rowCounter: 1,
                 tableItems: [
                     {
-                        tableId: 1, 
+                        tableId: (tableCounter+1), 
                         rowId: 1, 
-                        fieldName: "Changed?", 
+                        fieldName: "Enter Table Name", 
                         generator: "Gen01", 
                         isKey: "false"},
                 ],
                 functions: {},
             };
-        setTableCounter(tableCounter + 1);
+        schemaNew.uids.tableCounter = (tableCounter + 1);
         schemaNew.tables.push(newTableJSON);
         setCurrentSchemaLocal(schemaNew);
     };
@@ -81,7 +71,7 @@ export default function BodyEditor(props){
         let newRow = {
             tableId: tableId, 
             rowId: rowCounter + 1, 
-            fieldName: "Enter Name", 
+            fieldName: "Enter Table Name", 
             generator: "Select Generator", 
             isKey: "false",
         };
@@ -148,16 +138,6 @@ export default function BodyEditor(props){
     };
 
 
-
-    const addCustomVariableHandler = () => {
-        let schemaNew = {...currentSchemaLocal};
-        const extraInputElement =  {name: "Enter Name", value: "Enter Value", type: "Enter Type"};
-        schemaNew.variables.customVariables.push(extraInputElement);
-        setCurrentSchemaLocal(schemaNew);
-    };
-
-
-
     const defaultSystemVariableValueChangedHandler = (event, variableId) => {
         let schemaNew = {...currentSchemaLocal};
         let variableIndex = schemaNew.variables.defaultVariables.findIndex( x => x.variableId === variableId);
@@ -168,38 +148,53 @@ export default function BodyEditor(props){
 
     const customSystemVariableNameChangedHandler = (event, variableId) => {
         let schemaNew = {...currentSchemaLocal};
-        let variableIndex = schemaNew.variables.customVariables.findIndex( x => x.variableId === variableId);
-        schemaNew.variables.customVariables[variableIndex].name = event.target.value;
+        let variableIndex = schemaNew.variables.customVariables.variableItems.findIndex( x => x.variableId === variableId);
+        schemaNew.variables.customVariables.variableItems[variableIndex].name = event.target.value;
         setCurrentSchemaLocal(schemaNew);
     }
 
 
     const customSystemVariableValueChangedHandler = (event, variableId) => {
         let schemaNew = {...currentSchemaLocal};
-        let variableIndex = schemaNew.variables.customVariables.findIndex( x => x.variableId === variableId);
-        schemaNew.variables.customVariables[variableIndex].value = event.target.value;
+        let variableIndex = schemaNew.variables.customVariables.variableItems.findIndex( x => x.variableId === variableId);
+        schemaNew.variables.customVariables.variableItems[variableIndex].value = event.target.value;
         setCurrentSchemaLocal(schemaNew);
     }
 
 
     const customSystemVariableTypeChangedHandler = (event, variableId) => {
         let schemaNew = {...currentSchemaLocal};
-        let variableIndex = schemaNew.variables.customVariables.findIndex( x => x.variableId === variableId);
-        schemaNew.variables.customVariables[variableIndex].type = event.target.value;
+        let variableIndex = schemaNew.variables.customVariables.variableItems.findIndex( x => x.variableId === variableId);
+        schemaNew.variables.customVariables.variableItems[variableIndex].type = event.target.value;
         setCurrentSchemaLocal(schemaNew);
     }
 
 
+    const addCustomVariableHandler = () => {
+        let schemaNew = {...currentSchemaLocal};
+        const variableCounter = schemaNew.variables.customVariables.variableCounter
+        const variableCounterNew = variableCounter +1;
+        schemaNew.variables.customVariables.variableCounter = variableCounterNew;
+        const extraInputElement =  {
+            name: "Enter Name", 
+            value: "Enter Value", 
+            type: "Enter Type",
+            variableId: variableCounterNew, };
+        schemaNew.variables.customVariables.variableItems.push(extraInputElement);
+        setCurrentSchemaLocal(schemaNew);
+    };
+
+
     const deleteCustomSystemVariableHandler = (variableId) => {
         let schemaNew = {...currentSchemaLocal};
-        let customVariablesWithout = schemaNew.variables.customVariables.filter(x => x.variableId !== variableId);
-        schemaNew.variables.customVariables = customVariablesWithout;
+        let customVariablesWithout = schemaNew.variables.customVariables.variableItems.filter(x => x.variableId !== variableId);
+        schemaNew.variables.customVariables.variableItems = customVariablesWithout;
         setCurrentSchemaLocal(schemaNew);
     }
 
     // reset operation
     const resetEditor = () => {
-        setCurrentSchemaLocal(emptySchema2);
+        setCurrentSchemaLocal(emptySchema0);
     }
 
 
@@ -262,21 +257,21 @@ export default function BodyEditor(props){
             <Grid container display="flex" direction="row" justify="flex-start" alignContent="flex-start" xs={12} spacing = {0} style={{background: "white", height: "90vh"}}>
                
                {/*first row*/}
-               <Grid container item xs={12} style={{height: "350px"}} >
-                    <Grid container item xs={9} justify="flex-start" alignContent="flex-end" style={{backgroundColor: "yellow", paddingBottom: "20px", paddingLeft:"20px"}}>
+               <Grid container item xs={12} style={{height: "150px"}} >
+                    <Grid container item xs={9} justify="flex-start" alignContent="flex-end" style={{backgroundColor: "white", paddingBottom: "20px", paddingLeft:"20px"}}>
                         <SchemaNameElement schemaName={currentSchemaLocal.info.schemaName} schemaNameChangedHandler = {schemaNameChangedHandler}/>
                     </Grid>
-                    <Grid container item xs={3} direction="row" justify="flex-end" alignContent="center"  style={{background: "lightyellow", paddingRight: "20px"}}>
+                    <Grid container item xs={3} direction="row" justify="flex-end" alignContent="center"  style={{background: "white", paddingRight: "20px"}}>
                         <EditorButtonGroup 
                             addNewTableHandler = {addNewTableHandler}
                             resetEditor ={resetEditor}
-                            fairy ={fairy}/>
+                        />
                     </Grid>
                 </Grid>
 
                  {/*second row*/}
                 <Grid container item xs={12}>  
-                    <Grid container item xs={10} display="flex" direction="row" justify="center" alignContent="center"  style={{ backgroundColor: "white", padding: "20px", borderColor: "black", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>
+                    <Grid container item xs={10} display="flex" direction="row" justify="center" alignContent="center"  style={{ backgroundColor: "white", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>
                     {currentSchemaLocal.tables.map(table => {return( 
                             <TableComponent 
                                 data={table} 
@@ -286,7 +281,6 @@ export default function BodyEditor(props){
                                 tableNameChangedHandler={tableNameChangedHandler}
                                 tableSizeChangedHandler ={tableSizeChangedHandler}
                                 fieldNameChangedHandler ={fieldNameChangedHandler}
-                                fairy = {fairy}
                                 handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
                                 handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
                                 isOpenGeneratorDialog = {isOpenGeneratorDialog}
@@ -308,10 +302,11 @@ export default function BodyEditor(props){
                             <CustomVariablesContainer 
                                 variables={currentSchemaLocal.variables} 
                                 addCustomVariableHandler = {addCustomVariableHandler}
+                                deleteCustomSystemVariableHandler = {deleteCustomSystemVariableHandler}
                                 customSystemVariableNameChangedHandler = {customSystemVariableNameChangedHandler}
                                 customSystemVariableValueChangedHandler = {customSystemVariableValueChangedHandler}
                                 customSystemVariableTypeChangedHandler = {customSystemVariableTypeChangedHandler}
-                                deleteCustomSystemVariableHandler = {deleteCustomSystemVariableHandler}
+                                
                             />
 
                         </Grid>

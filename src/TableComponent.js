@@ -13,21 +13,25 @@ import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        background: "white",
+        background: "inherit",
         padding: "10px",
-        minWidth: "300px"
+        minWidth: "300px",
+        background: "inherit",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
 
 
     },
     item: {
-        background: "green",
+        background: "inherit",
         height: "40px",
         borderColor: "black",
         borderWidth: "2px",
     },
 
     header_row: {
-        background: "white",
+        background: "inherit",
         height: "60px",
         display: "flex",
         justifyContent: "space-between",
@@ -39,11 +43,11 @@ const useStyles = makeStyles((theme) => ({
         
     },
     footer_row: {
-      background: "white",
-      height: "60px",
+      background: "inherit",
+      height: "40px",
       display: "flex",
       justifyContent: "flex-start",
-      alignContent: "flex-end",
+      alignContent: "center",
       borderWidth: "2px",
       borderColor: "black",
       borderStyle: "solid",
@@ -68,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
         borderWidth: "2px",
         borderColor: "black",
         borderStyle: "solid",
+        background: "inherit",
     },
     resizeFont: {
       fontSize: "22px",
@@ -76,9 +81,9 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "20px",
     },
     actionLink: {
-      color: "blue",
+      color: "grey",
       '&:hover': {
-        color: "lightblue",
+        color: "blue",
       },
     }
   }));
@@ -133,19 +138,22 @@ export default function TableComponent(props){
                                                             data ={element} 
                                                             fieldNameChangedHandler={props.fieldNameChangedHandler}
                                                             deleteTableRowHandler={props.deleteTableRowHandler}
-                                                            fairy = {props.fairy}
                                                             handleClickOpenGeneratorDialog = {props.handleClickOpenGeneratorDialog}
                                                             handleCloseGeneratorDialog = {props.handleCloseGeneratorDialog}
                                                             isOpenGeneratorDialog = {props.isOpenGeneratorDialog}
                                                             />})}  
         </Grid>   
         <Grid container item className={classes.footer_row}>
+          <div style={{display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", paddingTop: "10px"}}>
           <IconButton onClick={() => {props.addTableRowHandler(props.data.tableId)}}>
             <AddCircleIcon/>
           </IconButton>
           <Typography 
             className={classes.actionLink} 
-            onClick={() => {props.addTableRowHandler(props.data.tableId)}}>InsertRow</Typography>
+            onClick={() => {props.addTableRowHandler(props.data.tableId)}}>
+              InsertRow
+            </Typography>
+          </div>
         </Grid> 
       </Grid>  
 
