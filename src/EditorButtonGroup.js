@@ -74,6 +74,7 @@ export default function EditorButtonGroup(props) {
             variant="contained"
             color="default"
             className={classes.button}
+            onClick={props.toggleSidebarRight}
             startIcon={<BuildIcon className={classes.icon}/>}
         />
         </LightTooltip>

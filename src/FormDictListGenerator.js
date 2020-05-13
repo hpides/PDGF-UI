@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -11,34 +11,23 @@ import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import FormGeneratorDetailsRepoElement from "./FormGeneratorDetailsRepoElement";
+import FormGeneratorDetailsRepoElement_deprecated from "./FormGeneratorDetailsRepoElement_deprecated";
 import FormNullValuesElement from "./FormNullValuesElement";
 import PaddingDropDownElement from "./PaddingDropDownElement";
+import PaddingDropDownElement2 from "./PaddingDropDownElement2";
+import FormGeneratorDetailsRepoElement from "./FormGeneratorDetailsRepoElement";
 import MenuItem from '@material-ui/core/MenuItem';
-
-const currencies = [
-    {
-      value: 'USD',
-      label: '$',
-    },
-    {
-      value: 'EUR',
-      label: '€',
-    },
-    {
-      value: 'BTC',
-      label: '฿',
-    },
-    {
-      value: 'JPY',
-      label: '¥',
-    },
-  ];
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+  },
+  input: {
+    fontSize: 22,
+  },
+  inputSelect: {
+    fontSize: 22,
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -46,20 +35,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FormDictListGenerator() {
+export default function FormDictListGenerator(props) {
   const classes = useStyles();
-  const [currency, setCurrency] = React.useState('EUR');
+  const [dictList, setDictList] = useState('start');
   const leftColumnWidth = 3;
   const rightColumnWidth = 12 - leftColumnWidth; 
   const fontSizeLeftColumn = "h5"
   const handleChange = (event) => {
-    setCurrency(event.target.value);
+    setDictList(event.target.value);
   };
+
+const dictData2 = [
+  {value: "Vornamen", label: "Vornamen"},
+  {value: "Nachnamen", label: "Nachnamen"},
+  {value: "Strassennamen", label: "Strassennamen"},
+  {value: "Ort", label: "Ort"},
+  {value: "PLZ", label: "PLZ"},
+  {value: "Telefon-Nummern", label: "Telefon-Nummern"},
+  {value: "IBAN", label: "IBAN"},
+  {value: "Länder", label: "Länder"},
+  {value: "Sozialversicherungs-Nummern", label: "Sozialversicherungs-Nummern"},
+  {value: "Steuer-Nummern", label: "Steuer-Nummern"},
+  {value: "Bankunternehmen", label: "Bankunternehmen"},
+]
+
 
 
   return (
       <>
-              <Grid direction="row" container item xs={12}>
+              <Grid direction="row" container item xs={12} style={{paddingLeft: "20px"}}>
                 <Grid container item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Dictionary:</Typography>
                 </Grid>
@@ -68,14 +72,16 @@ export default function FormDictListGenerator() {
                     id="standard-select-currency-native"
                     select
                     label="Native select"
-                    value={currency}
+                    value={dictList}
                     onChange={handleChange}
+                    InputProps={{ classes: { root: classes.inputSelect } }}
                     SelectProps={{
                         native: true,
                     }}
                     helperText="Please select your currency"
                     >
-                {currencies.map((option) => (
+                {/*alert("before map in Form Dict List: " + JSON.stringify(props.dictData))*/}      
+                {dictData2.map((option) => (
                     <option key={option.value} value={option.value}>
                     {option.label}
                     </option>
@@ -86,19 +92,19 @@ export default function FormDictListGenerator() {
                   <Typography variant={fontSizeLeftColumn}>Maximum:</Typography>
                 </Grid>
                 <Grid container item xs={rightColumnWidth}>
-                  <Input placeholder="Enter Maximum"/>
+                  <Input placeholder="Enter Maximum" className={classes.input}/>
                 </Grid>
                 <Grid container item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Decimal Places:</Typography>
                 </Grid>
                 <Grid container item xs={rightColumnWidth}>
-                  <Input placeholder="Enter Number of Decimalplaces"/>
+                  <Input placeholder="Enter Number of Decimalplaces" className={classes.input}/>
                 </Grid>
                 <Grid container item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Locale:</Typography>
                 </Grid>
                 <Grid container item xs={rightColumnWidth}>
-                  <Input placeholder="Enter Locale (Country whose formats to apply)"/>
+                  <Input placeholder="Enter Locale (Country whose formats to apply)" className={classes.input}/>
                 </Grid>
                 <Grid container item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Distinct Values:</Typography>
@@ -112,13 +118,20 @@ export default function FormDictListGenerator() {
                 <Grid container item xs={rightColumnWidth}>
                   <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
                 </Grid>
+
+                <FormNullValuesElement/>
               </Grid>       
 
-              <Grid direction="row" container item xs={12}>
-                  <FormNullValuesElement/>
-                  <FormGeneratorDetailsRepoElement/>
+              <Grid direction="column" container item xs={12}>
+                  <div></div>
+                  
+                  {/*<FormGeneratorDetailsRepoElement_deprecated/>*/}
                   <PaddingDropDownElement/> 
+                  {/*<FormGeneratorDetailsRepoElement_deprecated/>*/}
+                  {/*<PaddingDropDownElement2/>*/} 
+                  <FormGeneratorDetailsRepoElement/>
               </Grid> 
       </>
   );
 }
+

@@ -71,7 +71,12 @@ export default function DialogRawGeneratorSelection(props) {
         <DialogContent>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>    
                 <Grid container display="flex" justify="flex-start" flexWrap="wrap" xs={12}>
-                 {props.data.map(element => { return <Grid item xs={4}> <GeneratorCardForRepoBox data = {element} handleCloseRawGeneratorDialog = {props.handleCloseRawGeneratorDialog}/> </Grid>})}
+                 {props.data.map(element => { return <Grid item xs={4}> <GeneratorCardForRepoBox 
+                                                                              data = {element} 
+                                                                              handleCloseRawGeneratorDialog = {props.handleCloseRawGeneratorDialog}
+                                                                              selectRawGeneratorHandler={props.selectRawGeneratorHandler}
+                                                                              /> 
+                                                      </Grid>})}
                 </Grid>
             </div>
         </DialogContent>

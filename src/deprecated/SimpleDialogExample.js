@@ -14,9 +14,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
-import SchemaCardForRepo from "./SchemaCardForRepo";
-import SchemaCardForRepoBox from "./SchemaCardForRepoBox";
-import GeneratorCardForRepo from "./GeneratorCardForRepo";
+import SchemaCardForRepo from "../SchemaCardForRepo";
+import SchemaCardForRepoBox from "../SchemaCardForRepoBox";
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({
@@ -40,9 +39,9 @@ function SimpleDialog(props) {
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <DialogTitle id="simple-dialog-title">Select Generator</DialogTitle>
-      <div style={{display: "flex", flexDirection: "row", justifyContent: "flex-start", width: "500px", height: "600px", overflow: "auto", flexWrap: "wrap"}}>
-      {data.map(element => { return <Grid item> <GeneratorCardForRepo data = {element}/> </Grid>})}
+      <DialogTitle id="simple-dialog-title">Select Schema</DialogTitle>
+      <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>
+      {data.map(element => { return <Grid item> <SchemaCardForRepoBox input = {element}/> </Grid>})}
       </div>
     </Dialog>
   );
@@ -54,7 +53,7 @@ SimpleDialog.propTypes = {
   selectedValue: PropTypes.string.isRequired,
 };
 
-export default function SimpleDialogExample02(props) {
+export default function SimpleDialogExample(props) {
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 
@@ -70,7 +69,7 @@ export default function SimpleDialogExample02(props) {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Select Generator
+        Use Schema from Repo
       </Button>
       <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} data={props.data} />
     </div>

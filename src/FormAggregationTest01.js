@@ -1,6 +1,6 @@
 import React from "react";
 import FormIdGeneratorExtraAttributes from "./FormIdGenerator";
-import FormGeneratorDetailsRepoElement from "./FormGeneratorDetailsRepoElement";
+import FormGeneratorDetailsRepoElement_deprecated from "./FormGeneratorDetailsRepoElement_deprecated";
 import FormNullValuesElement from "./FormNullValuesElement";
 import PaddingDropDownElement from "./PaddingDropDownElement";
 
@@ -11,7 +11,7 @@ export default function FormAggregationTest01(){
         <div>
             <FormIdGeneratorExtraAttributes/>
             <FormNullValuesElement/>
-            <FormGeneratorDetailsRepoElement/>
+            <FormGeneratorDetailsRepoElement_deprecated/>
             <PaddingDropDownElement/>
         </div>
     )

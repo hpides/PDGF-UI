@@ -67,15 +67,18 @@ export const customSystemVariables = [
 
 
 export const rawGeneratorDescriptions = [
-   {name: "Id", description: "Generates consecutive Ids from 0 or any given minimum value.", examples: "0,1,2,3,4,..."},
-   {name: "Double", description: "Generate a 64bit floating point values between min and max..", examples: "0,1,2,3,4,..."},
-   {name: "Long", description: "Generates a 64Bit integer value between min and max.", examples: "0,1,2,3,4,..."},
-   {name: "Date-Time", description: "Generates dates within a specified time range.", examples: "0,1,2,3,4,..."},
-   {name: "Random String", description: "Generates strings in a size range with a specified set of characters.", examples: "0,1,2,3,4,..."},
-   {name: "Random-Sentence", description: "Generates a sentence within a size range with pseudo grammar.", examples: "0,1,2,3,4,..."},
-   {name: "Dict-List", description: "Uses a dictionary to generate single values or lists.", examples: "0,1,2,3,4,..."},
-   {name: "Reference", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,..."},
-   {name: "Sequential", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,..."},
+   {name: "Dummy01", description: "Generates a specific dummy generator.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Dummy01",},
+   {name: "Dummy02", description: "Generates a specific dummy generator.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy02", uid: "Dummy02",},
+   {name: "Dummy03", description: "Generates a specific dummy generator.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy03", uid: "Dummy03",},
+   {name: "Id", description: "Generates consecutive Ids from 0 or any given minimum value.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
+   {name: "Double", description: "Generate a 64bit floating point values between min and max..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
+   {name: "Long", description: "Generates a 64Bit integer value between min and max.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
+   {name: "Date-Time", description: "Generates dates within a specified time range.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
+   {name: "Random String", description: "Generates strings in a size range with a specified set of characters.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
+   {name: "Random-Sentence", description: "Generates a sentence within a size range with pseudo grammar.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
+   {name: "Dict-List", description: "Uses a dictionary to generate single values or lists.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
+   {name: "Reference", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
+   {name: "Sequential", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
 
 ]
 
@@ -95,7 +98,22 @@ export const rawGeneratorList = [
 
 
 
-export const dictionaryList = [
+export const dictListObj = [
+   {value: "Vornamen", label: "Vornamen"},
+   {value: "Nachnamen", label: "Nachnamen"},
+   {value: "Strassennamen", label: "Strassennamen"},
+   {value: "Ort", label: "Ort"},
+   {value: "PLZ", label: "PLZ"},
+   {value: "Telefon-Nummern", label: "Telefon-Nummern"},
+   {value: "IBAN", label: "IBAN"},
+   {value: "Länder", label: "Länder"},
+   {value: "Sozialversicherungs-Nummern", label: "Sozialversicherungs-Nummern"},
+   {value: "Steuer-Nummern", label: "Steuer-Nummern"},
+   {value: "Bankunternehmen", label: "Bankunternehmen"},
+]
+
+
+export const dictList = [
    "Vornamen",
    "Nachnamen",
    "Strassennamen",
@@ -284,7 +302,7 @@ export const emptySchema0 = {
                      tableCounter: 1,
                   },
                   info: {
-                     schemaName: "Unnamed",
+                     schemaName: "",
                      description: "not yet described",
                      author: "john doe",
                      lastEdited: "",
@@ -300,7 +318,7 @@ export const emptySchema0 = {
                               {tableId: 1, 
                                  rowId: 1, 
                                  fieldName: "Enter Name", 
-                                 generator: "Gen01", 
+                                 generator: {}, 
                                  isKey: "false"},
                            ],
                         }
@@ -333,7 +351,7 @@ export const emptySchema = {
       tableCounter: 1,
    },
    info: {
-      schemaName: "Enter Schema Name",
+      schemaName: "",
       description: "This is a description of the empty schema:         .Thank you for your attention.",
       author: "john doe",
       lastEdited: "today",
@@ -346,7 +364,7 @@ export const emptySchema = {
             tableId: 1,
             rowCounter: 1,
             tableItems: [
-               {tableId: 1, rowId: 1, fieldName: "Enter Table Name", generator: "Gen01", isKey: "false"},
+               {tableId: 1, rowId: 1, fieldName: "Enter Table Name", generator: {}, isKey: "false"},
             ],
          }
       ],

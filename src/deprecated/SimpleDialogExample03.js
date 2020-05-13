@@ -14,9 +14,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
-import SchemaCardForRepo from "./SchemaCardForRepo";
-import SchemaCardForRepoBox from "./SchemaCardForRepoBox";
-import GeneratorCardForRepoDiv from "./GeneratorCardForRepoDiv";
+import SchemaCardForRepo from "../SchemaCardForRepo";
+import SchemaCardForRepoBox from "../SchemaCardForRepoBox";
+import GeneratorCardForRepoDiv from "../GeneratorCardForRepoDiv";
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({

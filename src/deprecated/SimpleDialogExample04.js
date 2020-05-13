@@ -14,8 +14,12 @@ import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
-import SchemaCardForRepo from "./SchemaCardForRepo";
-import SchemaCardForRepoBox from "./SchemaCardForRepoBox";
+import SchemaCardForRepo from "../SchemaCardForRepo";
+import SchemaCardForRepoBox from "../SchemaCardForRepoBox";
+import GeneratorCardForRepoDiv from "../GeneratorCardForRepoDiv";
+import GeneratorDetailsForRepoElementShortVersion from "../FormGeneratorDetailsRepoElement_deprecated";
+import Slide from '@material-ui/core/Slide';
+import DialogActions from "@material-ui/core/DialogActions";
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({
@@ -37,12 +41,33 @@ function SimpleDialog(props) {
     onClose(value);
   };
 
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
+
   return (
-    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <DialogTitle id="simple-dialog-title">Select Schema</DialogTitle>
-      <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>
-      {data.map(element => { return <Grid item> <SchemaCardForRepoBox input = {element}/> </Grid>})}
+    <Dialog 
+        onClose={handleClose} 
+        aria-labelledby="simple-dialog-title" 
+        open={open}
+        titel="Dialog"
+        TransitionComponent={Transition}
+        keepMounted
+        PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
+        >
+      <DialogTitle id="simple-dialog-title">Test Form 01</DialogTitle>
+      <div  style={{width: "400px", height: "300px", overflow: "auto", margin: "auto", padding: "0px", background: "yellow"}}>
+      <GeneratorDetailsForRepoElementShortVersion/>
       </div>
+      <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Subscribe
+          </Button>
+        </DialogActions>  
     </Dialog>
   );
 }
@@ -53,7 +78,7 @@ SimpleDialog.propTypes = {
   selectedValue: PropTypes.string.isRequired,
 };
 
-export default function SimpleDialogExample(props) {
+export default function SimpleDialogExample04(props) {
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 
@@ -69,7 +94,7 @@ export default function SimpleDialogExample(props) {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Use Schema from Repo
+        Select Generator
       </Button>
       <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} data={props.data} />
     </div>

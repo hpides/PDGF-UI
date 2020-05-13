@@ -14,12 +14,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
-import SchemaCardForRepo from "./SchemaCardForRepo";
-import SchemaCardForRepoBox from "./SchemaCardForRepoBox";
-import GeneratorCardForRepoDiv from "./GeneratorCardForRepoDiv";
-import GeneratorDetailsForRepoElementShortVersion from "./FormGeneratorDetailsRepoElement";
-import Slide from '@material-ui/core/Slide';
-import DialogActions from "@material-ui/core/DialogActions";
+import SchemaCardForRepo from "../SchemaCardForRepo";
+import SchemaCardForRepoBox from "../SchemaCardForRepoBox";
+import GeneratorCardForRepo from "../GeneratorCardForRepo";
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({
@@ -41,33 +38,12 @@ function SimpleDialog(props) {
     onClose(value);
   };
 
-  const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  });
-
-
   return (
-    <Dialog 
-        onClose={handleClose} 
-        aria-labelledby="simple-dialog-title" 
-        open={open}
-        titel="Dialog"
-        TransitionComponent={Transition}
-        keepMounted
-        PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
-        >
-      <DialogTitle id="simple-dialog-title">Test Form 01</DialogTitle>
-      <div  style={{width: "400px", height: "300px", overflow: "auto", margin: "auto", padding: "0px", background: "yellow"}}>
-      <GeneratorDetailsForRepoElementShortVersion/>
+    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+      <DialogTitle id="simple-dialog-title">Select Generator</DialogTitle>
+      <div style={{display: "flex", flexDirection: "row", justifyContent: "flex-start", width: "500px", height: "600px", overflow: "auto", flexWrap: "wrap"}}>
+      {data.map(element => { return <Grid item> <GeneratorCardForRepo data = {element}/> </Grid>})}
       </div>
-      <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Subscribe
-          </Button>
-        </DialogActions>  
     </Dialog>
   );
 }
@@ -78,7 +54,7 @@ SimpleDialog.propTypes = {
   selectedValue: PropTypes.string.isRequired,
 };
 
-export default function SimpleDialogExample04(props) {
+export default function SimpleDialogExample02(props) {
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 

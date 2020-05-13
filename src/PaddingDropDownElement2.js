@@ -16,16 +16,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
-  input: {
-    fontSize: 20,
-  },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
 }));
 
-export default function PaddingDropDownElement() {
+export default function PaddingDropDownElement2() {
   const classes = useStyles();
   const [checked, setChecked] = React.useState(false);
   const leftColumnWidth = 3;
@@ -36,20 +33,20 @@ export default function PaddingDropDownElement() {
   }
 
   return (
-    <Grid container xs={12} style={{background: "inherit"}}>
+    <Grid container xs={12} style={{background: "black"}}>
     
-      <ExpansionPanel style={{width: 960}}>
+      <ExpansionPanel>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Grid container item xs={leftColumnWidth} style={{background: "inherit"}}>
+          <Grid container item xs={leftColumnWidth} style={{background: "lightgreen"}}>
             <Typography variant={fontSizeLeftColumn}>
-              Padding:
+              Save in Repo:
             </Typography>
           </Grid>
-          <Grid container item xs={rightColumnWidth} style={{background: "inherit", paddingLeft: 10}}>
+          <Grid container item xs={rightColumnWidth} style={{background: "lightblue"}}>
               <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
           </Grid>  
 
@@ -65,42 +62,37 @@ export default function PaddingDropDownElement() {
 
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-              <Grid  container item xs={12} style={{background: "inherit"}}>
-                <Grid container item xs={leftColumnWidth} style={{background: "inherit"}}>
-                  <Grid item xs={10}>
+              <Grid  container item xs={12} style={{background: "orange"}}>
+                <Grid container item xs={leftColumnWidth} style={{background: "violet"}}>
                   <Typography variant={fontSizeLeftColumn}>Size:</Typography>
-                  </Grid>
-                  <Grid item xs={2}>  </Grid>
                 </Grid>
-                <Grid container item xs={rightColumnWidth} style={{background: "inherit"}}>
-                  <Input placeholder="Enter Name" className={classes.input}/>
+                <Grid container item xs={rightColumnWidth} style={{background: "lightred"}}>
+                  <Input placeholder="Enter Name"/>
                 </Grid>
-                <Grid container item xs={leftColumnWidth}style={{background: "inherit"}}>
+                <Grid container item xs={leftColumnWidth}style={{background: "violet"}}>
                   <Typography variant={fontSizeLeftColumn}>Character:</Typography>
                 </Grid>
-                <Grid container item xs={rightColumnWidth} style={{background: "inherit"}}>
-                  <Input placeholder="Enter Description" multiline className={classes.input}/>
+                <Grid container item xs={rightColumnWidth} style={{background: "lightred"}}>
+                  <Input placeholder="Enter Description" multiline/>
                 </Grid>
-                <Grid container item xs={leftColumnWidth} style={{background: "inherit"}}>
-                  <Grid xs={10}>
-                    <Typography variant={fontSizeLeftColumn}>Direction:</Typography>
-                  </Grid>
-                  <Grid xs={2}></Grid>
+                <Grid container item xs={leftColumnWidth} style={{background: "violet"}}>
+                  <Typography variant={fontSizeLeftColumn}>Direction:</Typography>
                 </Grid>
-                <Grid container item xs={rightColumnWidth}style={{background: "inherit"}} justify="flex-start">
-                    
-                    <Typography style={{fontSize: "20px"}}> From Left </Typography>
-                    
-                    
+                <Grid container item xs={rightColumnWidth}style={{background: "lightred"}}>
+                    <Grid item xs={3}>
+                    <Typography variant={fontSizeLeftColumn}>From Left </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
                     <Switch
                         defaultChecked
                         color="default"
                         inputProps={{ 'aria-label': 'checkbox with default color' }}
                     />
-                   
-                   
-                    <Typography style={{fontSize: "20px"}}>From Right </Typography>
-                   
+                    </Grid>
+                    <Grid item xs={3}>
+                    <Typography variant={fontSizeLeftColumn}>From Right </Typography>
+                    </Grid>
+                    
                 </Grid>
               </Grid>
         </ExpansionPanelDetails>

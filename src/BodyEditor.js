@@ -5,25 +5,50 @@ import Paper from "@material-ui/core/Paper";
 import EditorButtonGroup from "./EditorButtonGroup";
 import DefaultVariablesComponent02 from "./DefaultVariablesComponent02";
 import CustomVariablesContainer from "./CustomVariablesContainer";
-import {customSystemVariables, emptySchema, emptySchema0, generatorDescriptions, rawGeneratorDescriptions} from "./data.js"; 
+import {customSystemVariables, emptySchema, emptySchema0, generatorDescriptions, rawGeneratorDescriptions, dictListObj} from "./data.js"; 
 import SchemaNameElement from "./SchemaNameElement";
 import TableComponent from "./TableComponent";
 import Button from "@material-ui/core/Button";
 import DialogGeneratorSelection from "./DialogGeneratorSelection";
 import DialogRawGeneratorSelection from "./DialogRawGeneratorSelection";
+import DialogFormDictListGenerator from "./DialogFormDictListGenerator";
+import DialogFormIdGenerator from "./DialogFormIdGenerator";
+
+import DialogFormDummy01 from "./DialogFormDummy01";
+import DialogFormDummy02 from "./DialogFormDummy02";
+import DialogFormDummy03 from "./DialogFormDummy03";
+
+import DialogFormLongGenerator from "./DialogFormLongGenerator";
+import DialogFormDoubleGenerator from "./DialogFormDoubleGenerator";
+import SimpleDialogExample05 from "./SimpleDialogExample05";
+import DialogBlank from "./DialogBlank";
 
 
 
 
 export default function BodyEditor(props){
-    const inititalStateIsOpenVariablePlate = true;
-    const [isOpenVariablePlate, setIsOpenVariablePlate] = useState(inititalStateIsOpenVariablePlate);
+    const [isOpenSideBarRight, setIsOpenSideBarRight] = useState(true);
     const initialCurrentSchemaLocal = props.currentSchema;
     const [currentSchemaLocal, setCurrentSchemaLocal] = useState(initialCurrentSchemaLocal);
     const defaultTableSize = 10;
     const [isOpenGeneratorDialog, setIsOpenGeneratorDialog] = useState(false);
     const [isOpenRawGeneratorDialog, setIsOpenRawGeneratorDialog] = useState(false);
+    const [isOpenDFDLG, setIsOpenDFDLG] = useState(false);
+    const [isOpenIdG, setIsOpenIdG] = useState(false);
+    const [isOpenLongG, setIsOpenLongG] = useState(false);
+    const [isOpenDoubleG, setIsOpenDoubleG] = useState(false);
+    const [isOpenDummy01, setIsOpenDummy01] = useState(false);
+    const [isOpenDummy02, setIsOpenDummy02] = useState(false);
+    const [isOpenDummy03, setIsOpenDummy03] = useState(false);
+    const [isOpenBlank, setIsOpenBlank] = useState(false);
 
+   
+    const selectRawGeneratorHandler = (uid) => {
+        const string = "setIsOpen" + uid;
+        alert(string);
+        setIsOpenRawGeneratorDialog(false);
+        eval(string+"(true)"); 
+    }
 
 
     const addNewTableHandler = () => {
@@ -246,8 +271,122 @@ export default function BodyEditor(props){
 
 
 
+    // DialogFormDictListGenerator
+    
+    const handleCloseDFDLG = () => {
+        setIsOpenDFDLG(false);
+        return null;
+    }
+
+    const handleClickOpenDFDLG = () => {
+        setIsOpenDFDLG(true);
+        return null;
+    }
 
 
+// DialogFormIdGenerator
+    
+    const handleCloseIdG = () => {
+        setIsOpenIdG(false);
+        return null;
+    }
+
+    const handleClickOpenIdG = () => {
+        setIsOpenIdG(true);
+        return null;
+    }
+
+// DialogFormLongGenerator
+    
+    const handleCloseLongG = () => {
+        setIsOpenLongG(false);
+        return null;
+    }
+
+    const handleClickOpenLongG = () => {
+        setIsOpenLongG(true);
+        return null;
+    }
+
+
+// DialogFormDoubleGenerator
+    
+const handleCloseDoubleG = () => {
+    setIsOpenDoubleG(false);
+    return null;
+}
+
+const handleClickOpenDoubleG = () => {
+    setIsOpenDoubleG(true);
+    return null;
+}
+
+
+// DialogFormDummy01Generator
+    
+const handleCloseDummy01 = () => {
+    setIsOpenDummy01(false);
+    return null;
+}
+
+const handleClickOpenDummy01 = () => {
+    setIsOpenDummy01(true);
+    return null;
+}
+
+
+// DialogFormDummy02Generator
+    
+const handleCloseDummy02 = () => {
+    setIsOpenDummy02(false);
+    return null;
+}
+
+const handleClickOpenDummy02 = () => {
+    setIsOpenDummy02(true);
+    return null;
+}
+
+
+// DialogFormDummy03Generator
+    
+const handleCloseDummy03 = () => {
+    setIsOpenDummy03(false);
+    return null;
+}
+
+const handleClickOpenDummy03 = () => {
+    setIsOpenDummy03(true);
+    return null;
+}
+
+
+// DialogBlank
+    
+const handleCloseBlank = () => {
+    setIsOpenBlank(false);
+    return null;
+}
+
+const handleClickOpenBlank = () => {
+    setIsOpenBlank(true);
+    return null;
+}
+
+
+
+
+
+
+
+
+
+
+    // toggle SideBar on right side
+
+    const toggleSidebarRight = () => {
+        setIsOpenSideBarRight(!isOpenSideBarRight);
+    }
 
 
 
@@ -257,21 +396,41 @@ export default function BodyEditor(props){
             <Grid container display="flex" direction="row" justify="flex-start" alignContent="flex-start" xs={12} spacing = {0} style={{background: "white", height: "90vh"}}>
                
                {/*first row*/}
-               <Grid container item xs={12} style={{height: "150px"}} >
+               <Grid container item xs={12} style={{height: "250px"}} >
                     <Grid container item xs={9} justify="flex-start" alignContent="flex-end" style={{backgroundColor: "white", paddingBottom: "20px", paddingLeft:"20px"}}>
+                    
+                    <div> 
+                        <Button onClick={()=>setIsOpenDFDLG(true)}>open Dialog DictList Spec</Button>
+                        <Button onClick={()=>setIsOpenIdG(true)}>open Dialog Id Spec</Button>
+                        <Button onClick={()=>setIsOpenLongG(true)}>open Dialog Long Spec</Button>
+                        <Button onClick={()=>setIsOpenDoubleG(true)}>open Dialog Double Spec</Button>
+
+                        <Button onClick={()=>setIsOpenDummy01(true)}>open Dialog Dummy01</Button>
+                        <Button onClick={()=>setIsOpenDummy02(true)}>open Dialog Dummy02</Button>
+                        <Button onClick={()=>setIsOpenDummy03(true)}>open Dialog Dummy03</Button>
+                        <Button onClick={()=>setIsOpenBlank(true)}>open Dialog Blank</Button>
+
+
+
+
+                    </div>
                         <SchemaNameElement schemaName={currentSchemaLocal.info.schemaName} schemaNameChangedHandler = {schemaNameChangedHandler}/>
+                       
                     </Grid>
                     <Grid container item xs={3} direction="row" justify="flex-end" alignContent="center"  style={{background: "white", paddingRight: "20px"}}>
                         <EditorButtonGroup 
                             addNewTableHandler = {addNewTableHandler}
                             resetEditor ={resetEditor}
+                            toggleSidebarRight = {toggleSidebarRight}
                         />
                     </Grid>
                 </Grid>
 
                  {/*second row*/}
-                <Grid container item xs={12}>  
-                    <Grid container item xs={10} display="flex" direction="row" justify="center" alignContent="center"  style={{ backgroundColor: "white", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>
+                 
+                <Grid container item xs={12} style={{height: "80vh"}}>  
+                    {(isOpenSideBarRight? (
+                    <Grid container item xs={10} display="flex" direction="row" justify="center" alignContent="center"  style={{ backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>
                     {currentSchemaLocal.tables.map(table => {return( 
                             <TableComponent 
                                 data={table} 
@@ -289,9 +448,30 @@ export default function BodyEditor(props){
                             />
                         )})
                     }
-                    </Grid>
-                    {(isOpenVariablePlate? (
-                    <Grid container item xs={2} direction="column" justify="flex-start" alignContent="flex-end" style={{ backgroundColor: "white" }}> 
+                    </Grid>):
+                    (<Grid container item xs={12} display="flex" direction="row" justify="center" alignContent="center"  style={{ backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>
+                    {currentSchemaLocal.tables.map(table => {return( 
+                            <TableComponent 
+                                data={table} 
+                                deleteTableHandler={deleteTableHandler} 
+                                addTableRowHandler={addTableRowHandler} 
+                                deleteTableRowHandler={deleteTableRowHandler}
+                                tableNameChangedHandler={tableNameChangedHandler}
+                                tableSizeChangedHandler ={tableSizeChangedHandler}
+                                fieldNameChangedHandler ={fieldNameChangedHandler}
+                                handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
+                                handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
+                                isOpenGeneratorDialog = {isOpenGeneratorDialog}
+
+
+                            />
+                        )})
+                    }
+                    </Grid>))}
+
+
+                    {(isOpenSideBarRight? (
+                    <Grid container item xs={2} direction="column" justify="flex-start" alignContent="flex-end" style={{ backgroundColor: "green" }}> 
                         <Grid item  >
                             <DefaultVariablesComponent02 
                                 variables={currentSchemaLocal.variables}
@@ -312,26 +492,27 @@ export default function BodyEditor(props){
                         </Grid>
                     </Grid>) : null)}
                 </Grid>   
-                
-                {/*<Button onClick={()=>{handleClickOpenRawGeneratorDialog()}}>
-                    Open RawDialog</Button>         
-
-                    <Button onClick={handleClickOpenGeneratorDialog}>
-                    Open Dialog</Button>     
-
-
-                    <Button onClick={handleClickOpenRawGeneratorDialog}>
-                    least v1</Button>  
-                    */}
+                          
+               
             </Grid>      
-            
-            
-            
+                            
             <DialogGeneratorSelection  isOpenGeneratorDialog={isOpenGeneratorDialog} handleCloseGeneratorDialog={handleCloseGeneratorDialog} data={generatorDescriptions} handleClickOpenRawGeneratorDialog={handleClickOpenRawGeneratorDialog} />                   
-            <DialogRawGeneratorSelection  isOpenRawGeneratorDialog={isOpenRawGeneratorDialog} handleCloseRawGeneratorDialog={handleCloseRawGeneratorDialog} data={rawGeneratorDescriptions} handleClickOpenGeneratorDialog={handleClickOpenGeneratorDialog}/>
-        
-        
-        
+            <DialogRawGeneratorSelection  
+                isOpenRawGeneratorDialog={isOpenRawGeneratorDialog} 
+                handleCloseRawGeneratorDialog={handleCloseRawGeneratorDialog} 
+                data={rawGeneratorDescriptions} 
+                handleClickOpenGeneratorDialog={handleClickOpenGeneratorDialog} 
+                selectRawGeneratorHandler={selectRawGeneratorHandler}/>
+            <DialogFormDictListGenerator isOpenDFDLG={isOpenDFDLG} handleCloseDFDLG={handleCloseDFDLG}/>
+            <DialogFormIdGenerator isOpenIdG={isOpenIdG} handleCloseIdG={handleCloseIdG}/>
+            <DialogFormLongGenerator isOpenLongG={isOpenLongG} handleCloseLongG={handleCloseLongG}/>
+            <DialogFormDoubleGenerator isOpenDoubleG={isOpenDoubleG} handleCloseDoubleG={handleCloseDoubleG}/>
+            <DialogFormDummy01 isOpenDummy01={isOpenDummy01} handleCloseDummy01={handleCloseDummy01}/>
+            <DialogFormDummy02 isOpenDummy02={isOpenDummy02} handleCloseDummy02={handleCloseDummy02}/>
+            <DialogFormDummy03 isOpenDummy03={isOpenDummy03} handleCloseDummy03={handleCloseDummy03}/>
+            <DialogBlank isOpenBlank={isOpenBlank} handleCloseBlank={handleCloseBlank}/>
+
+          
         </div>
     )
 

@@ -12,8 +12,8 @@ import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
 import IconButton from "@material-ui/core/IconButton";
-import {generatorDescriptions} from "./data";
-import DialogGeneratorSelection from "./DialogGeneratorSelection";
+import {generatorDescriptions} from "../data";
+import DialogGeneratorSelection from "../DialogGeneratorSelection";
 
 const useStyles = makeStyles((theme) => ({
     container: {

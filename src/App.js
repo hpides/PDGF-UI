@@ -28,7 +28,7 @@ import SimpleDialogExample03 from "./SimpleDialogExample03";
 import SimpleDialogExample04 from "./SimpleDialogExample04";
 
 import SimpleDialogExample05 from "./SimpleDialogExample05";
-import GeneratorDetailsForRepoElementShortVersion from "./FormGeneratorDetailsRepoElement";
+import GeneratorDetailsForRepoElementShortVersion from "./FormGeneratorDetailsRepoElement_deprecated";
 
 import PaddingDropDownElement from "./PaddingDropDownElement";
 
@@ -39,8 +39,6 @@ import DistributionInputElement from "./DistributionInputElement";
 
 
 function App() {
-  const initialData = tableDataLong_2_Array;
-  const [data, setData] = useState(initialData);
   const initialSchemaDescriptions = schemaDescriptions;
   const [schema, setSchema] = useState(initialSchemaDescriptions);
   const initialStateSchemaSelectionDialog = "closed";
@@ -56,15 +54,32 @@ function App() {
   
     <div style={{height: "40px",}}/>
 
-    <EditorPage data={data} currentSchema={currentSchema}/>
+    <EditorPage currentSchema={currentSchema}/>
 
     <div style={{height: "100px",}}/>
     
+
+    <div style={{height: "50px",}}/>
+
+
+    
+    <div style={{height: "400px", background: "white"}}/>
+
+
+
+
+
+
+
+
+
+{/*
+
     <DistributionInputElement/>
 
     <div style={{height: "100px",}}/>
 
-    {/*
+    
     <SimpleDialogExample data={schemaDescriptions}/>
    
     <div style={{height: "50px",}}/>

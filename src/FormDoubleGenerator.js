@@ -11,7 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import FormGeneratorDetailsRepoElement from "./FormGeneratorDetailsRepoElement";
+import FormGeneratorDetailsRepoElement_deprecated from "./FormGeneratorDetailsRepoElement_deprecated";
 import FormNullValuesElement from "./FormNullValuesElement";
 import PaddingDropDownElement from "./PaddingDropDownElement";
 
@@ -72,7 +72,7 @@ export default function FormLongGenerator() {
 
               <Grid direction="row" container item xs={12}>
                   <FormNullValuesElement/>
-                  <FormGeneratorDetailsRepoElement/>
+                  <FormGeneratorDetailsRepoElement_deprecated/>
                   <PaddingDropDownElement/> 
               </Grid> 
       </>
