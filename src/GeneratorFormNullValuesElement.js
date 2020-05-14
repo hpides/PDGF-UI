@@ -22,14 +22,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FormNullValuesElement(props){
+export default function GeneratorFormNullValuesElement(props){
   const classes = useStyles();
-  const [value, setValue] = useState(0);
   const leftColumnWidth = 3;
   const rightColumnWidth = 12 - leftColumnWidth; 
   const fontSizeLeftColumn = "h5"
   
   
+
+ {/*}
+
   const handleSliderChange = (event, newValue) => {
     setValue(newValue);
     props.nullValuesChangedHandler(newValue);
@@ -40,15 +42,18 @@ export default function FormNullValuesElement(props){
     props.nullValuesChangedHandler(safeValue);
   };
 
+
+ 
   const handleBlur = () => {
-    if (value < 0) {
-      setValue(0);
-      props.nullValuesChangedHandler(value);
-    } else if (value > 100) {
-      setValue(100);
-      props.nullValuesChangedHandler(value);
+    if (props.nullValues < 0) {
+      props.nullValuesChangedHandler(0);
+    } else if (props.nullValues > 100) {
+      props.nullValuesChangedHandler(100)
     }
   };
+
+
+  */}
 
   return (
     <>
@@ -59,18 +64,18 @@ export default function FormNullValuesElement(props){
                 <Grid container item xs={rightColumnWidth}>
                     <Grid item xs={4}>
                         <Slider
-                            value={typeof value === 'number' ? value : 0}
-                            onChange={handleSliderChange}
+                            value={typeof props.nullValues === 'number' ? props.nullValues : 0}
+                            onChange={(event=>props.nullValuesChangedHandler(event))}
                             aria-labelledby="input-slider"
                         />
                     </Grid>
                     <Grid item xs={1}>
                         <Input
                             className={classes.input}
-                            value={value}
+                            value={props.nullValues}
                             margin="dense"
-                            onChange={handleInputChange}
-                            onBlur={handleBlur}
+                            onChange={(event=>props.nullValuesChangedHandler(event))}
+                            //onBlur={handleBlur}
                             inputProps={{
                             step: 1,
                             min: 0,

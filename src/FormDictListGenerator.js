@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Checkbox from "@material-ui/core/Checkbox";
@@ -11,12 +8,10 @@ import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import FormGeneratorDetailsRepoElement_deprecated from "./FormGeneratorDetailsRepoElement_deprecated";
-import FormNullValuesElement from "./FormNullValuesElement";
+import GeneratorFormNullValuesElement from "./GeneratorFormNullValuesElement";
 import PaddingDropDownElement from "./PaddingDropDownElement";
-import PaddingDropDownElement2 from "./PaddingDropDownElement2";
-import FormGeneratorDetailsRepoElement from "./FormGeneratorDetailsRepoElement";
 import MenuItem from '@material-ui/core/MenuItem';
+import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -119,17 +114,15 @@ const dictData2 = [
                   <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
                 </Grid>
 
-                <FormNullValuesElement/>
+                <GeneratorFormNullValuesElement/>
               </Grid>       
 
               <Grid direction="column" container item xs={12}>
                   <div></div>
                   
-                  {/*<FormGeneratorDetailsRepoElement_deprecated/>*/}
+              
                   <PaddingDropDownElement/> 
-                  {/*<FormGeneratorDetailsRepoElement_deprecated/>*/}
-                  {/*<PaddingDropDownElement2/>*/} 
-                  <FormGeneratorDetailsRepoElement/>
+                  <GeneratorFormRepoExpansion/>
               </Grid> 
       </>
   );

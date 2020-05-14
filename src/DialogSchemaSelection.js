@@ -14,8 +14,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
-import SchemaCardForRepo from "./SchemaCardForRepo";
-import SchemaCardForRepoBox from "./SchemaCardForRepoBox";
+import SchemaSelectionCard from "./SchemaSelectionCard";
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({
@@ -41,7 +40,7 @@ export default function DialogSchemaSelection(props) {
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={isOpenSchemaDialog}>
       <DialogTitle id="simple-dialog-title">Select Schema</DialogTitle>
       <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>    
-      {schemaDescriptions.map(element => { return <Grid item> <SchemaCardForRepoBox input = {element}/> </Grid>})}
+      {schemaDescriptions.map(element => { return <Grid item> <SchemaSelectionCard input = {element}/> </Grid>})}
       </div>
     </Dialog>
   );

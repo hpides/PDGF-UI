@@ -6,11 +6,16 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from "@material-ui/core/Grid";
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-    padding: 3,
+    margin: 5,
+    background: "lightgrey",
+    '&:hover': {
+      background: "grey",
+    }
   },
   bullet: {
     display: 'inline-block',
@@ -34,21 +39,20 @@ const useStyles = makeStyles({
     
   },
   inner_container_left: {
-    background: "lightgreen",
+    background: "inherit",
     padding: "5px"
   },
   inner_container_right: {
-    background: "lightblue",
+    background: "inherit",
     padding: "5px"
   },
 });
 
-export default function SchemaCardForRepo(props) {
+export default function SchemaSelectionCard(props) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
-      <CardContent>
+    <Box className={classes.root} onClick={()=>{alert("My Name is " + props.input.name + "!")}}>
         <Grid container classeName={classes.container} xs={12}>
           <Grid container item className={classes.inner_container_left} xs={3} flexDirection="row" justify="flex-start">
             <Grid container item>
@@ -73,12 +77,7 @@ export default function SchemaCardForRepo(props) {
             </Typography>
           </Grid>
         </Grid>
-      </CardContent>
-      {/*<CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-      */}
-    </Card>
+    </Box>
   );
 }
 

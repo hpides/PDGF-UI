@@ -11,9 +11,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import Checkbox from "@material-ui/core/Checkbox";
-import FormNullValuesElement from "./FormNullValuesElement";
+import GeneratorFormNullValuesElement from "./GeneratorFormNullValuesElement";
 import PaddingDropDownElement from "./PaddingDropDownElement";
-import FormGeneratorDetailsRepoElement from "./FormGeneratorDetailsRepoElement";
+import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
 
 const useStyles = makeStyles({
     input: {
@@ -89,7 +89,7 @@ export default function DialogFormIdGenerator(props) {
 
                 
                 <Grid container item xs={12}>
-                  <FormNullValuesElement 
+                  <GeneratorFormNullValuesElement 
                     nullValuesChangedHandler={nullValuesChangedHandler} 
                     nullValues={nullValues} />
                 </Grid>  
@@ -98,7 +98,7 @@ export default function DialogFormIdGenerator(props) {
 
             <Grid direction="column" container item xs={12}>
                 <PaddingDropDownElement paddingVariablesChangedHandler={paddingVariablesChangedHandler} paddingVariables={paddingVariables}/> 
-                <FormGeneratorDetailsRepoElement infoVariablesChangedHandler={infoVariablesChangedHandler} infoVariables={infoVariables}/>
+                <GeneratorFormRepoExpansion infoVariablesChangedHandler={infoVariablesChangedHandler} infoVariables={infoVariables}/>
             </Grid>       
       
       </div>

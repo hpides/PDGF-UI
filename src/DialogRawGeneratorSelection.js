@@ -16,10 +16,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
-import SchemaCardForRepo from "./SchemaCardForRepo";
-import SchemaCardForRepoBox from "./SchemaCardForRepoBox";
+import SchemaSelectionCard from "./SchemaSelectionCard";
 import BuildIcon from "@material-ui/icons/Build";
-import GeneratorCardForRepoBox from "./GeneratorCardForRepoBox";
+import GeneratorSelectionCard from "./GeneratorSelectionCard";
 import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles({
@@ -71,7 +70,7 @@ export default function DialogRawGeneratorSelection(props) {
         <DialogContent>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>    
                 <Grid container display="flex" justify="flex-start" flexWrap="wrap" xs={12}>
-                 {props.data.map(element => { return <Grid item xs={4}> <GeneratorCardForRepoBox 
+                 {props.data.map(element => { return <Grid item xs={4}> <GeneratorSelectionCard 
                                                                               data = {element} 
                                                                               handleCloseRawGeneratorDialog = {props.handleCloseRawGeneratorDialog}
                                                                               selectRawGeneratorHandler={props.selectRawGeneratorHandler}

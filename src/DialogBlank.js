@@ -11,9 +11,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import Checkbox from "@material-ui/core/Checkbox";
-import FormNullValuesElement from "./FormNullValuesElement";
+import GeneratorFormNullValuesElement from "./GeneratorFormNullValuesElement";
 import PaddingDropDownElement from "./PaddingDropDownElement";
-import FormGeneratorDetailsRepoElement from "./FormGeneratorDetailsRepoElement";
+import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
 
 const useStyles = makeStyles({
     input: {
