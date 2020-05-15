@@ -11,9 +11,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import Checkbox from "@material-ui/core/Checkbox";
-import GeneratorFormNullValuesElement from "./GeneratorFormNullValuesElement";
-import PaddingDropDownElement from "./PaddingDropDownElement";
+import GeneratorFormPaddingExpansion from "./GeneratorFormPaddingExpansion";
 import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
+import Slider from "@material-ui/core/Slider";
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const useStyles = makeStyles({
     input: {
@@ -33,35 +34,63 @@ export default function DialogFormIdGenerator(props) {
     const [generatorSpec, setGeneratorSpec] =useState("");
 
     const [minimum, setMinimum] = useState("");
-    const [nullValues, setNullValues] = useState(46);
+    const [nullValues, setNullValues] = useState(0);
     const [paddingVariables, setPaddingVariables] = useState({});
-    const [infoVariables, setInfoVariables] = useState({});
+    const [repoVariables, setRepoVariables] = useState({});
 
+
+    // Change Handler Input Fields
     const minimumChangedHandler = (event) => {
         setMinimum(event.target.value);
     }
 
-    const nullValuesChangedHandler = (event) => {
-        setNullValues(event.target.value);    
-    }
-    
+    // Change Handler Slider Component
+    const handleNullValuesSliderChange = (event, newValue) => {
+      setNullValues(newValue);
+    };
+  
+    const handleNullValuesInputChange = (event) => {
+      setNullValues(event.target.value === '' ? '99' : Number(event.target.value));
+    };
+  
+    const handleBlur = () => {
+      if (nullValues < 0) {
+        setNullValues(0);
+      } else if (nullValues > 100) {
+        setNullValues(100);
+      }
+    };
 
-    const paddingVariablesChangedHandler = (event) => {
-        setPaddingVariables(event.target.value);
-    }
+    // Change Handler Padding Component
+    const paddingVariablesChangedHandler = (paddingObject) => {
+        setPaddingVariables(paddingObject);
+    };
+
+    // Change Handler Repo Component
+    const repoVariablesChangedHandler = (repoObject) => {
+        setRepoVariables(repoObject);
+    };
 
 
-    const infoVariablesChangedHandler = (event) => {
-        setInfoVariables(event.target.value);
-    }
+    // Combine to Generator Object
+    const buildGeneratorObject = () => {
+        const generatorObject = {
+          minimum: minimum,
+          nullValues: nullValues,
+          ...paddingVariables,
+          ... repoVariables}
+        return generatorObject;
+    }; 
+
+
 
 
   return (
     <>
     <Dialog 
-        onClose={props.handleCloseIdG} 
+        onClose={props.handleCloseIdGenerator} 
         aria-labelledby="simple-dialog-title" 
-        open={props.isOpenIdG}
+        open={props.isOpenIdGenerator}
         titel="Dialog"
         //TransitionComponent={Transition}
         keepMounted
@@ -88,17 +117,48 @@ export default function DialogFormIdGenerator(props) {
                 </Grid>
 
                 
-                <Grid container item xs={12}>
-                  <GeneratorFormNullValuesElement 
-                    nullValuesChangedHandler={nullValuesChangedHandler} 
-                    nullValues={nullValues} />
-                </Grid>  
+                <Grid container item xs={leftColumnWidth}>
+                      <Typography variant={fontSizeLeftColumn}>Null Values:</Typography>
+                </Grid>
+
+                <Grid container item xs={rightColumnWidth}>
+                  <Grid item xs>
+                    <Slider
+                      value={typeof nullValues === 'number' ? nullValues : 0}
+                      onChange={handleNullValuesSliderChange}
+                      aria-labelledby="input-slider"
+                    />
+                  </Grid>
+
+                  <Grid item>
+                    <Input
+                      className={classes.input}
+                      value={nullValues}
+                      margin="dense"
+                      onChange={handleNullValuesInputChange}
+                      onBlur={handleBlur}
+                      endAdornment={<InputAdornment position="end">%</InputAdornment>}
+                      inputProps={{
+                        step: 10,
+                        min: 0,
+                        max: 100,
+                        size: 3,
+                        type: 'number',
+                        'aria-labelledby': 'input-slider',
+                      }}
+                    />
+                  </Grid>
+                </Grid>
 
             </Grid>       
 
             <Grid direction="column" container item xs={12}>
-                <PaddingDropDownElement paddingVariablesChangedHandler={paddingVariablesChangedHandler} paddingVariables={paddingVariables}/> 
-                <GeneratorFormRepoExpansion infoVariablesChangedHandler={infoVariablesChangedHandler} infoVariables={infoVariables}/>
+                <GeneratorFormPaddingExpansion 
+                  paddingVariablesChangedHandler={paddingVariablesChangedHandler} 
+                  paddingVariables={paddingVariables}/> 
+                <GeneratorFormRepoExpansion 
+                  repoVariablesChangedHandler={repoVariablesChangedHandler} 
+                  repoVariables={repoVariables}/>
             </Grid>       
       
       </div>
@@ -107,7 +167,11 @@ export default function DialogFormIdGenerator(props) {
           <Button onClick={()=>console.log("hi")} color="primary">
             Cancel
           </Button>
-          <Button onClick={()=>console.log("hi")} color="primary">
+          <Button 
+              onClick={ ()=> {
+                props.saveGeneratorHandler(buildGeneratorObject());
+                props.handleCloseIdGenerator()}}
+              color="primary">
             Save
           </Button>
       </DialogActions>  

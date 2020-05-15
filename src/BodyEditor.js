@@ -18,7 +18,7 @@ import DialogFormDummy01 from "./DialogFormDummy01";
 import DialogFormDummy02 from "./DialogFormDummy02";
 import DialogFormDummy03 from "./DialogFormDummy03";
 
-import DialogFormLongGenerator from "./DialogFormLongGenerator";
+import DialogFormLongGenerator from "./DialogFormLongGenerator_old";
 import DialogFormDoubleGenerator from "./DialogFormDoubleGenerator";
 import SimpleDialogExample05 from "./SimpleDialogExample05";
 import DialogBlank from "./DialogBlank";
@@ -33,14 +33,16 @@ export default function BodyEditor(props){
     const defaultTableSize = 10;
     const [isOpenGeneratorDialog, setIsOpenGeneratorDialog] = useState(false);
     const [isOpenRawGeneratorDialog, setIsOpenRawGeneratorDialog] = useState(false);
-    const [isOpenDFDLG, setIsOpenDFDLG] = useState(false);
-    const [isOpenIdG, setIsOpenIdG] = useState(false);
-    const [isOpenLongG, setIsOpenLongG] = useState(false);
-    const [isOpenDoubleG, setIsOpenDoubleG] = useState(false);
+    const [isOpenDictListGenerator, setIsOpenDictListGenerator] = useState(false);
+    const [isOpenIdGenerator, setIsOpenIdGenerator] = useState(false);
+    const [isOpenLongGenerator, setIsOpenLongGenerator] = useState(false);
+    const [isOpenDoubleGenerator, setIsOpenDoubleGenerator] = useState(false);
     const [isOpenDummy01, setIsOpenDummy01] = useState(false);
     const [isOpenDummy02, setIsOpenDummy02] = useState(false);
     const [isOpenDummy03, setIsOpenDummy03] = useState(false);
     const [isOpenBlank, setIsOpenBlank] = useState(false);
+    const [tableFocus, setTableFocus] = useState({});
+
 
    
     const selectRawGeneratorHandler = (uid) => {
@@ -48,6 +50,31 @@ export default function BodyEditor(props){
         alert(string);
         setIsOpenRawGeneratorDialog(false);
         eval(string+"(true)"); 
+    };
+
+
+
+    // set Focus on table rows
+
+    const setTableFocusHandler = (tableId, rowId) => {
+        setTableFocus({tableId: tableId, rowId: rowId});
+    };
+
+
+    const unsetTableFocusHandler = () => {
+        setTableFocus({});
+    }
+
+
+    //  save generators
+
+    const saveGeneratorHandler = (generatorObject) => {
+        let schemaNew = {...currentSchemaLocal};
+        let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableFocus.tableId);
+        let rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x => x.rowId === tableFocus.rowId);
+        schemaNew.tables[tableIndex].tableItems[rowIndex].generator = generatorObject;
+        setCurrentSchemaLocal(schemaNew);
+        setTableFocus({});
     }
 
 
@@ -273,51 +300,51 @@ export default function BodyEditor(props){
 
     // DialogFormDictListGenerator
     
-    const handleCloseDFDLG = () => {
-        setIsOpenDFDLG(false);
+    const handleCloseDictListGenerator = () => {
+        setIsOpenDictListGenerator(false);
         return null;
     }
 
-    const handleClickOpenDFDLG = () => {
-        setIsOpenDFDLG(true);
+    const handleClickOpenDictListGenerator = () => {
+        setIsOpenDictListGenerator(true);
         return null;
     }
 
 
 // DialogFormIdGenerator
     
-    const handleCloseIdG = () => {
-        setIsOpenIdG(false);
+    const handleCloseIdGenerator = () => {
+        setIsOpenIdGenerator(false);
         return null;
     }
 
-    const handleClickOpenIdG = () => {
-        setIsOpenIdG(true);
+    const handleClickOpenIdGenerator = () => {
+        setIsOpenIdGenerator(true);
         return null;
     }
 
 // DialogFormLongGenerator
     
-    const handleCloseLongG = () => {
-        setIsOpenLongG(false);
+    const handleCloseLongGenerator = () => {
+        setIsOpenLongGenerator(false);
         return null;
     }
 
-    const handleClickOpenLongG = () => {
-        setIsOpenLongG(true);
+    const handleClickOpenLongGenerator = () => {
+        setIsOpenLongGenerator(true);
         return null;
     }
 
 
 // DialogFormDoubleGenerator
     
-const handleCloseDoubleG = () => {
-    setIsOpenDoubleG(false);
+const handleCloseDoubleGenerator = () => {
+    setIsOpenDoubleGenerator(false);
     return null;
 }
 
-const handleClickOpenDoubleG = () => {
-    setIsOpenDoubleG(true);
+const handleClickOpenDoubleGenerator = () => {
+    setIsOpenDoubleGenerator(true);
     return null;
 }
 
@@ -394,16 +421,15 @@ const handleClickOpenBlank = () => {
     return(
         <div>
             <Grid container display="flex" direction="row" justify="flex-start" alignContent="flex-start" xs={12} spacing = {0} style={{background: "white", height: "90vh"}}>
-               
                {/*first row*/}
                <Grid container item xs={12} style={{height: "250px"}} >
                     <Grid container item xs={9} justify="flex-start" alignContent="flex-end" style={{backgroundColor: "white", paddingBottom: "20px", paddingLeft:"20px"}}>
                     
                     <div> 
-                        <Button onClick={()=>setIsOpenDFDLG(true)}>open Dialog DictList Spec</Button>
-                        <Button onClick={()=>setIsOpenIdG(true)}>open Dialog Id Spec</Button>
-                        <Button onClick={()=>setIsOpenLongG(true)}>open Dialog Long Spec</Button>
-                        <Button onClick={()=>setIsOpenDoubleG(true)}>open Dialog Double Spec</Button>
+                        <Button onClick={()=>setIsOpenDictListGenerator(true)}>open Dialog DictList Spec</Button>
+                        <Button onClick={()=>setIsOpenIdGenerator(true)}>open Dialog Id Spec</Button>
+                        <Button onClick={()=>setIsOpenLongGenerator(true)}>open Dialog Long Spec</Button>
+                        <Button onClick={()=>setIsOpenDoubleGenerator(true)}>open Dialog Double Spec</Button>
 
                         <Button onClick={()=>setIsOpenDummy01(true)}>open Dialog Dummy01</Button>
                         <Button onClick={()=>setIsOpenDummy02(true)}>open Dialog Dummy02</Button>
@@ -443,6 +469,8 @@ const handleClickOpenBlank = () => {
                                 handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
                                 handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
                                 isOpenGeneratorDialog = {isOpenGeneratorDialog}
+                                setTableFocusHandler={setTableFocusHandler}
+
 
 
                             />
@@ -462,6 +490,7 @@ const handleClickOpenBlank = () => {
                                 handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
                                 handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
                                 isOpenGeneratorDialog = {isOpenGeneratorDialog}
+                                setTableFocusHandler={setTableFocusHandler}
 
 
                             />
@@ -503,14 +532,33 @@ const handleClickOpenBlank = () => {
                 data={rawGeneratorDescriptions} 
                 handleClickOpenGeneratorDialog={handleClickOpenGeneratorDialog} 
                 selectRawGeneratorHandler={selectRawGeneratorHandler}/>
-            <DialogFormDictListGenerator isOpenDFDLG={isOpenDFDLG} handleCloseDFDLG={handleCloseDFDLG}/>
-            <DialogFormIdGenerator isOpenIdG={isOpenIdG} handleCloseIdG={handleCloseIdG}/>
-            <DialogFormLongGenerator isOpenLongG={isOpenLongG} handleCloseLongG={handleCloseLongG}/>
-            <DialogFormDoubleGenerator isOpenDoubleG={isOpenDoubleG} handleCloseDoubleG={handleCloseDoubleG}/>
-            <DialogFormDummy01 isOpenDummy01={isOpenDummy01} handleCloseDummy01={handleCloseDummy01}/>
-            <DialogFormDummy02 isOpenDummy02={isOpenDummy02} handleCloseDummy02={handleCloseDummy02}/>
-            <DialogFormDummy03 isOpenDummy03={isOpenDummy03} handleCloseDummy03={handleCloseDummy03}/>
-            <DialogBlank isOpenBlank={isOpenBlank} handleCloseBlank={handleCloseBlank}/>
+            <DialogFormDictListGenerator 
+                isOpenDictListGenerator={isOpenDictListGenerator} handleCloseDictListGenerator={handleCloseDictListGenerator}/>
+            <DialogFormIdGenerator 
+                isOpenIdGenerator={isOpenIdGenerator} 
+                handleCloseIdGenerator={handleCloseIdGenerator}
+                saveGeneratorHandler={saveGeneratorHandler}/>
+            <DialogFormLongGenerator 
+                isOpenLongGenerator={isOpenLongGenerator} 
+                handleCloseLongGenerator={handleCloseLongGenerator}/>
+            <DialogFormDoubleGenerator 
+                isOpenDoubleGenerator={isOpenDoubleGenerator} 
+                handleCloseDoubleGenerator={handleCloseDoubleGenerator}/>
+            <DialogFormDummy01 
+                isOpenDummy01={isOpenDummy01} 
+                handleCloseDummy01={handleCloseDummy01}
+                saveGeneratorHandler={saveGeneratorHandler}/>
+            <DialogFormDummy02 
+                isOpenDummy02={isOpenDummy02} 
+                handleCloseDummy02={handleCloseDummy02}
+                saveGeneratorHandler={saveGeneratorHandler}/>
+            <DialogFormDummy03 
+                isOpenDummy03={isOpenDummy03} 
+                handleCloseDummy03={handleCloseDummy03}
+                saveGeneratorHandler={saveGeneratorHandler}/>
+            <DialogBlank 
+                isOpenBlank={isOpenBlank} 
+                handleCloseBlank={handleCloseBlank}/>
 
           
         </div>

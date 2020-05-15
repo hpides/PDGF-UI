@@ -12,8 +12,10 @@ import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import Checkbox from "@material-ui/core/Checkbox";
 import GeneratorFormNullValuesElement from "./GeneratorFormNullValuesElement";
-import PaddingDropDownElement from "./PaddingDropDownElement";
+import GeneratorFormPaddingExpansion from "./GeneratorFormPaddingExpansion";
 import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
+import Slider from "@material-ui/core/Slider";
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const useStyles = makeStyles({
     input: {
@@ -33,7 +35,15 @@ export default function DialogFormDummy01(props) {
     const [minimum, setMinimum] = useState("");
     const [name, setName] = useState("");
     const [type, setType] = useState("");
+    const [nullValues, setNullValues] = useState(0);
+  
    
+    const buildGeneratorObject = () => {
+      const generatorObject = {minimum: minimum, name: name, type: type};
+      return generatorObject
+    }
+
+    // Change Handler Functions Text- and InputFields
 
     const minimumChangedHandler = (event) => {
         setMinimum(event.target.value);
@@ -49,7 +59,26 @@ export default function DialogFormDummy01(props) {
     }
 
 
+    // Change Handler Functions Slider  
     
+    const handleNullValuesSliderChange = (event, newValue) => {
+      setNullValues(newValue);
+    };
+  
+    const handleNullValuesInputChange = (event) => {
+      setNullValues(event.target.value === '' ? '99' : Number(event.target.value));
+    };
+  
+    const handleBlur = () => {
+      if (nullValues < 0) {
+        setNullValues(0);
+      } else if (nullValues > 100) {
+        setNullValues(100);
+      }
+    };
+
+
+
 
   return (
     <>
@@ -69,6 +98,41 @@ export default function DialogFormDummy01(props) {
       
             <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>
 
+                
+                    <Grid container item xs={leftColumnWidth}>
+                          <Typography variant={fontSizeLeftColumn}>Null Values:</Typography>
+                    </Grid>
+
+                    <Grid container item xs={rightColumnWidth}>
+                      <Grid item xs>
+                        <Slider
+                          value={typeof nullValues === 'number' ? nullValues : 0}
+                          onChange={handleNullValuesSliderChange}
+                          aria-labelledby="input-slider"
+                        />
+                      </Grid>
+                      <Grid item>
+                        <Input
+                          className={classes.input}
+                          value={nullValues}
+                          margin="dense"
+                          onChange={handleNullValuesInputChange}
+                          onBlur={handleBlur}
+                          endAdornment={<InputAdornment position="end">%</InputAdornment>}
+                          inputProps={{
+                            step: 10,
+                            min: 0,
+                            max: 100,
+                            size: 3,
+                            type: 'number',
+                            'aria-labelledby': 'input-slider',
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                    
+                
+                
                 <Grid container item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Minimum:</Typography>
                 </Grid>
@@ -109,6 +173,7 @@ export default function DialogFormDummy01(props) {
                     onChange={(event) => typeChangedHandler(event)}/>
                 </Grid>
 
+
             </Grid>       
 
                
@@ -119,8 +184,11 @@ export default function DialogFormDummy01(props) {
           <Button onClick={()=>console.log("hi")} color="primary">
             Cancel
           </Button>
-          <Button onClick={()=>console.log("hi")} color="primary">
-            Save
+          <Button 
+            onClick={()=>{  props.saveGeneratorHandler(buildGeneratorObject());
+                            props.handleCloseDummy01()}} 
+            color="primary">
+              Save
           </Button>
       </DialogActions>  
 

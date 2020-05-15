@@ -4,16 +4,21 @@ import Typography from "@material-ui/core/Typography";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
-import ConditionalDistributionInputElement from "./ConditionalDistributionInputElement";
+import DistributionInputSubElement from "./DistributionInputSubElement";
 
 
 
-export default function DistributionInputElement(){
+export default function DistributionInputElement(props){
 
-    const [distribution, setDistribution] = useState('normalDistribution');
+    const [distributionType, setDistributionType] = useState('normalDistribution');
+    const [distributionValues, setDistributionValues] = useState("");
 
-    const handleChange = (event) => {
+    const distributionTypeChangedHandler = (event) => {
       setDistribution(event.target.value);    
+    }
+
+    const distributionValuesChangedHandler = (distributionObject) => {
+        setDistribution(distributionObject)
     }
 
 return (
@@ -28,8 +33,8 @@ return (
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={distribution}
-                        onChange={handleChange}
+                        value={distributionType}
+                        onChange={(event) => distributionTypeChangedHandler(event)}
                     >
                         <MenuItem value="equalDistribution">Equal Distribution</MenuItem>
                         <MenuItem value="normalDistribution">Normal Distribution</MenuItem>
@@ -41,7 +46,9 @@ return (
         
         <Grid container item xs={12}>
 
-        <ConditionalDistributionInputElement distribution = {distribution}/>    
+        <DistributionInputSubElement 
+            distributionType = {distributionType} 
+            distributionValuesChangedHandler={distributionValuesChangedHandler}/>    
             
         </Grid>    
     </>

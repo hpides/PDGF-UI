@@ -12,7 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import Checkbox from "@material-ui/core/Checkbox";
 import GeneratorFormNullValuesElement from "./GeneratorFormNullValuesElement";
-import PaddingDropDownElement from "./PaddingDropDownElement";
+import GeneratorFormPaddingExpansion from "./GeneratorFormPaddingExpansion";
 import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
 
 const useStyles = makeStyles({

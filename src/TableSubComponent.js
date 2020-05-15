@@ -70,7 +70,7 @@ export default function TableSubComponent(props){
 
         <Grid container item style={{width: "150px"}} className={classes.framed}xs={3}>
             <Button
-                onClick ={() => {props.handleClickOpenGeneratorDialog()}}>
+                onClick ={ () => {props.setTableFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorDialog() }}>
                     Generator
             </Button> 
         </Grid>

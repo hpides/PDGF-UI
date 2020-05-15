@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -25,15 +25,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PaddingDropDownElement() {
+export default function GeneratorFormPaddingExpansion(props) {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState(false);
+  const [withPadding, setWithPadding] = useState(false);
+  const [numberCharacters, setNumberCharacters] = useState(0);
+  const [fillCharacter, setFillCharacter] = useState("");
+  const [fromLeft, setFromLeft] = useState(true);
+
   const leftColumnWidth = 3;
   const rightColumnWidth = 12 - leftColumnWidth; 
   const fontSizeLeftColumn = "h5"
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  }
+  
+// Change Handler 
+
+  const withPaddingChangedHandler = (event) => {
+    setWithPadding(event.target.checked);
+  };
+
+  const numberCharactersChangedHandler = (event)=> {
+      setNumberCharacters(event.target.value)
+  };
+
+  const fillCharacterChangedHandler = (event) => {
+      setFillCharacter(event.target.value);
+  };
+
+  const fromLeftChangedHandler = (event) => {
+      setFromLeft(event.target.value)
+  };
+
+
+// Build Repo Object Function
+
+  const buildRepoObject = () => {
+      const repoObject={
+            withPadding: withPadding,
+            numberCharacters: numberCharacters,
+            fillCharacter: fillCharacter,
+            fromLeft: fromLeft,
+        };   
+        return repoObject;
+  };
+
+
 
   return (
     <Grid container xs={12} style={{background: "inherit"}}>
@@ -50,7 +84,13 @@ export default function PaddingDropDownElement() {
             </Typography>
           </Grid>
           <Grid container item xs={rightColumnWidth} style={{background: "inherit", paddingLeft: 10}}>
-              <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
+              <Checkbox 
+                checked={withPadding}
+                onChange={event => {
+                    withPaddingChangedHandler(event);
+                    props.paddingVariablesChangedHandler(buildRepoObject());
+                }}
+                inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
           </Grid>  
 
 {/*
@@ -73,13 +113,29 @@ export default function PaddingDropDownElement() {
                   <Grid item xs={2}>  </Grid>
                 </Grid>
                 <Grid container item xs={rightColumnWidth} style={{background: "inherit"}}>
-                  <Input placeholder="Enter Name" className={classes.input}/>
+                  <Input 
+                    placeholder="Enter Size" 
+                    className={classes.input}
+                    value={numberCharacters}
+                    onChange={(event=> {
+                        numberCharactersChangedHandler(event);
+                        props.paddingVariablesChangedHandler(buildRepoObject()); 
+                        })}/>
                 </Grid>
                 <Grid container item xs={leftColumnWidth}style={{background: "inherit"}}>
                   <Typography variant={fontSizeLeftColumn}>Character:</Typography>
                 </Grid>
                 <Grid container item xs={rightColumnWidth} style={{background: "inherit"}}>
-                  <Input placeholder="Enter Description" multiline className={classes.input}/>
+                  <Input 
+                    placeholder="Enter Fill Character" 
+                    value={fillCharacter}
+                    multiline className={classes.input}
+                    onChange={event => {
+                        fillCharacterChangedHandler(event);
+                        props.paddingVariablesChangedHandler(buildRepoObject());
+                        }
+                    }/>
+
                 </Grid>
                 <Grid container item xs={leftColumnWidth} style={{background: "inherit"}}>
                   <Grid xs={10}>
@@ -95,6 +151,11 @@ export default function PaddingDropDownElement() {
                     <Switch
                         defaultChecked
                         color="default"
+                        value={fromLeft}
+                        onChange={event => {
+                            fromLeftChangedHandler(event);
+                            props.paddingVariablesChangedHandler(buildRepoObject());
+                        }}
                         inputProps={{ 'aria-label': 'checkbox with default color' }}
                     />
                    

@@ -93,9 +93,6 @@ const useStyles = makeStyles((theme) => ({
 export default function TableComponent(props){
     const classes = useStyles();
 
-
-
-
     return(
       <Grid className={classes.container} container xs={4}>
         <Grid item container className={classes.header_row}>
@@ -141,6 +138,7 @@ export default function TableComponent(props){
                                                             handleClickOpenGeneratorDialog = {props.handleClickOpenGeneratorDialog}
                                                             handleCloseGeneratorDialog = {props.handleCloseGeneratorDialog}
                                                             isOpenGeneratorDialog = {props.isOpenGeneratorDialog}
+                                                            setTableFocusHandler={props.setTableFocusHandler}
                                                             />})}  
         </Grid>   
         <Grid container item className={classes.footer_row}>

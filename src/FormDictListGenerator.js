@@ -9,7 +9,7 @@ import Input from "@material-ui/core/Input";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import GeneratorFormNullValuesElement from "./GeneratorFormNullValuesElement";
-import PaddingDropDownElement from "./PaddingDropDownElement";
+import GeneratorFormPaddingExpansion from "./GeneratorFormPaddingExpansion";
 import MenuItem from '@material-ui/core/MenuItem';
 import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
 
@@ -121,7 +121,7 @@ const dictData2 = [
                   <div></div>
                   
               
-                  <PaddingDropDownElement/> 
+                  <GeneratorFormPaddingExpansion/> 
                   <GeneratorFormRepoExpansion/>
               </Grid> 
       </>

@@ -12,7 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import Checkbox from "@material-ui/core/Checkbox";
 import GeneratorFormNullValuesElement from "./GeneratorFormNullValuesElement";
-import PaddingDropDownElement from "./PaddingDropDownElement";
+import GeneratorFormPaddingExpansion from "./GeneratorFormPaddingExpansion";
 import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
 
 const useStyles = makeStyles({
@@ -130,7 +130,10 @@ export default function DialogFormDummy02(props) {
           <Button onClick={()=>console.log("hi")} color="primary">
             Cancel
           </Button>
-          <Button onClick={()=>console.log("hi")} color="primary">
+          <Button 
+            onClick={()=>{
+              props.saveGeneratorHandler({a: "success"});
+              props.handleCloseDummy03()}} color="primary">
             Save
           </Button>
       </DialogActions>  
