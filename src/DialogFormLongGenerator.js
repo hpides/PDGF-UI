@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function DialogFormIdGenerator(props) {
+export default function DialogFormLongGenerator(props) {
     const classes = useStyles();
     const [dictList, setDictList] = useState("start");
     const leftColumnWidth = 3;

@@ -22,7 +22,7 @@ import DialogFormLongGenerator from "./DialogFormLongGenerator_old";
 import DialogFormDoubleGenerator from "./DialogFormDoubleGenerator";
 import SimpleDialogExample05 from "./SimpleDialogExample05";
 import DialogBlank from "./DialogBlank";
-
+import DialogFormLongGeneratorV2 from "./DialogFormLongGeneratorV2";
 
 
 
@@ -42,6 +42,7 @@ export default function BodyEditor(props){
     const [isOpenDummy03, setIsOpenDummy03] = useState(false);
     const [isOpenBlank, setIsOpenBlank] = useState(false);
     const [tableFocus, setTableFocus] = useState({});
+    const [isOpenLongGeneratorV2, setIsOpenLongGeneratorV2] = useState(false);
 
 
    
@@ -336,6 +337,23 @@ export default function BodyEditor(props){
     }
 
 
+// DialogFormLongGeneratorV2
+    
+const handleCloseLongGeneratorV2 = () => {
+    setIsOpenLongGeneratorV2(false);
+    return null;
+}
+
+const handleClickOpenLongGeneratorV2 = () => {
+    setIsOpenLongGeneratorV2(true);
+    return null;
+}
+
+
+
+
+
+
 // DialogFormDoubleGenerator
     
 const handleCloseDoubleGenerator = () => {
@@ -541,6 +559,10 @@ const handleClickOpenBlank = () => {
             <DialogFormLongGenerator 
                 isOpenLongGenerator={isOpenLongGenerator} 
                 handleCloseLongGenerator={handleCloseLongGenerator}/>
+             <DialogFormLongGeneratorV2 
+                isOpenLongGeneratorV2={isOpenLongGeneratorV2} 
+                handleCloseLongGeneratorV2={handleCloseLongGeneratorV2}
+                saveGeneratorHandler={saveGeneratorHandler}/>    
             <DialogFormDoubleGenerator 
                 isOpenDoubleGenerator={isOpenDoubleGenerator} 
                 handleCloseDoubleGenerator={handleCloseDoubleGenerator}/>

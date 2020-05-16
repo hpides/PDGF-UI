@@ -102,7 +102,7 @@ export default function DistributionInputSubElement(props){
                         <Input 
                             placeholder="Enter Standard Deviation"
                             value={values.normal.stdDev}
-                            onChange={(event)=>{normlaDStdDevValueChangedHandler(event)}}/>
+                            onChange={(event)=>{normalDStdDevValueChangedHandler(event)}}/>
                     </Grid>
                     <Grid item xs={3}>
                         <Typography>Mean</Typography>
@@ -125,7 +125,7 @@ export default function DistributionInputSubElement(props){
                         <Input 
                             placeholder="Enter p Value"
                             value={values.bin.p}
-                            onChange={(event)=>{binDPValueChangedHandler(event)}}/>
+                            onChange={(event)=>{binomialDPValueChangedHandler(event)}}/>
                     </Grid>
                     <Grid item xs={3}>
                         <Typography>n Value:</Typography>
@@ -134,7 +134,7 @@ export default function DistributionInputSubElement(props){
                         <Input 
                             placeholder="Enter n Value"
                             value={values.exp.lambda}
-                            onChange={(event)=>{binDPValueChangedHandler(event)}}/>
+                            onChange={(event)=>{binomialDPValueChangedHandler(event)}}/>
                     </Grid>
                     </>);
 

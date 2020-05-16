@@ -14,11 +14,11 @@ export default function DistributionInputElement(props){
     const [distributionValues, setDistributionValues] = useState("");
 
     const distributionTypeChangedHandler = (event) => {
-      setDistribution(event.target.value);    
+      setDistributionType(event.target.value);    
     }
 
     const distributionValuesChangedHandler = (distributionObject) => {
-        setDistribution(distributionObject)
+        setDistributionValues(distributionObject)
     }
 
 return (
