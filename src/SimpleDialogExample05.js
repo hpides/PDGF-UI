@@ -52,7 +52,6 @@ function SimpleDialog(props) {
         >
       <DialogTitle id="simple-dialog-title">Test Form 01</DialogTitle>
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-      {/*alert(" from within SimpleDialog -> before Dict List Gen 2. " + JSON.stringify(props.dictData))  */}
       <FormDictListGenerator dictData={props.dictData}/>
       </div>
       <DialogActions>
@@ -85,7 +84,6 @@ export default function SimpleDialogExample05(props) {
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Form Aggregation Test
       </Button>
-      {/*alert("from SimpleDialogExample 1: " + JSON.stringify(props.dictData))*/}
       <SimpleDialog  open={open} onClose={handleClose} dictData={props.dictData} />
     </div>
   );

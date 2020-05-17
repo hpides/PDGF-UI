@@ -27,47 +27,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function GeneratorFormRepoExpansion(props) {
   const classes = useStyles();
-  const [saveInRepo, setSaveInRepo] = useState(false);
-  const [name, setName] = useState(false);
-  const [description, setDescription] = useState(false);
-  const [examples, setExamples] = useState(false);
 
   const leftColumnWidth = 3;
   const rightColumnWidth = 12 - leftColumnWidth; 
   const fontSizeLeftColumn = "h5"
   
-
-  // Change Handler 
-
-  const saveInRepoChangedHandler = (event) => {
-    setSaveInRepo(event.target.checked);
-  };
-
-  const nameChangedHandler = (event)=> {
-      setName(event.target.value)
-  };
-
-  const descriptionChangedHandler = (event) => {
-      setDescription(event.target.value);
-  };
-
-  const examplesChangedHandler = (event) => {
-      setExamples(event.target.value)
-  };
-
-
-// Build Repo Object Function
-
-  const buildRepoObject = () => {
-      const repoObject={
-            saveInRepo: saveInRepo,
-            name: name,
-            description: description,
-            examples: examples,
-        };   
-        return repoObject;
-  };
-
 
   return (
     <Grid container xs={12} style={{background: "inherit"}}>
@@ -86,22 +50,9 @@ export default function GeneratorFormRepoExpansion(props) {
           <Grid container item xs={rightColumnWidth} style={{background: "inherit", paddingLeft: 10}}>
               <Checkbox 
                   inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                  value={saveInRepo}
-                  onChange={event => {
-                    saveInRepoChangedHandler(event);
-                    props.repoVariablesChangedHandler(buildRepoObject())
-                  }}/>
+                  value={props.generatorObject.repoVariables.saveInRepo}
+                  onChange={event => {props.saveInRepoChangedHandler(event)}}/>
           </Grid>  
-
-{/*
-          <FormControlLabel
-          value="start"
-          control={<Checkbox color="primary" />}
-          label="Padding"
-          labelPlacement="start"
-            />
-
-*/}
 
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
@@ -114,11 +65,9 @@ export default function GeneratorFormRepoExpansion(props) {
                   <Input 
                       placeholder="Enter Name" 
                       className={classes.input}
-                      value={name}
-                      onChange={event => {
-                        nameChangedHandler(event);
-                        props.repoVariablesChangedHandler(buildRepoObject())
-                      }}/>
+                      value={props.generatorObject.repoVariables.name}
+                      onChange={event => {props.nameChangedHandler(event)}}
+                      />
                 </Grid>
                 <Grid container item xs={leftColumnWidth} style={{background: "inherit"}}>
                   <Typography variant={fontSizeLeftColumn}>Description:</Typography>
@@ -128,11 +77,9 @@ export default function GeneratorFormRepoExpansion(props) {
                       placeholder="Enter Description" 
                       multiline 
                       className={classes.input}
-                      value={description}
-                      onChange={event => {
-                        descriptionChangedHandler(event);
-                        props.repoVariablesChangedHandler(buildRepoObject())
-                      }}/>
+                      value={props.generatorObject.repoVariables.description}
+                      onChange={event => {props.descriptionChangedHandler(event)}}
+                  />
                 </Grid>
                 <Grid container item xs={leftColumnWidth} style={{background: "inherit"}}>
                   <Typography variant={fontSizeLeftColumn}>Examples:</Typography>
@@ -143,11 +90,9 @@ export default function GeneratorFormRepoExpansion(props) {
                             placeholder="Enter Examples" 
                             multiline 
                             className={classes.input}
-                            value={examples}
-                            onChange={event => {
-                              examplesChangedHandler(event);
-                              props.repoVariablesChangedHandler(buildRepoObject())
-                            }}/>
+                            value={props.generatorObject.repoVariables.examples}
+                            onChange={event => {props.examplesChangedHandler(event)}}
+                            />
                     </Grid>
                 </Grid>
                
@@ -158,3 +103,4 @@ export default function GeneratorFormRepoExpansion(props) {
     </Grid>
   );
 }
+

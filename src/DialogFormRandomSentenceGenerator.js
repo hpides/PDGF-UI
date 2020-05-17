@@ -11,11 +11,11 @@ import DialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import Checkbox from "@material-ui/core/Checkbox";
-import GeneratorFormPaddingExpansionV2 from "./GeneratorFormPaddingExpansionV2";
-import GeneratorFormRepoExpansionV2 from "./GeneratorFormRepoExpansionV2";
+import GeneratorFormPaddingExpansion from "./GeneratorFormPaddingExpansion";
+import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
 import Slider from "@material-ui/core/Slider";
 import InputAdornment from '@material-ui/core/InputAdornment';
-import DistributionInputElementV2 from "./DistributionInputElementV2";
+import DistributionInputElement from "./DistributionInputElement";
 
 
 const useStyles = makeStyles({
@@ -27,17 +27,16 @@ const useStyles = makeStyles({
   },
 });
 
-export default function DialogFormLongGeneratorV2(props) {
+export default function DialogFormRandomSentenceGenerator(props) {
     const classes = useStyles();
     const leftColumnWidth = 3;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
 
     const intialGeneratorObject = {
-        type: "longGenerator", 
-        minimum: "",
-        maximum: "",
-        hasAllDistinctValues: false,
+        type: "randomSentenceGenerator", 
+        numberOfCharacters: [10,30],
+        numberOfDistinctCharacters: "",
         distributionVariables: {
               type: "equalDistribution",
               normalDistribution: {
@@ -63,74 +62,39 @@ export default function DialogFormLongGeneratorV2(props) {
               fromLeft: "true"
         },
         repoVariables: {
-              type: "longGenerator",
+              type: "randomSentenceGenerator",
               name: "",
               description: "",
               examples: "",
         },
-    }
+    }; 
+
     const [generatorObject, setGeneratorObject]=useState(intialGeneratorObject);
 
     
-    // Change Handler Input Fields
-    const minimumChangedHandler = (event) => {
+    // Change Handler numberOfCharacters
+
+    const numberOfCharactersChangedHandler = (event, newValue) => {
         const newGenerator = {...generatorObject};
-        newGenerator.minimum = event.target.value;
+        newGenerator.numberOfCharacters = newValue;
         setGeneratorObject(newGenerator);
-    }
+    };
 
     // Change Handler Input Fields
-    const maximumChangedHandler = (event) => {
+    const numberOfDistinctCharactersChangedHandler = (event) => {
         const newGenerator = {...generatorObject};
-        newGenerator.maximum = event.target.value;
+        newGenerator.numberOfDistinctCharacters = event.target.value;
         setGeneratorObject(newGenerator);
-    }
+    };
 
-    // Change Handler Input Fields
-    const hasAllDistinctValuesChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
-        newGenerator.hasAllDistinctValues = event.target.checked;
-        setGeneratorObject(newGenerator);
-    }
+   
 
     // Change Handler Distribution Component
     const distributionVariablesChangedHandler = (distributionObject) => {
         const newGenerator = {...generatorObject};
         newGenerator.distribution = distributionObject;
         setGeneratorObject(newGenerator);
-    }
-
-    // Change Handler Slider Component
-    const handleNullValuesSliderChange = (event, newValue) => {
-        const newGenerator = {...generatorObject};
-        newGenerator.nullValues = newValue;
-        setGeneratorObject(newGenerator);
     };
-  
-    const handleNullValuesInputChange = (event) => {
-        const newGenerator = {...generatorObject};
-        newGenerator.nullValues = (event.target.value === '' ? '99' : Number(event.target.value));
-        setGeneratorObject(newGenerator);
-    };
-  
-
-    const handleBlur = () => {
-      if (generatorObject.nullValues < 0) {
-        setGeneratorObject.nullValues(0);
-      } else if (generatorObject.nullValues > 100) {
-        setGeneratorObject.nullValues(100);
-      }
-    };
-
-
-
-    // Change Handler Repo Component
-    const repoVariablesChangedHandler = (repoObject) => {
-        const newGenerator = {...generatorObject};
-        newGenerator.repoVariables = (repoObject);
-        setGeneratorObject(newGenerator);
-    };
-
 
         // Change Handler Repo Element
 
@@ -192,52 +156,79 @@ export default function DialogFormLongGeneratorV2(props) {
       const newGenerator = {...generatorObject};
       newGenerator.distributionVariables.type = event.target.value;
       setGeneratorObject(newGenerator);  
-    }
+    };
 
 
     const expDLambdaValueChangedHandler = (event) => {
       const newGenerator = {...generatorObject};
       newGenerator.distributionVariables.exponentialDistribution.lambda = event.target.value;
       setGeneratorObject(newGenerator);
-  }
+  };
 
       const logDPValueChangedHandler = (event) => {
       const newGenerator = {...generatorObject};
       newGenerator.distributionVariables.logarithmicDistribution.p = event.target.value;
       setGeneratorObject(newGenerator);
-  }
+  };
 
   const normalDStdDevValueChangedHandler = (event) => {
       const newGenerator = {...generatorObject};
       newGenerator.distributionVariables.normalDistribution.standardDeviation = event.target.value;
       setGeneratorObject(newGenerator);
-  }
+  };
 
   const normalDMeanValueChangedHandler = (event) => {
       const newGenerator = {...generatorObject};
       newGenerator.distributionVariables.normalDistribution.mean = event.target.value;
       setGeneratorObject(newGenerator);
-  }
+  };
 
   const binomialDPValueChangedHandler = (event) => {
       const newGenerator = {...generatorObject};
       newGenerator.distributionVariables.binomialDistribution.p = event.target.value;
       setGeneratorObject(newGenerator);
-  }
+  };
 
   const binomialDNValueChangedHandler = (event) => {
       const newGenerator = {...generatorObject};
       newGenerator.distributionVariables.binomialDistribution.n = event.target.value;
       setGeneratorObject(newGenerator);
+  };
+
+  // Change Handler Slider Component
+  const handleNullValuesSliderChange = (event, newValue) => {
+    const newGenerator = {...generatorObject};
+    newGenerator.nullValues = newValue;
+    setGeneratorObject(newGenerator);
+};
+
+const handleNullValuesInputChange = (event) => {
+    const newGenerator = {...generatorObject};
+    newGenerator.nullValues = (event.target.value === '' ? '99' : Number(event.target.value));
+    setGeneratorObject(newGenerator);
+};
+
+
+const handleBlur = () => {
+  if (generatorObject.nullValues < 0) {
+    setGeneratorObject.nullValues(0);
+  } else if (generatorObject.nullValues > 100) {
+    setGeneratorObject.nullValues(100);
   }
+};
+
+
+
+
+
 
 
   return (
     <>
     <Dialog 
-        onClose={props.handleCloseLongGeneratorV2Generator} 
+        onClose={props.handleCloseRandomSentenceGenerator} 
         aria-labelledby="simple-dialog-title" 
-        open={props.isOpenLongGeneratorV2}
+        open={props.isOpenRandomSentenceGenerator}
         titel="Dialog"
         //TransitionComponent={Transition}
         keepMounted
@@ -245,54 +236,41 @@ export default function DialogFormLongGeneratorV2(props) {
         fullWidth
         maxWidth="md"
         >
-      <DialogTitle id="simple-dialog-title">Id Generator</DialogTitle>
+      <DialogTitle id="simple-dialog-title">RandomSentence Generator</DialogTitle>
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
       
             <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>
+                
+                <Grid container item xs={leftColumnWidth} style={{paddingTop:25}}>
+                  <Typography variant={fontSizeLeftColumn}>Number of Characters:</Typography>
+                </Grid>
+
+                <Grid container item xs={rightColumnWidth} style={{paddingTop:25}}>
+                    <Slider
+                        value={generatorObject.numberOfCharacters}
+                        onChange={numberOfCharactersChangedHandler}
+                        valueLabelDisplay="auto"
+                    />
+                </Grid>
+
 
                 <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Minimum:</Typography>
+                  <Typography variant={fontSizeLeftColumn}>Number of Distinct Characters:</Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>
                   <Input 
                     className={classes.input} 
                     type="number" 
-                    placeholder="Enter Minimum" 
-                    value={generatorObject.minimum} 
-                    onChange={(event) => minimumChangedHandler(event)}/>
+                    placeholder="Enter # of distinct characters" 
+                    value={generatorObject.numberDistinctCharacters} 
+                    onChange={(event) => numberOfDistinctCharactersChangedHandler(event)}/>
                 </Grid>
 
-
-                <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Maximum:</Typography>
-                </Grid>
-
-                <Grid container item xs={rightColumnWidth}>
-                  <Input 
-                    className={classes.input} 
-                    type="number" 
-                    placeholder="Enter Maximum" 
-                    value={generatorObject.maximum} 
-                    onChange={(event) => maximumChangedHandler(event)}/>
-                </Grid>
-
-
-                <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Distinct Values:</Typography>
-                </Grid>
-
-                <Grid container item xs={rightColumnWidth}>
-                  <Checkbox 
-                        inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={generatorObject.hasAllDistinctValues}
-                        onChange={(event)=> {hasAllDistinctValuesChangedHandler(event)}}
-                        />
-                </Grid>
 
                 
                 <Grid container item xs={12}>
-                    <DistributionInputElementV2 
+                    <DistributionInputElement 
                         distributionTypeChangedHandler={distributionTypeChangedHandler}
                         expDLambdaValueChangedHandler={expDLambdaValueChangedHandler}
                         logDPValueChangedHandler={logDPValueChangedHandler}
@@ -340,18 +318,20 @@ export default function DialogFormLongGeneratorV2(props) {
             </Grid>       
 
             <Grid direction="column" container item xs={12}>
-                <GeneratorFormPaddingExpansionV2 
+                <GeneratorFormPaddingExpansion 
                     withPaddingChangedHandler={withPaddingChangedHandler}
                     numberCharactersChangedHandler={numberCharactersChangedHandler}
                     fillCharacterChangedHandler={fillCharacterChangedHandler}
                     fromLeftChangedHandler={fromLeftChangedHandler}
                     generatorObject={generatorObject}/> 
-                <GeneratorFormRepoExpansionV2 
+
+                <GeneratorFormRepoExpansion 
                     saveInRepoChangedHandler={saveInRepoChangedHandler}
                     nameChangedHandler={nameChangedHandler}
                     descriptionChangedHandler={descriptionChangedHandler}
                     examplesChangedHandler={examplesChangedHandler}
                     generatorObject={generatorObject}/> 
+
             </Grid>       
       
       </div>
@@ -363,7 +343,7 @@ export default function DialogFormLongGeneratorV2(props) {
           <Button 
               onClick={ ()=> {
                 props.saveGeneratorHandler(generatorObject);
-                props.handleCloseLongGeneratorV2()}}
+                props.handleCloseRandomSentenceGenerator()}}
               color="primary">
             Save
           </Button>

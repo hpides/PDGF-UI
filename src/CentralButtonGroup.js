@@ -82,7 +82,11 @@ export default function CentralButtonGroup2(props){
                         Load Schema from Repo
                     </Button>
                 </Box>
-                <DialogSchemaSelection selectedValue={selectedValue} isOpenSchemaDialog={isOpenSchemaDialog} onClose={handleClose} schemaDescriptions={props.schemaDescriptions} />
+                <DialogSchemaSelection 
+                    selectedValue={selectedValue} 
+                    isOpenSchemaDialog={isOpenSchemaDialog} 
+                    onClose={handleClose} 
+                    schemaDescriptions={props.schemaDescriptions} />
                 
                 <Box className={classes.boxElement}>
                     <Button

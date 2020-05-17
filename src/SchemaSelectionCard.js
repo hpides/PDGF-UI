@@ -52,12 +52,15 @@ export default function SchemaSelectionCard(props) {
   const classes = useStyles();
 
   return (
-    <Box className={classes.root} onClick={()=>{alert("My Name is " + props.input.name + "!")}}>
+    <Box 
+      className={classes.root} 
+      onClick={()=>{alert("My Name is " + props.input.name + "!")}}
+    >
         <Grid container classeName={classes.container} xs={12}>
           <Grid container item className={classes.inner_container_left} xs={3} flexDirection="row" justify="flex-start">
             <Grid container item>
             <Typography className={classes.title} color="textSecondary" gutterBottom >
-              {props.input.name}
+              {props.input.schemaName}
             </Typography >
             </Grid>
             <Grid container item>
@@ -67,7 +70,7 @@ export default function SchemaSelectionCard(props) {
             </Grid>
             <Grid container item>
             <Typography className={classes.date} color="textSecondary" variant="h5" component="h2" >
-            {props.input.date}
+            {props.input.lastEdited}
             </Typography >
             </Grid>
           </Grid>

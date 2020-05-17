@@ -67,19 +67,14 @@ export const customSystemVariables = [
 
 
 export const rawGeneratorDescriptions = [
-   {name: "Dummy01", description: "Generates a specific dummy generator.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Dummy01",},
-   {name: "Dummy02", description: "Generates a specific dummy generator.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy02", uid: "Dummy02",},
-   {name: "Dummy03", description: "Generates a specific dummy generator.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy03", uid: "Dummy03",},
    {name: "Id", description: "Generates consecutive Ids from 0 or any given minimum value.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "IdGenerator",},
-   {name: "Double", description: "Generate a 64bit floating point values between min and max..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
-   {name: "Long", description: "Generates a 64Bit integer value between min and max.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
-   {name: "Date-Time", description: "Generates dates within a specified time range.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
-   {name: "Random String", description: "Generates strings in a size range with a specified set of characters.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
-   {name: "Random-Sentence", description: "Generates a sentence within a size range with pseudo grammar.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
-   {name: "Dict-List", description: "Uses a dictionary to generate single values or lists.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
-   {name: "Reference", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "Blank",},
-   {name: "LongGeneratorV2", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "LongGeneratorV2",},
-
+   {name: "Double", description: "Generate a 64bit floating point values between min and max..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DoubleGenerator",},
+   {name: "LongGenerator", description: "Generates a 64Bit integer value between min and max.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "LongGenerator",},
+   {name: "DateTime", description: "Generates dates within a specified time range.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DateTimeGenerator",},
+   {name: "Random String", description: "Generates strings in a size range with a specified set of characters.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "RandomStringGenerator",},
+   {name: "RandomSentence", description: "Generates a sentence within a size range with pseudo grammar.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "RandomSentence",},
+   {name: "DictList", description: "Uses a dictionary to generate single values or lists.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DictListGenerator",},
+   {name: "Reference", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "ReferenceGenerator",},
 ]
 
 
@@ -347,12 +342,12 @@ export const emptySchema0 = {
 
 export const emptySchema = {
    uids: {
-      schemaUid: "date-seconds-randomThreeLetters",
+      schemaUid: "uid",
       tableCounter: 1,
    },
    info: {
       schemaName: "",
-      description: "This is a description of the empty schema:         .Thank you for your attention.",
+      description: "You can enter a description of your schema here if you like.",
       author: "john doe",
       lastEdited: "today",
    },

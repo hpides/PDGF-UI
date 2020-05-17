@@ -13,16 +13,15 @@ import DialogGeneratorSelection from "./DialogGeneratorSelection";
 import DialogRawGeneratorSelection from "./DialogRawGeneratorSelection";
 import DialogFormDictListGenerator from "./DialogFormDictListGenerator";
 import DialogFormIdGenerator from "./DialogFormIdGenerator";
-
-import DialogFormDummy01 from "./DialogFormDummy01";
-import DialogFormDummy02 from "./DialogFormDummy02";
-import DialogFormDummy03 from "./DialogFormDummy03";
-
-import DialogFormLongGenerator from "./DialogFormLongGenerator_old";
 import DialogFormDoubleGenerator from "./DialogFormDoubleGenerator";
 import SimpleDialogExample05 from "./SimpleDialogExample05";
 import DialogBlank from "./DialogBlank";
-import DialogFormLongGeneratorV2 from "./DialogFormLongGeneratorV2";
+import DialogFormLongGenerator from "./DialogFormLongGenerator";
+import DialogFormDateTimeGenerator from "./DialogFormDateTimeGenerator";
+import DialogFormRandomStringGenerator from "./DialogFormRandomStringGenerator";
+import DialogFormRandomSentenceGenerator from "./DialogFormRandomSentenceGenerator";
+import DialogSaveSchema from "./DialogSaveSchema";
+
 
 
 
@@ -34,21 +33,22 @@ export default function BodyEditor(props){
     const [isOpenGeneratorDialog, setIsOpenGeneratorDialog] = useState(false);
     const [isOpenRawGeneratorDialog, setIsOpenRawGeneratorDialog] = useState(false);
     const [isOpenDictListGenerator, setIsOpenDictListGenerator] = useState(false);
+    const [isOpenDialogSaveSchema, setIsOpenDialogSaveSchema] = useState(false);
     const [isOpenIdGenerator, setIsOpenIdGenerator] = useState(false);
     const [isOpenLongGenerator, setIsOpenLongGenerator] = useState(false);
     const [isOpenDoubleGenerator, setIsOpenDoubleGenerator] = useState(false);
-    const [isOpenDummy01, setIsOpenDummy01] = useState(false);
-    const [isOpenDummy02, setIsOpenDummy02] = useState(false);
+    const [isOpenDateTimeGenerator, setIsOpenDateTimeGenerator] = useState(false);
+    const [isOpenRandomStringGenerator, setIsOpenRandomStringGenerator] = useState(false);
+    const [isOpenRandomSentenceGenerator, setIsOpenRandomSentenceGenerator] = useState(false);
     const [isOpenDummy03, setIsOpenDummy03] = useState(false);
     const [isOpenBlank, setIsOpenBlank] = useState(false);
     const [tableFocus, setTableFocus] = useState({});
-    const [isOpenLongGeneratorV2, setIsOpenLongGeneratorV2] = useState(false);
+    const [schemaStore, setSchemaStore] = useState([]);
 
 
    
     const selectRawGeneratorHandler = (uid) => {
         const string = "setIsOpen" + uid;
-        alert(string);
         setIsOpenRawGeneratorDialog(false);
         eval(string+"(true)"); 
     };
@@ -138,28 +138,15 @@ export default function BodyEditor(props){
 
 
     const deleteTableRowHandler = (tableId, rowId) => { 
-        //alert("Boom    " + tableId + "     " + rowId);
-        //alert("in deleteTableRowHandler: " + tableId + "   /    " + rowId);
         let schemaNew = {...currentSchemaLocal};
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
-        //alert("tableIndex: " + tableIndex);
         let rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x => x.rowId === rowId);
-        //alert("rowIndex: " + rowIndex);
         schemaNew.tables[tableIndex].tableItems.splice(rowIndex,1);
         setCurrentSchemaLocal(schemaNew);
     }
 
 
-    const schemaNameChangedHandler = (event, tableId) => {
-        //alert("Entering tableNameChangedHandlerFunction");
-        let schemaNew = {...currentSchemaLocal};
-        schemaNew.info.schemaName = event.target.value;
-        setCurrentSchemaLocal(schemaNew); 
-    };
-
-
     const tableNameChangedHandler = (event, tableId) => {
-        //alert("Entering tableNameChangedHandlerFunction");
         let schemaNew = {...currentSchemaLocal};
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
         schemaNew.tables[tableIndex].tableName = event.target.value;
@@ -169,7 +156,6 @@ export default function BodyEditor(props){
 
 
     const tableSizeChangedHandler = (event, tableId) => {
-        //alert("Entering tableNameChangedHandlerFunction");
         let schemaNew = {...currentSchemaLocal};
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
         schemaNew.tables[tableIndex].tableSize = event.target.value;
@@ -180,12 +166,7 @@ export default function BodyEditor(props){
     const fieldNameChangedHandler = (event, tableId, rowId) => {
         let schemaNew = {...currentSchemaLocal};
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
-        //alert("Types tid / rid: " + (typeof tableId) + "  /  " + (typeof rowId));
-        //alert("tableId: " + tableId + "    tableIndex" + tableIndex + "   JSON: " + JSON.stringify(schemaNew.tables));
-        //alert((typeof schemaNew.tables[tableIndex].tableItems.rowId) + "typ  " + JSON.stringify(schemaNew.tables[tableIndex].tableItems.rowId) + " value");
         let rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x => x.rowId === rowId);
-        //alert("rowId: " + rowId + "    rowIndex: " + rowIndex);
-        //alert("TableIndex: " + tableIndex + " RowIndex: " + rowIndex + " Event : " + event.target.value);
         schemaNew.tables[tableIndex].tableItems[rowIndex].fieldName = event.target.value;
         setCurrentSchemaLocal(schemaNew); 
     };
@@ -251,14 +232,34 @@ export default function BodyEditor(props){
     }
 
 
-    // Local Store operations
-
-    const saveDataInLocalStore = () => {
-        let schema = {...currentSchemaLocal};
-        localStorage.setItem("MySchema", JSON.stringify(schema));
+    // Temp Store operations
+    const saveSchemaInLocalStore = () => {
+        let currentSchema = {...currentSchemaLocal};
+        let schemaStoreNew = [...schemaStore];
+        schemaStoreNew.push(currentSchema);
+        setSchemaStore(schemaStoreNew);
     }
+
+
+    // Browser Store operations
+
+   const saveSchemaInBrowserStorage = () => {
+    let currentSchema = {...currentSchemaLocal};
+    let schemaRepositoryStringified = localStorage.getItem("schemaRepository");
+        if (schemaRepositoryStringified === null) {
+            let schemaRepository = [];
+            schemaRepository.push(currentSchema);
+            localStorage.setItem("schemaRepository", JSON.stringify(schemaRepository));
+        } else {
+            let schemaRepository = JSON.parse(localStorage.getItem("schemaRepository"));
+            schemaRepository.push(currentSchema);
+            localStorage.setItem("schemaRepository", JSON.stringify(schemaRepository));
+        }
     
-    const loadDataFromLocalStore = () => {
+    }
+
+
+    const loadSchemaFromBrowserStorage = () => {
         let schemaReloadedStringified = localStorage.getItem('MySchema');
         console.log("schemaStringified: " + schemaReloadedStringified); 
         let schemaReloaded = JSON.parse(schemaReloadedStringified);
@@ -266,6 +267,17 @@ export default function BodyEditor(props){
         setCurrentSchemaLocal(schemaReloaded);
     }
   
+
+    // Load Schema from schemaRepo
+    const loadSelectedSchemaFromRepo = (schemaUid) => {
+        let schemaRepo = JSON.parse(localStorage.getItem("schemaRepo"));
+        let schemaIndex = schemaRepo.findIndex(x => x.uid === schemaUid);
+        setCurrentSchemaLocal(schemaRepo[schemaIndex]);
+    }
+
+
+
+
 
 
     // DialogGenerator Selection Operations
@@ -336,24 +348,6 @@ export default function BodyEditor(props){
         return null;
     }
 
-
-// DialogFormLongGeneratorV2
-    
-const handleCloseLongGeneratorV2 = () => {
-    setIsOpenLongGeneratorV2(false);
-    return null;
-}
-
-const handleClickOpenLongGeneratorV2 = () => {
-    setIsOpenLongGeneratorV2(true);
-    return null;
-}
-
-
-
-
-
-
 // DialogFormDoubleGenerator
     
 const handleCloseDoubleGenerator = () => {
@@ -366,45 +360,41 @@ const handleClickOpenDoubleGenerator = () => {
     return null;
 }
 
-
-// DialogFormDummy01Generator
+// DialogFormDateTimeGenerator
     
-const handleCloseDummy01 = () => {
-    setIsOpenDummy01(false);
+const handleCloseDateTimeGenerator = () => {
+    setIsOpenDateTimeGenerator(false);
     return null;
 }
 
-const handleClickOpenDummy01 = () => {
-    setIsOpenDummy01(true);
+const handleClickOpenDateTimeGenerator = () => {
+    setIsOpenDateTimeGenerator(true);
     return null;
 }
 
-
-// DialogFormDummy02Generator
+// DialogFormRandomStringGenerator
     
-const handleCloseDummy02 = () => {
-    setIsOpenDummy02(false);
+const handleCloseRandomStringGenerator = () => {
+    setIsOpenRandomStringGenerator(false);
     return null;
 }
 
-const handleClickOpenDummy02 = () => {
-    setIsOpenDummy02(true);
+const handleClickOpenRandomStringGenerator = () => {
+    setIsOpenRandomStringGenerator(true);
     return null;
 }
 
-
-// DialogFormDummy03Generator
+// DialogFormRandomSentenceGenerator
     
-const handleCloseDummy03 = () => {
-    setIsOpenDummy03(false);
+const handleCloseRandomSentenceGenerator = () => {
+    setIsOpenRandomSentenceGenerator(false);
     return null;
 }
 
-const handleClickOpenDummy03 = () => {
-    setIsOpenDummy03(true);
+const handleClickOpenRandomSentenceGenerator = () => {
+    setIsOpenRandomSentenceGenerator(true);
     return null;
 }
-
 
 // DialogBlank
     
@@ -421,6 +411,65 @@ const handleClickOpenBlank = () => {
 
 
 
+    // Date Time operations
+    const printTimeStamp = () => {
+        const d = new Date();
+        let timeStamp = d.getDate();
+        return timeStamp;
+    }
+
+
+    // 
+    const infoObjectChangedHandler = (infoObject) => {
+    const schemaNew ={...currentSchemaLocal};
+    schemaNew.info = infoObject;
+    setCurrentSchemaLocal(schemaNew); 
+    }
+
+
+    // DialogSaveSchema
+    
+    const handleCloseDialogSaveSchema = () => {
+        setIsOpenDialogSaveSchema(false);
+        return null;
+    }
+
+    const handleClickOpenDialogSaveSchema = () => {
+        setIsOpenDialogSaveSchema(true);
+        return null;
+    }
+
+
+    // Change Handler for DialogSaveSchema
+    const schemaNameChangedHandler = (event) => {
+        const schemaNew = {...currentSchemaLocal};
+        schemaNew.info.schemaName = event.target.value;
+        setCurrentSchemaLocal(schemaNew);
+    };
+
+ 
+    const descriptionChangedHandler = (event) => {
+        const schemaNew = {...currentSchemaLocal};
+        schemaNew.info.description = event.target.value;
+        setCurrentSchemaLocal(schemaNew);
+    };
+
+   
+    const authorChangedHandler = (event) => {
+        const schemaNew = {...currentSchemaLocal};
+        schemaNew.info.author = event.target.value;
+        setCurrentSchemaLocal(schemaNew);
+    };
+
+     
+     const lastEditedChangedHandler = (event) => {
+        const schemaNew = {...currentSchemaLocal};
+        schemaNew.info.lastEdited = event.target.value;
+        setCurrentSchemaLocal(schemaNew);
+    };
+
+
+
 
 
 
@@ -433,6 +482,25 @@ const handleClickOpenBlank = () => {
         setIsOpenSideBarRight(!isOpenSideBarRight);
     }
 
+
+    // createSchemaUid -> uid = Milli-Sekunden seit dem 01.01.2020
+
+    const addUidToSchema = () => {
+        const miliSecondsFrom1970To2020 = 1577785488*1000;
+        const uid = Date.now() - miliSecondsFrom1970To2020; 
+        const currentSchema = {...currentSchemaLocal};
+        currentSchema.uids.schemaUid = uid;
+        setCurrentSchemaLocal(currentSchema);
+        return null;
+    }
+
+
+
+
+
+    // load selected Schema after DialogSchemaSelection
+
+    const loadSelectedSchema = () => {}
 
 
 
@@ -447,16 +515,7 @@ const handleClickOpenBlank = () => {
                         <Button onClick={()=>setIsOpenDictListGenerator(true)}>open Dialog DictList Spec</Button>
                         <Button onClick={()=>setIsOpenIdGenerator(true)}>open Dialog Id Spec</Button>
                         <Button onClick={()=>setIsOpenLongGenerator(true)}>open Dialog Long Spec</Button>
-                        <Button onClick={()=>setIsOpenDoubleGenerator(true)}>open Dialog Double Spec</Button>
-
-                        <Button onClick={()=>setIsOpenDummy01(true)}>open Dialog Dummy01</Button>
-                        <Button onClick={()=>setIsOpenDummy02(true)}>open Dialog Dummy02</Button>
-                        <Button onClick={()=>setIsOpenDummy03(true)}>open Dialog Dummy03</Button>
-                        <Button onClick={()=>setIsOpenBlank(true)}>open Dialog Blank</Button>
-
-
-
-
+                        
                     </div>
                         <SchemaNameElement schemaName={currentSchemaLocal.info.schemaName} schemaNameChangedHandler = {schemaNameChangedHandler}/>
                        
@@ -466,6 +525,7 @@ const handleClickOpenBlank = () => {
                             addNewTableHandler = {addNewTableHandler}
                             resetEditor ={resetEditor}
                             toggleSidebarRight = {toggleSidebarRight}
+                            handleClickOpenDialogSaveSchema={handleClickOpenDialogSaveSchema}
                         />
                     </Grid>
                 </Grid>
@@ -543,44 +603,70 @@ const handleClickOpenBlank = () => {
                
             </Grid>      
                             
-            <DialogGeneratorSelection  isOpenGeneratorDialog={isOpenGeneratorDialog} handleCloseGeneratorDialog={handleCloseGeneratorDialog} data={generatorDescriptions} handleClickOpenRawGeneratorDialog={handleClickOpenRawGeneratorDialog} />                   
+            <DialogGeneratorSelection  
+                isOpenGeneratorDialog={isOpenGeneratorDialog} 
+                handleCloseGeneratorDialog={handleCloseGeneratorDialog} 
+                data={generatorDescriptions} 
+                handleClickOpenRawGeneratorDialog={handleClickOpenRawGeneratorDialog} 
+            />                   
             <DialogRawGeneratorSelection  
                 isOpenRawGeneratorDialog={isOpenRawGeneratorDialog} 
                 handleCloseRawGeneratorDialog={handleCloseRawGeneratorDialog} 
                 data={rawGeneratorDescriptions} 
                 handleClickOpenGeneratorDialog={handleClickOpenGeneratorDialog} 
-                selectRawGeneratorHandler={selectRawGeneratorHandler}/>
+                selectRawGeneratorHandler={selectRawGeneratorHandler}
+            />
             <DialogFormDictListGenerator 
-                isOpenDictListGenerator={isOpenDictListGenerator} handleCloseDictListGenerator={handleCloseDictListGenerator}/>
+                isOpenDictListGenerator={isOpenDictListGenerator} 
+                handleCloseDictListGenerator={handleCloseDictListGenerator}
+                saveGeneratorHandler={saveGeneratorHandler}
+            />
             <DialogFormIdGenerator 
                 isOpenIdGenerator={isOpenIdGenerator} 
                 handleCloseIdGenerator={handleCloseIdGenerator}
-                saveGeneratorHandler={saveGeneratorHandler}/>
+                saveGeneratorHandler={saveGeneratorHandler}
+            />
             <DialogFormLongGenerator 
                 isOpenLongGenerator={isOpenLongGenerator} 
-                handleCloseLongGenerator={handleCloseLongGenerator}/>
-             <DialogFormLongGeneratorV2 
-                isOpenLongGeneratorV2={isOpenLongGeneratorV2} 
-                handleCloseLongGeneratorV2={handleCloseLongGeneratorV2}
-                saveGeneratorHandler={saveGeneratorHandler}/>    
+                handleCloseLongGenerator={handleCloseLongGenerator}
+                saveGeneratorHandler={saveGeneratorHandler}
+            />
             <DialogFormDoubleGenerator 
                 isOpenDoubleGenerator={isOpenDoubleGenerator} 
-                handleCloseDoubleGenerator={handleCloseDoubleGenerator}/>
-            <DialogFormDummy01 
-                isOpenDummy01={isOpenDummy01} 
-                handleCloseDummy01={handleCloseDummy01}
-                saveGeneratorHandler={saveGeneratorHandler}/>
-            <DialogFormDummy02 
-                isOpenDummy02={isOpenDummy02} 
-                handleCloseDummy02={handleCloseDummy02}
-                saveGeneratorHandler={saveGeneratorHandler}/>
-            <DialogFormDummy03 
-                isOpenDummy03={isOpenDummy03} 
-                handleCloseDummy03={handleCloseDummy03}
-                saveGeneratorHandler={saveGeneratorHandler}/>
+                handleCloseDoubleGenerator={handleCloseDoubleGenerator}
+                saveGeneratorHandler={saveGeneratorHandler}
+            />
+            <DialogFormDateTimeGenerator 
+                isOpenDateTimeGenerator={isOpenDateTimeGenerator} 
+                handleCloseDateTimeGenerator={handleCloseDateTimeGenerator}
+                saveGeneratorHandler={saveGeneratorHandler}
+            />
+             <DialogFormRandomStringGenerator 
+                isOpenRandomStringGenerator={isOpenRandomStringGenerator} 
+                handleCloseRandomStringGenerator={handleCloseRandomStringGenerator}
+                saveGeneratorHandler={saveGeneratorHandler}
+            />
+            <DialogFormRandomSentenceGenerator 
+                isOpenRandomSentenceGenerator={isOpenRandomSentenceGenerator} 
+                handleCloseRandomSentenceGenerator={handleCloseRandomSentenceGenerator}
+                saveGeneratorHandler={saveGeneratorHandler}
+            />
             <DialogBlank 
                 isOpenBlank={isOpenBlank} 
-                handleCloseBlank={handleCloseBlank}/>
+                handleCloseBlank={handleCloseBlank}
+            />
+              <DialogSaveSchema 
+                isOpenDialogSaveSchema={isOpenDialogSaveSchema} 
+                handleCloseDialogSaveSchema={handleCloseDialogSaveSchema}
+                saveSchemaInBrowserStorage={saveSchemaInBrowserStorage}
+                schemaInfoObject={currentSchemaLocal.info}
+                schemaNameChangedHandler={schemaNameChangedHandler}
+                descriptionChangedHandler={descriptionChangedHandler}
+                authorChangedHandler={authorChangedHandler}
+                lastEditedChangedHandler={lastEditedChangedHandler}
+                addUidToSchema={addUidToSchema}
+
+            />
 
           
         </div>

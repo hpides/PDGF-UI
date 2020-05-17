@@ -15,6 +15,8 @@ import GeneratorFormPaddingExpansion from "./GeneratorFormPaddingExpansion";
 import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
 import Slider from "@material-ui/core/Slider";
 import InputAdornment from '@material-ui/core/InputAdornment';
+import DistributionInputElement from "./DistributionInputElement";
+
 
 const useStyles = makeStyles({
     input: {
@@ -27,63 +29,145 @@ const useStyles = makeStyles({
 
 export default function DialogFormIdGenerator(props) {
     const classes = useStyles();
-    const [dictList, setDictList] = useState("start");
     const leftColumnWidth = 3;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
-    const [generatorSpec, setGeneratorSpec] =useState("");
 
-    const [minimum, setMinimum] = useState("");
-    const [nullValues, setNullValues] = useState(0);
-    const [paddingVariables, setPaddingVariables] = useState({});
-    const [repoVariables, setRepoVariables] = useState({});
+    const intialGeneratorObject = {
+        type: "idGenerator", 
+        minimum: "",
+        maximum: "",
+        hasAllDistinctValues: false,
+        distributionVariables: {
+              type: "equalDistribution",
+              normalDistribution: {
+                standardDeviation: "",
+                mean: "",
+              },
+              binomialDistribution: {
+                n: "",
+                p: "",
+              },
+              exponentialDistribution: {
+                lambda: "",
+              },
+              logarithmicDistribution: {
+                p: "",
+              },
+        },
+        nullValues: "0",
+        paddingVariables: {
+              withPadding: false,
+              numberCharacters: "",
+              fillCharacter: "",
+              fromLeft: "true"
+        },
+        repoVariables: {
+              type: "idGenerator",
+              name: "",
+              description: "",
+              examples: "",
+        },
+    }; 
 
+    const [generatorObject, setGeneratorObject]=useState(intialGeneratorObject);
 
+    
     // Change Handler Input Fields
     const minimumChangedHandler = (event) => {
-        setMinimum(event.target.value);
-    }
+        const newGenerator = {...generatorObject};
+        newGenerator.minimum = event.target.value;
+        setGeneratorObject(newGenerator);
+    };
+
 
     // Change Handler Slider Component
     const handleNullValuesSliderChange = (event, newValue) => {
-      setNullValues(newValue);
+        const newGenerator = {...generatorObject};
+        newGenerator.nullValues = newValue;
+        setGeneratorObject(newGenerator);
     };
   
     const handleNullValuesInputChange = (event) => {
-      setNullValues(event.target.value === '' ? '99' : Number(event.target.value));
+        const newGenerator = {...generatorObject};
+        newGenerator.nullValues = (event.target.value === '' ? '99' : Number(event.target.value));
+        setGeneratorObject(newGenerator);
     };
   
+
     const handleBlur = () => {
-      if (nullValues < 0) {
-        setNullValues(0);
-      } else if (nullValues > 100) {
-        setNullValues(100);
+      if (generatorObject.nullValues < 0) {
+        setGeneratorObject.nullValues(0);
+      } else if (generatorObject.nullValues > 100) {
+        setGeneratorObject.nullValues(100);
       }
     };
 
-    // Change Handler Padding Component
-    const paddingVariablesChangedHandler = (paddingObject) => {
-        setPaddingVariables(paddingObject);
-    };
+
 
     // Change Handler Repo Component
     const repoVariablesChangedHandler = (repoObject) => {
-        setRepoVariables(repoObject);
+        const newGenerator = {...generatorObject};
+        newGenerator.repoVariables = (repoObject);
+        setGeneratorObject(newGenerator);
     };
 
 
-    // Combine to Generator Object
-    const buildGeneratorObject = () => {
-        const generatorObject = {
-          minimum: minimum,
-          nullValues: nullValues,
-          ...paddingVariables,
-          ... repoVariables}
-        return generatorObject;
-    }; 
+        // Change Handler Repo Element
+
+    const saveInRepoChangedHandler = (event) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.repoVariables.saveInRepo = (event.target.checked);
+        setGeneratorObject(newGenerator);
+    };
+
+    const nameChangedHandler = (event)=> {
+        const newGenerator = {...generatorObject};
+        newGenerator.repoVariables.name = (event.target.value);
+        setGeneratorObject(newGenerator);
+    };
+
+    const descriptionChangedHandler = (event) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.repoVariables.description = (event.target.value);
+        setGeneratorObject(newGenerator);
+    };
+
+    const examplesChangedHandler = (event) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.repoVariables.examples = (event.target.value);
+        setGeneratorObject(newGenerator);
+    };
 
 
+    // Change Handler Padding Component
 
+    const withPaddingChangedHandler = (event) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.paddingVariables.withPadding = (event.target.checked);
+        setGeneratorObject(newGenerator);
+    };
+
+    const numberCharactersChangedHandler = (event)=> {
+        const newGenerator = {...generatorObject};
+        newGenerator.paddingVariables.numberCharacters = (event.target.value);
+        setGeneratorObject(newGenerator);
+    };
+
+    const fillCharacterChangedHandler = (event) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.paddingVariables.fillCharacter = (event.target.value);
+        setGeneratorObject(newGenerator);
+    };
+
+    const fromLeftChangedHandler = (event) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.paddingVariables.fromLeft = (event.target.value);
+        setGeneratorObject(newGenerator);
+    };
+    
+
+    
 
   return (
     <>
@@ -112,11 +196,11 @@ export default function DialogFormIdGenerator(props) {
                     className={classes.input} 
                     type="number" 
                     placeholder="Enter Minimum" 
-                    value={minimum} 
+                    value={generatorObject.minimum} 
                     onChange={(event) => minimumChangedHandler(event)}/>
                 </Grid>
 
-                
+
                 <Grid container item xs={leftColumnWidth}>
                       <Typography variant={fontSizeLeftColumn}>Null Values:</Typography>
                 </Grid>
@@ -124,7 +208,7 @@ export default function DialogFormIdGenerator(props) {
                 <Grid container item xs={rightColumnWidth}>
                   <Grid item xs>
                     <Slider
-                      value={typeof nullValues === 'number' ? nullValues : 0}
+                      value={typeof generatorObject.nullValues === 'number' ? generatorObject.nullValues : 0}
                       onChange={handleNullValuesSliderChange}
                       aria-labelledby="input-slider"
                     />
@@ -133,7 +217,7 @@ export default function DialogFormIdGenerator(props) {
                   <Grid item>
                     <Input
                       className={classes.input}
-                      value={nullValues}
+                      value={generatorObject.nullValues}
                       margin="dense"
                       onChange={handleNullValuesInputChange}
                       onBlur={handleBlur}
@@ -154,11 +238,19 @@ export default function DialogFormIdGenerator(props) {
 
             <Grid direction="column" container item xs={12}>
                 <GeneratorFormPaddingExpansion 
-                  paddingVariablesChangedHandler={paddingVariablesChangedHandler} 
-                  paddingVariables={paddingVariables}/> 
+                    withPaddingChangedHandler={withPaddingChangedHandler}
+                    numberCharactersChangedHandler={numberCharactersChangedHandler}
+                    fillCharacterChangedHandler={fillCharacterChangedHandler}
+                    fromLeftChangedHandler={fromLeftChangedHandler}
+                    generatorObject={generatorObject}/> 
+
                 <GeneratorFormRepoExpansion 
-                  repoVariablesChangedHandler={repoVariablesChangedHandler} 
-                  repoVariables={repoVariables}/>
+                    saveInRepoChangedHandler={saveInRepoChangedHandler}
+                    nameChangedHandler={nameChangedHandler}
+                    descriptionChangedHandler={descriptionChangedHandler}
+                    examplesChangedHandler={examplesChangedHandler}
+                    generatorObject={generatorObject}/> 
+
             </Grid>       
       
       </div>
@@ -169,7 +261,7 @@ export default function DialogFormIdGenerator(props) {
           </Button>
           <Button 
               onClick={ ()=> {
-                props.saveGeneratorHandler(buildGeneratorObject());
+                props.saveGeneratorHandler(generatorObject);
                 props.handleCloseIdGenerator()}}
               color="primary">
             Save

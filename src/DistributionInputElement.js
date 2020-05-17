@@ -10,16 +10,6 @@ import DistributionInputSubElement from "./DistributionInputSubElement";
 
 export default function DistributionInputElement(props){
 
-    const [distributionType, setDistributionType] = useState('normalDistribution');
-    const [distributionValues, setDistributionValues] = useState("");
-
-    const distributionTypeChangedHandler = (event) => {
-      setDistributionType(event.target.value);    
-    }
-
-    const distributionValuesChangedHandler = (distributionObject) => {
-        setDistributionValues(distributionObject)
-    }
 
 return (
     <>
@@ -33,13 +23,14 @@ return (
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={distributionType}
-                        onChange={(event) => distributionTypeChangedHandler(event)}
+                        value={props.generatorObject.distributionVariables.type}
+                        onChange={(event) => props.distributionTypeChangedHandler(event)}
                     >
                         <MenuItem value="equalDistribution">Equal Distribution</MenuItem>
                         <MenuItem value="normalDistribution">Normal Distribution</MenuItem>
-                        <MenuItem value="binomialDistribution">Binomial DistributionThirty</MenuItem>
-                        <MenuItem value="zDistribution">Z-DistributionThirty</MenuItem>
+                        <MenuItem value="binomialDistribution">Binomial Distribution</MenuItem>
+                        <MenuItem value="exponentialDistribution">Exponential Distribution</MenuItem>
+                        <MenuItem value="logarithmicDistribution">Logarithmic Distribution</MenuItem>
                     </Select>
                 </Grid>
             </Grid>
@@ -47,8 +38,13 @@ return (
         <Grid container item xs={12}>
 
         <DistributionInputSubElement 
-            distributionType = {distributionType} 
-            distributionValuesChangedHandler={distributionValuesChangedHandler}/>    
+            expDLambdaValueChangedHandler={props.expDLambdaValueChangedHandler}
+            logDPValueChangedHandler={props.logDPValueChangedHandler}
+            normalDStdDevValueChangedHandler={props.normalDStdDevValueChangedHandler}
+            normalDMeanValueChangedHandler={props.normalDMeanValueChangedHandler}
+            binomialDPValueChangedHandler={props.binomialDPValueChangedHandler}
+            binomialDNValueChangedHandler={props.binomialDNValueChangedHandler}
+            generatorObject={props.generatorObject}/>  
             
         </Grid>    
     </>

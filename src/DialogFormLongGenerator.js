@@ -29,90 +29,216 @@ const useStyles = makeStyles({
 
 export default function DialogFormLongGenerator(props) {
     const classes = useStyles();
-    const [dictList, setDictList] = useState("start");
     const leftColumnWidth = 3;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
 
-    const [minimum, setMinimum] = useState("");
-    const [maximum, setMaximum] = useState("");
-    const [allDistinctValues, setAllDistinctValues] = useState("");
-    const [distributionValues, setDistributionValues] = useState({});
-    const [nullValues, setNullValues] = useState(0);
-    const [paddingVariables, setPaddingVariables] = useState({});
-    const [repoVariables, setRepoVariables] = useState({});
+    const intialGeneratorObject = {
+        type: "longGenerator", 
+        minimum: "",
+        maximum: "",
+        hasAllDistinctValues: false,
+        distributionVariables: {
+              type: "equalDistribution",
+              normalDistribution: {
+                standardDeviation: "",
+                mean: "",
+              },
+              binomialDistribution: {
+                n: "",
+                p: "",
+              },
+              exponentialDistribution: {
+                lambda: "",
+              },
+              logarithmicDistribution: {
+                p: "",
+              },
+        },
+        nullValues: "0",
+        paddingVariables: {
+              withPadding: false,
+              numberCharacters: "",
+              fillCharacter: "",
+              fromLeft: "true"
+        },
+        repoVariables: {
+              type: "longGenerator",
+              name: "",
+              description: "",
+              examples: "",
+        },
+    }; 
 
+    const [generatorObject, setGeneratorObject]=useState(intialGeneratorObject);
 
+    
     // Change Handler Input Fields
     const minimumChangedHandler = (event) => {
-        setMinimum(event.target.value);
-    }
+        const newGenerator = {...generatorObject};
+        newGenerator.minimum = event.target.value;
+        setGeneratorObject(newGenerator);
+    };
 
     // Change Handler Input Fields
     const maximumChangedHandler = (event) => {
-        setMaximum(event.target.value);
-    }
+        const newGenerator = {...generatorObject};
+        newGenerator.maximum = event.target.value;
+        setGeneratorObject(newGenerator);
+    };
 
     // Change Handler Input Fields
-    const allDistinctValuesChangedHandler = (event) => {
-        setAllDistinctValues(event.target.checked);
-    }
+    const hasAllDistinctValuesChangedHandler = (event) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.hasAllDistinctValues = event.target.checked;
+        setGeneratorObject(newGenerator);
+    };
 
     // Change Handler Distribution Component
-    const distributionValuesChangedHandler = (distributionObject) => {
-        setDistributionValues(distributionObject);
-    }
+    const distributionVariablesChangedHandler = (distributionObject) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.distribution = distributionObject;
+        setGeneratorObject(newGenerator);
+    };
 
     // Change Handler Slider Component
     const handleNullValuesSliderChange = (event, newValue) => {
-      setNullValues(newValue);
+        const newGenerator = {...generatorObject};
+        newGenerator.nullValues = newValue;
+        setGeneratorObject(newGenerator);
     };
   
     const handleNullValuesInputChange = (event) => {
-      setNullValues(event.target.value === '' ? '99' : Number(event.target.value));
+        const newGenerator = {...generatorObject};
+        newGenerator.nullValues = (event.target.value === '' ? '99' : Number(event.target.value));
+        setGeneratorObject(newGenerator);
     };
   
+
     const handleBlur = () => {
-      if (nullValues < 0) {
-        setNullValues(0);
-      } else if (nullValues > 100) {
-        setNullValues(100);
+      if (generatorObject.nullValues < 0) {
+        setGeneratorObject.nullValues(0);
+      } else if (generatorObject.nullValues > 100) {
+        setGeneratorObject.nullValues(100);
       }
     };
 
-    // Change Handler Padding Component
-    const paddingVariablesChangedHandler = (paddingObject) => {
-        setPaddingVariables(paddingObject);
-    };
+
 
     // Change Handler Repo Component
     const repoVariablesChangedHandler = (repoObject) => {
-        setRepoVariables(repoObject);
+        const newGenerator = {...generatorObject};
+        newGenerator.repoVariables = (repoObject);
+        setGeneratorObject(newGenerator);
     };
 
 
-    // Combine to Generator Object
-    const buildGeneratorObject = () => {
-        const generatorObject = {
-          minimum: minimum,
-          maximum: maximum,
-          distinctValues: distinctValues,
-          ...distributionVariables,
-          nullValues: nullValues,
-          ...paddingVariables,
-          ... repoVariables}
-        return generatorObject;
-    }; 
+        // Change Handler Repo Element
+
+    const saveInRepoChangedHandler = (event) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.repoVariables.saveInRepo = (event.target.checked);
+        setGeneratorObject(newGenerator);
+    };
+
+    const nameChangedHandler = (event)=> {
+        const newGenerator = {...generatorObject};
+        newGenerator.repoVariables.name = (event.target.value);
+        setGeneratorObject(newGenerator);
+    };
+
+    const descriptionChangedHandler = (event) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.repoVariables.description = (event.target.value);
+        setGeneratorObject(newGenerator);
+    };
+
+    const examplesChangedHandler = (event) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.repoVariables.examples = (event.target.value);
+        setGeneratorObject(newGenerator);
+    };
 
 
+    // Change Handler Padding Component
+
+    const withPaddingChangedHandler = (event) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.paddingVariables.withPadding = (event.target.checked);
+        setGeneratorObject(newGenerator);
+    };
+
+    const numberCharactersChangedHandler = (event)=> {
+        const newGenerator = {...generatorObject};
+        newGenerator.paddingVariables.numberCharacters = (event.target.value);
+        setGeneratorObject(newGenerator);
+    };
+
+    const fillCharacterChangedHandler = (event) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.paddingVariables.fillCharacter = (event.target.value);
+        setGeneratorObject(newGenerator);
+    };
+
+    const fromLeftChangedHandler = (event) => {
+        const newGenerator = {...generatorObject};
+        newGenerator.paddingVariables.fromLeft = (event.target.value);
+        setGeneratorObject(newGenerator);
+    };
+    
+
+    // Change Handler Distribution Component
+
+    const distributionTypeChangedHandler = (event) => {
+      const newGenerator = {...generatorObject};
+      newGenerator.distributionVariables.type = event.target.value;
+      setGeneratorObject(newGenerator);  
+    };
+
+
+    const expDLambdaValueChangedHandler = (event) => {
+      const newGenerator = {...generatorObject};
+      newGenerator.distributionVariables.exponentialDistribution.lambda = event.target.value;
+      setGeneratorObject(newGenerator);
+  };
+
+      const logDPValueChangedHandler = (event) => {
+      const newGenerator = {...generatorObject};
+      newGenerator.distributionVariables.logarithmicDistribution.p = event.target.value;
+      setGeneratorObject(newGenerator);
+  };
+
+  const normalDStdDevValueChangedHandler = (event) => {
+      const newGenerator = {...generatorObject};
+      newGenerator.distributionVariables.normalDistribution.standardDeviation = event.target.value;
+      setGeneratorObject(newGenerator);
+  };
+
+  const normalDMeanValueChangedHandler = (event) => {
+      const newGenerator = {...generatorObject};
+      newGenerator.distributionVariables.normalDistribution.mean = event.target.value;
+      setGeneratorObject(newGenerator);
+  };
+
+  const binomialDPValueChangedHandler = (event) => {
+      const newGenerator = {...generatorObject};
+      newGenerator.distributionVariables.binomialDistribution.p = event.target.value;
+      setGeneratorObject(newGenerator);
+  };
+
+  const binomialDNValueChangedHandler = (event) => {
+      const newGenerator = {...generatorObject};
+      newGenerator.distributionVariables.binomialDistribution.n = event.target.value;
+      setGeneratorObject(newGenerator);
+  };
 
 
   return (
     <>
     <Dialog 
-        onClose={props.handleCloseIdGenerator} 
+        onClose={props.handleCloseLongGenerator} 
         aria-labelledby="simple-dialog-title" 
-        open={props.isOpenIdGenerator}
+        open={props.isOpenLongGenerator}
         titel="Dialog"
         //TransitionComponent={Transition}
         keepMounted
@@ -120,7 +246,7 @@ export default function DialogFormLongGenerator(props) {
         fullWidth
         maxWidth="md"
         >
-      <DialogTitle id="simple-dialog-title">Id Generator</DialogTitle>
+      <DialogTitle id="simple-dialog-title">Long Generator</DialogTitle>
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
       
             <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>
@@ -134,7 +260,7 @@ export default function DialogFormLongGenerator(props) {
                     className={classes.input} 
                     type="number" 
                     placeholder="Enter Minimum" 
-                    value={minimum} 
+                    value={generatorObject.minimum} 
                     onChange={(event) => minimumChangedHandler(event)}/>
                 </Grid>
 
@@ -148,7 +274,7 @@ export default function DialogFormLongGenerator(props) {
                     className={classes.input} 
                     type="number" 
                     placeholder="Enter Maximum" 
-                    value={maximum} 
+                    value={generatorObject.maximum} 
                     onChange={(event) => maximumChangedHandler(event)}/>
                 </Grid>
 
@@ -160,15 +286,22 @@ export default function DialogFormLongGenerator(props) {
                 <Grid container item xs={rightColumnWidth}>
                   <Checkbox 
                         inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={distinctValues}
-                        onChange={()=> {distinctValuesChangedHandler(event)}}
+                        checked={generatorObject.hasAllDistinctValues}
+                        onChange={(event)=> {hasAllDistinctValuesChangedHandler(event)}}
                         />
                 </Grid>
 
                 
                 <Grid container item xs={12}>
                     <DistributionInputElement 
-                        distributionValuesChangedHandler={distributionValuesChangedHandler}/>
+                        distributionTypeChangedHandler={distributionTypeChangedHandler}
+                        expDLambdaValueChangedHandler={expDLambdaValueChangedHandler}
+                        logDPValueChangedHandler={logDPValueChangedHandler}
+                        normalDStdDevValueChangedHandler={normalDStdDevValueChangedHandler}
+                        normalDMeanValueChangedHandler={normalDMeanValueChangedHandler}
+                        binomialDPValueChangedHandler={binomialDPValueChangedHandler}
+                        binomialDNValueChangedHandler={binomialDNValueChangedHandler}
+                        generatorObject={generatorObject}/>
                 </Grid>
 
 
@@ -179,7 +312,7 @@ export default function DialogFormLongGenerator(props) {
                 <Grid container item xs={rightColumnWidth}>
                   <Grid item xs>
                     <Slider
-                      value={typeof nullValues === 'number' ? nullValues : 0}
+                      value={typeof generatorObject.nullValues === 'number' ? generatorObject.nullValues : 0}
                       onChange={handleNullValuesSliderChange}
                       aria-labelledby="input-slider"
                     />
@@ -188,7 +321,7 @@ export default function DialogFormLongGenerator(props) {
                   <Grid item>
                     <Input
                       className={classes.input}
-                      value={nullValues}
+                      value={generatorObject.nullValues}
                       margin="dense"
                       onChange={handleNullValuesInputChange}
                       onBlur={handleBlur}
@@ -209,11 +342,19 @@ export default function DialogFormLongGenerator(props) {
 
             <Grid direction="column" container item xs={12}>
                 <GeneratorFormPaddingExpansion 
-                  paddingVariablesChangedHandler={paddingVariablesChangedHandler} 
-                  paddingVariables={paddingVariables}/> 
+                    withPaddingChangedHandler={withPaddingChangedHandler}
+                    numberCharactersChangedHandler={numberCharactersChangedHandler}
+                    fillCharacterChangedHandler={fillCharacterChangedHandler}
+                    fromLeftChangedHandler={fromLeftChangedHandler}
+                    generatorObject={generatorObject}/> 
+
                 <GeneratorFormRepoExpansion 
-                  repoVariablesChangedHandler={repoVariablesChangedHandler} 
-                  repoVariables={repoVariables}/>
+                    saveInRepoChangedHandler={saveInRepoChangedHandler}
+                    nameChangedHandler={nameChangedHandler}
+                    descriptionChangedHandler={descriptionChangedHandler}
+                    examplesChangedHandler={examplesChangedHandler}
+                    generatorObject={generatorObject}/> 
+
             </Grid>       
       
       </div>
@@ -224,8 +365,8 @@ export default function DialogFormLongGenerator(props) {
           </Button>
           <Button 
               onClick={ ()=> {
-                props.saveGeneratorHandler(buildGeneratorObject());
-                props.handleCloseIdGenerator()}}
+                props.saveGeneratorHandler(generatorObject);
+                props.handleCloseLongGenerator()}}
               color="primary">
             Save
           </Button>

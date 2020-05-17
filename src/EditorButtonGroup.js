@@ -50,7 +50,7 @@ export default function EditorButtonGroup(props) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleCloseMenu = () => {
     setAnchorEl(null);
   };    
 
@@ -95,11 +95,16 @@ export default function EditorButtonGroup(props) {
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
-            onClose={handleClose}
+            onClose={handleCloseMenu}
             >
-                <MenuItem onClick={handleClose}>Save on Disc</MenuItem>
-                <MenuItem onClick={handleClose}>Export PDGF-XML</MenuItem>
-                <MenuItem onClick={handleClose}>Export JSON</MenuItem>
+                <MenuItem onClick={handleCloseMenu}>Save on Disc</MenuItem>
+                <MenuItem 
+                    onClick={() => {handleCloseMenu(); props.handleClickOpenDialogSaveSchema()}}>
+                      Save Schema in TempStore
+                </MenuItem>
+                <MenuItem onClick={handleCloseMenu}>Export PDGF-XML</MenuItem>
+                <MenuItem onClick={handleCloseMenu}>Export JSON</MenuItem>
+
         </Menu>
         
         <LightTooltip title="Show help">

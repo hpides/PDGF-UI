@@ -75,7 +75,6 @@ const dictData2 = [
                     }}
                     helperText="Please select your currency"
                     >
-                {/*alert("before map in Form Dict List: " + JSON.stringify(props.dictData))*/}      
                 {dictData2.map((option) => (
                     <option key={option.value} value={option.value}>
                     {option.label}
@@ -114,15 +113,14 @@ const dictData2 = [
                   <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
                 </Grid>
 
-                <GeneratorFormNullValuesElement/>
+              
               </Grid>       
 
               <Grid direction="column" container item xs={12}>
                   <div></div>
                   
               
-                  <GeneratorFormPaddingExpansion/> 
-                  <GeneratorFormRepoExpansion/>
+               
               </Grid> 
       </>
   );

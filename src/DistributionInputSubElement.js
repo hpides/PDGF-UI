@@ -11,53 +11,8 @@ import Input from "@material-ui/core/Input";
 
 export default function DistributionInputSubElement(props){
 
-    const [values, setValues] = useState({exp: {lambda: ""},log: {p: ""}, normal: {stdDev: "", mean: ""}, bin: {p: "", n:""}  });
-
-
-    const expDLambdaValueChangedHandler = (event) => {
-        const valuesNew = {...values};
-        valuesNew.exp.lambda = event.target.value;
-        setValues(valuesNew);
-        props.distributionValuesChangedHandler(values);
-    }
-
-    const logDPValueChangedHandler = (event) => {
-        const valuesNew = {...values};
-        valuesNew.log.p = event.target.value;
-        setValues(valuesNew);
-        props.distributionValuesChangedHandler(values);
-    }
-
-    const normalDStdDevValueChangedHandler = (event) => {
-        const valuesNew = {...values};
-        valuesNew.normal.stdDev = event.target.value;
-        setValues(valuesNew);
-        props.distributionValuesChangedHandler(values);
-    }
-
-    const normalDMeanValueChangedHandler = (event) => {
-        const valuesNew = {...values};
-        valuesNew.normal.mean = event.target.value;
-        setValues(valuesNew);
-        props.distributionValuesChangedHandler(values);
-    }
-
-    const binomialDPValueChangedHandler = (event) => {
-        const valuesNew = {...values};
-        valuesNew.binomial.p = event.target.value;
-        setValues(valuesNew);
-        props.distributionValuesChangedHandler(values);
-    }
-
-    const binomialDNValueChangedHandler = (event) => {
-        const valuesNew = {...values};
-        valuesNew.binomial.n = event.target.value;
-        setValues(valuesNew);
-        props.distributionValuesChangedHandler(values);
-    }
     
-    
-        switch (props.distribution) {
+        switch (props.generatorObject.distributionVariables.type) {
 
          
 
@@ -70,8 +25,8 @@ export default function DistributionInputSubElement(props){
                         <Grid item xs={9}>
                             <Input 
                                 placeholder="Enter lambda Value"
-                                value={values.exp.lambda}
-                                onChange={(event)=>{expDLambdaValueChangedHandler(event)}}/>
+                                value={props.generatorObject.distributionVariables.exponentialDistribution.lambda}
+                                onChange={(event)=>{props.expDLambdaValueChangedHandler(event)}}/>
                         </Grid>
     
                         </>);
@@ -82,13 +37,13 @@ export default function DistributionInputSubElement(props){
             return (
                     <>
                     <Grid item xs={3}>
-                        <Typography>p Value:</Typography>
+                        <Typography>p-Value:</Typography>
                     </Grid>
                     <Grid item xs={9}>
                         <Input 
-                        placeholder="Enter p Value"
-                        value={values.log.p}
-                        onChange={(event)=>{logDPValueChangedHandler(event)}}/>
+                        placeholder="Enter p-Value"
+                        value={props.generatorObject.distributionVariables.logarithmicDistribution.p}
+                        onChange={(event)=>{props.logDPValueChangedHandler(event)}}/>
                     </Grid>
 
                     </>);
@@ -101,8 +56,8 @@ export default function DistributionInputSubElement(props){
                     <Grid item xs={9}>
                         <Input 
                             placeholder="Enter Standard Deviation"
-                            value={values.normal.stdDev}
-                            onChange={(event)=>{normalDStdDevValueChangedHandler(event)}}/>
+                            value={props.generatorObject.distributionVariables.normalDistribution.standardDeviation}
+                            onChange={(event)=>{props.normalDStdDevValueChangedHandler(event)}}/>
                     </Grid>
                     <Grid item xs={3}>
                         <Typography>Mean</Typography>
@@ -110,8 +65,8 @@ export default function DistributionInputSubElement(props){
                     <Grid item xs={9}>
                         <Input 
                             placeholder="Enter Mean Value"
-                            value={values.normal.mean}
-                            onChange={(event)=>{normalDMeanValueChangedHandler(event)}}/>
+                            value={props.generatorObject.distributionVariables.normalDistribution.mean}
+                            onChange={(event)=>{props.normalDMeanValueChangedHandler(event)}}/>
                     </Grid>
                     </>);
 
@@ -123,18 +78,18 @@ export default function DistributionInputSubElement(props){
                     </Grid>
                     <Grid item xs={9}>
                         <Input 
-                            placeholder="Enter p Value"
-                            value={values.bin.p}
-                            onChange={(event)=>{binomialDPValueChangedHandler(event)}}/>
+                            placeholder="Enter p-Value"
+                            value={props.generatorObject.distributionVariables.binomialDistribution.p}
+                            onChange={(event)=>{props.binomialDPValueChangedHandler(event)}}/>
                     </Grid>
                     <Grid item xs={3}>
                         <Typography>n Value:</Typography>
                     </Grid>
                     <Grid item xs={9}>
                         <Input 
-                            placeholder="Enter n Value"
-                            value={values.exp.lambda}
-                            onChange={(event)=>{binomialDPValueChangedHandler(event)}}/>
+                            placeholder="Enter n-Value"
+                            value={props.generatorObject.distributionVariables.binomialDistribution.p}
+                            onChange={(event)=>{props.binomialDPValueChangedHandler(event)}}/>
                     </Grid>
                     </>);
 

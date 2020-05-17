@@ -36,11 +36,19 @@ export default function DialogSchemaSelection(props) {
     onClose(value);
   };
 
+
+ 
+
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={isOpenSchemaDialog}>
       <DialogTitle id="simple-dialog-title">Select Schema</DialogTitle>
       <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>    
-      {schemaDescriptions.map(element => { return <Grid item> <SchemaSelectionCard input = {element}/> </Grid>})}
+      
+      
+      {(localStorage.getItem("schemaRepository")!== null)? 
+        JSON.parse(localStorage.getItem("schemaRepository")).map(element => {return <Grid item> <SchemaSelectionCard input = {element.info} loadSelectedSchema={props.loadSelectedSchema}/> </Grid>}): 
+        <div> There are currently no Schemata in the Repository </div>}  
+      
       </div>
     </Dialog>
   );

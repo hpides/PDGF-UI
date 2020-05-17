@@ -27,20 +27,19 @@ const useStyles = makeStyles({
   },
 });
 
-export default function DialogFormDoubleGenerator(props) {
+export default function DialogFormDateTimeGenerator(props) {
     const classes = useStyles();
     const leftColumnWidth = 3;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
 
     const intialGeneratorObject = {
-        type: "doubleGenerator", 
-        minimum: "",
-        maximum: "",
-        decimalPlaces: "",
-        locale: "",
-        fixedStepSize: "",
+        type: "dateTimeGenerator", 
+        startDate: "",
+        endDate: "",
+        disableRNG: "",
         hasAllDistinctValues: false,
+        fixedStepSize: "",
         distributionVariables: {
               type: "equalDistribution",
               normalDistribution: {
@@ -66,66 +65,46 @@ export default function DialogFormDoubleGenerator(props) {
               fromLeft: "true"
         },
         repoVariables: {
-              type: "doubleGenerator",
+              type: "dateTimeGenerator",
               name: "",
               description: "",
               examples: "",
         },
     }; 
 
+
     const [generatorObject, setGeneratorObject]=useState(intialGeneratorObject);
 
-    
-    // Change Handler Input Fields
-    const minimumChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
-        newGenerator.minimum = event.target.value;
-        setGeneratorObject(newGenerator);
-    };
 
-    // Change Handler Input Fields
-    const maximumChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
-        newGenerator.maximum = event.target.value;
-        setGeneratorObject(newGenerator);
-    };
-
-    // Change Handler decimalPlaces
-    const decimalPlacesChangedHandler = (event) => {
+    // Change Handler startDate
+    const startDateChangedHandler = (event) => {
       const newGenerator = {...generatorObject};
-      newGenerator.decimalPlaces = event.target.value;
+      newGenerator.startDate = event.target.value;
       setGeneratorObject(newGenerator);
     };
 
-     // Change Handler locale
-     const localeChangedHandler = (event) => {
+     // Change Handler endDate
+     const endDateChangedHandler = (event) => {
       const newGenerator = {...generatorObject};
-      newGenerator.locale = event.target.value;
+      newGenerator.endDate = event.target.value;
       setGeneratorObject(newGenerator);
     };
 
-    // Change Handler Input Fields
+    // Change Handler disableRNG
+    const disableRNGChangedHandler = (event) => {
+      const newGenerator = {...generatorObject};
+      newGenerator.disableRNG = event.target.checked;
+      setGeneratorObject(newGenerator);
+    };
+
+    // Change Handler fixedStepSize
     const fixedStepSizeChangedHandler = (event) => {
       const newGenerator = {...generatorObject};
       newGenerator.fixedStepSize = event.target.checked;
       setGeneratorObject(newGenerator);
-    };
+  };
 
-    // Change Handler Input Fields
-    const hasAllDistinctValuesChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
-        newGenerator.hasAllDistinctValues = event.target.checked;
-        setGeneratorObject(newGenerator);
-    };
-
-    // Change Handler Distribution Component
-    const distributionVariablesChangedHandler = (distributionObject) => {
-        const newGenerator = {...generatorObject};
-        newGenerator.distribution = distributionObject;
-        setGeneratorObject(newGenerator);
-    };
-
-    // Change Handler Slider Component
+    // Change Handler nullValues Slider Component
     const handleNullValuesSliderChange = (event, newValue) => {
         const newGenerator = {...generatorObject};
         newGenerator.nullValues = newValue;
@@ -147,17 +126,7 @@ export default function DialogFormDoubleGenerator(props) {
       }
     };
 
-
-
-    // Change Handler Repo Component
-    const repoVariablesChangedHandler = (repoObject) => {
-        const newGenerator = {...generatorObject};
-        newGenerator.repoVariables = (repoObject);
-        setGeneratorObject(newGenerator);
-    };
-
-
-        // Change Handler Repo Element
+    // Change Handler Repo Element
 
     const saveInRepoChangedHandler = (event) => {
         const newGenerator = {...generatorObject};
@@ -211,58 +180,13 @@ export default function DialogFormDoubleGenerator(props) {
     };
     
 
-    // Change Handler Distribution Component
-
-    const distributionTypeChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
-      newGenerator.distributionVariables.type = event.target.value;
-      setGeneratorObject(newGenerator);  
-    };
-
-
-    const expDLambdaValueChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
-      newGenerator.distributionVariables.exponentialDistribution.lambda = event.target.value;
-      setGeneratorObject(newGenerator);
-  };
-
-      const logDPValueChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
-      newGenerator.distributionVariables.logarithmicDistribution.p = event.target.value;
-      setGeneratorObject(newGenerator);
-  };
-
-  const normalDStdDevValueChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
-      newGenerator.distributionVariables.normalDistribution.standardDeviation = event.target.value;
-      setGeneratorObject(newGenerator);
-  };
-
-  const normalDMeanValueChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
-      newGenerator.distributionVariables.normalDistribution.mean = event.target.value;
-      setGeneratorObject(newGenerator);
-  };
-
-  const binomialDPValueChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
-      newGenerator.distributionVariables.binomialDistribution.p = event.target.value;
-      setGeneratorObject(newGenerator);
-  };
-
-  const binomialDNValueChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
-      newGenerator.distributionVariables.binomialDistribution.n = event.target.value;
-      setGeneratorObject(newGenerator);
-  };
-
 
   return (
     <>
     <Dialog 
-        onClose={props.handleCloseDoubleGenerator} 
+        onClose={props.handleCloseDateTimeGenerator} 
         aria-labelledby="simple-dialog-title" 
-        open={props.isOpenDoubleGenerator}
+        open={props.isOpenDateTimeGenerator}
         titel="Dialog"
         //TransitionComponent={Transition}
         keepMounted
@@ -270,65 +194,50 @@ export default function DialogFormDoubleGenerator(props) {
         fullWidth
         maxWidth="md"
         >
-      <DialogTitle id="simple-dialog-title">Double Generator</DialogTitle>
+      <DialogTitle id="simple-dialog-title">DateTime Generator</DialogTitle>
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
       
-            <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>
+            <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>          
 
                 <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Minimum:</Typography>
+                  <Typography variant={fontSizeLeftColumn}>Start-Date:</Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>
                   <Input 
                     className={classes.input} 
-                    type="number" 
-                    placeholder="Enter Minimum" 
-                    value={generatorObject.minimum} 
-                    onChange={(event) => minimumChangedHandler(event)}/>
-                </Grid>
-
-
-                <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Maximum:</Typography>
-                </Grid>
-
-                <Grid container item xs={rightColumnWidth}>
-                  <Input 
-                    className={classes.input} 
-                    type="number" 
-                    placeholder="Enter Maximum" 
-                    value={generatorObject.maximum} 
-                    onChange={(event) => maximumChangedHandler(event)}/>
-                </Grid>
-
-
-                <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Decimal Places:</Typography>
-                </Grid>
-
-                <Grid container item xs={rightColumnWidth}>
-                  <Input 
-                    className={classes.input} 
-                    type="number" 
-                    placeholder="Enter Number of Decima Places" 
-                    value={generatorObject.decimalPlaces} 
-                    onChange={(event) => decimalPlacesChangedHandler(event)}/>
+                    type="date" 
+                    placeholder="Enter Start-Date" 
+                    value={generatorObject.startDate} 
+                    onChange={(event) => startDateChangedHandler(event)}/>
                 </Grid>
 
 
 
                 <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Locale:</Typography>
+                  <Typography variant={fontSizeLeftColumn}>End-Date:</Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>
                   <Input 
                     className={classes.input} 
-                    type="number" 
-                    placeholder="Enter Locale" 
-                    value={generatorObject.locale} 
-                    onChange={(event) => localeChangedHandler(event)}/>
+                    type="date" 
+                    placeholder="Enter End-Date" 
+                    value={generatorObject.endDate} 
+                    onChange={(event) => endDateChangedHandler(event)}/>
+                </Grid>
+
+
+                <Grid container item xs={leftColumnWidth}>
+                  <Typography variant={fontSizeLeftColumn}>Disable RNG:</Typography>
+                </Grid>
+
+                <Grid container item xs={rightColumnWidth}>
+                  <Checkbox 
+                        inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
+                        checked={generatorObject.disableRNG}
+                        onChange={(event)=> {disableRNGChangedHandler(event)}}
+                        />
                 </Grid>
 
 
@@ -343,41 +252,6 @@ export default function DialogFormDoubleGenerator(props) {
                         onChange={(event)=> {fixedStepSizeChangedHandler(event)}}
                         />
                 </Grid>
-
-
-
-
-
-
-
-
-
-
-                <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Distinct Values:</Typography>
-                </Grid>
-
-                <Grid container item xs={rightColumnWidth}>
-                  <Checkbox 
-                        inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={generatorObject.hasAllDistinctValues}
-                        onChange={(event)=> {hasAllDistinctValuesChangedHandler(event)}}
-                        />
-                </Grid>
-
-                
-                <Grid container item xs={12}>
-                    <DistributionInputElement 
-                        distributionTypeChangedHandler={distributionTypeChangedHandler}
-                        expDLambdaValueChangedHandler={expDLambdaValueChangedHandler}
-                        logDPValueChangedHandler={logDPValueChangedHandler}
-                        normalDStdDevValueChangedHandler={normalDStdDevValueChangedHandler}
-                        normalDMeanValueChangedHandler={normalDMeanValueChangedHandler}
-                        binomialDPValueChangedHandler={binomialDPValueChangedHandler}
-                        binomialDNValueChangedHandler={binomialDNValueChangedHandler}
-                        generatorObject={generatorObject}/>
-                </Grid>
-
 
                 <Grid container item xs={leftColumnWidth}>
                       <Typography variant={fontSizeLeftColumn}>Null Values:</Typography>
@@ -411,8 +285,8 @@ export default function DialogFormDoubleGenerator(props) {
                     />
                   </Grid>
                 </Grid>
-
-            </Grid>       
+            </Grid>           
+          
 
             <Grid direction="column" container item xs={12}>
                 <GeneratorFormPaddingExpansion 
@@ -440,7 +314,7 @@ export default function DialogFormDoubleGenerator(props) {
           <Button 
               onClick={ ()=> {
                 props.saveGeneratorHandler(generatorObject);
-                props.handleCloseDoubleGenerator()}}
+                props.handleCloseDateTimeGenerator()}}
               color="primary">
             Save
           </Button>

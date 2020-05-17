@@ -27,46 +27,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function GeneratorFormPaddingExpansion(props) {
   const classes = useStyles();
-  const [withPadding, setWithPadding] = useState(false);
-  const [numberCharacters, setNumberCharacters] = useState(0);
-  const [fillCharacter, setFillCharacter] = useState("");
-  const [fromLeft, setFromLeft] = useState(true);
-
   const leftColumnWidth = 3;
   const rightColumnWidth = 12 - leftColumnWidth; 
   const fontSizeLeftColumn = "h5"
-  
-// Change Handler 
-
-  const withPaddingChangedHandler = (event) => {
-    setWithPadding(event.target.checked);
-  };
-
-  const numberCharactersChangedHandler = (event)=> {
-      setNumberCharacters(event.target.value)
-  };
-
-  const fillCharacterChangedHandler = (event) => {
-      setFillCharacter(event.target.value);
-  };
-
-  const fromLeftChangedHandler = (event) => {
-      setFromLeft(event.target.value)
-  };
-
-
-// Build Repo Object Function
-
-  const buildRepoObject = () => {
-      const repoObject={
-            withPadding: withPadding,
-            numberCharacters: numberCharacters,
-            fillCharacter: fillCharacter,
-            fromLeft: fromLeft,
-        };   
-        return repoObject;
-  };
-
 
 
   return (
@@ -85,23 +48,11 @@ export default function GeneratorFormPaddingExpansion(props) {
           </Grid>
           <Grid container item xs={rightColumnWidth} style={{background: "inherit", paddingLeft: 10}}>
               <Checkbox 
-                checked={withPadding}
-                onChange={event => {
-                    withPaddingChangedHandler(event);
-                    props.paddingVariablesChangedHandler(buildRepoObject());
-                }}
+                checked={props.generatorObject.paddingVariables.withPadding}
+                onChange={event => {props.withPaddingChangedHandler(event)}}
                 inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
           </Grid>  
 
-{/*
-          <FormControlLabel
-          value="start"
-          control={<Checkbox color="primary" />}
-          label="Padding"
-          labelPlacement="start"
-            />
-
-*/}
 
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
@@ -116,11 +67,9 @@ export default function GeneratorFormPaddingExpansion(props) {
                   <Input 
                     placeholder="Enter Size" 
                     className={classes.input}
-                    value={numberCharacters}
-                    onChange={(event=> {
-                        numberCharactersChangedHandler(event);
-                        props.paddingVariablesChangedHandler(buildRepoObject()); 
-                        })}/>
+                    value={props.generatorObject.paddingVariables.numberCharacters}
+                    onChange={event=> {props.numberCharactersChangedHandler(event)}}
+                    />
                 </Grid>
                 <Grid container item xs={leftColumnWidth}style={{background: "inherit"}}>
                   <Typography variant={fontSizeLeftColumn}>Character:</Typography>
@@ -128,13 +77,9 @@ export default function GeneratorFormPaddingExpansion(props) {
                 <Grid container item xs={rightColumnWidth} style={{background: "inherit"}}>
                   <Input 
                     placeholder="Enter Fill Character" 
-                    value={fillCharacter}
+                    value={props.generatorObject.paddingVariables.fillCharacter}
                     multiline className={classes.input}
-                    onChange={event => {
-                        fillCharacterChangedHandler(event);
-                        props.paddingVariablesChangedHandler(buildRepoObject());
-                        }
-                    }/>
+                    onChange={event => {props.fillCharacterChangedHandler(event)}}/>
 
                 </Grid>
                 <Grid container item xs={leftColumnWidth} style={{background: "inherit"}}>
@@ -151,11 +96,8 @@ export default function GeneratorFormPaddingExpansion(props) {
                     <Switch
                         defaultChecked
                         color="default"
-                        value={fromLeft}
-                        onChange={event => {
-                            fromLeftChangedHandler(event);
-                            props.paddingVariablesChangedHandler(buildRepoObject());
-                        }}
+                        value={props.generatorObject.paddingVariables.fromLeft}
+                        onChange={event => {props.fromLeftChangedHandler(event)}}
                         inputProps={{ 'aria-label': 'checkbox with default color' }}
                     />
                    
@@ -170,3 +112,9 @@ export default function GeneratorFormPaddingExpansion(props) {
     </Grid>
   );
 }
+
+
+
+
+
+
