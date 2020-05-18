@@ -53,16 +53,16 @@ const useStyles = makeStyles({
   },
 });
 
-export default function GeneratorSelectionCard(props) {
+export default function RawGeneratorSelectionCard(props) {
   const classes = useStyles();
 
   return (
-      <Box className={classes.root} onClick={()=>{props.selectGeneratorHandler(props.data.uid); props.handleCloseGeneratorDialog()}} style={{height: "170px", width: "200px", margin: "3px"}}>
+      <Box className={classes.root} onClick={()=>{props.selectRawGeneratorHandler(props.data.uid)}} style={{height: "170px", width: "200px", margin: "3px"}}>
         <Grid container classeName={classes.container} direction="column" xs={12} style={{background: "inherit", padding: "4px",}}>
             <Grid container item className={classes.inner_container_top} xs={12} direction="row" justify="space-between" style={{background: "inherit"}}>
                 <Grid container item xs={9} style={{background: "inherit"}}>
                     <Typography className={classes.name} color="textSecondary"  >
-                        {props.data.repoVariables.name}
+                        {props.data.name}
                     </Typography >
                 </Grid>
                 <Grid container item className={classes.inner_container_middle} xs={3} style={{background: "inherit"}} display="flex" direction="row" justify="flex-end">
@@ -72,12 +72,12 @@ export default function GeneratorSelectionCard(props) {
             </Grid>
             <Grid container item style={{background: "inherit"}}>
                 <Typography className={classes.description} color="textSecondary" variant="h5" component="h2" >
-                {props.data.repoVariables.description}
+                {props.data.description}
                 </Typography >
             </Grid>
             <Grid container item className={classes.inner_container_bottom}>
                 <Typography className={classes.examples}>
-                {props.data.repoVariables.examples}
+                {props.data.examples}
                 </Typography>
             </Grid>
         </Grid>

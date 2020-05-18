@@ -43,7 +43,6 @@ export default function BodyEditor(props){
     const [isOpenDummy03, setIsOpenDummy03] = useState(false);
     const [isOpenBlank, setIsOpenBlank] = useState(false);
     const [tableFocus, setTableFocus] = useState({});
-    const [schemaStore, setSchemaStore] = useState([]);
 
 
    
@@ -54,6 +53,27 @@ export default function BodyEditor(props){
     };
 
 
+    const selectGeneratorHandler = (uid) => {
+        //alert("uid passed: " + uid);
+        const schemaNew = {...currentSchemaLocal};
+        const tableIndex = schemaNew.tables.findIndex(x => x.tableIndex === tableFocus.tableIndex);
+        //alert("tableIndex:   " + tableIndex);
+        const rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x=> x.rowId === tableFocus.rowId);
+        //alert("rowIndex:   " + rowIndex);
+        const generatorRepo = JSON.parse(localStorage.getItem("generatorRepository"));
+        //alert("generatorRepo: " + generatorRepo);
+        const indexGenerator = generatorRepo.findIndex(x=> x.uid === uid);
+        //alert("generatorIndex:   " + indexGenerator);
+        schemaNew.tables[tableIndex].tableItems[rowIndex].generator = generatorRepo[indexGenerator];
+        //alert("operation done!")
+    };
+
+
+
+
+
+
+
 
     // set Focus on table rows
 
@@ -62,7 +82,7 @@ export default function BodyEditor(props){
     };
 
 
-    const unsetTableFocusHandler = () => {
+    const resetTableFocusHandler = () => {
         setTableFocus({});
     }
 
@@ -229,16 +249,40 @@ export default function BodyEditor(props){
     // reset operation
     const resetEditor = () => {
         setCurrentSchemaLocal(emptySchema0);
-    }
+    };
 
 
-    // Temp Store operations
-    const saveSchemaInLocalStore = () => {
-        let currentSchema = {...currentSchemaLocal};
-        let schemaStoreNew = [...schemaStore];
-        schemaStoreNew.push(currentSchema);
-        setSchemaStore(schemaStoreNew);
+    // Browser Store for Generator
+    const saveGeneratorInBrowserStorage =(generatorObject) => {
+        alert("in saveGeneratorInBrowserStorage");
+        if (localStorage.getItem("generatorRepository") === null) {
+            alert("generatorRepo === null");
+            let generatorRepository = [];
+            generatorRepository.push(generatorObject);
+            localStorage.setItem("generatorRepository", JSON.stringify(generatorRepository));
+        } else {
+            let generatorRepository = JSON.parse(localStorage.getItem("generatorRepository"));
+            alert("generatorRepo !== null");
+            generatorRepository.push(generatorObject);
+            localStorage.setItem("generatorRepository", JSON.stringify(generatorRepository));
+        }
     }
+
+/*
+    const loadGeneratorFromBrowserStorage = () => {
+        let generatorReloadedStringified = localStorage.getItem('generatorRepo');
+        console.log("generatorStringified: " + generatorReloadedStringified); 
+        let generatorReloaded = JSON.parse(generatorReloadedStringified);
+        console.log("schema: " + generatorReloaded);
+        setCurrentSchemaLocal(generatorReloaded);
+    }
+
+*/
+
+
+
+
+
 
 
     // Browser Store operations
@@ -257,19 +301,10 @@ export default function BodyEditor(props){
         }
     
     }
-
-
-    const loadSchemaFromBrowserStorage = () => {
-        let schemaReloadedStringified = localStorage.getItem('MySchema');
-        console.log("schemaStringified: " + schemaReloadedStringified); 
-        let schemaReloaded = JSON.parse(schemaReloadedStringified);
-        console.log("schema: " + schemaReloaded);
-        setCurrentSchemaLocal(schemaReloaded);
-    }
   
 
-    // Load Schema from schemaRepo
-    const loadSelectedSchemaFromRepo = (schemaUid) => {
+    // Load Schema from Browser Storage
+    const loadSchemaFromRepo = (schemaUid) => {
         let schemaRepo = JSON.parse(localStorage.getItem("schemaRepo"));
         let schemaIndex = schemaRepo.findIndex(x => x.uid === schemaUid);
         setCurrentSchemaLocal(schemaRepo[schemaIndex]);
@@ -494,13 +529,7 @@ const handleClickOpenBlank = () => {
         return null;
     }
 
-
-
-
-
-    // load selected Schema after DialogSchemaSelection
-
-    const loadSelectedSchema = () => {}
+    
 
 
 
@@ -607,7 +636,8 @@ const handleClickOpenBlank = () => {
                 isOpenGeneratorDialog={isOpenGeneratorDialog} 
                 handleCloseGeneratorDialog={handleCloseGeneratorDialog} 
                 data={generatorDescriptions} 
-                handleClickOpenRawGeneratorDialog={handleClickOpenRawGeneratorDialog} 
+                handleClickOpenRawGeneratorDialog={handleClickOpenRawGeneratorDialog}
+                selectGeneratorHandler={selectGeneratorHandler} 
             />                   
             <DialogRawGeneratorSelection  
                 isOpenRawGeneratorDialog={isOpenRawGeneratorDialog} 
@@ -620,36 +650,43 @@ const handleClickOpenBlank = () => {
                 isOpenDictListGenerator={isOpenDictListGenerator} 
                 handleCloseDictListGenerator={handleCloseDictListGenerator}
                 saveGeneratorHandler={saveGeneratorHandler}
+                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
             />
             <DialogFormIdGenerator 
                 isOpenIdGenerator={isOpenIdGenerator} 
                 handleCloseIdGenerator={handleCloseIdGenerator}
                 saveGeneratorHandler={saveGeneratorHandler}
+                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
             />
             <DialogFormLongGenerator 
                 isOpenLongGenerator={isOpenLongGenerator} 
                 handleCloseLongGenerator={handleCloseLongGenerator}
                 saveGeneratorHandler={saveGeneratorHandler}
+                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
             />
             <DialogFormDoubleGenerator 
                 isOpenDoubleGenerator={isOpenDoubleGenerator} 
                 handleCloseDoubleGenerator={handleCloseDoubleGenerator}
                 saveGeneratorHandler={saveGeneratorHandler}
+                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
             />
             <DialogFormDateTimeGenerator 
                 isOpenDateTimeGenerator={isOpenDateTimeGenerator} 
                 handleCloseDateTimeGenerator={handleCloseDateTimeGenerator}
                 saveGeneratorHandler={saveGeneratorHandler}
+                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
             />
              <DialogFormRandomStringGenerator 
                 isOpenRandomStringGenerator={isOpenRandomStringGenerator} 
                 handleCloseRandomStringGenerator={handleCloseRandomStringGenerator}
                 saveGeneratorHandler={saveGeneratorHandler}
+                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
             />
             <DialogFormRandomSentenceGenerator 
                 isOpenRandomSentenceGenerator={isOpenRandomSentenceGenerator} 
                 handleCloseRandomSentenceGenerator={handleCloseRandomSentenceGenerator}
                 saveGeneratorHandler={saveGeneratorHandler}
+                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
             />
             <DialogBlank 
                 isOpenBlank={isOpenBlank} 

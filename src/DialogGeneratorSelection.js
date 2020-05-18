@@ -70,8 +70,24 @@ export default function DialogGeneratorSelection(props) {
         <DialogContent>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>    
                 <Grid container display="flex" justify="flex-start" flexWrap="wrap" xs={12}>
+
+                {(localStorage.getItem("generatorRepository")!== null)? 
+                  JSON.parse(localStorage.getItem("generatorRepository")).map(element => {
+                    return <Grid item xs={4}> 
+                              <GeneratorSelectionCard 
+                                  data = {element} 
+                                  loadSelectedSchema={props.loadSelectedGenerator}
+                                  selectGeneratorHandler={props.selectGeneratorHandler}
+                                  handleCloseGeneratorDialog={props.handleCloseGeneratorDialog}/> 
+                            </Grid>}): 
+                    <div> There are currently no Schemata in the Repository </div>}  
+
+
+                 {/* 
                  {props.data.map(element => { return <Grid item xs={4}> <GeneratorSelectionCard data = {element} handleCloseGeneratorDialog = {props.handleCloseGeneratorDialog}/> </Grid>})}
-                </Grid>
+                 */} 
+                
+                 </Grid>
             </div>
         </DialogContent>
 

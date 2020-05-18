@@ -50,7 +50,11 @@ export default function TableSubComponent(props){
     const classes = useStyles();
 
     return(
-    <Grid container className={classes.container} styles={{display: "flex", flexDirection: "row", justifyContent: "flex-end", alignItems: "center"}} xs={12}>
+    <Grid 
+        container className={classes.container} 
+        styles={{display: "flex", flexDirection: "row", justifyContent: "flex-end", alignItems: "center"}} 
+        xs={12}>
+            
         <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed} xs={1}>
         <div style={{display: "flex", justifyContent: "center", width: "40px", height: "40px" }}>
             <IconButton>

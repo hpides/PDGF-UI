@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -34,6 +34,7 @@ export default function DialogFormIdGenerator(props) {
     const fontSizeLeftColumn = "h5";
 
     const intialGeneratorObject = {
+        uid:"",
         type: "idGenerator", 
         minimum: "",
         maximum: "",
@@ -64,6 +65,7 @@ export default function DialogFormIdGenerator(props) {
         },
         repoVariables: {
               type: "idGenerator",
+              saveInRepo: false,
               name: "",
               description: "",
               examples: "",
@@ -71,7 +73,7 @@ export default function DialogFormIdGenerator(props) {
     }; 
 
     const [generatorObject, setGeneratorObject]=useState(intialGeneratorObject);
-
+    useEffect(()=>{addUidToGenerator()}, []);
     
     // Change Handler Input Fields
     const minimumChangedHandler = (event) => {
@@ -110,6 +112,7 @@ export default function DialogFormIdGenerator(props) {
         const newGenerator = {...generatorObject};
         newGenerator.repoVariables = (repoObject);
         setGeneratorObject(newGenerator);
+        
     };
 
 
@@ -167,7 +170,35 @@ export default function DialogFormIdGenerator(props) {
     };
     
 
+
+
+    // onClick Handler for Save Button
+
+    const saveButtonOnClickHandler = () => {
+      if (generatorObject.repoVariables.saveInRepo === true){
+        props.saveGeneratorInBrowserStorage(generatorObject);
+        props.saveGeneratorHandler(generatorObject);
+        props.handleCloseIdGenerator();
+      } else {
+        props.saveGeneratorHandler(generatorObject);
+        props.handleCloseIdGenerator();
+      }
+    }
     
+    // addGeneratorUid -> uid = Milli-Sekunden seit dem 01.01.2020
+
+    const addUidToGenerator = () => {
+      const miliSecondsFrom1970To2020 = 1577785488*1000;
+      const uid = Date.now() - miliSecondsFrom1970To2020; 
+      //alert(uid);
+      const newGenerator = {...generatorObject};
+      newGenerator.uid = uid;
+      //alert(JSON.stringify(newGenerator));
+      setGeneratorObject(newGenerator);
+      //alert(JSON.stringify(newGenerator));
+      return null;
+  }
+
 
   return (
     <>
@@ -256,13 +287,11 @@ export default function DialogFormIdGenerator(props) {
       </div>
 
       <DialogActions>
-          <Button onClick={()=>console.log("hi")} color="primary">
+          <Button  color="primary" onClick={()=> {props.handleCloseIdGenerator()}}>
             Cancel
           </Button>
           <Button 
-              onClick={ ()=> {
-                props.saveGeneratorHandler(generatorObject);
-                props.handleCloseIdGenerator()}}
+              onClick={()=>{saveButtonOnClickHandler(generatorObject)}}               
               color="primary">
             Save
           </Button>

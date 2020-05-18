@@ -72,7 +72,7 @@ export const rawGeneratorDescriptions = [
    {name: "LongGenerator", description: "Generates a 64Bit integer value between min and max.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "LongGenerator",},
    {name: "DateTime", description: "Generates dates within a specified time range.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DateTimeGenerator",},
    {name: "Random String", description: "Generates strings in a size range with a specified set of characters.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "RandomStringGenerator",},
-   {name: "RandomSentence", description: "Generates a sentence within a size range with pseudo grammar.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "RandomSentence",},
+   {name: "RandomSentence", description: "Generates a sentence within a size range with pseudo grammar.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "RandomSentenceGenerator",},
    {name: "DictList", description: "Uses a dictionary to generate single values or lists.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DictListGenerator",},
    {name: "Reference", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "ReferenceGenerator",},
 ]

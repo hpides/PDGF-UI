@@ -18,7 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 import SchemaSelectionCard from "./SchemaSelectionCard";
 import BuildIcon from "@material-ui/icons/Build";
-import GeneratorSelectionCard from "./GeneratorSelectionCard";
+import RawGeneratorSelectionCard from "./RawGeneratorSelectionCard";
 import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles({
@@ -70,7 +70,7 @@ export default function DialogRawGeneratorSelection(props) {
         <DialogContent>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>    
                 <Grid container display="flex" justify="flex-start" flexWrap="wrap" xs={12}>
-                 {props.data.map(element => { return <Grid item xs={4}> <GeneratorSelectionCard 
+                 {props.data.map(element => { return <Grid item xs={4}> <RawGeneratorSelectionCard 
                                                                               data = {element} 
                                                                               handleCloseRawGeneratorDialog = {props.handleCloseRawGeneratorDialog}
                                                                               selectRawGeneratorHandler={props.selectRawGeneratorHandler}

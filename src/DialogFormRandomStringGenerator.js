@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -34,6 +34,7 @@ export default function DialogFormRandomStringGenerator(props) {
     const fontSizeLeftColumn = "h5";
 
     const intialGeneratorObject = {
+        uid: "",
         type: "randomStringGenerator", 
         numberOfCharacters: [10,30],
         numberOfDistinctCharacters: "",
@@ -70,7 +71,7 @@ export default function DialogFormRandomStringGenerator(props) {
     }; 
 
     const [generatorObject, setGeneratorObject]=useState(intialGeneratorObject);
-
+    useEffect(()=>{addUidToGenerator()}, []);
     
     // Change Handler numberOfCharacters
 
@@ -217,9 +218,28 @@ const handleBlur = () => {
   }
 };
 
+// onClick Handler for Save Button
 
+const saveButtonOnClickHandler = () => {
+  if (generatorObject.repoVariables.saveInRepo === true){
+    props.saveGeneratorInBrowserStorage(generatorObject);
+    props.saveGeneratorHandler(generatorObject);
+    props.handleCloseRandomStringGenerator();
+  } else {
+    props.saveGeneratorHandler(generatorObject);
+    props.handleCloseRandomStringGenerator();
+  }
+}
 
+// addGeneratorUid -> uid = Milli-Sekunden seit dem 01.01.2020
 
+const addUidToGenerator = () => {
+  const miliSecondsFrom1970To2020 = 1577785488*1000;
+  const uid = Date.now() - miliSecondsFrom1970To2020; 
+  const newGenerator = {...generatorObject};
+  newGenerator.uid = uid;
+  setGeneratorObject(newGenerator);
+}
 
 
 
@@ -337,13 +357,11 @@ const handleBlur = () => {
       </div>
 
       <DialogActions>
-          <Button onClick={()=>console.log("hi")} color="primary">
+          <Button onClick={()=>props.handleCloseRandomStringGenerator()} color="primary">
             Cancel
           </Button>
           <Button 
-              onClick={ ()=> {
-                props.saveGeneratorHandler(generatorObject);
-                props.handleCloseRandomStringGenerator()}}
+              onClick={ ()=> {saveButtonOnClickHandler()}}
               color="primary">
             Save
           </Button>

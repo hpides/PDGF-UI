@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -34,6 +34,7 @@ export default function DialogFormDoubleGenerator(props) {
     const fontSizeLeftColumn = "h5";
 
     const intialGeneratorObject = {
+        uid: "",
         type: "doubleGenerator", 
         minimum: "",
         maximum: "",
@@ -74,7 +75,7 @@ export default function DialogFormDoubleGenerator(props) {
     }; 
 
     const [generatorObject, setGeneratorObject]=useState(intialGeneratorObject);
-
+    useEffect(()=>{addUidToGenerator()}, []);
     
     // Change Handler Input Fields
     const minimumChangedHandler = (event) => {
@@ -257,6 +258,32 @@ export default function DialogFormDoubleGenerator(props) {
   };
 
 
+// onClick Handler for Save Button
+
+const saveButtonOnClickHandler = () => {
+  if (generatorObject.repoVariables.saveInRepo === true){
+    props.saveGeneratorInBrowserStorage(generatorObject);
+    props.saveGeneratorHandler(generatorObject);
+    props.handleCloseDoubleGenerator();
+    
+  } else {
+    props.saveGeneratorHandler(generatorObject);
+    props.handleCloseDoubleGenerator();
+  }
+}
+
+
+// addGeneratorUid -> uid = Milli-Sekunden seit dem 01.01.2020
+
+const addUidToGenerator = () => {
+  const miliSecondsFrom1970To2020 = 1577785488*1000;
+  const uid = Date.now() - miliSecondsFrom1970To2020; 
+  const newGenerator = {...generatorObject};
+  newGenerator.uid = uid;
+  setGeneratorObject(newGenerator);
+}
+
+
   return (
     <>
     <Dialog 
@@ -434,13 +461,11 @@ export default function DialogFormDoubleGenerator(props) {
       </div>
 
       <DialogActions>
-          <Button onClick={()=>console.log("hi")} color="primary">
+          <Button onClick={()=>props.handleCloseDoubleGenerator()} color="primary">
             Cancel
           </Button>
           <Button 
-              onClick={ ()=> {
-                props.saveGeneratorHandler(generatorObject);
-                props.handleCloseDoubleGenerator()}}
+             onClick={()=>{saveButtonOnClickHandler(generatorObject)}} 
               color="primary">
             Save
           </Button>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -34,6 +34,7 @@ export default function DialogFormDictListGenerator(props) {
     const fontSizeLeftColumn = "h5";
 
     const intialGeneratorObject = {
+        uid: "",
         type: "dictListGenerator", 
         dictionary: "",
         size: "",
@@ -89,7 +90,7 @@ export default function DialogFormDictListGenerator(props) {
     ];
 
     const [generatorObject, setGeneratorObject]=useState(intialGeneratorObject);
-
+    useEffect(()=>{addUidToGenerator()}, []);
     
 
     // Change Handler dictionary
@@ -273,6 +274,31 @@ export default function DialogFormDictListGenerator(props) {
   };
 
 
+// onClick Handler for Save Button
+
+const saveButtonOnClickHandler = () => {
+  if (generatorObject.repoVariables.saveInRepo === true){
+    props.saveGeneratorInBrowserStorage(generatorObject);
+    props.saveGeneratorHandler(generatorObject);
+    props.handleCloseDictListGenerator();
+  } else {
+    props.saveGeneratorHandler(generatorObject);
+    props.handleCloseDictListGenerator();
+  }
+}
+
+
+
+// addGeneratorUid -> uid = Milli-Sekunden seit dem 01.01.2020
+
+const addUidToGenerator = () => {
+  const miliSecondsFrom1970To2020 = 1577785488*1000;
+  const uid = Date.now() - miliSecondsFrom1970To2020; 
+  const newGenerator = {...generatorObject};
+  newGenerator.uid = uid;
+  setGeneratorObject(newGenerator);
+}
+
   return (
     <>
     <Dialog 
@@ -437,13 +463,11 @@ export default function DialogFormDictListGenerator(props) {
       </div>
 
       <DialogActions>
-          <Button onClick={()=>console.log("hi")} color="primary">
+          <Button onClick={()=> {props.handleCloseDictListGenerator()}} color="primary">
             Cancel
           </Button>
           <Button 
-              onClick={ ()=> {
-                props.saveGeneratorHandler(generatorObject);
-                props.handleCloseDictListGenerator()}}
+              onClick={()=>{saveButtonOnClickHandler(generatorObject)}}
               color="primary">
             Save
           </Button>
