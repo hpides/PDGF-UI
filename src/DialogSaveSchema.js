@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 
 export default function DialogSaveSchema(props) {
     const classes = useStyles();
-    const leftColumnWidth = 3;
+    const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
     const [currentDate, setCurrentDate] = useState("");

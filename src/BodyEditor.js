@@ -43,6 +43,8 @@ export default function BodyEditor(props){
     const [isOpenDummy03, setIsOpenDummy03] = useState(false);
     const [isOpenBlank, setIsOpenBlank] = useState(false);
     const [tableFocus, setTableFocus] = useState({});
+    const [tempGeneratorObject, setTempGeneratorObject] = useState({});
+    const [isInCreateMode, setIsInCreateMode] = useState(true);
 
 
    
@@ -505,12 +507,6 @@ const handleClickOpenBlank = () => {
 
 
 
-
-
-
-
-
-
     // toggle SideBar on right side
 
     const toggleSidebarRight = () => {
@@ -527,9 +523,25 @@ const handleClickOpenBlank = () => {
         currentSchema.uids.schemaUid = uid;
         setCurrentSchemaLocal(currentSchema);
         return null;
-    }
+    };
 
-    
+
+
+    // loadGeneratorToEditDialog
+   
+    const loadGeneratorToEditDialog = (tableId, rowId) => {
+        alert("entered function with tableId: " + tableId + " and rowId: " + rowId);
+        const tableIndex = currentSchemaLocal.tables.findIndex(x => x.tableId === tableId);
+        const rowIndex = currentSchemaLocal.tables[tableIndex].tableItems.findIndex(x => x.rowId === rowId);
+        const generator = currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator;
+        setTempGeneratorObject(generator);
+        setIsInCreateMode(false);
+        eval("setIsOpen" + generator.type+"(true)");// setting the isOpen- Variable for the needed generator to true.
+        return null;
+    };
+
+
+
 
 
 
@@ -540,12 +552,6 @@ const handleClickOpenBlank = () => {
                <Grid container item xs={12} style={{height: "250px"}} >
                     <Grid container item xs={9} justify="flex-start" alignContent="flex-end" style={{backgroundColor: "white", paddingBottom: "20px", paddingLeft:"20px"}}>
                     
-                    <div> 
-                        <Button onClick={()=>setIsOpenDictListGenerator(true)}>open Dialog DictList Spec</Button>
-                        <Button onClick={()=>setIsOpenIdGenerator(true)}>open Dialog Id Spec</Button>
-                        <Button onClick={()=>setIsOpenLongGenerator(true)}>open Dialog Long Spec</Button>
-                        
-                    </div>
                         <SchemaNameElement schemaName={currentSchemaLocal.info.schemaName} schemaNameChangedHandler = {schemaNameChangedHandler}/>
                        
                     </Grid>
@@ -577,7 +583,7 @@ const handleClickOpenBlank = () => {
                                 handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
                                 isOpenGeneratorDialog = {isOpenGeneratorDialog}
                                 setTableFocusHandler={setTableFocusHandler}
-
+                                loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
 
 
                             />
@@ -598,6 +604,7 @@ const handleClickOpenBlank = () => {
                                 handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
                                 isOpenGeneratorDialog = {isOpenGeneratorDialog}
                                 setTableFocusHandler={setTableFocusHandler}
+                                loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
 
 
                             />
@@ -657,6 +664,8 @@ const handleClickOpenBlank = () => {
                 handleCloseIdGenerator={handleCloseIdGenerator}
                 saveGeneratorHandler={saveGeneratorHandler}
                 saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
+                tempGeneratorObject={tempGeneratorObject}
+                isInCreateMode={isInCreateMode}
             />
             <DialogFormLongGenerator 
                 isOpenLongGenerator={isOpenLongGenerator} 
@@ -669,6 +678,7 @@ const handleClickOpenBlank = () => {
                 handleCloseDoubleGenerator={handleCloseDoubleGenerator}
                 saveGeneratorHandler={saveGeneratorHandler}
                 saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
+                
             />
             <DialogFormDateTimeGenerator 
                 isOpenDateTimeGenerator={isOpenDateTimeGenerator} 

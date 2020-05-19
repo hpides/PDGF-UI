@@ -25,11 +25,14 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  select: {
+    fontSize: 22,
+  }
 });
 
 export default function DialogFormDictListGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 3;
+    const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
 
@@ -312,23 +315,25 @@ const addUidToGenerator = () => {
         fullWidth
         maxWidth="md"
         >
-      <DialogTitle id="simple-dialog-title">DictList Generator</DialogTitle>
+       <DialogTitle disableTypography style={{fontSize: 40, paddingLeft: 15, }} id="simple-dialog-title">DictList Generator</DialogTitle>
+      
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
       
+            <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>
+
                 <Grid container item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Dictionary:</Typography>
                 </Grid>
-                <Grid container item xs={8}>
+                <Grid container item xs={rightColumnWidth}>
                     <TextField
                         id="standard-select-currency-native"
+                        className={classes.select}                      
                         select
-                        label="Native select"
                         value={generatorObject.dictionary}
                         onChange={(event) => dictionaryChangedHandler(event)}
                         SelectProps={{
                             native: true,
                         }}
-                        helperText="Select Dictionary"
                         > 
                         {dictData2.map((option) => (
                           <option key={option.value} value={option.value}>
@@ -362,7 +367,7 @@ const addUidToGenerator = () => {
                 <Grid container item xs={rightColumnWidth}>
                   <Input 
                     className={classes.input} 
-                    type="number" 
+                    type="text" 
                     placeholder="Enter Separator" 
                     value={generatorObject.separator} 
                     onChange={(event) => separatorChangedHandler(event)}/>
@@ -394,6 +399,14 @@ const addUidToGenerator = () => {
                         />
                 </Grid>
 
+
+
+
+
+
+
+              
+
                 
                 <Grid container item xs={12}>
                     <DistributionInputElement 
@@ -407,6 +420,7 @@ const addUidToGenerator = () => {
                         generatorObject={generatorObject}/>
                 </Grid>
 
+               
 
                 <Grid container item xs={leftColumnWidth}>
                       <Typography variant={fontSizeLeftColumn}>Null Values:</Typography>
@@ -441,7 +455,7 @@ const addUidToGenerator = () => {
                   </Grid>
                 </Grid>
 
-          
+                </Grid>
 
             <Grid direction="column" container item xs={12}>
                 <GeneratorFormPaddingExpansion 

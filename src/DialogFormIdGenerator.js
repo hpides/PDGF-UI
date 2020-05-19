@@ -29,13 +29,13 @@ const useStyles = makeStyles({
 
 export default function DialogFormIdGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 3;
+    const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
 
     const intialGeneratorObject = {
         uid:"",
-        type: "idGenerator", 
+        type: "IdGenerator", 
         minimum: "",
         maximum: "",
         hasAllDistinctValues: false,
@@ -73,7 +73,7 @@ export default function DialogFormIdGenerator(props) {
     }; 
 
     const [generatorObject, setGeneratorObject]=useState(intialGeneratorObject);
-    useEffect(()=>{addUidToGenerator()}, []);
+    useEffect(()=>{addUidToGenerator();}, []);
     
     // Change Handler Input Fields
     const minimumChangedHandler = (event) => {
@@ -200,6 +200,13 @@ export default function DialogFormIdGenerator(props) {
   }
 
 
+
+
+    const swapObjects = () => {
+      setGeneratorObject(props.tempGeneratorObject);
+    }
+
+
   return (
     <>
     <Dialog 
@@ -213,39 +220,40 @@ export default function DialogFormIdGenerator(props) {
         fullWidth
         maxWidth="md"
         >
-      <DialogTitle id="simple-dialog-title">Id Generator</DialogTitle>
+      <DialogTitle disableTypography style={{fontSize: 40, paddingLeft: 15, }} id="simple-dialog-title">Id Generator <Button onClick={()=>swapObjects()}>Swap </Button></DialogTitle>
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
       
-            <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>
+            <Grid direction="row" container item xs={12} style={{paddingLeft: "15px", paddingRight: "30px"}}>
 
-                <Grid container item xs={leftColumnWidth}>
+                <Grid container item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
                   <Typography variant={fontSizeLeftColumn}>Minimum:</Typography>
                 </Grid>
 
-                <Grid container item xs={rightColumnWidth}>
+                <Grid container item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
                   <Input 
                     className={classes.input} 
                     type="number" 
                     placeholder="Enter Minimum" 
+                    fullWidth
                     value={generatorObject.minimum} 
                     onChange={(event) => minimumChangedHandler(event)}/>
                 </Grid>
 
-
-                <Grid container item xs={leftColumnWidth}>
+                <Grid container item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightblue"}}>
                       <Typography variant={fontSizeLeftColumn}>Null Values:</Typography>
                 </Grid>
 
-                <Grid container item xs={rightColumnWidth}>
+                <Grid container item xs={rightColumnWidth} style={{padding: "10px 0px",background: "lightblue"}}>
                   <Grid item xs>
                     <Slider
                       value={typeof generatorObject.nullValues === 'number' ? generatorObject.nullValues : 0}
                       onChange={handleNullValuesSliderChange}
                       aria-labelledby="input-slider"
+                      fullWidth
                     />
                   </Grid>
 
-                  <Grid item>
+                  <Grid item style={{padding: "10px 0px", background: "lightblue"}}>
                     <Input
                       className={classes.input}
                       value={generatorObject.nullValues}
@@ -264,8 +272,10 @@ export default function DialogFormIdGenerator(props) {
                     />
                   </Grid>
                 </Grid>
-
             </Grid>       
+
+
+
 
             <Grid direction="column" container item xs={12}>
                 <GeneratorFormPaddingExpansion 

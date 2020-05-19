@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 
 export default function DialogFormLongGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 3;
+    const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
 
@@ -270,7 +270,7 @@ export default function DialogFormLongGenerator(props) {
         fullWidth
         maxWidth="md"
         >
-      <DialogTitle id="simple-dialog-title">Long Generator</DialogTitle>
+      <DialogTitle disableTypography style={{fontSize: 40, paddingLeft: 15, }} id="simple-dialog-title">Long Generator</DialogTitle>
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
       
             <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>

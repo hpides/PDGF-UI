@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 
 export default function DialogFormDoubleGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 3;
+    const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
 
@@ -74,7 +74,9 @@ export default function DialogFormDoubleGenerator(props) {
         },
     }; 
 
+
     const [generatorObject, setGeneratorObject]=useState(intialGeneratorObject);
+  
     useEffect(()=>{addUidToGenerator()}, []);
     
     // Change Handler Input Fields
@@ -297,7 +299,7 @@ const addUidToGenerator = () => {
         fullWidth
         maxWidth="md"
         >
-      <DialogTitle id="simple-dialog-title">Double Generator</DialogTitle>
+      <DialogTitle disableTypography style={{fontSize: 40, paddingLeft: 15, }} id="simple-dialog-title">Double Generator</DialogTitle>
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
       
             <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>
@@ -352,7 +354,7 @@ const addUidToGenerator = () => {
                 <Grid container item xs={rightColumnWidth}>
                   <Input 
                     className={classes.input} 
-                    type="number" 
+                    type="text" 
                     placeholder="Enter Locale" 
                     value={generatorObject.locale} 
                     onChange={(event) => localeChangedHandler(event)}/>

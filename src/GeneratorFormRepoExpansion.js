@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 export default function GeneratorFormRepoExpansion(props) {
   const classes = useStyles();
 
-  const leftColumnWidth = 3;
+  const leftColumnWidth = 5;
   const rightColumnWidth = 12 - leftColumnWidth; 
   const fontSizeLeftColumn = "h5"
   

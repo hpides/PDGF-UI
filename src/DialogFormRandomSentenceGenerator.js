@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 
 export default function DialogFormRandomSentenceGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 3;
+    const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
 
@@ -256,7 +256,7 @@ const addUidToGenerator = () => {
         fullWidth
         maxWidth="md"
         >
-      <DialogTitle id="simple-dialog-title">RandomSentence Generator</DialogTitle>
+      <DialogTitle disableTypography style={{fontSize: 40, paddingLeft: 15, }} id="simple-dialog-title">RandomSentence Generator</DialogTitle>
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
       
             <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>

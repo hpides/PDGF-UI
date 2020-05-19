@@ -81,7 +81,8 @@ export default function TableSubComponent(props){
 
         <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed} xs={1}>
         <div style={{display: "flex", justifyContent: "center", width: "40px", height: "40px" }}>
-            <IconButton>
+            <IconButton
+                onClick={() => {alert("I in!"); props.loadGeneratorToEditDialog(props.data.tableId, props.data.rowId)}}> 
                 <BuildIcon className={classes.icon} />
             </IconButton>    
         </div>

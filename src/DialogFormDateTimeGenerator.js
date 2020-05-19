@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 
 export default function DialogFormDateTimeGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 3;
+    const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
 
@@ -225,10 +225,10 @@ export default function DialogFormDateTimeGenerator(props) {
         fullWidth
         maxWidth="md"
         >
-      <DialogTitle id="simple-dialog-title">DateTime Generator</DialogTitle>
+      <DialogTitle disableTypography style={{fontSize: 40, paddingLeft: 15, }} id="simple-dialog-title">DateTime Generator</DialogTitle>
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
       
-            <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>          
+            <Grid direction="row" container item xs={12} style={{paddingLeft: "15px", paddingRight: "30px",}}>          
 
                 <Grid container item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Start-Date:</Typography>
@@ -240,13 +240,14 @@ export default function DialogFormDateTimeGenerator(props) {
                     type="date" 
                     placeholder="Enter Start-Date" 
                     value={generatorObject.startDate} 
-                    onChange={(event) => startDateChangedHandler(event)}/>
+                    onChange={(event) => startDateChangedHandler(event)}
+                    fullWidth/>
                 </Grid>
 
 
 
                 <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>End-Date:</Typography>
+                  <Typography variant={fontSizeLeftColumn} fullWidth>End-Date:</Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>
@@ -255,12 +256,13 @@ export default function DialogFormDateTimeGenerator(props) {
                     type="date" 
                     placeholder="Enter End-Date" 
                     value={generatorObject.endDate} 
-                    onChange={(event) => endDateChangedHandler(event)}/>
+                    onChange={(event) => endDateChangedHandler(event)}
+                    fullWidth/>
                 </Grid>
 
 
                 <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Disable RNG:</Typography>
+                  <Typography variant={fontSizeLeftColumn} fullWidth >Disable RNG:</Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>
@@ -273,7 +275,7 @@ export default function DialogFormDateTimeGenerator(props) {
 
 
                 <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Fixed Step Size:</Typography>
+                  <Typography variant={fontSizeLeftColumn} fullWidth>Fixed Step Size:</Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>

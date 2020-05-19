@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 export default function FormDictListGenerator(props) {
   const classes = useStyles();
   const [dictList, setDictList] = useState('start');
-  const leftColumnWidth = 3;
+  const leftColumnWidth = 5;
   const rightColumnWidth = 12 - leftColumnWidth; 
   const fontSizeLeftColumn = "h5"
   const handleChange = (event) => {

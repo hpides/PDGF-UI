@@ -139,6 +139,7 @@ export default function TableComponent(props){
                                                             handleCloseGeneratorDialog = {props.handleCloseGeneratorDialog}
                                                             isOpenGeneratorDialog = {props.isOpenGeneratorDialog}
                                                             setTableFocusHandler={props.setTableFocusHandler}
+                                                            loadGeneratorToEditDialog={props.loadGeneratorToEditDialog}
                                                             />})}  
         </Grid>   
         <Grid container item className={classes.footer_row}>
