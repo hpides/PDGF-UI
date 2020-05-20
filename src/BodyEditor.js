@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
@@ -21,13 +21,14 @@ import DialogFormDateTimeGenerator from "./DialogFormDateTimeGenerator";
 import DialogFormRandomStringGenerator from "./DialogFormRandomStringGenerator";
 import DialogFormRandomSentenceGenerator from "./DialogFormRandomSentenceGenerator";
 import DialogSaveSchema from "./DialogSaveSchema";
+import DialogStartPage from "./DialogStartPage";
 
 
 
 
 export default function BodyEditor(props){
     const [isOpenSideBarRight, setIsOpenSideBarRight] = useState(true);
-    const initialCurrentSchemaLocal = props.currentSchema;
+    const initialCurrentSchemaLocal = emptySchema;
     const [currentSchemaLocal, setCurrentSchemaLocal] = useState(initialCurrentSchemaLocal);
     const defaultTableSize = 10;
     const [isOpenGeneratorDialog, setIsOpenGeneratorDialog] = useState(false);
@@ -45,8 +46,10 @@ export default function BodyEditor(props){
     const [tableFocus, setTableFocus] = useState({});
     const [tempGeneratorObject, setTempGeneratorObject] = useState({});
     const [isInCreateMode, setIsInCreateMode] = useState(true);
+    const [isOpenDialogStartPage, setIsOpenDialogStartPage] = useState(true);
+    const [isOpenDialogSchemaSelection, setIsOpenDialogSchemaSelection] = useState(false)
 
-
+    
    
     const selectRawGeneratorHandler = (uid) => {
         const string = "setIsOpen" + uid;
@@ -506,6 +509,20 @@ const handleClickOpenBlank = () => {
     };
 
 
+    // DialogSaveSchema
+    
+    const handleCloseDialogSchemaSelection = () => {
+        setIsOpenDialogSchemaSelection(false);
+        return null;
+    }
+
+    const handleClickOpenDialogSchemaSelection = () => {
+        setIsOpenDialogSchemaSelection(true);
+        alert("set to true schema selection dialog");
+        return null;
+    }
+
+
 
     // toggle SideBar on right side
 
@@ -541,6 +558,23 @@ const handleClickOpenBlank = () => {
     };
 
 
+    const handleCloseDialogStartPage = () => {
+        setIsOpenDialogStartPage(false);
+    }
+
+
+    const loadSelectedSchema = (schemaUID) => {
+        alert("Entered loadSelectedSchema");
+        setIsOpenDialogSchemaSelection(false);
+        setIsOpenDialogStartPage(false);
+        const schemaRepo = JSON.parse(localStorage.schemaRepository);
+        alert("schemaRepo: " + JSON.stringify(schemaRepo));
+        const schemaIndex = schemaRepo.findIndex(x=> x.uids.schemaUid === schemaUID);
+        alert("schemaIndex: " + schemaIndex);
+        setCurrentSchemaLocal(schemaRepo[schemaIndex]);
+        alert("About to exit loadSelectedSchema. CurrentSchemaLocal " + JSON.stringify(currentSchemaLocal));
+    }
+
 
 
 
@@ -552,7 +586,7 @@ const handleClickOpenBlank = () => {
                <Grid container item xs={12} style={{height: "250px"}} >
                     <Grid container item xs={9} justify="flex-start" alignContent="flex-end" style={{backgroundColor: "white", paddingBottom: "20px", paddingLeft:"20px"}}>
                     
-                        <SchemaNameElement schemaName={currentSchemaLocal.info.schemaName} schemaNameChangedHandler = {schemaNameChangedHandler}/>
+                        <SchemaNameElement schemaName="currentSchemaLocal.info.schemaName" schemaNameChangedHandler = {schemaNameChangedHandler}/>
                        
                     </Grid>
                     <Grid container item xs={3} direction="row" justify="flex-end" alignContent="center"  style={{background: "white", paddingRight: "20px"}}>
@@ -570,6 +604,7 @@ const handleClickOpenBlank = () => {
                 <Grid container item xs={12} style={{height: "80vh"}}>  
                     {(isOpenSideBarRight? (
                     <Grid container item xs={10} display="flex" direction="row" justify="center" alignContent="center"  style={{ backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>
+                    {alert("CurrentSchemaLocal In JSX line 609 BodyEditor: " + JSON.stringify(currentSchemaLocal))}        
                     {currentSchemaLocal.tables.map(table => {return( 
                             <TableComponent 
                                 data={table} 
@@ -714,7 +749,14 @@ const handleClickOpenBlank = () => {
                 addUidToSchema={addUidToSchema}
 
             />
-
+            <DialogStartPage 
+            isOpenDialogStartPage={isOpenDialogStartPage}
+            handleCloseDialogStartPage={handleCloseDialogStartPage}
+            handleClickOpenDialogSchemaSelection={handleClickOpenDialogSchemaSelection}
+            handleCloseDialogSchemaSelection={handleCloseDialogSchemaSelection}
+            isOpenDialogSchemaSelection={ isOpenDialogSchemaSelection}
+            loadSelectedSchema={loadSelectedSchema}
+            />
           
         </div>
     )

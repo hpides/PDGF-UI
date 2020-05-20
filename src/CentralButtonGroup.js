@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
 export default function CentralButtonGroup2(props){
     const classes = useStyles();
     const [isOpenSchemaDialog, setIsOpenSchemaDialog] = useState(false);
-    const [selectedValue, setSelectedValue] = useState();
   
     const handleClickOpen = () => {
       setIsOpenSchemaDialog(true);
@@ -63,7 +62,6 @@ export default function CentralButtonGroup2(props){
   
     const handleClose = (value) => {
       setIsOpenSchemaDialog(false);
-      setSelectedValue(value);
     };
   
 
@@ -75,18 +73,18 @@ export default function CentralButtonGroup2(props){
                     <Button
                     variant="contained"
                     color="default"
-                    onClick ={handleClickOpen }
+                    onClick ={props.handleClickOpenDialogSchemaSelection}
                     className={classes.button}
                     startIcon={<AppleIcon />}
                     >
                         Load Schema from Repo
                     </Button>
                 </Box>
-                <DialogSchemaSelection 
-                    selectedValue={selectedValue} 
-                    isOpenSchemaDialog={isOpenSchemaDialog} 
-                    onClose={handleClose} 
-                    schemaDescriptions={props.schemaDescriptions} />
+                <DialogSchemaSelection   
+                    handleCloseDialogSchemaSelection={props.handleCloseDialogSchemaSelection}
+                    isOpenDialogSchemaSelection={ props.isOpenDialogSchemaSelection}
+                    loadSelectedSchema={props.loadSelectedSchema}
+                 />
                 
                 <Box className={classes.boxElement}>
                     <Button

@@ -16,7 +16,6 @@ import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 import SchemaSelectionCard from "./SchemaSelectionCard";
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({
   avatar: {
     backgroundColor: blue[100],
@@ -26,27 +25,15 @@ const useStyles = makeStyles({
 
 export default function DialogSchemaSelection(props) {
   const classes = useStyles();
-  const { onClose, selectedValue, isOpenSchemaDialog, schemaDescriptions } = props;
-
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
-
-  const handleListItemClick = (value) => {
-    onClose(value);
-  };
-
-
- 
-
+  
   return (
-    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={isOpenSchemaDialog}>
+    <Dialog onClose={props.handleCloseDialogSchemaSelection} aria-labelledby="simple-dialog-title" open={props.isOpenDialogSchemaSelection}>
       <DialogTitle id="simple-dialog-title">Select Schema</DialogTitle>
       <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>    
       
       
       {(localStorage.getItem("schemaRepository")!== null)? 
-        JSON.parse(localStorage.getItem("schemaRepository")).map(element => {return <Grid item> <SchemaSelectionCard input = {element.info} loadSelectedSchema={props.loadSelectedSchema}/> </Grid>}): 
+        JSON.parse(localStorage.getItem("schemaRepository")).map(element => {return <Grid item> <SchemaSelectionCard input = {element} loadSelectedSchema={props.loadSelectedSchema} handleCloseDialogSchemaSelection={props.handleCloseDialogSchemaSelection}/> </Grid>}): 
         <div> There are currently no Schemata in the Repository </div>}  
       
       </div>

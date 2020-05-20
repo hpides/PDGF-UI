@@ -342,11 +342,11 @@ export const emptySchema0 = {
 
 export const emptySchema = {
    uids: {
-      schemaUid: "uid",
+      schemaUid: "12345",
       tableCounter: 1,
    },
    info: {
-      schemaName: "",
+      schemaName: "Unnamed",
       description: "You can enter a description of your schema here if you like.",
       author: "john doe",
       lastEdited: "today",

@@ -54,29 +54,29 @@ export default function SchemaSelectionCard(props) {
   return (
     <Box 
       className={classes.root} 
-      onClick={()=>{alert("My Name is " + props.input.name + "!")}}
+      onClick={()=>{alert("uid: "+ props.input.uids.schemaUid); props.loadSelectedSchema(props.input.uids.schemaUid)}}
     >
         <Grid container classeName={classes.container} xs={12}>
           <Grid container item className={classes.inner_container_left} xs={3} flexDirection="row" justify="flex-start">
             <Grid container item>
             <Typography className={classes.title} color="textSecondary" gutterBottom >
-              {props.input.schemaName}
+              {props.input.info.schemaName}
             </Typography >
             </Grid>
             <Grid container item>
             <Typography className={classes.author} color="textSecondary" variant="h5" component="h2" >
-            {props.input.author}
+            {props.input.info.author}
             </Typography >
             </Grid>
             <Grid container item>
             <Typography className={classes.date} color="textSecondary" variant="h5" component="h2" >
-            {props.input.lastEdited}
+            {props.input.info.lastEdited}
             </Typography >
             </Grid>
           </Grid>
           <Grid container item className={classes.inner_container_right}  variant="body2" component="p" xs={9}>
             <Typography>
-            {props.input.description}
+            {props.input.info.description}
             </Typography>
           </Grid>
         </Grid>
