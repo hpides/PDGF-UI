@@ -321,7 +321,7 @@ createXmlForPDGF = () => {
   
   const gen_otherFieldValueGenerator = (generator) => {
   
-    alert("gen_otherFieldValueGeneratror called!")
+    
     //let referenceTable = generator.spec.referenceTable;
     let referenceField = generator.spec.referenceField;
     //let chooseSelection = generator.spec.chooseSelection;
@@ -363,7 +363,6 @@ createXmlForPDGF = () => {
     let innerStuff = "";
     let i, tempString;
   
-    alert(valueProbabilityRows);
     
     //abarbeiten alle ValueOptionen bis auf die letzte
     for (i = 0; i < valueProbabilityRows.length-1; i++) {

@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import EditorButtonGroup from "./EditorButtonGroup";
 import DefaultVariablesComponent02 from "./DefaultVariablesComponent02";
 import CustomVariablesContainer from "./CustomVariablesContainer";
-import {customSystemVariables, emptySchema, emptySchema0, generatorDescriptions, rawGeneratorDescriptions, dictListObj} from "./data.js"; 
+import {customSystemVariables, emptySchema, emptySchema0, generatorDescriptions, rawGeneratorDescriptions, dictListObj, emptyGenerator} from "./data.js"; 
 import SchemaNameElement from "./SchemaNameElement";
 import TableComponent from "./TableComponent";
 import Button from "@material-ui/core/Button";
@@ -22,6 +22,7 @@ import DialogFormRandomStringGenerator from "./DialogFormRandomStringGenerator";
 import DialogFormRandomSentenceGenerator from "./DialogFormRandomSentenceGenerator";
 import DialogSaveSchema from "./DialogSaveSchema";
 import DialogStartPage from "./DialogStartPage";
+import DialogUniversalGeneratorForm from "./DialogUniversalGeneratorForm";
 
 
 
@@ -46,15 +47,27 @@ export default function BodyEditor(props){
     const [tableFocus, setTableFocus] = useState({});
     const [tempGeneratorObject, setTempGeneratorObject] = useState({});
     const [isInCreateMode, setIsInCreateMode] = useState(true);
-    const [isOpenDialogStartPage, setIsOpenDialogStartPage] = useState(true);
-    const [isOpenDialogSchemaSelection, setIsOpenDialogSchemaSelection] = useState(false)
+    const [isOpenDialogStartPage, setIsOpenDialogStartPage] = useState(false);
+    const [isOpenDialogSchemaSelection, setIsOpenDialogSchemaSelection] = useState(false);
+    const [selectedGeneratorType, setSelectedGeneratorType] = useState("");
+    const [fieldInFocus, setFieldInFocus] = useState("");
+    const [isOpenDialogUniGenForm, setIsOpenDialogUniGenForm] = useState(false);
+
 
     
    
     const selectRawGeneratorHandler = (uid) => {
+        //alert("selectRawGeneraterHandler entered");
+        //alert("uid: " + uid);
+        setSelectedGeneratorType(uid);
+        setIsOpenRawGeneratorDialog(false);
+        setIsOpenDialogUniGenForm(true);
+        setTempGeneratorObject("");
+        //alert("selectRawGeneraterHandler exited")
+        /*
         const string = "setIsOpen" + uid;
         setIsOpenRawGeneratorDialog(false);
-        eval(string+"(true)"); 
+        eval(string+"(true)"); */
     };
 
 
@@ -259,15 +272,12 @@ export default function BodyEditor(props){
 
     // Browser Store for Generator
     const saveGeneratorInBrowserStorage =(generatorObject) => {
-        alert("in saveGeneratorInBrowserStorage");
         if (localStorage.getItem("generatorRepository") === null) {
-            alert("generatorRepo === null");
             let generatorRepository = [];
             generatorRepository.push(generatorObject);
             localStorage.setItem("generatorRepository", JSON.stringify(generatorRepository));
         } else {
             let generatorRepository = JSON.parse(localStorage.getItem("generatorRepository"));
-            alert("generatorRepo !== null");
             generatorRepository.push(generatorObject);
             localStorage.setItem("generatorRepository", JSON.stringify(generatorRepository));
         }
@@ -518,7 +528,6 @@ const handleClickOpenBlank = () => {
 
     const handleClickOpenDialogSchemaSelection = () => {
         setIsOpenDialogSchemaSelection(true);
-        alert("set to true schema selection dialog");
         return null;
     }
 
@@ -547,7 +556,6 @@ const handleClickOpenBlank = () => {
     // loadGeneratorToEditDialog
    
     const loadGeneratorToEditDialog = (tableId, rowId) => {
-        alert("entered function with tableId: " + tableId + " and rowId: " + rowId);
         const tableIndex = currentSchemaLocal.tables.findIndex(x => x.tableId === tableId);
         const rowIndex = currentSchemaLocal.tables[tableIndex].tableItems.findIndex(x => x.rowId === rowId);
         const generator = currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator;
@@ -564,29 +572,37 @@ const handleClickOpenBlank = () => {
 
 
     const loadSelectedSchema = (schemaUID) => {
-        alert("Entered loadSelectedSchema");
         setIsOpenDialogSchemaSelection(false);
         setIsOpenDialogStartPage(false);
         const schemaRepo = JSON.parse(localStorage.schemaRepository);
-        alert("schemaRepo: " + JSON.stringify(schemaRepo));
         const schemaIndex = schemaRepo.findIndex(x=> x.uids.schemaUid === schemaUID);
-        alert("schemaIndex: " + schemaIndex);
         setCurrentSchemaLocal(schemaRepo[schemaIndex]);
-        alert("About to exit loadSelectedSchema. CurrentSchemaLocal " + JSON.stringify(currentSchemaLocal));
-    }
+    };
 
 
 
+    
+    const handleCloseDialogUniGenForm = () => {
+        alert("entered: in handleCloseDialogUniGenForm");
+        setIsOpenDialogUniGenForm(false);
+    };
+
+
+    const handleClickOpenDialogUniGenForm = () => {
+        setIsOpenDialogUniGenForm(true);
+        return null;
+    };
 
 
     return(
         <div>
+            {alert("inBodyEditor handleCloseFctn: " + handleCloseDialogUniGenForm)}
             <Grid container display="flex" direction="row" justify="flex-start" alignContent="flex-start" xs={12} spacing = {0} style={{background: "white", height: "90vh"}}>
                {/*first row*/}
                <Grid container item xs={12} style={{height: "250px"}} >
                     <Grid container item xs={9} justify="flex-start" alignContent="flex-end" style={{backgroundColor: "white", paddingBottom: "20px", paddingLeft:"20px"}}>
                     
-                        <SchemaNameElement schemaName="currentSchemaLocal.info.schemaName" schemaNameChangedHandler = {schemaNameChangedHandler}/>
+                        <SchemaNameElement schemaName={currentSchemaLocal.info.schemaName} schemaNameChangedHandler = {schemaNameChangedHandler}/>
                        
                     </Grid>
                     <Grid container item xs={3} direction="row" justify="flex-end" alignContent="center"  style={{background: "white", paddingRight: "20px"}}>
@@ -603,8 +619,7 @@ const handleClickOpenBlank = () => {
                  
                 <Grid container item xs={12} style={{height: "80vh"}}>  
                     {(isOpenSideBarRight? (
-                    <Grid container item xs={10} display="flex" direction="row" justify="center" alignContent="center"  style={{ backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>
-                    {alert("CurrentSchemaLocal In JSX line 609 BodyEditor: " + JSON.stringify(currentSchemaLocal))}        
+                    <Grid container item xs={10} display="flex" direction="row" justify="center" alignContent="center"  style={{ backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>    
                     {currentSchemaLocal.tables.map(table => {return( 
                             <TableComponent 
                                 data={table} 
@@ -750,14 +765,20 @@ const handleClickOpenBlank = () => {
 
             />
             <DialogStartPage 
-            isOpenDialogStartPage={isOpenDialogStartPage}
-            handleCloseDialogStartPage={handleCloseDialogStartPage}
-            handleClickOpenDialogSchemaSelection={handleClickOpenDialogSchemaSelection}
-            handleCloseDialogSchemaSelection={handleCloseDialogSchemaSelection}
-            isOpenDialogSchemaSelection={ isOpenDialogSchemaSelection}
-            loadSelectedSchema={loadSelectedSchema}
+                isOpenDialogStartPage={isOpenDialogStartPage}
+                handleCloseDialogStartPage={handleCloseDialogStartPage}
+                handleClickOpenDialogSchemaSelection={handleClickOpenDialogSchemaSelection}
+                handleCloseDialogSchemaSelection={handleCloseDialogSchemaSelection}
+                isOpenDialogSchemaSelection={ isOpenDialogSchemaSelection}
+                loadSelectedSchema={loadSelectedSchema}
             />
-          
+            <DialogUniversalGeneratorForm
+               
+                tempGeneratorObject = {tempGeneratorObject}
+                isOpenDialogUniGenForm = {isOpenDialogUniGenForm}
+                generatorType={selectedGeneratorType}
+                handleCloseDialogUniGenForm = {handleCloseDialogUniGenForm}
+            />        
         </div>
     )
 

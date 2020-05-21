@@ -54,7 +54,7 @@ export default function SchemaSelectionCard(props) {
   return (
     <Box 
       className={classes.root} 
-      onClick={()=>{alert("uid: "+ props.input.uids.schemaUid); props.loadSelectedSchema(props.input.uids.schemaUid)}}
+      onClick={()=>{ props.loadSelectedSchema(props.input.uids.schemaUid)}}
     >
         <Grid container classeName={classes.container} xs={12}>
           <Grid container item className={classes.inner_container_left} xs={3} flexDirection="row" justify="flex-start">

@@ -382,3 +382,55 @@ export const emptySchema = {
    }
 }
 
+
+
+export const emptyGenerator = {
+   uid: "",
+   type: "thisShouldBeReplace", 
+   minimum: "",
+   maximum: "",
+   dictionary: "",
+   size: "",
+   separator: "",
+   decimalPlaces: "",
+   locale: "",
+   fixedStepSize: "",
+   hasAllDistinctValues: false,
+   startDate: "",
+   endDate: "",
+   disableRNG: "false",
+   numberOfCharacters: "",
+   numberOfDistinctCharacters: "",
+   
+
+   distributionVariables: {
+         type: "equalDistribution",
+         normalDistribution: {
+           standardDeviation: "",
+           mean: "",
+         },
+         binomialDistribution: {
+           n: "",
+           p: "",
+         },
+         exponentialDistribution: {
+           lambda: "",
+         },
+         logarithmicDistribution: {
+           p: "",
+         },
+   },
+   nullValues: "0",
+   paddingVariables: {
+         withPadding: "false",
+         numberCharacters: "",
+         fillCharacter: "",
+         fromLeft: "true"
+   },
+   repoVariables: {
+         saveInRepo: "",
+         name: "",
+         description: "",
+         examples: "",
+   },
+}; 
