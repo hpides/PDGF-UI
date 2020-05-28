@@ -7,6 +7,8 @@ import Grid from "@material-ui/core/Grid";
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Box from "@material-ui/core/Box";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles({
   root: {
@@ -50,7 +52,7 @@ const useStyles = makeStyles({
 
 export default function SchemaSelectionCard(props) {
   const classes = useStyles();
-
+  
   return (
     <Box 
       className={classes.root} 
@@ -74,11 +76,18 @@ export default function SchemaSelectionCard(props) {
             </Typography >
             </Grid>
           </Grid>
-          <Grid container item className={classes.inner_container_right}  variant="body2" component="p" xs={9}>
+          <Grid container item className={classes.inner_container_right}  variant="body2" component="p" xs={8}>
             <Typography>
             {props.input.info.description}
             </Typography>
           </Grid>
+
+          <Grid container item className={classes.inner_container_middle} xs={1} style={{background: "inherit"}} display="flex" direction="row" justify="flex-end">
+                    <IconButton onClick={(event) => {event.stopPropagation(); props.deleteSchemaFromRepo(props.input.uids.schemaUid); props.triggerReload()}}>
+                        <DeleteIcon />
+                    </IconButton>   
+          </Grid>
+
         </Grid>
     </Box>
   );

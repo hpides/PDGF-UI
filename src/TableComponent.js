@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         background: "inherit",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "flex-start",
+        //justifycontent: "flex-start",
 
 
     },
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
         background: "inherit",
         height: "60px",
         display: "flex",
-        justifyContent: "space-between",
+        //justifycontent: "space-between",
         borderWidth: "2px",
         borderColor: "black",
         borderStyle: "solid",
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
       background: "inherit",
       height: "40px",
       display: "flex",
-      justifyContent: "flex-start",
+      //justifycontent: "flex-start",
       alignContent: "center",
       borderWidth: "2px",
       borderColor: "black",
@@ -101,7 +101,7 @@ export default function TableComponent(props){
                   className={classes.nameField} 
                   label="Table Name" 
                   placeholder="Enter Table Name"
-                  fullWidth
+                  fullwidth
                   
                   InputProps={{
                     classes: {
@@ -132,18 +132,20 @@ export default function TableComponent(props){
         <Divider className={classes.divider}/>
         <Grid item container className={classes.body}>
          {props.data.tableItems.map(element => {return <TableSubComponent 
+                                                            key={element.rowId}
                                                             data ={element} 
                                                             fieldNameChangedHandler={props.fieldNameChangedHandler}
                                                             deleteTableRowHandler={props.deleteTableRowHandler}
                                                             handleClickOpenGeneratorDialog = {props.handleClickOpenGeneratorDialog}
                                                             handleCloseGeneratorDialog = {props.handleCloseGeneratorDialog}
                                                             isOpenGeneratorDialog = {props.isOpenGeneratorDialog}
-                                                            setTableFocusHandler={props.setTableFocusHandler}
+                                                            setFieldInFocusHandler={props.setFieldInFocusHandler}
                                                             loadGeneratorToEditDialog={props.loadGeneratorToEditDialog}
+                                                           
                                                             />})}  
         </Grid>   
         <Grid container item className={classes.footer_row}>
-          <div style={{display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", paddingTop: "10px"}}>
+          <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start", alignItems: "center", paddingTop: "10px"}}>
           <IconButton onClick={() => {props.addTableRowHandler(props.data.tableId)}}>
             <AddCircleIcon/>
           </IconButton>

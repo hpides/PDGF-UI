@@ -16,7 +16,6 @@ import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
 import Slider from "@material-ui/core/Slider";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DistributionInputElement from "./DistributionInputElement";
-import {emptyGenerator} from "./data";
 import cloneDeep from 'lodash/cloneDeep';
 
 const useStyles = makeStyles({
@@ -28,37 +27,29 @@ const useStyles = makeStyles({
   },
 });
 
-export default function DialogFormLongGenerator(props) {
+export default function DialogFormRandomSentenceGenerator(props) {
     const classes = useStyles();
     const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
-   
-    //alert("generatorObject: " + props.generatorObject);
-    
-    // Change Handler Input Fields
-    const minimumChangedHandler = (event) => {
-    const newGenerator = cloneDeep(props.generatorObject);
-    newGenerator.minimum = event.target.value;
-    props.setGeneratorObject(newGenerator);
-    //alert("neuer Generator mit Minumum: " + newGenerator );
-    };
 
-// Change Handler Input Fields
-    const maximumChangedHandler = (event) => {
-    const newGenerator = cloneDeep(props.generatorObject);
-    newGenerator.maximum = event.target.value;
-    props.setGeneratorObject(newGenerator);
-    };
     
+    // Change Handler numberOfCharacters
 
-    // Change Handler Input Fields
-    const hasAllDistinctValuesChangedHandler = (event) => {
+    const numberOfCharactersChangedHandler = (event, newValue) => {
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.hasAllDistinctValues = event.target.checked;
+        newGenerator.numberOfCharacters = newValue;
         props.setGeneratorObject(newGenerator);
     };
 
+    // Change Handler Input Fields
+    const numberOfDistinctCharactersChangedHandler = (event) => {
+        const newGenerator = cloneDeep(props.generatorObject);
+        newGenerator.numberOfDistinctCharacters = event.target.value;
+        props.setGeneratorObject(newGenerator);
+    };
+
+   
     // Change Handler Distribution Component
     const distributionVariablesChangedHandler = (distributionObject) => {
         const newGenerator = cloneDeep(props.generatorObject);
@@ -66,7 +57,7 @@ export default function DialogFormLongGenerator(props) {
         props.setGeneratorObject(newGenerator);
     };
 
-
+    
     // Change Handler Distribution Component
 
     const distributionTypeChangedHandler = (event) => {
@@ -112,16 +103,30 @@ export default function DialogFormLongGenerator(props) {
       props.setGeneratorObject(newGenerator);
   };
 
-    
-
+  
   return (
     <>
-   
+    
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
+      
             <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>
+                
+                <Grid container item xs={leftColumnWidth} style={{paddingTop:25}}>
+                  <Typography variant={fontSizeLeftColumn}>Number of Characters:</Typography>
+                </Grid>
+
+                <Grid container item xs={rightColumnWidth} style={{paddingTop:25}}>
+                    <Slider
+                        value={props.generatorObject.numberOfCharacters}
+                        onChange={numberOfCharactersChangedHandler}
+                        valueLabelDisplay="auto"
+                        fullwidth
+                    />
+                </Grid>
+
 
                 <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Minimum:</Typography>
+                  <Typography variant={fontSizeLeftColumn}>Number of Distinct Characters:</Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>
@@ -129,38 +134,11 @@ export default function DialogFormLongGenerator(props) {
                     className={classes.input} 
                     type="number" 
                     fullwidth
-                    placeholder="Enter Minimum" 
-                    value={props.generatorObject.minimum} 
-                    onChange={(event) => minimumChangedHandler(event)}/>
+                    placeholder="Enter # of distinct characters" 
+                    value={props.generatorObject.numberDistinctCharacters} 
+                    onChange={(event) => numberOfDistinctCharactersChangedHandler(event)}/>
                 </Grid>
 
-
-                <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Maximum:</Typography>
-                </Grid>
-
-                <Grid container item xs={rightColumnWidth}>
-                  <Input 
-                    className={classes.input} 
-                    type="number" 
-                    fullwidth
-                    placeholder="Enter Maximum" 
-                    value={props.generatorObject.maximum} 
-                    onChange={(event) => maximumChangedHandler(event)}/>
-                </Grid>
-
-
-                <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Distinct Values:</Typography>
-                </Grid>
-
-                <Grid container item xs={rightColumnWidth}>
-                  <Checkbox 
-                        inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={props.generatorObject.hasAllDistinctValues}
-                        onChange={(event)=> {hasAllDistinctValuesChangedHandler(event)}}
-                        />
-                </Grid>
 
                 
                 <Grid container item xs={12}>
@@ -174,11 +152,9 @@ export default function DialogFormLongGenerator(props) {
                         binomialDNValueChangedHandler={binomialDNValueChangedHandler}
                         generatorObject={props.generatorObject}/>
                 </Grid>
-
-            </Grid>          
-      
+            </Grid>                 
       </div>
-    
     </>
   );
 }
+

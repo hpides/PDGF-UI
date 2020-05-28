@@ -46,7 +46,7 @@ export default function DialogRawGeneratorSelection(props) {
         aria-labelledby="simple-dialog-title" 
         open={props.isOpenRawGeneratorDialog}
         maxWidth="md"
-        fullWidth>
+        fullwidth>
 
 
         <DialogTitle id="simple-dialog-title">
@@ -68,12 +68,12 @@ export default function DialogRawGeneratorSelection(props) {
             </Grid>
         </DialogTitle>
         <DialogContent>
-            <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>    
+            <div style={{display: "flex", flexDirection: "column", justifycontent: "flex-start"}}>    
                 <Grid container display="flex" justify="flex-start" flexWrap="wrap" xs={12}>
-                 {props.data.map(element => { return <Grid item xs={4}> <RawGeneratorSelectionCard 
+                 {props.data.map(element => { return <Grid key={element.uid} item xs={4}> <RawGeneratorSelectionCard 
                                                                               data = {element} 
                                                                               handleCloseRawGeneratorDialog = {props.handleCloseRawGeneratorDialog}
-                                                                              selectRawGeneratorHandler={props.selectRawGeneratorHandler}
+                                                                              openInputMaskForSelectedGenerator={props.openInputMaskForSelectedGenerator}
                                                                               /> 
                                                       </Grid>})}
                 </Grid>

@@ -68,6 +68,7 @@ export default function DefaultVariablesComponent02(props){
                     </Typography>
                     
                     {props.variables.defaultVariables.map((variable)=>{ return <TextField 
+                                                                                  key={variable.variableId}
                                                                                   className={classes.textField} 
                                                                                   id="outlined-basic" 
                                                                                   label={variable.name}

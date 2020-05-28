@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import EditorButtonGroup from "./EditorButtonGroup";
 import DefaultVariablesComponent02 from "./DefaultVariablesComponent02";
 import CustomVariablesContainer from "./CustomVariablesContainer";
-import {customSystemVariables, emptySchema, emptySchema0, generatorDescriptions, rawGeneratorDescriptions, dictListObj, emptyGenerator} from "./data.js"; 
+import {customSystemVariables, emptySchema,  generatorDescriptions, rawGeneratorDescriptions, dictListObj, emptyGenerator} from "./data.js"; 
 import SchemaNameElement from "./SchemaNameElement";
 import TableComponent from "./TableComponent";
 import Button from "@material-ui/core/Button";
@@ -23,6 +23,11 @@ import DialogFormRandomSentenceGenerator from "./DialogFormRandomSentenceGenerat
 import DialogSaveSchema from "./DialogSaveSchema";
 import DialogStartPage from "./DialogStartPage";
 import DialogUniversalGeneratorForm from "./DialogUniversalGeneratorForm";
+import cloneDeep from 'lodash/cloneDeep';
+import Input from "@material-ui/core/Input";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/Textfield";
+import DialogSchemaSelection from "./DialogSchemaSelection";
 
 
 
@@ -34,91 +39,101 @@ export default function BodyEditor(props){
     const defaultTableSize = 10;
     const [isOpenGeneratorDialog, setIsOpenGeneratorDialog] = useState(false);
     const [isOpenRawGeneratorDialog, setIsOpenRawGeneratorDialog] = useState(false);
-    const [isOpenDictListGenerator, setIsOpenDictListGenerator] = useState(false);
     const [isOpenDialogSaveSchema, setIsOpenDialogSaveSchema] = useState(false);
-    const [isOpenIdGenerator, setIsOpenIdGenerator] = useState(false);
-    const [isOpenLongGenerator, setIsOpenLongGenerator] = useState(false);
-    const [isOpenDoubleGenerator, setIsOpenDoubleGenerator] = useState(false);
-    const [isOpenDateTimeGenerator, setIsOpenDateTimeGenerator] = useState(false);
-    const [isOpenRandomStringGenerator, setIsOpenRandomStringGenerator] = useState(false);
-    const [isOpenRandomSentenceGenerator, setIsOpenRandomSentenceGenerator] = useState(false);
-    const [isOpenDummy03, setIsOpenDummy03] = useState(false);
     const [isOpenBlank, setIsOpenBlank] = useState(false);
-    const [tableFocus, setTableFocus] = useState({});
     const [tempGeneratorObject, setTempGeneratorObject] = useState({});
-    const [isInCreateMode, setIsInCreateMode] = useState(true);
+    const [universalGeneratorFormMode, setUniversalGeneratorFormMode] = useState("create");
     const [isOpenDialogStartPage, setIsOpenDialogStartPage] = useState(false);
     const [isOpenDialogSchemaSelection, setIsOpenDialogSchemaSelection] = useState(false);
     const [selectedGeneratorType, setSelectedGeneratorType] = useState("");
-    const [fieldInFocus, setFieldInFocus] = useState("");
+    const [fieldInFocus, setFieldInFocus] = useState({tableId: "", rowId: ""});
     const [isOpenDialogUniGenForm, setIsOpenDialogUniGenForm] = useState(false);
+    const [copyGeneratorObject, setCopyGeneratorObject] = useState({emptyGenerator});
 
 
-    
+
+
+    const saveSchemaOnClickHandler = () => {
+        addUidToSchema();
+        saveSchemaInLocalStorage();
+        //setTimeout(()=>{saveSchemaInLocalStorage();}, 4000);
+    }
+
+
+
+    const upgradeCopyGeneratorObject = (generatorObject) => {
+        setCopyGeneratorObject(generatorObject);
+    }
    
-    const selectRawGeneratorHandler = (uid) => {
-        //alert("selectRawGeneraterHandler entered");
-        //alert("uid: " + uid);
-        setSelectedGeneratorType(uid);
+    const openInputMaskForSelectedGenerator = (typOfSelectedGenerator) => {
+        setSelectedGeneratorType(typOfSelectedGenerator);
+        setUniversalGeneratorFormMode("create");
         setIsOpenRawGeneratorDialog(false);
         setIsOpenDialogUniGenForm(true);
-        setTempGeneratorObject("");
-        //alert("selectRawGeneraterHandler exited")
-        /*
-        const string = "setIsOpen" + uid;
-        setIsOpenRawGeneratorDialog(false);
-        eval(string+"(true)"); */
     };
 
 
     const selectGeneratorHandler = (uid) => {
-        //alert("uid passed: " + uid);
-        const schemaNew = {...currentSchemaLocal};
-        const tableIndex = schemaNew.tables.findIndex(x => x.tableIndex === tableFocus.tableIndex);
-        //alert("tableIndex:   " + tableIndex);
-        const rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x=> x.rowId === tableFocus.rowId);
-        //alert("rowIndex:   " + rowIndex);
+        alert("uid passed: " + uid);
+        const schemaNew = cloneDeep(currentSchemaLocal);
+        const tableIndex = schemaNew.tables.findIndex(x => x.tableId === fieldInFocus.tableId);
+        alert("tableIndex:   " + tableIndex);
+        const rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x=> x.rowId === fieldInFocus.rowId);
+        alert("rowIndex:   " + rowIndex);
         const generatorRepo = JSON.parse(localStorage.getItem("generatorRepository"));
-        //alert("generatorRepo: " + generatorRepo);
+        alert("generatorRepo: " + generatorRepo);
         const indexGenerator = generatorRepo.findIndex(x=> x.uid === uid);
-        //alert("generatorIndex:   " + indexGenerator);
+        alert("generatorIndex:   " + indexGenerator);
         schemaNew.tables[tableIndex].tableItems[rowIndex].generator = generatorRepo[indexGenerator];
+        setCurrentSchemaLocal(schemaNew);
         //alert("operation done!")
     };
 
 
 
-
-
+    const resetGeneratorStateVariables = () => {
+        setFieldInFocus({});
+        setUniversalGeneratorFormMode("create");
+        //setTempGeneratorObject({});
+        setSelectedGeneratorType("BlankPage");
+    }
 
 
 
     // set Focus on table rows
 
-    const setTableFocusHandler = (tableId, rowId) => {
-        setTableFocus({tableId: tableId, rowId: rowId});
+    const setFieldInFocusHandler = (tableId, rowId) => {
+        setFieldInFocus({tableId: tableId, rowId: rowId});
     };
 
 
-    const resetTableFocusHandler = () => {
-        setTableFocus({});
-    }
+    const resetFieldInFocusHandler = () => {
+        setFieldInFocus({});
+    };
+
+
+    const openDialogSchemaSelection = () => {
+        setIsOpenDialogSchemaSelection(true);
+    };
+
+
+
 
 
     //  save generators
 
-    const saveGeneratorHandler = (generatorObject) => {
-        let schemaNew = {...currentSchemaLocal};
-        let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableFocus.tableId);
-        let rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x => x.rowId === tableFocus.rowId);
+    const addGeneratorToSchema = (generatorObject) => {
+        let schemaNew = cloneDeep(currentSchemaLocal);
+        let tableIndex = schemaNew.tables.findIndex( x => x.tableId === fieldInFocus.tableId);
+        alert("addGeneratorToSchema tableIndex: " + tableIndex);
+        let rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x => x.rowId === fieldInFocus.rowId);
         schemaNew.tables[tableIndex].tableItems[rowIndex].generator = generatorObject;
         setCurrentSchemaLocal(schemaNew);
-        setTableFocus({});
     }
 
 
     const addNewTableHandler = () => {
-        let schemaNew = {...currentSchemaLocal};
+        let schemaNew = cloneDeep(currentSchemaLocal);
         let tableCounter = parseInt(schemaNew.uids.tableCounter);
         let newTableName = "Table " + (tableCounter+1);
         let newTableJSON = {          
@@ -144,7 +159,7 @@ export default function BodyEditor(props){
 
     
     const deleteTableHandler = (tableId) => {
-        let schemaNew = {...currentSchemaLocal};
+        let schemaNew = cloneDeep(currentSchemaLocal);
         let tables = schemaNew.tables;
         //let index = this.state.tables.findIndex(x => x.id === tableId);
         //let tablesWithout = tables.filter(x => x.id !== tableId);
@@ -155,7 +170,7 @@ export default function BodyEditor(props){
 
 
     const addTableRowHandler = (tableId) => {
-        let schemaNew = {...currentSchemaLocal};
+        let schemaNew = cloneDeep(currentSchemaLocal);
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
         let rowCounter = schemaNew.tables[tableIndex].rowCounter;
         
@@ -176,7 +191,7 @@ export default function BodyEditor(props){
 
 
     const deleteTableRowHandler = (tableId, rowId) => { 
-        let schemaNew = {...currentSchemaLocal};
+        let schemaNew = cloneDeep(currentSchemaLocal);
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
         let rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x => x.rowId === rowId);
         schemaNew.tables[tableIndex].tableItems.splice(rowIndex,1);
@@ -185,7 +200,7 @@ export default function BodyEditor(props){
 
 
     const tableNameChangedHandler = (event, tableId) => {
-        let schemaNew = {...currentSchemaLocal};
+        let schemaNew = cloneDeep(currentSchemaLocal);
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
         schemaNew.tables[tableIndex].tableName = event.target.value;
         setCurrentSchemaLocal(schemaNew); 
@@ -194,7 +209,7 @@ export default function BodyEditor(props){
 
 
     const tableSizeChangedHandler = (event, tableId) => {
-        let schemaNew = {...currentSchemaLocal};
+        let schemaNew = cloneDeep(currentSchemaLocal);
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
         schemaNew.tables[tableIndex].tableSize = event.target.value;
         setCurrentSchemaLocal(schemaNew); 
@@ -202,7 +217,7 @@ export default function BodyEditor(props){
 
 
     const fieldNameChangedHandler = (event, tableId, rowId) => {
-        let schemaNew = {...currentSchemaLocal};
+        let schemaNew = cloneDeep(currentSchemaLocal);
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
         let rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x => x.rowId === rowId);
         schemaNew.tables[tableIndex].tableItems[rowIndex].fieldName = event.target.value;
@@ -211,7 +226,7 @@ export default function BodyEditor(props){
 
 
     const defaultSystemVariableValueChangedHandler = (event, variableId) => {
-        let schemaNew = {...currentSchemaLocal};
+        let schemaNew = cloneDeep(currentSchemaLocal);
         let variableIndex = schemaNew.variables.defaultVariables.findIndex( x => x.variableId === variableId);
         schemaNew.variables.defaultVariables[variableIndex].value = event.target.value;
         setCurrentSchemaLocal(schemaNew);
@@ -219,7 +234,7 @@ export default function BodyEditor(props){
 
 
     const customSystemVariableNameChangedHandler = (event, variableId) => {
-        let schemaNew = {...currentSchemaLocal};
+        let schemaNew = cloneDeep(currentSchemaLocal);
         let variableIndex = schemaNew.variables.customVariables.variableItems.findIndex( x => x.variableId === variableId);
         schemaNew.variables.customVariables.variableItems[variableIndex].name = event.target.value;
         setCurrentSchemaLocal(schemaNew);
@@ -227,7 +242,7 @@ export default function BodyEditor(props){
 
 
     const customSystemVariableValueChangedHandler = (event, variableId) => {
-        let schemaNew = {...currentSchemaLocal};
+        let schemaNew = cloneDeep(currentSchemaLocal);
         let variableIndex = schemaNew.variables.customVariables.variableItems.findIndex( x => x.variableId === variableId);
         schemaNew.variables.customVariables.variableItems[variableIndex].value = event.target.value;
         setCurrentSchemaLocal(schemaNew);
@@ -235,7 +250,7 @@ export default function BodyEditor(props){
 
 
     const customSystemVariableTypeChangedHandler = (event, variableId) => {
-        let schemaNew = {...currentSchemaLocal};
+        let schemaNew = cloneDeep(currentSchemaLocal);
         let variableIndex = schemaNew.variables.customVariables.variableItems.findIndex( x => x.variableId === variableId);
         schemaNew.variables.customVariables.variableItems[variableIndex].type = event.target.value;
         setCurrentSchemaLocal(schemaNew);
@@ -243,7 +258,7 @@ export default function BodyEditor(props){
 
 
     const addCustomVariableHandler = () => {
-        let schemaNew = {...currentSchemaLocal};
+        let schemaNew = cloneDeep(currentSchemaLocal);
         const variableCounter = schemaNew.variables.customVariables.variableCounter
         const variableCounterNew = variableCounter +1;
         schemaNew.variables.customVariables.variableCounter = variableCounterNew;
@@ -258,7 +273,7 @@ export default function BodyEditor(props){
 
 
     const deleteCustomSystemVariableHandler = (variableId) => {
-        let schemaNew = {...currentSchemaLocal};
+        let schemaNew = cloneDeep(currentSchemaLocal);
         let customVariablesWithout = schemaNew.variables.customVariables.variableItems.filter(x => x.variableId !== variableId);
         schemaNew.variables.customVariables.variableItems = customVariablesWithout;
         setCurrentSchemaLocal(schemaNew);
@@ -266,12 +281,12 @@ export default function BodyEditor(props){
 
     // reset operation
     const resetEditor = () => {
-        setCurrentSchemaLocal(emptySchema0);
+        setCurrentSchemaLocal(emptySchema);
     };
 
 
     // Browser Store for Generator
-    const saveGeneratorInBrowserStorage =(generatorObject) => {
+    const saveGeneratorInLocalStorage =(generatorObject) => {
         if (localStorage.getItem("generatorRepository") === null) {
             let generatorRepository = [];
             generatorRepository.push(generatorObject);
@@ -284,7 +299,7 @@ export default function BodyEditor(props){
     }
 
 /*
-    const loadGeneratorFromBrowserStorage = () => {
+    const loadGeneratorFromLocalStorage = () => {
         let generatorReloadedStringified = localStorage.getItem('generatorRepo');
         console.log("generatorStringified: " + generatorReloadedStringified); 
         let generatorReloaded = JSON.parse(generatorReloadedStringified);
@@ -302,9 +317,9 @@ export default function BodyEditor(props){
 
     // Browser Store operations
 
-   const saveSchemaInBrowserStorage = () => {
-    let currentSchema = {...currentSchemaLocal};
-    let schemaRepositoryStringified = localStorage.getItem("schemaRepository");
+   const saveSchemaInLocalStorage = () => {
+    let currentSchema = cloneDeep(currentSchemaLocal);
+        let schemaRepositoryStringified = localStorage.getItem("schemaRepository");
         if (schemaRepositoryStringified === null) {
             let schemaRepository = [];
             schemaRepository.push(currentSchema);
@@ -315,15 +330,33 @@ export default function BodyEditor(props){
             localStorage.setItem("schemaRepository", JSON.stringify(schemaRepository));
         }
     
-    }
+    };
   
 
     // Load Schema from Browser Storage
     const loadSchemaFromRepo = (schemaUid) => {
-        let schemaRepo = JSON.parse(localStorage.getItem("schemaRepo"));
-        let schemaIndex = schemaRepo.findIndex(x => x.uid === schemaUid);
+        let schemaRepo = JSON.parse(localStorage.getItem("schemaRepository"));
+        let schemaIndex = schemaRepo.findIndex(x => x.uids.schemaUid === schemaUid);
         setCurrentSchemaLocal(schemaRepo[schemaIndex]);
-    }
+    };
+
+    const deleteSchemaFromRepo = (schemaUid) => {
+        alert("deleteSchemaFromRepoCalled");
+        alert("SchemaUid: " + schemaUid);
+        let schemaRepo = JSON.parse(localStorage.getItem("schemaRepository"));
+        let schemaIndex = schemaRepo.findIndex(x => x.uids.schemaUid === schemaUid);
+        alert("schemaIndex: " + schemaIndex);
+        schemaRepo.splice(schemaIndex, 1);
+        localStorage.setItem("schemaRepository", JSON.stringify(schemaRepo));
+    };
+
+
+    const deleteGeneratorFromRepo = (generatorUid) => {
+        let generatorRepo = JSON.parse(localStorage.getItem("generatorRepository"));
+        let generatorIndex = generatorRepo.findIndex(x => x.uid === generatorUid);
+        generatorRepo.splice(generatorIndex, 1);
+        localStorage.setItem("generatorRepository", JSON.stringify(generatorRepo));
+    };
 
 
 
@@ -361,91 +394,7 @@ export default function BodyEditor(props){
 
 
 
-    // DialogFormDictListGenerator
     
-    const handleCloseDictListGenerator = () => {
-        setIsOpenDictListGenerator(false);
-        return null;
-    }
-
-    const handleClickOpenDictListGenerator = () => {
-        setIsOpenDictListGenerator(true);
-        return null;
-    }
-
-
-// DialogFormIdGenerator
-    
-    const handleCloseIdGenerator = () => {
-        setIsOpenIdGenerator(false);
-        return null;
-    }
-
-    const handleClickOpenIdGenerator = () => {
-        setIsOpenIdGenerator(true);
-        return null;
-    }
-
-// DialogFormLongGenerator
-    
-    const handleCloseLongGenerator = () => {
-        setIsOpenLongGenerator(false);
-        return null;
-    }
-
-    const handleClickOpenLongGenerator = () => {
-        setIsOpenLongGenerator(true);
-        return null;
-    }
-
-// DialogFormDoubleGenerator
-    
-const handleCloseDoubleGenerator = () => {
-    setIsOpenDoubleGenerator(false);
-    return null;
-}
-
-const handleClickOpenDoubleGenerator = () => {
-    setIsOpenDoubleGenerator(true);
-    return null;
-}
-
-// DialogFormDateTimeGenerator
-    
-const handleCloseDateTimeGenerator = () => {
-    setIsOpenDateTimeGenerator(false);
-    return null;
-}
-
-const handleClickOpenDateTimeGenerator = () => {
-    setIsOpenDateTimeGenerator(true);
-    return null;
-}
-
-// DialogFormRandomStringGenerator
-    
-const handleCloseRandomStringGenerator = () => {
-    setIsOpenRandomStringGenerator(false);
-    return null;
-}
-
-const handleClickOpenRandomStringGenerator = () => {
-    setIsOpenRandomStringGenerator(true);
-    return null;
-}
-
-// DialogFormRandomSentenceGenerator
-    
-const handleCloseRandomSentenceGenerator = () => {
-    setIsOpenRandomSentenceGenerator(false);
-    return null;
-}
-
-const handleClickOpenRandomSentenceGenerator = () => {
-    setIsOpenRandomSentenceGenerator(true);
-    return null;
-}
-
 // DialogBlank
     
 const handleCloseBlank = () => {
@@ -471,7 +420,7 @@ const handleClickOpenBlank = () => {
 
     // 
     const infoObjectChangedHandler = (infoObject) => {
-    const schemaNew ={...currentSchemaLocal};
+    const schemaNew =cloneDeep(currentSchemaLocal);
     schemaNew.info = infoObject;
     setCurrentSchemaLocal(schemaNew); 
     }
@@ -492,28 +441,28 @@ const handleClickOpenBlank = () => {
 
     // Change Handler for DialogSaveSchema
     const schemaNameChangedHandler = (event) => {
-        const schemaNew = {...currentSchemaLocal};
+        const schemaNew = cloneDeep(currentSchemaLocal);
         schemaNew.info.schemaName = event.target.value;
         setCurrentSchemaLocal(schemaNew);
     };
 
  
     const descriptionChangedHandler = (event) => {
-        const schemaNew = {...currentSchemaLocal};
+        const schemaNew = cloneDeep(currentSchemaLocal);
         schemaNew.info.description = event.target.value;
         setCurrentSchemaLocal(schemaNew);
     };
 
    
     const authorChangedHandler = (event) => {
-        const schemaNew = {...currentSchemaLocal};
+        const schemaNew = cloneDeep(currentSchemaLocal);
         schemaNew.info.author = event.target.value;
         setCurrentSchemaLocal(schemaNew);
     };
 
      
      const lastEditedChangedHandler = (event) => {
-        const schemaNew = {...currentSchemaLocal};
+        const schemaNew = cloneDeep(currentSchemaLocal);
         schemaNew.info.lastEdited = event.target.value;
         setCurrentSchemaLocal(schemaNew);
     };
@@ -548,6 +497,7 @@ const handleClickOpenBlank = () => {
         const currentSchema = {...currentSchemaLocal};
         currentSchema.uids.schemaUid = uid;
         setCurrentSchemaLocal(currentSchema);
+        alert("In addVidToSchema. Uid Added: " + currentSchema.uids.schemaUid);
         return null;
     };
 
@@ -555,13 +505,30 @@ const handleClickOpenBlank = () => {
 
     // loadGeneratorToEditDialog
    
-    const loadGeneratorToEditDialog = (tableId, rowId) => {
+    const loadGeneratorToEditDialog = (tableId, rowId, generatorType) => {
+        setFieldInFocus({tableId: tableId, rowId: rowId});
+        setUniversalGeneratorFormMode("edit");
+        alert("generator type: " + generatorType)
+        setSelectedGeneratorType(generatorType);
+        setIsOpenDialogUniGenForm(true);
+       /* 
         const tableIndex = currentSchemaLocal.tables.findIndex(x => x.tableId === tableId);
+        alert( "tableIndex: " +tableIndex);
         const rowIndex = currentSchemaLocal.tables[tableIndex].tableItems.findIndex(x => x.rowId === rowId);
+        alert( "rowIndex: " +rowIndex);
+        const generator = currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator;
+        const tableIndex = currentSchemaLocal.tables.findIndex(x => x.tableId === tableId);
+        alert( "tableIndex: " +tableIndex);
+        const rowIndex = currentSchemaLocal.tables[tableIndex].tableItems.findIndex(x => x.rowId === rowId);
+        alert( "rowIndex: " +rowIndex);
         const generator = currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator;
         setTempGeneratorObject(generator);
-        setIsInCreateMode(false);
-        eval("setIsOpen" + generator.type+"(true)");// setting the isOpen- Variable for the needed generator to true.
+        alert( "generator: " + JSON.stringify(generator));
+        //setIsInCreateMode(false);
+        setIsOpenDialogUniGenForm(true);
+        setSelectedGeneratorType(generator.type);
+        //eval("setIsOpen" + generator.type+"(true)");// setting the isOpen- Variable for the needed generator to true.
+        */
         return null;
     };
 
@@ -583,7 +550,7 @@ const handleClickOpenBlank = () => {
 
     
     const handleCloseDialogUniGenForm = () => {
-        alert("entered: in handleCloseDialogUniGenForm");
+        //alert("entered: in handleCloseDialogUniGenForm");
         setIsOpenDialogUniGenForm(false);
     };
 
@@ -595,9 +562,45 @@ const handleClickOpenBlank = () => {
 
 
     return(
+
+        <>
         <div>
-            {alert("inBodyEditor handleCloseFctn: " + handleCloseDialogUniGenForm)}
-            <Grid container display="flex" direction="row" justify="flex-start" alignContent="flex-start" xs={12} spacing = {0} style={{background: "white", height: "90vh"}}>
+            
+              <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start"}}>
+                
+                <div>
+                    <Typography>UniversalFormMode:</Typography>
+                    <Input value={universalGeneratorFormMode}/>
+                </div>
+                
+                <div>
+                    <Typography>FieldInFocus:</Typography>
+                    <Input value={JSON.stringify(fieldInFocus)}/>
+                </div>
+                
+                <div>
+                    <Typography>selectedGeneratorType:</Typography>
+                    <Input value={selectedGeneratorType}/>
+                </div>
+                
+                <div>
+                    <Typography>TempGeneratorObject:</Typography>
+                    <Input value={JSON.stringify(tempGeneratorObject)}/>
+                </div>
+                {/*} <div>Percent NullValues: {copyGeneratorObject.nullValues.percentNullValues} </div>
+
+                <div>Save in Repo: </div> <Input value={copyGeneratorObject.repoVariables.saveInRepo} />*/}
+
+            </div>
+                <div>
+                    {JSON.stringify(copyGeneratorObject)}
+                </div>
+               
+
+             
+
+
+            <Grid container display="flex" direction="row" justify="flex-start" alignContent="flex-start" spacing = {0} style={{background: "white", height: "90vh"}}>
                {/*first row*/}
                <Grid container item xs={12} style={{height: "250px"}} >
                     <Grid container item xs={9} justify="flex-start" alignContent="flex-end" style={{backgroundColor: "white", paddingBottom: "20px", paddingLeft:"20px"}}>
@@ -611,7 +614,9 @@ const handleClickOpenBlank = () => {
                             resetEditor ={resetEditor}
                             toggleSidebarRight = {toggleSidebarRight}
                             handleClickOpenDialogSaveSchema={handleClickOpenDialogSaveSchema}
-                        />
+                            openDialogSchemaSelection={openDialogSchemaSelection}
+                        ><div></div>
+                        </EditorButtonGroup>
                     </Grid>
                 </Grid>
 
@@ -621,7 +626,8 @@ const handleClickOpenBlank = () => {
                     {(isOpenSideBarRight? (
                     <Grid container item xs={10} display="flex" direction="row" justify="center" alignContent="center"  style={{ backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>    
                     {currentSchemaLocal.tables.map(table => {return( 
-                            <TableComponent 
+                            <TableComponent
+                                key={table.tableId} 
                                 data={table} 
                                 deleteTableHandler={deleteTableHandler} 
                                 addTableRowHandler={addTableRowHandler} 
@@ -632,9 +638,9 @@ const handleClickOpenBlank = () => {
                                 handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
                                 handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
                                 isOpenGeneratorDialog = {isOpenGeneratorDialog}
-                                setTableFocusHandler={setTableFocusHandler}
+                                setFieldInFocusHandler={setFieldInFocusHandler}
                                 loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
-
+                               
 
                             />
                         )})
@@ -642,7 +648,8 @@ const handleClickOpenBlank = () => {
                     </Grid>):
                     (<Grid container item xs={12} display="flex" direction="row" justify="center" alignContent="center"  style={{ backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>
                     {currentSchemaLocal.tables.map(table => {return( 
-                            <TableComponent 
+                            <TableComponent
+                                key={table.tableId} 
                                 data={table} 
                                 deleteTableHandler={deleteTableHandler} 
                                 addTableRowHandler={addTableRowHandler} 
@@ -653,9 +660,9 @@ const handleClickOpenBlank = () => {
                                 handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
                                 handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
                                 isOpenGeneratorDialog = {isOpenGeneratorDialog}
-                                setTableFocusHandler={setTableFocusHandler}
+                                setFieldInFocusHandler={setFieldInFocusHandler}
                                 loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
-
+                               
 
                             />
                         )})
@@ -701,53 +708,64 @@ const handleClickOpenBlank = () => {
                 handleCloseRawGeneratorDialog={handleCloseRawGeneratorDialog} 
                 data={rawGeneratorDescriptions} 
                 handleClickOpenGeneratorDialog={handleClickOpenGeneratorDialog} 
-                selectRawGeneratorHandler={selectRawGeneratorHandler}
+                openInputMaskForSelectedGenerator={openInputMaskForSelectedGenerator}
             />
+
+            <DialogSchemaSelection   
+                handleCloseDialogSchemaSelection={handleCloseDialogSchemaSelection}
+                isOpenDialogSchemaSelection={ isOpenDialogSchemaSelection}
+                loadSelectedSchema={loadSelectedSchema}
+                deleteSchemaFromRepo={deleteSchemaFromRepo}
+                />
+
+            {/*
             <DialogFormDictListGenerator 
                 isOpenDictListGenerator={isOpenDictListGenerator} 
                 handleCloseDictListGenerator={handleCloseDictListGenerator}
-                saveGeneratorHandler={saveGeneratorHandler}
-                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
+                addGeneratorToSchema={addGeneratorToSchema}
+                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
             />
             <DialogFormIdGenerator 
                 isOpenIdGenerator={isOpenIdGenerator} 
                 handleCloseIdGenerator={handleCloseIdGenerator}
-                saveGeneratorHandler={saveGeneratorHandler}
-                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
+                addGeneratorToSchema={addGeneratorToSchema}
+                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
                 tempGeneratorObject={tempGeneratorObject}
                 isInCreateMode={isInCreateMode}
             />
             <DialogFormLongGenerator 
                 isOpenLongGenerator={isOpenLongGenerator} 
                 handleCloseLongGenerator={handleCloseLongGenerator}
-                saveGeneratorHandler={saveGeneratorHandler}
-                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
+                addGeneratorToSchema={addGeneratorToSchema}
+                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
             />
             <DialogFormDoubleGenerator 
                 isOpenDoubleGenerator={isOpenDoubleGenerator} 
                 handleCloseDoubleGenerator={handleCloseDoubleGenerator}
-                saveGeneratorHandler={saveGeneratorHandler}
-                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
+                addGeneratorToSchema={addGeneratorToSchema}
+                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
                 
             />
             <DialogFormDateTimeGenerator 
                 isOpenDateTimeGenerator={isOpenDateTimeGenerator} 
                 handleCloseDateTimeGenerator={handleCloseDateTimeGenerator}
-                saveGeneratorHandler={saveGeneratorHandler}
-                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
+                addGeneratorToSchema={addGeneratorToSchema}
+                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
             />
              <DialogFormRandomStringGenerator 
                 isOpenRandomStringGenerator={isOpenRandomStringGenerator} 
                 handleCloseRandomStringGenerator={handleCloseRandomStringGenerator}
-                saveGeneratorHandler={saveGeneratorHandler}
-                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
+                addGeneratorToSchema={addGeneratorToSchema}
+                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
             />
             <DialogFormRandomSentenceGenerator 
                 isOpenRandomSentenceGenerator={isOpenRandomSentenceGenerator} 
                 handleCloseRandomSentenceGenerator={handleCloseRandomSentenceGenerator}
-                saveGeneratorHandler={saveGeneratorHandler}
-                saveGeneratorInBrowserStorage={saveGeneratorInBrowserStorage}
+                addGeneratorToSchema={addGeneratorToSchema}
+                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
             />
+
+            */}
             <DialogBlank 
                 isOpenBlank={isOpenBlank} 
                 handleCloseBlank={handleCloseBlank}
@@ -755,13 +773,14 @@ const handleClickOpenBlank = () => {
               <DialogSaveSchema 
                 isOpenDialogSaveSchema={isOpenDialogSaveSchema} 
                 handleCloseDialogSaveSchema={handleCloseDialogSaveSchema}
-                saveSchemaInBrowserStorage={saveSchemaInBrowserStorage}
+                saveSchemaInLocalStorage={saveSchemaInLocalStorage}
                 schemaInfoObject={currentSchemaLocal.info}
                 schemaNameChangedHandler={schemaNameChangedHandler}
                 descriptionChangedHandler={descriptionChangedHandler}
                 authorChangedHandler={authorChangedHandler}
                 lastEditedChangedHandler={lastEditedChangedHandler}
                 addUidToSchema={addUidToSchema}
+                saveSchemaOnClickHandler={saveSchemaOnClickHandler}
 
             />
             <DialogStartPage 
@@ -771,15 +790,24 @@ const handleClickOpenBlank = () => {
                 handleCloseDialogSchemaSelection={handleCloseDialogSchemaSelection}
                 isOpenDialogSchemaSelection={ isOpenDialogSchemaSelection}
                 loadSelectedSchema={loadSelectedSchema}
+                deleteSchemaFromRepo={deleteSchemaFromRepo}
             />
             <DialogUniversalGeneratorForm
                
-                tempGeneratorObject = {tempGeneratorObject}
                 isOpenDialogUniGenForm = {isOpenDialogUniGenForm}
-                generatorType={selectedGeneratorType}
+                selectedGeneratorType={selectedGeneratorType}
                 handleCloseDialogUniGenForm = {handleCloseDialogUniGenForm}
+                currentSchemaLocal={currentSchemaLocal}
+                addGeneratorToSchema={addGeneratorToSchema}
+                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
+                universalGeneratorFormMode={universalGeneratorFormMode}
+                fieldInFocus={fieldInFocus}
+                upgradeCopyGeneratorObject={upgradeCopyGeneratorObject}
+                resetGeneratorStateVariables={resetGeneratorStateVariables}
+
             />        
         </div>
+        </>
     )
 
 }

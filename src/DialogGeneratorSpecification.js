@@ -15,7 +15,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 import SchemaSelectionCard from "./SchemaSelectionCard";
-
+import cloneDeep from 'lodash/cloneDeep';
 import Slide from '@material-ui/core/Slide';
 import DialogActions from "@material-ui/core/DialogActions";
 import FormAggregationTest01 from "./FormAggregationTest01";
@@ -58,7 +58,7 @@ function DialogGeneratorSpecification(props) {
         TransitionComponent={Transition}
         keepMounted
         PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
-        fullWidth
+        fullwidth
         maxWidth="md"
         >
       <DialogTitle id="simple-dialog-title">Test Form 01</DialogTitle>

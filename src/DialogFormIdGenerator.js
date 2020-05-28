@@ -16,6 +16,7 @@ import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
 import Slider from "@material-ui/core/Slider";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DistributionInputElement from "./DistributionInputElement";
+import cloneDeep from 'lodash/cloneDeep';
 
 
 const useStyles = makeStyles({
@@ -77,7 +78,7 @@ export default function DialogFormIdGenerator(props) {
     
     // Change Handler Input Fields
     const minimumChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.minimum = event.target.value;
         setGeneratorObject(newGenerator);
     };
@@ -85,13 +86,13 @@ export default function DialogFormIdGenerator(props) {
 
     // Change Handler Slider Component
     const handleNullValuesSliderChange = (event, newValue) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.nullValues = newValue;
         setGeneratorObject(newGenerator);
     };
   
     const handleNullValuesInputChange = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.nullValues = (event.target.value === '' ? '99' : Number(event.target.value));
         setGeneratorObject(newGenerator);
     };
@@ -109,7 +110,7 @@ export default function DialogFormIdGenerator(props) {
 
     // Change Handler Repo Component
     const repoVariablesChangedHandler = (repoObject) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.repoVariables = (repoObject);
         setGeneratorObject(newGenerator);
         
@@ -119,25 +120,25 @@ export default function DialogFormIdGenerator(props) {
         // Change Handler Repo Element
 
     const saveInRepoChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.repoVariables.saveInRepo = (event.target.checked);
         setGeneratorObject(newGenerator);
     };
 
     const nameChangedHandler = (event)=> {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.repoVariables.name = (event.target.value);
         setGeneratorObject(newGenerator);
     };
 
     const descriptionChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.repoVariables.description = (event.target.value);
         setGeneratorObject(newGenerator);
     };
 
     const examplesChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.repoVariables.examples = (event.target.value);
         setGeneratorObject(newGenerator);
     };
@@ -146,25 +147,25 @@ export default function DialogFormIdGenerator(props) {
     // Change Handler Padding Component
 
     const withPaddingChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.paddingVariables.withPadding = (event.target.checked);
         setGeneratorObject(newGenerator);
     };
 
     const numberCharactersChangedHandler = (event)=> {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.paddingVariables.numberCharacters = (event.target.value);
         setGeneratorObject(newGenerator);
     };
 
     const fillCharacterChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.paddingVariables.fillCharacter = (event.target.value);
         setGeneratorObject(newGenerator);
     };
 
     const fromLeftChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.paddingVariables.fromLeft = (event.target.value);
         setGeneratorObject(newGenerator);
     };
@@ -176,11 +177,11 @@ export default function DialogFormIdGenerator(props) {
 
     const saveButtonOnClickHandler = () => {
       if (generatorObject.repoVariables.saveInRepo === true){
-        props.saveGeneratorInBrowserStorage(generatorObject);
-        props.saveGeneratorHandler(generatorObject);
+        props.saveGeneratorInLocalStorage(generatorObject);
+        props.addGeneratorToSchema(generatorObject);
         props.handleCloseIdGenerator();
       } else {
-        props.saveGeneratorHandler(generatorObject);
+        props.addGeneratorToSchema(generatorObject);
         props.handleCloseIdGenerator();
       }
     }
@@ -191,7 +192,7 @@ export default function DialogFormIdGenerator(props) {
       const miliSecondsFrom1970To2020 = 1577785488*1000;
       const uid = Date.now() - miliSecondsFrom1970To2020; 
       //alert(uid);
-      const newGenerator = {...generatorObject};
+      const newGenerator = cloneDeep(generatorObject);
       newGenerator.uid = uid;
       //alert(JSON.stringify(newGenerator));
       setGeneratorObject(newGenerator);
@@ -201,11 +202,11 @@ export default function DialogFormIdGenerator(props) {
 
 
 
-
+{/*}
     const swapObjects = () => {
       setGeneratorObject(props.tempGeneratorObject);
     }
-
+  */}
 
   return (
     <>
@@ -217,10 +218,10 @@ export default function DialogFormIdGenerator(props) {
         //TransitionComponent={Transition}
         keepMounted
         PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
-        fullWidth
+        fullwidth
         maxWidth="md"
         >
-      <DialogTitle disableTypography style={{fontSize: 40, paddingLeft: 15, }} id="simple-dialog-title">Id Generator <Button onClick={()=>swapObjects()}>Swap </Button></DialogTitle>
+      <DialogTitle disableTypography style={{fontSize: 40, paddingLeft: 15, }} id="simple-dialog-title">Id Generator <Button >Swap. hier on Click wieder einfügen </Button></DialogTitle>
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
       
             <Grid direction="row" container item xs={12} style={{paddingLeft: "15px", paddingRight: "30px"}}>
@@ -234,7 +235,7 @@ export default function DialogFormIdGenerator(props) {
                     className={classes.input} 
                     type="number" 
                     placeholder="Enter Minimum" 
-                    fullWidth
+                    fullwidth
                     value={generatorObject.minimum} 
                     onChange={(event) => minimumChangedHandler(event)}/>
                 </Grid>
@@ -249,7 +250,7 @@ export default function DialogFormIdGenerator(props) {
                       value={typeof generatorObject.nullValues === 'number' ? generatorObject.nullValues : 0}
                       onChange={handleNullValuesSliderChange}
                       aria-labelledby="input-slider"
-                      fullWidth
+                      fullwidth
                     />
                   </Grid>
 

@@ -95,6 +95,12 @@ export default function GeneratorFormRepoExpansion(props) {
                             />
                     </Grid>
                 </Grid>
+
+                <Grid container item xs={leftColumnWidth} style={{background: "inherit"}}>
+                  <Typography variant={fontSizeLeftColumn}>SetRepo:</Typography>
+                  <div>{props.generatorObject.repoVariables.saveInRepo}</div>
+
+                </Grid>
                
               </Grid>
         </ExpansionPanelDetails>

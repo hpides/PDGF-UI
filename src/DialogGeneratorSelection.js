@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -20,6 +20,8 @@ import SchemaSelectionCard from "./SchemaSelectionCard";
 import BuildIcon from "@material-ui/icons/Build";
 import GeneratorSelectionCard from "./GeneratorSelectionCard";
 import Box from "@material-ui/core/Box";
+import cloneDeep from 'lodash/cloneDeep';
+
 
 const useStyles = makeStyles({
   avatar: {
@@ -40,13 +42,19 @@ export default function DialogGeneratorSelection(props) {
   //  onClose(value);
   //};
 
+  const [reRenderTrigger, setReRenderTrigger] = useState(0);
+
+  const triggerRerender = () => {
+    setReRenderTrigger(Date.now);
+  }
+
   return (
     <Dialog 
         onClose={props.handleCloseGeneratorDialog} 
         aria-labelledby="simple-dialog-title" 
         open={props.isOpenGeneratorDialog}
         maxWidth="md"
-        fullWidth>
+        fullwidth>
 
 
         <DialogTitle id="simple-dialog-title">
@@ -68,7 +76,7 @@ export default function DialogGeneratorSelection(props) {
             </Grid>
         </DialogTitle>
         <DialogContent>
-            <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>    
+            <div style={{display: "flex", flexDirection: "column", justifycontent: "flex-start"}}>    
                 <Grid container display="flex" justify="flex-start" flexWrap="wrap" xs={12}>
 
                 {(localStorage.getItem("generatorRepository")!== null)? 
@@ -78,13 +86,14 @@ export default function DialogGeneratorSelection(props) {
                                   data = {element} 
                                   loadSelectedSchema={props.loadSelectedGenerator}
                                   selectGeneratorHandler={props.selectGeneratorHandler}
-                                  handleCloseGeneratorDialog={props.handleCloseGeneratorDialog}/> 
+                                  handleCloseGeneratorDialog={props.handleCloseGeneratorDialog}
+                                  triggerRerender={triggerRerender}/> 
                             </Grid>}): 
                     <div> There are currently no Schemata in the Repository </div>}  
 
 
                  {/* 
-                 {props.data.map(element => { return <Grid item xs={4}> <GeneratorSelectionCard data = {element} handleCloseGeneratorDialog = {props.handleCloseGeneratorDialog}/> </Grid>})}
+                 {props.data.map(element => { return <Grid  key={element.uid} item xs={4}> <GeneratorSelectionCard data = {element} handleCloseGeneratorDialog = {props.handleCloseGeneratorDialog}/> </Grid>})}
                  */} 
                 
                  </Grid>

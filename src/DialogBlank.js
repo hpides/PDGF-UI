@@ -40,7 +40,7 @@ export default function DialogBlank(props) {
         //TransitionComponent={Transition}
         keepMounted
         PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
-        fullWidth
+        fullwidth
         maxWidth="md"
         >
       <DialogTitle id="simple-dialog-title">Blank</DialogTitle>

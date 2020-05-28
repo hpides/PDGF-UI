@@ -52,6 +52,7 @@ export default function CustomVariablesContainer(props){
                 <Typography className={classes.containerLabel}>Custom System Variables</Typography>  
                 <div>
                 {props.variables.customVariables.variableItems.map(element => {return <CustomVariablesSubComponent 
+                                                                          key = {element.variableId}
                                                                           input = {element} 
                                                                           customSystemVariableNameChangedHandler={props.customSystemVariableNameChangedHandler}
                                                                           customSystemVariableValueChangedHandler={props.customSystemVariableValueChangedHandler}
@@ -59,7 +60,7 @@ export default function CustomVariablesContainer(props){
                                                                           deleteCustomSystemVariableHandler ={props.deleteCustomSystemVariableHandler}                                                                        
                                                                           />})}
                 </div> 
-                <div style={{display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center",}}>
+                <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start", alignItems: "center",}}>
                   <IconButton onClick={() => {props.addCustomVariableHandler()}}>
                     <AddCircleIcon/>
                   </IconButton>

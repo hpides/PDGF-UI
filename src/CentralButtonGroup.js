@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     outerBox: {
         display:"flex", 
         flexDirection: "row", 
-        justifyContent:"center",
+        //justifycontent:"center",
         background: "white", 
         height: "70vh", 
         margin: "30px", 
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     innerBox: {
         display:"flex", 
         flexDirection: "column", 
-        justifyContent: "center", 
+        //justifycontent: "center", 
         alignItems: "flex-start", 
         background: "white",
         height: "60vh",
@@ -80,11 +80,6 @@ export default function CentralButtonGroup2(props){
                         Load Schema from Repo
                     </Button>
                 </Box>
-                <DialogSchemaSelection   
-                    handleCloseDialogSchemaSelection={props.handleCloseDialogSchemaSelection}
-                    isOpenDialogSchemaSelection={ props.isOpenDialogSchemaSelection}
-                    loadSelectedSchema={props.loadSelectedSchema}
-                 />
                 
                 <Box className={classes.boxElement}>
                     <Button

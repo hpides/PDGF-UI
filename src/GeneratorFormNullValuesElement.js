@@ -10,11 +10,17 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Slider from '@material-ui/core/Slider';
+import Switch from "@material-ui/core/Switch";
+import Slider from "@material-ui/core/slider";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import cloneDeep from 'lodash/cloneDeep';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+  },
+  input: {
+    fontSize: 20,
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -22,71 +28,92 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function GeneratorFormNullValuesElement(props){
+export default function GeneratorFormNullValuesElement(props) {
   const classes = useStyles();
   const leftColumnWidth = 5;
   const rightColumnWidth = 12 - leftColumnWidth; 
   const fontSizeLeftColumn = "h5"
-  
-  
 
- {/*}
-
-  const handleSliderChange = (event, newValue) => {
-    setValue(newValue);
-    props.nullValuesChangedHandler(newValue);
-  };
-
-  const handleInputChange = (event) => {
-    const safeValue = (event.target.value === '' ? '' : Number(event.target.value));
-    props.nullValuesChangedHandler(safeValue);
-  };
-
-
- 
-  const handleBlur = () => {
-    if (props.nullValues < 0) {
-      props.nullValuesChangedHandler(0);
-    } else if (props.nullValues > 100) {
-      props.nullValuesChangedHandler(100)
-    }
-  };
-
-
-  */}
 
   return (
-    <>
-        <Grid direction="row" container item xs={12}>
-                <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Null-Values:</Typography>
+    <Grid container xs={12} style={{background: "inherit"}}>
+    
+    
+      <ExpansionPanel style={{width: 960}}>
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header">
+  
+          <Grid container item xs={leftColumnWidth} style={{background: "inherit"}}>
+            <Typography variant={fontSizeLeftColumn}>
+              NullValues:
+            </Typography>
+          </Grid>
+          <Grid container item xs={rightColumnWidth} style={{background: "inherit", paddingLeft: 10}}>
+              <Checkbox 
+                checked={props.generatorObject.nullValues.withNullValues}
+                onChange={event => {props.withNullValuesChangedHandler(event)}}
+                inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
+          </Grid>  
+
+
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+
+              <Grid  container item xs={12} style={{background: "inherit"}}>
+                <Grid container item xs={leftColumnWidth} style={{background: "inherit"}}>
+                      <Typography variant={fontSizeLeftColumn}>Null Values:</Typography>
                 </Grid>
+
                 <Grid container item xs={rightColumnWidth}>
-                    <Grid item xs={4}>
-                        <Slider
-                            value={typeof props.nullValues === 'number' ? props.nullValues : 0}
-                            onChange={(event=>props.nullValuesChangedHandler(event))}
-                            aria-labelledby="input-slider"
-                        />
-                    </Grid>
-                    <Grid item xs={1}>
-                        <Input
-                            className={classes.input}
-                            value={props.nullValues}
-                            margin="dense"
-                            onChange={(event=>props.nullValuesChangedHandler(event))}
-                            //onBlur={handleBlur}
-                            inputProps={{
-                            step: 1,
-                            min: 0,
-                            max: 100,
-                            type: 'number',
-                            'aria-labelledby': 'input-slider',
-                            }}
-                        />
-                    </Grid>
+                                    
+                  
+                  <Grid item xs={9}>
+                    <Slider
+                      value={typeof props.generatorObject.nullValues.percentNullValues === 'number' ? props.generatorObject.nullValues.percentNullValues : 0}
+                      onChange={props.handleNullValuesSliderChange}
+                      aria-labelledby="input-slider"
+                    />
+                  </Grid>
+
+
+
+
+                  <Grid item>
+                    <Input
+                      className={classes.input}
+                      value={props.generatorObject.nullValues.percentNullValues}
+                      margin="dense"
+                      onChange={props.handleNullValuesInputChange}
+                      onBlur={props.handleBlur}
+                      endAdornment={<InputAdornment position="end">%</InputAdornment>}
+                      inputProps={{
+                        step: 10,
+                        min: 0,
+                        max: 100,
+                        size: 3,
+                        type: 'number',
+                        'aria-labelledby': 'input-slider',
+                      }}
+                    />
+                  </Grid>
+
+
                 </Grid>
-        </Grid>
-    </>
+           
+              </Grid>
+             
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+      
+     
+    </Grid>
   );
 }
+
+
+
+
+
+

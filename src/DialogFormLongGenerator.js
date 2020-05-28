@@ -16,7 +16,7 @@ import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
 import Slider from "@material-ui/core/Slider";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DistributionInputElement from "./DistributionInputElement";
-
+import cloneDeep from 'lodash/cloneDeep';
 
 const useStyles = makeStyles({
     input: {
@@ -237,11 +237,11 @@ export default function DialogFormLongGenerator(props) {
 
   const saveButtonOnClickHandler = () => {
     if (generatorObject.repoVariables.saveInRepo === true){
-      props.saveGeneratorInBrowserStorage(generatorObject);
-      props.saveGeneratorHandler(generatorObject);
+      props.saveGeneratorInLocalStorage(generatorObject);
+      props.addGeneratorToSchema(generatorObject);
       props.handleCloseLongGenerator();
     } else {
-      props.saveGeneratorHandler(generatorObject);
+      props.addGeneratorToSchema(generatorObject);
       props.handleCloseLongGenerator();
     }
   }
@@ -267,7 +267,7 @@ export default function DialogFormLongGenerator(props) {
         //TransitionComponent={Transition}
         keepMounted
         PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
-        fullWidth
+        fullwidth
         maxWidth="md"
         >
       <DialogTitle disableTypography style={{fontSize: 40, paddingLeft: 15, }} id="simple-dialog-title">Long Generator</DialogTitle>

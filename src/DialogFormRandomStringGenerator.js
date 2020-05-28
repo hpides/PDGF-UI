@@ -16,7 +16,7 @@ import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
 import Slider from "@material-ui/core/Slider";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DistributionInputElement from "./DistributionInputElement";
-
+import cloneDeep from 'lodash/cloneDeep';
 
 const useStyles = makeStyles({
     input: {
@@ -76,14 +76,14 @@ export default function DialogFormRandomStringGenerator(props) {
     // Change Handler numberOfCharacters
 
     const numberOfCharactersChangedHandler = (event, newValue) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.numberOfCharacters = newValue;
         setGeneratorObject(newGenerator);
     };
 
     // Change Handler Input Fields
     const numberOfDistinctCharactersChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.numberOfDistinctCharacters = event.target.value;
         setGeneratorObject(newGenerator);
     };
@@ -92,7 +92,7 @@ export default function DialogFormRandomStringGenerator(props) {
 
     // Change Handler Distribution Component
     const distributionVariablesChangedHandler = (distributionObject) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.distribution = distributionObject;
         setGeneratorObject(newGenerator);
     };
@@ -100,25 +100,25 @@ export default function DialogFormRandomStringGenerator(props) {
         // Change Handler Repo Element
 
     const saveInRepoChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.repoVariables.saveInRepo = (event.target.checked);
         setGeneratorObject(newGenerator);
     };
 
     const nameChangedHandler = (event)=> {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.repoVariables.name = (event.target.value);
         setGeneratorObject(newGenerator);
     };
 
     const descriptionChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.repoVariables.description = (event.target.value);
         setGeneratorObject(newGenerator);
     };
 
     const examplesChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.repoVariables.examples = (event.target.value);
         setGeneratorObject(newGenerator);
     };
@@ -127,25 +127,25 @@ export default function DialogFormRandomStringGenerator(props) {
     // Change Handler Padding Component
 
     const withPaddingChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.paddingVariables.withPadding = (event.target.checked);
         setGeneratorObject(newGenerator);
     };
 
     const numberCharactersChangedHandler = (event)=> {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.paddingVariables.numberCharacters = (event.target.value);
         setGeneratorObject(newGenerator);
     };
 
     const fillCharacterChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.paddingVariables.fillCharacter = (event.target.value);
         setGeneratorObject(newGenerator);
     };
 
     const fromLeftChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.paddingVariables.fromLeft = (event.target.value);
         setGeneratorObject(newGenerator);
     };
@@ -154,57 +154,57 @@ export default function DialogFormRandomStringGenerator(props) {
     // Change Handler Distribution Component
 
     const distributionTypeChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
+      const newGenerator = cloneDeep(generatorObject);
       newGenerator.distributionVariables.type = event.target.value;
       setGeneratorObject(newGenerator);  
     };
 
 
     const expDLambdaValueChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
+      const newGenerator = cloneDeep(generatorObject);
       newGenerator.distributionVariables.exponentialDistribution.lambda = event.target.value;
       setGeneratorObject(newGenerator);
   };
 
       const logDPValueChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
+      const newGenerator = cloneDeep(generatorObject);
       newGenerator.distributionVariables.logarithmicDistribution.p = event.target.value;
       setGeneratorObject(newGenerator);
   };
 
   const normalDStdDevValueChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
+      const newGenerator = cloneDeep(generatorObject);
       newGenerator.distributionVariables.normalDistribution.standardDeviation = event.target.value;
       setGeneratorObject(newGenerator);
   };
 
   const normalDMeanValueChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
+      const newGenerator = cloneDeep(generatorObject);
       newGenerator.distributionVariables.normalDistribution.mean = event.target.value;
       setGeneratorObject(newGenerator);
   };
 
   const binomialDPValueChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
+      const newGenerator = cloneDeep(generatorObject);
       newGenerator.distributionVariables.binomialDistribution.p = event.target.value;
       setGeneratorObject(newGenerator);
   };
 
   const binomialDNValueChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
+      const newGenerator = cloneDeep(generatorObject);
       newGenerator.distributionVariables.binomialDistribution.n = event.target.value;
       setGeneratorObject(newGenerator);
   };
 
   // Change Handler Slider Component
   const handleNullValuesSliderChange = (event, newValue) => {
-    const newGenerator = {...generatorObject};
+    const newGenerator = cloneDeep(generatorObject);
     newGenerator.nullValues = newValue;
     setGeneratorObject(newGenerator);
 };
 
 const handleNullValuesInputChange = (event) => {
-    const newGenerator = {...generatorObject};
+    const newGenerator = cloneDeep(generatorObject);
     newGenerator.nullValues = (event.target.value === '' ? '99' : Number(event.target.value));
     setGeneratorObject(newGenerator);
 };
@@ -222,11 +222,11 @@ const handleBlur = () => {
 
 const saveButtonOnClickHandler = () => {
   if (generatorObject.repoVariables.saveInRepo === true){
-    props.saveGeneratorInBrowserStorage(generatorObject);
-    props.saveGeneratorHandler(generatorObject);
+    props.saveGeneratorInLocalStorage(generatorObject);
+    props.addGeneratorToSchema(generatorObject);
     props.handleCloseRandomStringGenerator();
   } else {
-    props.saveGeneratorHandler(generatorObject);
+    props.addGeneratorToSchema(generatorObject);
     props.handleCloseRandomStringGenerator();
   }
 }
@@ -236,7 +236,7 @@ const saveButtonOnClickHandler = () => {
 const addUidToGenerator = () => {
   const miliSecondsFrom1970To2020 = 1577785488*1000;
   const uid = Date.now() - miliSecondsFrom1970To2020; 
-  const newGenerator = {...generatorObject};
+  const newGenerator = cloneDeep(generatorObject);
   newGenerator.uid = uid;
   setGeneratorObject(newGenerator);
 }
@@ -253,7 +253,7 @@ const addUidToGenerator = () => {
         //TransitionComponent={Transition}
         keepMounted
         PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
-        fullWidth
+        fullwidth
         maxWidth="md"
         >
       <DialogTitle disableTypography style={{fontSize: 40, paddingLeft: 15, }} id="simple-dialog-title">RandomString Generator</DialogTitle>

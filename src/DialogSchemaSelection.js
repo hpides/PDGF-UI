@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -25,15 +25,28 @@ const useStyles = makeStyles({
 
 export default function DialogSchemaSelection(props) {
   const classes = useStyles();
-  
+  const [lastSchemaDeletedAt, setLastSchemaDeletedAt] = useState(0);
+
+  const triggerReload = () => {
+    setLastSchemaDeletedAt(Date.now);
+  }
+
   return (
     <Dialog onClose={props.handleCloseDialogSchemaSelection} aria-labelledby="simple-dialog-title" open={props.isOpenDialogSchemaSelection}>
       <DialogTitle id="simple-dialog-title">Select Schema</DialogTitle>
-      <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>    
+      <div style={{display: "flex", flexDirection: "column", justifycontent: "flex-start"}}>    
       
       
       {(localStorage.getItem("schemaRepository")!== null)? 
-        JSON.parse(localStorage.getItem("schemaRepository")).map(element => {return <Grid item> <SchemaSelectionCard input = {element} loadSelectedSchema={props.loadSelectedSchema} handleCloseDialogSchemaSelection={props.handleCloseDialogSchemaSelection}/> </Grid>}): 
+        JSON.parse(localStorage.getItem("schemaRepository")).map(element => {
+          return <Grid  
+                  key={element.uids.schemaUid} item> 
+                    <SchemaSelectionCard 
+                        input = {element} 
+                        loadSelectedSchema={props.loadSelectedSchema} 
+                        deleteSchemaFromRepo={props.deleteSchemaFromRepo}
+                        triggerReload = {triggerReload}
+                        handleCloseDialogSchemaSelection={props.handleCloseDialogSchemaSelection}/> </Grid>}): 
         <div> There are currently no Schemata in the Repository </div>}  
       
       </div>

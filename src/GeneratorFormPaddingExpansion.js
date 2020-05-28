@@ -11,6 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import cloneDeep from 'lodash/cloneDeep';
 
 const useStyles = makeStyles((theme) => ({
   root: {

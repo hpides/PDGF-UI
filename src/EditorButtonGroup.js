@@ -11,6 +11,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import BuildIcon from "@material-ui/icons/Build";
 import HelpIcon from "@material-ui/icons/Help";
 import DeleteIcon from "@material-ui/icons/Delete";
+import LoadIcon from '@material-ui/icons/SystemUpdateAlt';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +46,7 @@ const LightTooltip = withStyles((theme) => ({
 export default function EditorButtonGroup(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl2, setAnchorEl2] = React.useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -53,6 +55,15 @@ export default function EditorButtonGroup(props) {
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };    
+
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+
+  const handleCloseMenu2 = () => {
+    setAnchorEl2(null);
+  };    
+
 
 
   return (
@@ -66,7 +77,8 @@ export default function EditorButtonGroup(props) {
             className={classes.button}
             startIcon={<AddCircleIcon className={classes.icon}/>}
             onClick={props.addNewTableHandler}
-        />
+            ><div></div>
+        </Button>
       </LightTooltip>
 
       <LightTooltip title="Edit system variables">
@@ -97,16 +109,48 @@ export default function EditorButtonGroup(props) {
             open={Boolean(anchorEl)}
             onClose={handleCloseMenu}
             >
-                <MenuItem onClick={handleCloseMenu}>Save on Disc</MenuItem>
+                <MenuItem onClick={handleCloseMenu}>Save Schema on Disc</MenuItem>
                 <MenuItem 
                     onClick={() => {handleCloseMenu(); props.handleClickOpenDialogSaveSchema()}}>
-                      Save Schema in TempStore
+                      Save Schema in LocalStorage 
                 </MenuItem>
+                <MenuItem onClick={handleCloseMenu}>Save complete State on Disc</MenuItem>
                 <MenuItem onClick={handleCloseMenu}>Export PDGF-XML</MenuItem>
                 <MenuItem onClick={handleCloseMenu}>Export JSON</MenuItem>
 
         </Menu>
         
+
+
+        <LightTooltip title="Load Elements">
+        <Button
+            aria-controls="load-elements-menu" 
+            aria-haspopup="true" 
+            onClick={handleClick2}
+            variant="contained"
+            color="default"
+            className={classes.button}
+            startIcon={<LoadIcon className={classes.icon}/>}
+        />
+        </LightTooltip>
+        <Menu
+            id="load-elements-menu"
+            anchorEl={anchorEl2}
+            keepMounted
+            open={Boolean(anchorEl2)}
+            onClose={handleCloseMenu2}
+            >
+                <MenuItem onClick={() => {handleCloseMenu2(); props.openDialogSchemaSelection() }}>Load Schema from LocalStorage</MenuItem>
+                <MenuItem 
+                    onClick={handleCloseMenu2}>
+                      Load Schema from Disc 
+                </MenuItem>
+                <MenuItem onClick={handleCloseMenu2}>Load Generators from Disc</MenuItem>
+
+        </Menu>
+
+
+
         <LightTooltip title="Show help">
         <Button
             variant="contained"

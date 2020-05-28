@@ -18,7 +18,7 @@ export default function Header(){
     return(
         <div className={classes.root}>
             <AppBar position="static">
-                <Toolbar  display="flex" justifyContent="space-between">
+                <Toolbar  display="flex" justifycontent="space-between">
                     <Typography variant="h6" >
                     Bankmark - PDGF-Online
                     </Typography>

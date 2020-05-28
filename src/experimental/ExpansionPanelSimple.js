@@ -48,7 +48,7 @@ export default function ExpansionPanelSimple() {
          />
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid style={{display: "flex", justifyContent: "space-between"}} xs={5}>
+          <Grid style={{display: "flex", justifycontent: "space-between"}} xs={5}>
           <TextField id="outlined-basic" label="Enter some additional Data here!" variant="outlined" />
           <TextField id="outlined-basic" label="And also here!" variant="outlined" />
           </Grid>

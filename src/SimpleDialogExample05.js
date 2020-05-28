@@ -47,7 +47,7 @@ function SimpleDialog(props) {
         titel="Dialog"
         keepMounted
         PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
-        fullWidth
+        fullwidth
         maxWidth="md"
         >
       <DialogTitle id="simple-dialog-title">Test Form 01</DialogTitle>

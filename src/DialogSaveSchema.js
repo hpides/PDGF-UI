@@ -50,7 +50,7 @@ export default function DialogSaveSchema(props) {
         //TransitionComponent={Transition}
         keepMounted
         PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
-        fullWidth
+        fullwidth
         maxWidth="md"
         >
       <DialogTitle id="simple-dialog-title">Vor dem Speichern können Sie hier weitere Informationen zum Schema eingeben.</DialogTitle>
@@ -59,7 +59,9 @@ export default function DialogSaveSchema(props) {
             <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>
 
                 <Grid container item xs={leftColumnWidth}>
-                <Typography variant={fontSizeLeftColumn}>Schema Name:</Typography>
+                    <Typography variant={fontSizeLeftColumn}>
+                      Schema Name:
+                    </Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>
@@ -73,7 +75,9 @@ export default function DialogSaveSchema(props) {
 
 
                 <Grid container item xs={leftColumnWidth}>
-                <Typography variant={fontSizeLeftColumn}>Description:</Typography>
+                    <Typography variant={fontSizeLeftColumn}>
+                        Description:
+                    </Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>
@@ -88,7 +92,9 @@ export default function DialogSaveSchema(props) {
 
 
                 <Grid container item xs={leftColumnWidth}>
-                <Typography variant={fontSizeLeftColumn}>Author:</Typography>
+                    <Typography variant={fontSizeLeftColumn}>
+                        Author:
+                    </Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>
@@ -103,7 +109,9 @@ export default function DialogSaveSchema(props) {
 
 
                 <Grid container item xs={leftColumnWidth}>
-                <Typography variant={fontSizeLeftColumn}>Last Edited:</Typography>
+                    <Typography variant={fontSizeLeftColumn}>
+                        Last Edited:
+                    </Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>
@@ -122,11 +130,14 @@ export default function DialogSaveSchema(props) {
       </div>
 
       <DialogActions>
-      <Button onClick={()=>{props.handleCloseDialogSaveSchema()}} color="primary">
-            Cancel
+          <Button onClick={()=>{props.handleCloseDialogSaveSchema()}} color="primary">
+              Cancel
           </Button>
-          <Button onClick={()=>{props.handleCloseDialogSaveSchema(); props.addUidToSchema(); props.saveSchemaInBrowserStorage()}} color="primary">
-            Save
+          <Button onClick={()=>{ 
+                      props.saveSchemaOnClickHandler();
+                      props.handleCloseDialogSaveSchema();}} 
+                  color="primary">
+              Save
           </Button>
       </DialogActions>  
 

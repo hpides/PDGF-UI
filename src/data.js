@@ -67,15 +67,16 @@ export const customSystemVariables = [
 
 
 export const rawGeneratorDescriptions = [
-   {name: "Id", description: "Generates consecutive Ids from 0 or any given minimum value.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "IdGenerator",},
-   {name: "Double", description: "Generate a 64bit floating point values between min and max..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DoubleGenerator",},
+   {name: "IdGenerator", description: "Generates consecutive Ids from 0 or any given minimum value.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "IdGenerator",},
+   {name: "DoubleGenerator", description: "Generate a 64bit floating point values between min and max..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DoubleGenerator",},
    {name: "LongGenerator", description: "Generates a 64Bit integer value between min and max.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "LongGenerator",},
-   {name: "DateTime", description: "Generates dates within a specified time range.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DateTimeGenerator",},
-   {name: "Random String", description: "Generates strings in a size range with a specified set of characters.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "RandomStringGenerator",},
-   {name: "RandomSentence", description: "Generates a sentence within a size range with pseudo grammar.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "RandomSentenceGenerator",},
-   {name: "DictList", description: "Uses a dictionary to generate single values or lists.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DictListGenerator",},
-   {name: "Reference", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "ReferenceGenerator",},
-]
+   {name: "DateTimeGenerator", description: "Generates dates within a specified time range.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DateTimeGenerator",},
+   {name: "RandomStringGenerator", description: "Generates strings in a size range with a specified set of characters.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "RandomStringGenerator",},
+   {name: "RandomSentenceGenerator", description: "Generates a sentence within a size range with pseudo grammar.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "RandomSentenceGenerator",},
+   {name: "DictListGenerator", description: "Uses a dictionary to generate single values or lists.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DictListGenerator",},
+   {name: "ReferenceGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "ReferenceGenerator",},
+   {name: "IfGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "IfGenerator",},
+];
 
 
 
@@ -124,34 +125,31 @@ export const dictList = [
 
 
 export const localeList = [
-   "en_IN",
-   "en_NZ",
    "en_UK",
    "en_US",
-   "en_IE",
-   "de_AT",
    "de_DE",
-   "de_LU",
-   "de_CH"
+   "es_ES",
+   "fr_FR",
+   "ru_RU",
 ]
 
 
 
  export const tableItemsLong = [
-    {fieldName: "Name", generator: "Gen01", isKey: "true"},
-    {fieldName: "Street", generator: "Gen", isKey: "false"},
-    {fieldName: "Postcode", generator: "Gen", isKey: "false"},
-    {fieldName: "Country", generator: "Gen", isKey: "false"},
-    {fieldName: "IBAN", generator: "Gen", isKey: "false"},
-    {fieldName: "Salary", generator: "Gen", isKey: "false"},
-    {fieldName: "Gender", generator: "Gen", isKey: "false"}
+    {fieldName: "Name", generator: "Gen01", isKey: true},
+    {fieldName: "Street", generator: "Gen", isKey: false},
+    {fieldName: "Postcode", generator: "Gen", isKey: false},
+    {fieldName: "Country", generator: "Gen", isKey: false},
+    {fieldName: "IBAN", generator: "Gen", isKey: false},
+    {fieldName: "Salary", generator: "Gen", isKey: false},
+    {fieldName: "Gender", generator: "Gen", isKey: false}
    ];
 
 
    export const tableItemsShort = [
-      {fieldName: "Name", generator: "Gen01", isKey: "true"},
-      {fieldName: "Street", generator: "Gen", isKey: "false"},
-      {fieldName: "Postcode", generator: "Gen", isKey: "false"},
+      {fieldName: "Name", generator: "Gen01", isKey: true},
+      {fieldName: "Street", generator: "Gen", isKey: false},
+      {fieldName: "Postcode", generator: "Gen", isKey: false},
      ];   
 
 
@@ -160,9 +158,9 @@ export const localeList = [
         tableName: "", 
         tableSize: "", 
         tableItems: [
-         {fieldName: "Name", generator: "Gen01", isKey: "true"},
-         {fieldName: "Street", generator: "Gen", isKey: "false"},
-         {fieldName: "Postcode", generator: "Gen", isKey: "false"},
+         {fieldName: "Name", generator: "Gen01", isKey: true},
+         {fieldName: "Street", generator: "Gen", isKey: false},
+         {fieldName: "Postcode", generator: "Gen", isKey: false},
         ]
       };
 
@@ -172,13 +170,13 @@ export const localeList = [
          tableName: "TestItem", 
          tableSize: "1", 
          tableItems: [
-            {fieldName: "Name", generator: "Gen01", isKey: "true"},
-            {fieldName: "Street", generator: "Gen", isKey: "false"},
-            {fieldName: "Postcode", generator: "Gen", isKey: "false"},
-            {fieldName: "Country", generator: "Gen", isKey: "false"},
-            {fieldName: "IBAN", generator: "Gen", isKey: "false"},
-            {fieldName: "Salary", generator: "Gen", isKey: "false"},
-            {fieldName: "Gender", generator: "Gen", isKey: "false"},
+            {fieldName: "Name", generator: "Gen01", isKey: true},
+            {fieldName: "Street", generator: "Gen", isKey: false},
+            {fieldName: "Postcode", generator: "Gen", isKey: false},
+            {fieldName: "Country", generator: "Gen", isKey: false},
+            {fieldName: "IBAN", generator: "Gen", isKey: false},
+            {fieldName: "Salary", generator: "Gen", isKey: false},
+            {fieldName: "Gender", generator: "Gen", isKey: false},
          ]
       };
 
@@ -188,13 +186,13 @@ export const localeList = [
          tableName: "TestItem", 
          tableSize: "1", 
          tableItems: [
-            {fieldName: "Name", generator: "Gen01", isKey: "true"},
-            {fieldName: "Street", generator: "Gen", isKey: "false"},
-            {fieldName: "Postcode", generator: "Gen", isKey: "false"},
-            {fieldName: "Country", generator: "Gen", isKey: "false"},
-            {fieldName: "IBAN", generator: "Gen", isKey: "false"},
-            {fieldName: "Salary", generator: "Gen", isKey: "false"},
-            {fieldName: "Gender", generator: "Gen", isKey: "false"},
+            {fieldName: "Name", generator: "Gen01", isKey: true},
+            {fieldName: "Street", generator: "Gen", isKey: false},
+            {fieldName: "Postcode", generator: "Gen", isKey: false},
+            {fieldName: "Country", generator: "Gen", isKey: false},
+            {fieldName: "IBAN", generator: "Gen", isKey: false},
+            {fieldName: "Salary", generator: "Gen", isKey: false},
+            {fieldName: "Gender", generator: "Gen", isKey: false},
          ]
       }];
 
@@ -203,26 +201,26 @@ export const localeList = [
          tableName: "Table A", 
          tableSize: "1", 
          tableItems: [
-            {fieldName: "Name", generator: "Gen01", isKey: "true"},
-            {fieldName: "Street", generator: "Gen", isKey: "false"},
-            {fieldName: "Postcode", generator: "Gen", isKey: "false"},
-            {fieldName: "Country", generator: "Gen", isKey: "false"},
-            {fieldName: "IBAN", generator: "Gen", isKey: "false"},
-            {fieldName: "Salary", generator: "Gen", isKey: "false"},
-            {fieldName: "Gender", generator: "Gen", isKey: "false"},
+            {fieldName: "Name", generator: "Gen01", isKey: true},
+            {fieldName: "Street", generator: "Gen", isKey: false},
+            {fieldName: "Postcode", generator: "Gen", isKey: false},
+            {fieldName: "Country", generator: "Gen", isKey: false},
+            {fieldName: "IBAN", generator: "Gen", isKey: false},
+            {fieldName: "Salary", generator: "Gen", isKey: false},
+            {fieldName: "Gender", generator: "Gen", isKey: false},
          ]
          },
          {
          tableName: "Table B", 
          tableSize: "22", 
          tableItems: [
-            {fieldName: "Name", generator: "Gen01", isKey: "true"},
-            {fieldName: "Street", generator: "Gen", isKey: "false"},
-            {fieldName: "Postcode", generator: "Gen", isKey: "false"},
-            {fieldName: "Country", generator: "Gen", isKey: "false"},
-            {fieldName: "IBAN", generator: "Gen", isKey: "false"},
-            {fieldName: "Salary", generator: "Gen", isKey: "false"},
-            {fieldName: "Gender", generator: "Gen", isKey: "false"},
+            {fieldName: "Name", generator: "Gen01", isKey: true},
+            {fieldName: "Street", generator: "Gen", isKey: false},
+            {fieldName: "Postcode", generator: "Gen", isKey: false},
+            {fieldName: "Country", generator: "Gen", isKey: false},
+            {fieldName: "IBAN", generator: "Gen", isKey: false},
+            {fieldName: "Salary", generator: "Gen", isKey: false},
+            {fieldName: "Gender", generator: "Gen", isKey: false},
          ]
          }
       ];
@@ -234,35 +232,35 @@ export const localeList = [
          tableName: "Table A", 
          tableSize: "111", 
          tableItems: [
-            {fieldName: "Name", generator: "Gen01", isKey: "true"},
-            {fieldName: "Street", generator: "Gen", isKey: "false"},
-            {fieldName: "Postcode", generator: "Gen", isKey: "false"},
-            {fieldName: "Country", generator: "Gen", isKey: "false"},
-            {fieldName: "IBAN", generator: "Gen", isKey: "false"},
-            {fieldName: "Salary", generator: "Gen", isKey: "false"},
-            {fieldName: "Gender", generator: "Gen", isKey: "false"},
+            {fieldName: "Name", generator: "Gen01", isKey: true},
+            {fieldName: "Street", generator: "Gen", isKey: false},
+            {fieldName: "Postcode", generator: "Gen", isKey: false},
+            {fieldName: "Country", generator: "Gen", isKey: false},
+            {fieldName: "IBAN", generator: "Gen", isKey: false},
+            {fieldName: "Salary", generator: "Gen", isKey: false},
+            {fieldName: "Gender", generator: "Gen", isKey: false},
          ]
          },
          {
          tableName: "Table B", 
          tableSize: "222", 
          tableItems: [
-            {fieldName: "Name", generator: "Gen01", isKey: "true"},
-            {fieldName: "Street", generator: "Gen", isKey: "false"},
-            {fieldName: "Postcode", generator: "Gen", isKey: "false"},
-            {fieldName: "Country", generator: "Gen", isKey: "false"},
-            {fieldName: "IBAN", generator: "Gen", isKey: "false"},
-            {fieldName: "Salary", generator: "Gen", isKey: "false"},
-            {fieldName: "Gender", generator: "Gen", isKey: "false"},
+            {fieldName: "Name", generator: "Gen01", isKey: true},
+            {fieldName: "Street", generator: "Gen", isKey: false},
+            {fieldName: "Postcode", generator: "Gen", isKey: false},
+            {fieldName: "Country", generator: "Gen", isKey: false},
+            {fieldName: "IBAN", generator: "Gen", isKey: false},
+            {fieldName: "Salary", generator: "Gen", isKey: false},
+            {fieldName: "Gender", generator: "Gen", isKey: false},
          ]
          },
          {
             tableName: "Table C", 
             tableSize: "333", 
             tableItems: [
-               {fieldName: "Name", generator: "Gen01", isKey: "true"},
-               {fieldName: "Street", generator: "Gen", isKey: "false"},
-               {fieldName: "Postcode", generator: "Gen", isKey: "false"},
+               {fieldName: "Name", generator: "Gen01", isKey: true},
+               {fieldName: "Street", generator: "Gen", isKey: false},
+               {fieldName: "Postcode", generator: "Gen", isKey: false},
             ]
             },
             {
@@ -270,21 +268,21 @@ export const localeList = [
             tableSize: "444", 
             tableItems: [
                
-               {fieldName: "Salary", generator: "Gen", isKey: "false"},
-               {fieldName: "Gender", generator: "Gen", isKey: "false"},
+               {fieldName: "Salary", generator: "Gen", isKey: false},
+               {fieldName: "Gender", generator: "Gen", isKey: false},
             ]
             },
             {
                tableName: "Table E", 
                tableSize: "555", 
                tableItems: [
-                  {fieldName: "Name", generator: "Gen01", isKey: "true"},
-                  {fieldName: "Street", generator: "Gen", isKey: "false"},
-                  {fieldName: "Postcode", generator: "Gen", isKey: "false"},
-                  {fieldName: "Country", generator: "Gen", isKey: "false"},
-                  {fieldName: "IBAN", generator: "Gen", isKey: "false"},
-                  {fieldName: "Salary", generator: "Gen", isKey: "false"},
-                  {fieldName: "Gender", generator: "Gen", isKey: "false"},
+                  {fieldName: "Name", generator: "Gen01", isKey: true},
+                  {fieldName: "Street", generator: "Gen", isKey: false},
+                  {fieldName: "Postcode", generator: "Gen", isKey: false},
+                  {fieldName: "Country", generator: "Gen", isKey: false},
+                  {fieldName: "IBAN", generator: "Gen", isKey: false},
+                  {fieldName: "Salary", generator: "Gen", isKey: false},
+                  {fieldName: "Gender", generator: "Gen", isKey: false},
                ]
                },
       ];
@@ -314,7 +312,7 @@ export const emptySchema0 = {
                                  rowId: 1, 
                                  fieldName: "Enter Name", 
                                  generator: {}, 
-                                 isKey: "false"},
+                                 isKey: false},
                            ],
                         }
                      ],
@@ -342,7 +340,7 @@ export const emptySchema0 = {
 
 export const emptySchema = {
    uids: {
-      schemaUid: "12345",
+      schemaUid: 42,
       tableCounter: 1,
    },
    info: {
@@ -359,7 +357,7 @@ export const emptySchema = {
             tableId: 1,
             rowCounter: 1,
             tableItems: [
-               {tableId: 1, rowId: 1, fieldName: "Enter Table Name", generator: {}, isKey: "false"},
+               {tableId: 1, rowId: 1, fieldName: "Enter Table Name", generator: {}, isKey: false},
             ],
          }
       ],
@@ -386,7 +384,7 @@ export const emptySchema = {
 
 export const emptyGenerator = {
    uid: "",
-   type: "thisShouldBeReplace", 
+   type: "", 
    minimum: "",
    maximum: "",
    dictionary: "",
@@ -398,9 +396,16 @@ export const emptyGenerator = {
    hasAllDistinctValues: false,
    startDate: "",
    endDate: "",
-   disableRNG: "false",
+   disableRNG: false,
    numberOfCharacters: "",
    numberOfDistinctCharacters: "",
+   generatorList: [{name:"aaa", uid: "123", generatorIndex: "0"}],
+   if: "",
+   else: "",
+   then: "",
+   referenceTable: 1,
+   referenceField: "",
+
    
 
    distributionVariables: {
@@ -420,17 +425,84 @@ export const emptyGenerator = {
            p: "",
          },
    },
-   nullValues: "0",
+   nullValues: {
+      withNullValues: false,
+      percenNullValues: 0,
+   },
    paddingVariables: {
-         withPadding: "false",
+         withPadding: false,
          numberCharacters: "",
          fillCharacter: "",
-         fromLeft: "true"
+         fromLeft: true,
    },
    repoVariables: {
-         saveInRepo: "",
+         saveInRepo: false,
          name: "",
          description: "",
          examples: "",
+   },
+}; 
+
+
+
+
+export const emptyGenerator9x = {
+   uid: "999",
+   type: "xxx", 
+   minimum: "",
+   maximum: "",
+   dictionary: "xxx",
+   size: "",
+   separator: "x",
+   decimalPlaces: "",
+   locale: "",
+   fixedStepSize: "",
+   hasAllDistinctValues: false,
+   startDate: "",
+   endDate: "",
+   disableRNG: false,
+   numberOfCharacters: "",
+   numberOfDistinctCharacters: "",
+   generatorList: [{name:"aaa", uid: "123", generatorIndex: "0"}],
+   if: "xxx",
+   else: "xxx",
+   then: "xxx",
+   referenceTable: 2,
+   referenceField: "",
+
+   
+
+   distributionVariables: {
+         type: "equalDistribution",
+         normalDistribution: {
+           standardDeviation: "",
+           mean: "9",
+         },
+         binomialDistribution: {
+           n: "9",
+           p: "9",
+         },
+         exponentialDistribution: {
+           lambda: "9",
+         },
+         logarithmicDistribution: {
+           p: "9",
+         },
+   },
+   nullValues: {
+      withNullValues: false,
+      percenNullValues: 0,
+   },
+   paddingVariables: {
+         withPadding: false,
+         numberCharacters: "0",
+         fillCharacter: "x",
+         fromLeft: true,
+   },
+   repoVariables: {
+         saveInRepo: false,
+         name: "xxx",
+         description: "xxx",
+         examples: "xxx",
    },
 }; 

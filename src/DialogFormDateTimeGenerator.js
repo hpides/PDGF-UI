@@ -16,7 +16,7 @@ import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
 import Slider from "@material-ui/core/Slider";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import DistributionInputElement from "./DistributionInputElement";
-
+import cloneDeep from 'lodash/cloneDeep';
 
 const useStyles = makeStyles({
     input: {
@@ -79,41 +79,41 @@ export default function DialogFormDateTimeGenerator(props) {
 
     // Change Handler startDate
     const startDateChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
+      const newGenerator = cloneDeep(generatorObject);
       newGenerator.startDate = event.target.value;
       setGeneratorObject(newGenerator);
     };
 
      // Change Handler endDate
      const endDateChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
+      const newGenerator = cloneDeep(generatorObject);
       newGenerator.endDate = event.target.value;
       setGeneratorObject(newGenerator);
     };
 
     // Change Handler disableRNG
     const disableRNGChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
+      const newGenerator = cloneDeep(generatorObject);
       newGenerator.disableRNG = event.target.checked;
       setGeneratorObject(newGenerator);
     };
 
     // Change Handler fixedStepSize
     const fixedStepSizeChangedHandler = (event) => {
-      const newGenerator = {...generatorObject};
+      const newGenerator = cloneDeep(generatorObject);
       newGenerator.fixedStepSize = event.target.checked;
       setGeneratorObject(newGenerator);
   };
 
     // Change Handler nullValues Slider Component
     const handleNullValuesSliderChange = (event, newValue) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.nullValues = newValue;
         setGeneratorObject(newGenerator);
     };
   
     const handleNullValuesInputChange = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.nullValues = (event.target.value === '' ? '99' : Number(event.target.value));
         setGeneratorObject(newGenerator);
     };
@@ -130,25 +130,25 @@ export default function DialogFormDateTimeGenerator(props) {
     // Change Handler Repo Element
 
     const saveInRepoChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.repoVariables.saveInRepo = (event.target.checked);
         setGeneratorObject(newGenerator);
     };
 
     const nameChangedHandler = (event)=> {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.repoVariables.name = (event.target.value);
         setGeneratorObject(newGenerator);
     };
 
     const descriptionChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.repoVariables.description = (event.target.value);
         setGeneratorObject(newGenerator);
     };
 
     const examplesChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.repoVariables.examples = (event.target.value);
         setGeneratorObject(newGenerator);
     };
@@ -157,25 +157,25 @@ export default function DialogFormDateTimeGenerator(props) {
     // Change Handler Padding Component
 
     const withPaddingChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.paddingVariables.withPadding = (event.target.checked);
         setGeneratorObject(newGenerator);
     };
 
     const numberCharactersChangedHandler = (event)=> {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.paddingVariables.numberCharacters = (event.target.value);
         setGeneratorObject(newGenerator);
     };
 
     const fillCharacterChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.paddingVariables.fillCharacter = (event.target.value);
         setGeneratorObject(newGenerator);
     };
 
     const fromLeftChangedHandler = (event) => {
-        const newGenerator = {...generatorObject};
+        const newGenerator = cloneDeep(generatorObject);
         newGenerator.paddingVariables.fromLeft = (event.target.value);
         setGeneratorObject(newGenerator);
     };
@@ -191,7 +191,7 @@ export default function DialogFormDateTimeGenerator(props) {
     const addUidToGenerator = () => {
       const miliSecondsFrom1970To2020 = 1577785488*1000;
       const uid = Date.now() - miliSecondsFrom1970To2020; 
-      const newGenerator = {...generatorObject};
+      const newGenerator = cloneDeep(generatorObject);
       newGenerator.uid = uid;
       setGeneratorObject(newGenerator);
   }
@@ -201,11 +201,11 @@ export default function DialogFormDateTimeGenerator(props) {
 
     const saveButtonOnClickHandler = () => {
       if (generatorObject.repoVariables.saveInRepo === true){
-        props.saveGeneratorInBrowserStorage(generatorObject);
-        props.saveGeneratorHandler(generatorObject);
+        props.saveGeneratorInLocalStorage(generatorObject);
+        props.addGeneratorToSchema(generatorObject);
         props.handleCloseDateTimeGenerator();
       } else {
-        props.saveGeneratorHandler(generatorObject);
+        props.addGeneratorToSchema(generatorObject);
         props.handleCloseDateTimeGenerator();
       }
     }
@@ -222,7 +222,7 @@ export default function DialogFormDateTimeGenerator(props) {
         //TransitionComponent={Transition}
         keepMounted
         PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
-        fullWidth
+        fullwidth
         maxWidth="md"
         >
       <DialogTitle disableTypography style={{fontSize: 40, paddingLeft: 15, }} id="simple-dialog-title">DateTime Generator</DialogTitle>
@@ -241,13 +241,13 @@ export default function DialogFormDateTimeGenerator(props) {
                     placeholder="Enter Start-Date" 
                     value={generatorObject.startDate} 
                     onChange={(event) => startDateChangedHandler(event)}
-                    fullWidth/>
+                    fullwidth/>
                 </Grid>
 
 
 
                 <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn} fullWidth>End-Date:</Typography>
+                  <Typography variant={fontSizeLeftColumn} fullwidth>End-Date:</Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>
@@ -257,12 +257,12 @@ export default function DialogFormDateTimeGenerator(props) {
                     placeholder="Enter End-Date" 
                     value={generatorObject.endDate} 
                     onChange={(event) => endDateChangedHandler(event)}
-                    fullWidth/>
+                    fullwidth/>
                 </Grid>
 
 
                 <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn} fullWidth >Disable RNG:</Typography>
+                  <Typography variant={fontSizeLeftColumn} fullwidth >Disable RNG:</Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>
@@ -275,7 +275,7 @@ export default function DialogFormDateTimeGenerator(props) {
 
 
                 <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn} fullWidth>Fixed Step Size:</Typography>
+                  <Typography variant={fontSizeLeftColumn} fullwidth>Fixed Step Size:</Typography>
                 </Grid>
 
                 <Grid container item xs={rightColumnWidth}>

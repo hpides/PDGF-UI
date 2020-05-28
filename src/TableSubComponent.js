@@ -52,11 +52,12 @@ export default function TableSubComponent(props){
     return(
     <Grid 
         container className={classes.container} 
-        styles={{display: "flex", flexDirection: "row", justifyContent: "flex-end", alignItems: "center"}} 
+        justify = "flex-end"
+        styles={{display: "flex", flexDirection: "row", alignItems: "center"}} 
         xs={12}>
             
         <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed} xs={1}>
-        <div style={{display: "flex", justifyContent: "center", width: "40px", height: "40px" }}>
+        <div style={{display: "flex", justifycontent: "center", width: "40px", height: "40px" }}>
             <IconButton>
                 <VpnKeyIcon className={classes.icon}/>
             </IconButton>
@@ -74,22 +75,22 @@ export default function TableSubComponent(props){
 
         <Grid container item style={{width: "150px"}} className={classes.framed}xs={3}>
             <Button
-                onClick ={ () => {props.setTableFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorDialog() }}>
+                onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorDialog() }}>
                     Generator
             </Button> 
         </Grid>
 
         <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed} xs={1}>
-        <div style={{display: "flex", justifyContent: "center", width: "40px", height: "40px" }}>
+        <div style={{display: "flex", justifycontent: "center", width: "40px", height: "40px" }}>
             <IconButton
-                onClick={() => {props.loadGeneratorToEditDialog(props.data.tableId, props.data.rowId)}}> 
+                onClick={() => {props.loadGeneratorToEditDialog(props.data.tableId, props.data.rowId, props.data.generator.type)}}> 
                 <BuildIcon className={classes.icon} />
             </IconButton>    
         </div>
         </Grid>
 
         <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed} xs={1}>
-        <div style={{display: "flex", justifyContent: "center", width: "40px", height: "40px" }}>
+        <div style={{display: "flex", justifycontent: "center", width: "40px", height: "40px" }}>
             
             <IconButton onClick={() => {props.deleteTableRowHandler(props.data.tableId, props.data.rowId)}}>
                 <DeleteIcon className={classes.icon}/>

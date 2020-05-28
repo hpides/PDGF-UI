@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     container: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "flex-start",
+        justifycontent: "flex-start",
     },
     inputRoot: {
         fontSize: 24,

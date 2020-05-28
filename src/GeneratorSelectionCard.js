@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import SearchIcon from "@material-ui/icons/Search";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Box from "@material-ui/core/Box";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles({
     root: {
@@ -66,8 +67,9 @@ export default function GeneratorSelectionCard(props) {
                     </Typography >
                 </Grid>
                 <Grid container item className={classes.inner_container_middle} xs={3} style={{background: "inherit"}} display="flex" direction="row" justify="flex-end">
-                    <SearchIcon/>
-              {/*}     <DeleteIcon/> */}
+                    <IconButton onClick={() => {props.deleteGeneratorInRepo(props.data.uid)}}>
+                        <DeleteIcon className={classes.icon}/>
+                    </IconButton>   
                 </Grid>
             </Grid>
             <Grid container item style={{background: "inherit"}}>
