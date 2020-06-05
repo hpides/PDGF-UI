@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function FormIdGenerator(props) {
+export default function FormConstantValueGenerator(props) {
     const classes = useStyles();
     const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
@@ -23,9 +23,9 @@ export default function FormIdGenerator(props) {
 
   
     // Change Handler Input Fields
-    const minimumChangedHandler = (event) => {
+    const constantValueChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.minimum = event.target.value;
+        newGenerator.constantValue = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
 
@@ -36,20 +36,20 @@ export default function FormIdGenerator(props) {
     <>
    
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-            <Grid direction="row" container style={{paddingLeft: "15px", paddingRight: "30px"}}>
+            <Grid direction="row" container  style={{paddingLeft: "15px", paddingRight: "30px"}}>
 
-                <Grid  item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>Minimum:</Typography>
+                <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
+                  <Typography variant={fontSizeLeftColumn}>Constant Value:</Typography>
                 </Grid>
 
-                <Grid  item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
+                <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
                   <Input 
                     className={classes.input} 
-                    type="number" 
-                    placeholder="Enter Minimum" 
+                    type="text" 
+                    placeholder="Enter Constant Value" 
                     fullWidth
-                    value={props.generatorObject.minimum} 
-                    onChange={(event) => minimumChangedHandler(event)}/>
+                    value={props.generatorObject.constantValue} 
+                    onChange={(event) => constantValueChangedHandler(event)}/>
                 </Grid>
             </Grid>       
       

@@ -76,6 +76,13 @@ export const rawGeneratorDescriptions = [
    {name: "DictListGenerator", description: "Uses a dictionary to generate single values or lists.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DictListGenerator",},
    {name: "ReferenceGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "ReferenceGenerator",},
    {name: "IfGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "IfGenerator",},
+   {name: "ConstantValueGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "ConstantValueGenerator",},
+   {name: "PrePostFixGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "PrePostFixGenerator",},
+   {name: "SequentialGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "SequentialGenerator",},
+   {name: "SwitchGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "SwitchGenerator",},
+   {name: "Probability", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "ProbabilityGenerator",},
+   {name: "OtherFieldValueGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "OtherFieldValueGenerator",},
+   {name: "FormUUIDGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "FormUUIDGenerator",},
 ];
 
 
@@ -357,7 +364,7 @@ export const emptySchema = {
             tableId: 1,
             rowCounter: 1,
             tableItems: [
-               {tableId: 1, rowId: 1, fieldName: "Enter Table Name", generator: {}, isKey: false},
+               {tableId: 1, rowId: 1, fieldName: "Enter Field Name", generator: {}, isKey: false},
             ],
          }
       ],
@@ -383,6 +390,7 @@ export const emptySchema = {
 
 
 export const emptyGenerator = {
+   isRawGenerator: false,
    uid: "",
    type: "", 
    minimum: "",
@@ -399,14 +407,24 @@ export const emptyGenerator = {
    disableRNG: false,
    numberOfCharacters: "",
    numberOfDistinctCharacters: "",
-   generatorList: [{name:"aaa", uid: "123", generatorIndex: "0"}],
+   generatorList: [{name: null, uid: null}],
    if: "",
    else: "",
    then: "",
    referenceTable: 1,
    referenceField: "",
-
-   
+   preFix: "",
+   postFix: "",
+   constantValue: "",
+   probabilityList: [],
+   disableShuffling: "",
+   concatenateElements: false,
+   delimiter: "",
+   underlyingGenerator: "",
+   valueProbabilitySets: [{id: 0, value: "another Value", probability: "another Probability",}],
+   caseOutcomeSets: [{id: 0, case: "", outcome: ""}],
+   default: "",
+   //ggf id zur Refernzierung von Feldern.
 
    distributionVariables: {
          type: "equalDistribution",
@@ -427,7 +445,7 @@ export const emptyGenerator = {
    },
    nullValues: {
       withNullValues: false,
-      percenNullValues: 0,
+      percentNullValues: 0,
    },
    paddingVariables: {
          withPadding: false,
@@ -446,63 +464,3 @@ export const emptyGenerator = {
 
 
 
-export const emptyGenerator9x = {
-   uid: "999",
-   type: "xxx", 
-   minimum: "",
-   maximum: "",
-   dictionary: "xxx",
-   size: "",
-   separator: "x",
-   decimalPlaces: "",
-   locale: "",
-   fixedStepSize: "",
-   hasAllDistinctValues: false,
-   startDate: "",
-   endDate: "",
-   disableRNG: false,
-   numberOfCharacters: "",
-   numberOfDistinctCharacters: "",
-   generatorList: [{name:"aaa", uid: "123", generatorIndex: "0"}],
-   if: "xxx",
-   else: "xxx",
-   then: "xxx",
-   referenceTable: 2,
-   referenceField: "",
-
-   
-
-   distributionVariables: {
-         type: "equalDistribution",
-         normalDistribution: {
-           standardDeviation: "",
-           mean: "9",
-         },
-         binomialDistribution: {
-           n: "9",
-           p: "9",
-         },
-         exponentialDistribution: {
-           lambda: "9",
-         },
-         logarithmicDistribution: {
-           p: "9",
-         },
-   },
-   nullValues: {
-      withNullValues: false,
-      percenNullValues: 0,
-   },
-   paddingVariables: {
-         withPadding: false,
-         numberCharacters: "0",
-         fillCharacter: "x",
-         fromLeft: true,
-   },
-   repoVariables: {
-         saveInRepo: false,
-         name: "xxx",
-         description: "xxx",
-         examples: "xxx",
-   },
-}; 

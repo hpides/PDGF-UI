@@ -1,16 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+//import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import AddIcon from '@material-ui/icons/Add';
-import Typography from '@material-ui/core/Typography';
-import Slide from '@material-ui/core/Slide';
 import DialogActions from "@material-ui/core/DialogActions";
-import TextField from "@material-ui/core/TextField";
-import Input from "@material-ui/core/Input";
-import Checkbox from "@material-ui/core/Checkbox";
 import FormIdGenerator from "./FormIdGenerator";
 import FormLongGenerator from "./FormLongGenerator";
 import FormDateTimeGenerator from "./FormDateTimeGenerator";
@@ -19,14 +13,20 @@ import FormDictListGenerator from "./FormDictListGenerator";
 import FormRandomStringGenerator from "./FormRandomStringGenerator";
 import FormRandomSentenceGenerator from "./FormRandomSentenceGenerator";
 import FormIfGenerator from "./FormIfGenerator";
+import FormOtherFieldValueGenerator from "./FormOtherFieldValueGenerator";
+import FormConstantValueGenerator from "./FormConstantValueGenerator";
+import FormPrePostFixGenerator from "./FormPrePostFixGenerator";
+import FormSwitchGenerator from "./FormSwitchGenerator";
+import FormSequentialGenerator from "./FormSequentialGenerator";
 import FormReferenceGenerator from "./FormReferenceGenerator";
-import {emptyGenerator, emptySchema} from "./data";
+import FormProbabilityGenerator from "./FormProbabilityGenerator";
+import {emptyGenerator} from "./data";
 import GeneratorFormPaddingExpansion from "./GeneratorFormPaddingExpansion";
 import GeneratorFormRepoExpansion  from "./GeneratorFormRepoExpansion";
 import GeneratorFormNullValuesElement from "./GeneratorFormNullValuesElement";
 import cloneDeep from 'lodash/cloneDeep';
 
-const useStyles = makeStyles({
+/*const useStyles = makeStyles({
     input: {
     fontSize: 22,
   },
@@ -34,33 +34,13 @@ const useStyles = makeStyles({
     fontSize: 22,
   },
 });
-
+*/
 
 
 export default function DialogUniversalGeneratorForm(props) {
-      const classes = useStyles();
+  //const classes = useStyles();
       
   const [generatorObject, setGeneratorObject]=useState(emptyGenerator);
-
-  useEffect(()=>{
-    (props.universalGeneratorFormMode === "create")? addUidAndTypeToGenerator(): copyGeneratorToBeEdited();
-
-  }, [props.selectedGeneratorType]);
-
-  useEffect(()=>{props.upgradeCopyGeneratorObject(generatorObject)});
-
-
-  
-  const copyGeneratorToBeEdited = () => {
-    const schema = cloneDeep(props.currentSchemaLocal);
-    let tableIndex = schema.tables.findIndex(x=> x.tableId === props.fieldInFocus.tableId);
-    let rowIndex = schema.tables[tableIndex].tableItems.findIndex(x=> x.rowId === props.fieldInFocus.rowId);
-    setGeneratorObject(schema.tables[tableIndex].tableItems[rowIndex].generator);
-    };
-
-  const reSetGeneratorObject = () => {
-    setGeneratorObject(emptyGenerator);
-  }
 
   const addUidAndTypeToGenerator = () => {
     const miliSecondsFrom1970To2020 = 1577785488*1000;
@@ -70,6 +50,32 @@ export default function DialogUniversalGeneratorForm(props) {
     newGenerator.type = props.selectedGeneratorType;
     setGeneratorObject(newGenerator);
   };
+
+
+  const copyGeneratorToBeEdited = () => {
+    const schema = cloneDeep(props.currentSchemaLocal);
+    let tableIndex = schema.tables.findIndex(x=> x.tableId === props.fieldInFocus.tableId);
+    let rowIndex = schema.tables[tableIndex].tableItems.findIndex(x=> x.rowId === props.fieldInFocus.rowId);
+    setGeneratorObject(schema.tables[tableIndex].tableItems[rowIndex].generator);
+    };
+
+
+
+
+  useEffect(()=>{
+    (props.universalGeneratorFormMode === "create")? addUidAndTypeToGenerator(): copyGeneratorToBeEdited();
+
+  }, [props.selectedGeneratorType]);
+
+  useEffect(()=>{props.upgradeCopyGeneratorObject(generatorObject)});
+
+
+
+  const reSetGeneratorObject = () => {
+    setGeneratorObject(emptyGenerator);
+  }
+
+ 
 
   const saveGeneratorAndResetState = () => {
     if (generatorObject.repoVariables.saveInRepo === true){
@@ -193,81 +199,94 @@ export default function DialogUniversalGeneratorForm(props) {
         switch (props.selectedGeneratorType) {
           
           case "IdGenerator":
-                return <FormIdGenerator 
-                         
+                return <FormIdGenerator
                           generatorObject={generatorObject}
                           setGeneratorObject={setGeneratorObjectHandDown}/>;
-                break;
             case "LongGenerator":
                 return <FormLongGenerator 
-                         
                           generatorObject={generatorObject}
                           setGeneratorObject={setGeneratorObjectHandDown}/>;
-                break;
             case "DateTimeGenerator":
                 return <FormDateTimeGenerator 
-                         
                           generatorObject={generatorObject}
                           setGeneratorObject={setGeneratorObjectHandDown}
                            /> 
-                break;
             case "RandomStringGenerator":
               return <FormRandomStringGenerator 
-                        
                         generatorObject={generatorObject}
                         setGeneratorObject={setGeneratorObjectHandDown}/> 
-              break;
+
             case "RandomSentenceGenerator":
               return <FormRandomSentenceGenerator 
-                        
                         generatorObject={generatorObject}
                         setGeneratorObject={setGeneratorObjectHandDown}/> 
-              break;
+
             case "DictListGenerator":
               return <FormDictListGenerator 
-                        
                         generatorObject={generatorObject}
                         setGeneratorObject={setGeneratorObjectHandDown}/> 
-              break;
+
             case "DoubleGenerator":
               return <FormDoubleGenerator 
-                       
                         generatorObject={generatorObject}
                         setGeneratorObject={setGeneratorObjectHandDown}/> 
-              break;
+
            case "IfGenerator":
               return <FormIfGenerator 
-                       
                         generatorObject={generatorObject}
-                        setGeneratorObject={setGeneratorObjectHandDown}/> 
-              break;  
+                        setGeneratorObject={setGeneratorObjectHandDown}/>  
+
              case "ReferenceGenerator":
-              return <FormReferenceGenerator 
-                        
+              return <FormReferenceGenerator
                         generatorObject={generatorObject}
                         setGeneratorObject={setGeneratorObjectHandDown}
                         currentSchemaLocal={props.currentSchemaLocal}/> 
-              break;
+
+              case "OtherFieldValueGenerator":
+                return <FormOtherFieldValueGenerator 
+                          generatorObject={generatorObject}
+                          setGeneratorObject={setGeneratorObjectHandDown}
+                          currentSchemaLocal={props.currentSchemaLocal}
+                          fieldInFocus={props.fieldInFocus}/> 
+      
+
+              case "ConstantValueGenerator":
+              return <FormConstantValueGenerator 
+                        generatorObject={generatorObject}
+                        setGeneratorObject={setGeneratorObjectHandDown}/>
+            
+
+              case "PrePostFixGenerator":
+                return <FormPrePostFixGenerator 
+                          generatorObject={generatorObject}
+                          setGeneratorObject={setGeneratorObjectHandDown}/>
+               
+
+
+              case "ProbabilityGenerator":
+                return <FormProbabilityGenerator 
+                          generatorObject={generatorObject}
+                          setGeneratorObject={setGeneratorObjectHandDown}/>
+                
+
+
+              case "SequentialGenerator":
+                return <FormSequentialGenerator 
+                          generatorObject={generatorObject}
+                          setGeneratorObject={setGeneratorObjectHandDown}/>
+                  
+
+
+              case "SwitchGenerator":
+              return <FormSwitchGenerator 
+                        generatorObject={generatorObject}
+                        setGeneratorObject={setGeneratorObjectHandDown}/>
+              
 
           case "BlankPage":
               return <div>There is nothing to see here...</div>
                       
-          break;
-
-
- /*              case "DateTimeGenerator":
-              return <FormDateTimeGenerator 
-                        
-                        generatorObject={generatorObject}
-                        setGeneratorObject={setGeneratorObjectHandDown}/> 
-              break;
-            case "DateTimeGenerator":
-              return <FormDateTimeGenerator 
-                        
-                        generatorObject={generatorObject}
-                        setGeneratorObject={setGeneratorObjectHandDown}/> 
-              break;  */
-
+    
 
             default:
                 return <div>Sorry, but we have not found that type of generator!</div>
@@ -284,17 +303,17 @@ export default function DialogUniversalGeneratorForm(props) {
         titel="Dialog"
         keepMounted
         PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
-        fullwidth
+        fullWidth
         maxWidth="md"
         >
-      <DialogTitle variant="h2" id="simple-dialog-title">Hier der Titel: {props.selectedGeneratorType}</DialogTitle>
+      <DialogTitle style={{fontSize: 80}} id="simple-dialog-title">{props.selectedGeneratorType}</DialogTitle>
       
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
 
     
           {renderSwitch()}
 
-          <Grid direction="column" container item xs={12}>
+          <Grid direction="column" container item>
                 <GeneratorFormPaddingExpansion 
                     withPaddingChangedHandler={withPaddingChangedHandler}
                     numberCharactersChangedHandler={numberCharactersChangedHandler}

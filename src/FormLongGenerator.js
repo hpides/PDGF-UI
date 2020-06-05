@@ -1,22 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
-import Slide from '@material-ui/core/Slide';
-import DialogActions from "@material-ui/core/DialogActions";
-import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import Checkbox from "@material-ui/core/Checkbox";
-import GeneratorFormPaddingExpansion from "./GeneratorFormPaddingExpansion";
-import GeneratorFormRepoExpansion from "./GeneratorFormRepoExpansion";
-import Slider from "@material-ui/core/Slider";
-import InputAdornment from '@material-ui/core/InputAdornment';
 import DistributionInputElement from "./DistributionInputElement";
-import {emptyGenerator} from "./data";
 import cloneDeep from 'lodash/cloneDeep';
 
 const useStyles = makeStyles({
@@ -59,12 +47,13 @@ export default function DialogFormLongGenerator(props) {
         props.setGeneratorObject(newGenerator);
     };
 
+    /*
     // Change Handler Distribution Component
     const distributionVariablesChangedHandler = (distributionObject) => {
         const newGenerator = cloneDeep(props.generatorObject);
         newGenerator.distribution = distributionObject;
         props.setGeneratorObject(newGenerator);
-    };
+    }; */
 
 
     // Change Handler Distribution Component
@@ -118,43 +107,43 @@ export default function DialogFormLongGenerator(props) {
     <>
    
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-            <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>
+            <Grid direction="row" container  style={{paddingLeft: "15px"}}>
 
-                <Grid container item xs={leftColumnWidth}>
+                <Grid item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Minimum:</Typography>
                 </Grid>
 
-                <Grid container item xs={rightColumnWidth}>
+                <Grid  item xs={rightColumnWidth}>
                   <Input 
                     className={classes.input} 
                     type="number" 
-                    fullwidth
+                    fullWidth
                     placeholder="Enter Minimum" 
                     value={props.generatorObject.minimum} 
                     onChange={(event) => minimumChangedHandler(event)}/>
                 </Grid>
 
 
-                <Grid container item xs={leftColumnWidth}>
+                <Grid  item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Maximum:</Typography>
                 </Grid>
 
-                <Grid container item xs={rightColumnWidth}>
+                <Grid  item xs={rightColumnWidth}>
                   <Input 
                     className={classes.input} 
                     type="number" 
-                    fullwidth
+                    fullWidth
                     placeholder="Enter Maximum" 
                     value={props.generatorObject.maximum} 
                     onChange={(event) => maximumChangedHandler(event)}/>
                 </Grid>
 
 
-                <Grid container item xs={leftColumnWidth}>
+                <Grid  item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Distinct Values:</Typography>
                 </Grid>
 
-                <Grid container item xs={rightColumnWidth}>
+                <Grid  item xs={rightColumnWidth}>
                   <Checkbox 
                         inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
                         checked={props.generatorObject.hasAllDistinctValues}
@@ -163,7 +152,7 @@ export default function DialogFormLongGenerator(props) {
                 </Grid>
 
                 
-                <Grid container item xs={12}>
+                <Grid item xs={12}>
                     <DistributionInputElement 
                         distributionTypeChangedHandler={distributionTypeChangedHandler}
                         expDLambdaValueChangedHandler={expDLambdaValueChangedHandler}

@@ -1,22 +1,19 @@
-import React from "react";
+import Divider from "@material-ui/core/Divider";
 import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import BuildIcon from "@material-ui/icons/Build";
-import DeleteIcon from "@material-ui/icons/Delete";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
-import Divider from "@material-ui/core/Divider";
-import {makeStyles} from "@material-ui/core/styles";
+import React from "react";
 import TableSubComponent from "./TableSubComponent";
-import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
     container: {
         background: "inherit",
         padding: "10px",
         minWidth: "300px",
-        background: "inherit",
         display: "flex",
         flexDirection: "column",
         //justifycontent: "flex-start",
@@ -34,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         background: "inherit",
         height: "60px",
         display: "flex",
-        //justifycontent: "space-between",
+        justifyContent: "space-between",
         borderWidth: "2px",
         borderColor: "black",
         borderStyle: "solid",
@@ -101,16 +98,17 @@ export default function TableComponent(props){
                   className={classes.nameField} 
                   label="Table Name" 
                   placeholder="Enter Table Name"
-                  fullwidth
+                  fullWidth
                   
                   InputProps={{
                     classes: {
                       input: classes.resizeFont,
                     },
                   }} 
+                  /* inputLabel richtigesProp?*/
                   InputLabelProps={{
                     classes: {
-                      inputLabel: classes.resizeLabel,
+                      style: {fontSize: 30},
                     },
                   }} 
                   value={props.data.tableName}

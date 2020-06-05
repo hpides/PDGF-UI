@@ -1,10 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import Grid from "@material-ui/core/Grid";
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Box from "@material-ui/core/Box";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -58,31 +54,33 @@ export default function SchemaSelectionCard(props) {
       className={classes.root} 
       onClick={()=>{ props.loadSelectedSchema(props.input.uids.schemaUid)}}
     >
-        <Grid container classeName={classes.container} xs={12}>
+        <Grid container classeName={classes.container}>
           <Grid container item className={classes.inner_container_left} xs={3} flexDirection="row" justify="flex-start">
-            <Grid container item>
+           
+            <Grid item>
             <Typography className={classes.title} color="textSecondary" gutterBottom >
               {props.input.info.schemaName}
             </Typography >
             </Grid>
-            <Grid container item>
+            <Grid item>
             <Typography className={classes.author} color="textSecondary" variant="h5" component="h2" >
             {props.input.info.author}
             </Typography >
             </Grid>
-            <Grid container item>
+            <Grid item>
             <Typography className={classes.date} color="textSecondary" variant="h5" component="h2" >
             {props.input.info.lastEdited}
             </Typography >
             </Grid>
           </Grid>
-          <Grid container item className={classes.inner_container_right}  variant="body2" component="p" xs={8}>
+          
+          <Grid item className={classes.inner_container_middle}  variant="body2" component="p" xs={8}>
             <Typography>
             {props.input.info.description}
             </Typography>
           </Grid>
 
-          <Grid container item className={classes.inner_container_middle} xs={1} style={{background: "inherit"}} display="flex" direction="row" justify="flex-end">
+          <Grid item className={classes.inner_container_middle} xs={1} style={{background: "inherit"}} display="flex" direction="row" >
                     <IconButton onClick={(event) => {event.stopPropagation(); props.deleteSchemaFromRepo(props.input.uids.schemaUid); props.triggerReload()}}>
                         <DeleteIcon />
                     </IconButton>   

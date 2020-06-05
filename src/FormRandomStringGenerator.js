@@ -1,14 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
-import Slide from '@material-ui/core/Slide';
-import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
-import Checkbox from "@material-ui/core/Checkbox";
-import Slider from "@material-ui/core/Slider";
-import InputAdornment from '@material-ui/core/InputAdornment';
 import DistributionInputElement from "./DistributionInputElement";
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -44,13 +38,13 @@ export default function DialogFormRandomStringGenerator(props) {
     };
 
    
-
+/*
     // Change Handler Distribution Component
     const distributionVariablesChangedHandler = (distributionObject) => {
         const newGenerator = cloneDeep(props.generatorObject);
         newGenerator.distribution = distributionObject;
         props.setGeneratorObject(newGenerator);
-    };
+    }; */
 
    
     // Change Handler Distribution Component
@@ -105,37 +99,38 @@ export default function DialogFormRandomStringGenerator(props) {
     
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
       
-            <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>
+            <Grid direction="row" container style={{paddingLeft: "15px"}}>
                 
-                <Grid container item xs={leftColumnWidth} style={{paddingTop:25}}>
+                <Grid item xs={leftColumnWidth} style={{paddingTop:25}}>
                   <Typography variant={fontSizeLeftColumn}>Number of Characters:</Typography>
                 </Grid>
 
-                <Grid container item xs={rightColumnWidth} style={{paddingTop:25}}>
-                    <Slider
-                        value={props.generatorObject.numberOfCharacters}
-                        onChange={numberOfCharactersChangedHandler}
-                        valueLabelDisplay="auto"
-                        fullwidth
-                    />
+                <Grid item xs={rightColumnWidth} style={{paddingTop:25}}>
+                  <Input 
+                      className={classes.input} 
+                      type="number" 
+                      fullWidth
+                      placeholder="Enter # of characters" 
+                      value={props.generatorObject.numberOfCharacters} 
+                      onChange={(event) => numberOfCharactersChangedHandler(event)}/>
                 </Grid>
 
 
-                <Grid container item xs={leftColumnWidth}>
+                <Grid item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Number of Distinct Characters:</Typography>
                 </Grid>
 
-                <Grid container item xs={rightColumnWidth}>
+                <Grid item xs={rightColumnWidth}>
                   <Input 
                     className={classes.input} 
                     type="number" 
-                    fullwidth
+                    fullWidth
                     placeholder="Enter # of distinct characters" 
                     value={props.generatorObject.numberDistinctCharacters} 
                     onChange={(event) => numberOfDistinctCharactersChangedHandler(event)}/>
                 </Grid>
 
-                <Grid container item xs={12}>
+                <Grid item xs={12}>
                     <DistributionInputElement 
                         distributionTypeChangedHandler={distributionTypeChangedHandler}
                         expDLambdaValueChangedHandler={expDLambdaValueChangedHandler}

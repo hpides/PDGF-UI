@@ -62,7 +62,7 @@ export default function DefaultVariablesComponent(){
                 </Typography>
                 <TextField 
                   className={classes.textField} 
-                  id="outlined-basic" 
+                  id="outlined-basic1" 
                   label="Root-Seed" 
                   variant="outlined" 
                   InputProps={{ classes: { root: classes.inputRoot } }}
@@ -74,7 +74,7 @@ export default function DefaultVariablesComponent(){
                   }}/>
                 <TextField 
                   className={classes.textField} 
-                  id="outlined-basic" 
+                  id="outlined-basic2" 
                   label="Scale Factor" 
                   variant="outlined" 
                   InputProps={{ 

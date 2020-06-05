@@ -1,10 +1,8 @@
 import React from "react";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import Typography from "@material-ui/core/Typography";
 import CustomVariablesSubComponent from "./CustomVariablesSubComponent";
-import {shadows} from "@material-ui/system";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 
@@ -44,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomVariablesContainer(props){
     const classes = useStyles();
-    const data = props.var;
     
     return (
         <div>
@@ -60,7 +57,7 @@ export default function CustomVariablesContainer(props){
                                                                           deleteCustomSystemVariableHandler ={props.deleteCustomSystemVariableHandler}                                                                        
                                                                           />})}
                 </div> 
-                <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start", alignItems: "center",}}>
+                <div style={{display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center",}}>
                   <IconButton onClick={() => {props.addCustomVariableHandler()}}>
                     <AddCircleIcon/>
                   </IconButton>

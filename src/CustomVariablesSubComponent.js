@@ -1,6 +1,4 @@
 import React from 'react';
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Box";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
@@ -44,7 +42,7 @@ export default function CustomVariablesSubComponent(props) {
   return (
       <>
       <div className={classes.container}>
-      <div style={{display: "flex", flexDirection: "row", justifycontent: "space-between", alignItems: "center",}}>
+      <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center",}}>
       <div style={{width: "200px", padding: "0", margin: "0"}}>
         <TextField 
         className={classes.textFieldName} 

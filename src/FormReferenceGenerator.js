@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -22,12 +21,12 @@ export default function FormReferenceGenerator(props) {
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
 
-    const [selectedTable, setSelectedTable] = useState("Table1");
+    //const [selectedTable, setSelectedTable] = useState("Table1");
 
   
     // Change Handler Input Fields
     const referenceTableChangedHandler = (event) => {
-        setSelectedTable(event.target.value);
+        //setSelectedTable(event.target.value);
         const newGenerator = cloneDeep(props.generatorObject);
         newGenerator.referenceTable = event.target.value;
         props.setGeneratorObject(newGenerator);
@@ -63,15 +62,15 @@ export default function FormReferenceGenerator(props) {
     <>
    
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-            <Grid direction="row" container item xs={12} style={{paddingLeft: "15px", paddingRight: "30px"}}>
+            <Grid direction="row" container style={{paddingLeft: "15px", paddingRight: "30px"}}>
 
 
 
-                <Grid container item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
+                <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
                     <Typography variant={fontSizeLeftColumn}>Reference Table:</Typography>
                 </Grid>
 
-                <Grid container item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
+                <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
                     <TextField
                             id="standard-select-currency-native"
                             className={classes.select}                      
@@ -92,12 +91,12 @@ export default function FormReferenceGenerator(props) {
     
 
 
-                <Grid container item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
+                <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
                     <Typography variant={fontSizeLeftColumn}>Reference Field:</Typography>
                 </Grid>
 
 
-                <Grid container item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
+                <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
                     <TextField
                             id="standard-select-currency-native"
                             className={classes.select}                      
@@ -109,15 +108,22 @@ export default function FormReferenceGenerator(props) {
                                 native: true,
                             }}
                             > 
+                            debbuger
                             {/*{props.currentSchemaLocal.tables.filter(x => { return x.tableId === props.generatorObject.referenceTable})[0].tableItems.map(row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}
                             
                             {alert("currentSchemaLocal.tables: " + JSON.stringify(props.currentSchemaLocal.tables))}
                             {alert("referenceTable: " + props.generatorObject.referenceTable )}
                             */} 
-                            {alert("referenceTable: " + props.generatorObject.referenceTable)}
-                            {alert(JSON.stringify(props.currentSchemaLocal.tables))}
-                            {alert(JSON.stringify(props.currentSchemaLocal.tables.filter(x => { return (x.tableId === props.generatorObject.referenceTable)})))}
-                            {(props.currentSchemaLocal.tables.filter(x => { return (x.tableId === props.generatorObject.referenceTable)}))[0].tableItems.map(row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}
+                            {/*alert("referenceTable: " + props.generatorObject.referenceTable)*/}
+                            {/*alert("Tabellen SchemaLocal: " + JSON.stringify(props.currentSchemaLocal.tables))*/}
+                            {/*alert("Tabellen SchemaLocal gefilter mit ReferenceTable: " + JSON.stringify(props.currentSchemaLocal.tables.filter(x => { 
+                                return (x.tableId === props.generatorObject.referenceTable)})))*/}
+                             {/*props.currentSchemaLocal.tables.map(x => 
+                                { console.log("x.tableId: " + x.tableId + "  type: " + typeof(x.tableId) + "  RefTableId: " + props.generatorObject.referenceTable + "  typ: " + typeof(props.generatorObject.referenceTable) + "  Vergleich:  " + (x.tableId === props.generatorObject.referenceTable))})*/}
+
+                            {(props.currentSchemaLocal.tables.filter(x => { 
+                                return (x.tableId === Number(props.generatorObject.referenceTable))}))[0].tableItems.map(
+                                    row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}
                         
 {/*}
                             {const tables = props.currentSchemaLocal.tables;
@@ -131,12 +137,12 @@ export default function FormReferenceGenerator(props) {
                     </TextField>
                 </Grid>
 
-                <Grid container item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
+                <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
                     <Typography variant={fontSizeLeftColumn}>Choose by:</Typography>
                 </Grid>
 
 
-                <Grid container item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
+                <Grid  item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
                     <TextField
                             id="standard-select-currency-native"
                             className={classes.select}                      
@@ -160,12 +166,12 @@ export default function FormReferenceGenerator(props) {
 
 
 
-                <Grid container item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
+                <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
                     <Typography variant={fontSizeLeftColumn}>Select From:</Typography>
                 </Grid>
 
 
-                <Grid container item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
+                <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
                     <TextField
                             id="standard-select-currency-native"
                             className={classes.select}                      

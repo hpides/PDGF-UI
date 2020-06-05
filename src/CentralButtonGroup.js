@@ -1,13 +1,12 @@
-import React, {useState} from "react";
+import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import AlarmIcon from "@material-ui/icons/Alarm";
 import AppleIcon from "@material-ui/icons/Apple";
 import AllInboxIcon from "@material-ui/icons/AllInbox";
 import DragAndDropComponent from "./DragAndDropComponent";
-import DialogSchemaSelection from "./DialogSchemaSelection";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,25 +45,12 @@ const useStyles = makeStyles((theme) => ({
         width: "1000px",
         height: "700px",
     },
-    boxElement: {
-        margin: "30px",
-    }
+    
   }));
 
 
 export default function CentralButtonGroup2(props){
     const classes = useStyles();
-    const [isOpenSchemaDialog, setIsOpenSchemaDialog] = useState(false);
-  
-    const handleClickOpen = () => {
-      setIsOpenSchemaDialog(true);
-    };
-  
-    const handleClose = (value) => {
-      setIsOpenSchemaDialog(false);
-    };
-  
-
     return(
         <Box className={classes.outerBox}>
             <Box className={classes.innerBox} >

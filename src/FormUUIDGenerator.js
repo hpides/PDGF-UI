@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function FormIdGenerator(props) {
+export default function FormUUIDGenerator(props) {
     const classes = useStyles();
     const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
@@ -38,19 +38,12 @@ export default function FormIdGenerator(props) {
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
             <Grid direction="row" container style={{paddingLeft: "15px", paddingRight: "30px"}}>
 
-                <Grid  item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>Minimum:</Typography>
+                <Grid container item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
+                  <Typography variant={fontSizeLeftColumn}>No Input required. Just save now. </Typography>
                 </Grid>
 
-                <Grid  item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Input 
-                    className={classes.input} 
-                    type="number" 
-                    placeholder="Enter Minimum" 
-                    fullWidth
-                    value={props.generatorObject.minimum} 
-                    onChange={(event) => minimumChangedHandler(event)}/>
-                </Grid>
+
+
             </Grid>       
       
       </div>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -8,12 +8,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Checkbox from "@material-ui/core/Checkbox";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import Input from "@material-ui/core/Input";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 import Slider from "@material-ui/core/slider";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import cloneDeep from 'lodash/cloneDeep';
+//import cloneDeep from 'lodash/cloneDeep';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +33,7 @@ export default function GeneratorFormNullValuesElement(props) {
 
 
   return (
-    <Grid container xs={12} style={{background: "inherit"}}>
+    <Grid container style={{background: "inherit"}}>
     
     
       <ExpansionPanel style={{width: 960}}>
@@ -45,12 +42,12 @@ export default function GeneratorFormNullValuesElement(props) {
           aria-controls="panel2a-content"
           id="panel2a-header">
   
-          <Grid container item xs={leftColumnWidth} style={{background: "inherit"}}>
+          <Grid item xs={leftColumnWidth} style={{background: "inherit"}}>
             <Typography variant={fontSizeLeftColumn}>
               NullValues:
             </Typography>
           </Grid>
-          <Grid container item xs={rightColumnWidth} style={{background: "inherit", paddingLeft: 10}}>
+          <Grid item xs={rightColumnWidth} style={{background: "inherit", paddingLeft: 10}}>
               <Checkbox 
                 checked={props.generatorObject.nullValues.withNullValues}
                 onChange={event => {props.withNullValuesChangedHandler(event)}}
@@ -61,43 +58,44 @@ export default function GeneratorFormNullValuesElement(props) {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
 
-              <Grid  container item xs={12} style={{background: "inherit"}}>
-                <Grid container item xs={leftColumnWidth} style={{background: "inherit"}}>
+              <Grid  container  style={{background: "inherit"}}>
+                <Grid item xs={leftColumnWidth} style={{background: "inherit"}}>
                       <Typography variant={fontSizeLeftColumn}>Null Values:</Typography>
                 </Grid>
 
-                <Grid container item xs={rightColumnWidth}>
+                <Grid container display="flex" justify="space-between" alignItems="center" item xs={rightColumnWidth}>
                                     
+                    <Grid item xs={3}>
+                        <TextField
+                          className={classes.input}
+                          value={props.generatorObject.nullValues.percentNullValues}
+                          margin="dense"
+                          variant="outlined"
+                          onChange={props.handleNullValuesInputChange}
+                          onBlur={props.handleBlur}
+                          styles={{paddingRight: 30, width: 40,}}
+                          inputProps={{
+                            step: 10,
+                            min: 0,
+                            max: 100,
+                            size: 3,
+                            type: 'number',
+                            'aria-labelledby': 'input-slider',
+                          }}
+                        />
+                    </Grid>
+
+                    <Grid item xs={9}>
+                        <Slider
+                          value={typeof props.generatorObject.nullValues.percentNullValues === 'number' ? props.generatorObject.nullValues.percentNullValues : 0}
+                          onChange={props.handleNullValuesSliderChange}
+                          aria-labelledby="input-slider"
+                          fullWidth
+                        />
+
+                    </Grid>
+
                   
-                  <Grid item xs={9}>
-                    <Slider
-                      value={typeof props.generatorObject.nullValues.percentNullValues === 'number' ? props.generatorObject.nullValues.percentNullValues : 0}
-                      onChange={props.handleNullValuesSliderChange}
-                      aria-labelledby="input-slider"
-                    />
-                  </Grid>
-
-
-
-
-                  <Grid item>
-                    <Input
-                      className={classes.input}
-                      value={props.generatorObject.nullValues.percentNullValues}
-                      margin="dense"
-                      onChange={props.handleNullValuesInputChange}
-                      onBlur={props.handleBlur}
-                      endAdornment={<InputAdornment position="end">%</InputAdornment>}
-                      inputProps={{
-                        step: 10,
-                        min: 0,
-                        max: 100,
-                        size: 3,
-                        type: 'number',
-                        'aria-labelledby': 'input-slider',
-                      }}
-                    />
-                  </Grid>
 
 
                 </Grid>

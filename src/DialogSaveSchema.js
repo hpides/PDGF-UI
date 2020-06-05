@@ -4,13 +4,13 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import AddIcon from '@material-ui/icons/Add';
+
 import Typography from '@material-ui/core/Typography';
-import Slide from '@material-ui/core/Slide';
+
 import DialogActions from "@material-ui/core/DialogActions";
-import TextField from "@material-ui/core/TextField";
+
 import Input from "@material-ui/core/Input";
-import Checkbox from "@material-ui/core/Checkbox";
+
 
 
 const useStyles = makeStyles({
@@ -50,21 +50,21 @@ export default function DialogSaveSchema(props) {
         //TransitionComponent={Transition}
         keepMounted
         PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
-        fullwidth
+        fullWidth
         maxWidth="md"
         >
       <DialogTitle id="simple-dialog-title">Vor dem Speichern können Sie hier weitere Informationen zum Schema eingeben.</DialogTitle>
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
       
-            <Grid direction="row" container item xs={12} style={{paddingLeft: "15px"}}>
+            <Grid direction="row" container  style={{paddingLeft: "15px"}}>
 
-                <Grid container item xs={leftColumnWidth}>
+                <Grid item xs={leftColumnWidth}>
                     <Typography variant={fontSizeLeftColumn}>
                       Schema Name:
                     </Typography>
                 </Grid>
 
-                <Grid container item xs={rightColumnWidth}>
+                <Grid item xs={rightColumnWidth}>
                 <Input 
                     className={classes.input} 
                     type="text" 
@@ -74,13 +74,13 @@ export default function DialogSaveSchema(props) {
                 </Grid>
 
 
-                <Grid container item xs={leftColumnWidth}>
+                <Grid item xs={leftColumnWidth}>
                     <Typography variant={fontSizeLeftColumn}>
                         Description:
                     </Typography>
                 </Grid>
 
-                <Grid container item xs={rightColumnWidth}>
+                <Grid item xs={rightColumnWidth}>
                 <Input 
                     className={classes.input} 
                     type="number" 
@@ -91,13 +91,13 @@ export default function DialogSaveSchema(props) {
                 </Grid>
 
 
-                <Grid container item xs={leftColumnWidth}>
+                <Grid item xs={leftColumnWidth}>
                     <Typography variant={fontSizeLeftColumn}>
                         Author:
                     </Typography>
                 </Grid>
 
-                <Grid container item xs={rightColumnWidth}>
+                <Grid item xs={rightColumnWidth}>
                 <Input 
                     className={classes.input} 
                     type="text" 
@@ -108,13 +108,13 @@ export default function DialogSaveSchema(props) {
 
 
 
-                <Grid container item xs={leftColumnWidth}>
+                <Grid  item xs={leftColumnWidth}>
                     <Typography variant={fontSizeLeftColumn}>
                         Last Edited:
                     </Typography>
                 </Grid>
 
-                <Grid container item xs={rightColumnWidth}>
+                <Grid  item xs={rightColumnWidth}>
                 <Input 
                     className={classes.input}  
                     readOnly

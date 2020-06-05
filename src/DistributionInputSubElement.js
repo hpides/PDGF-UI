@@ -1,11 +1,10 @@
-import React, {useState} from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
 
-
+const leftSideColumnWidth = 4;
+const rightSideColumnWidth = 12- leftSideColumnWidth;
 
 
 
@@ -19,12 +18,13 @@ export default function DistributionInputSubElement(props){
             case 'exponentialDistribution':
                 return (
                         <>
-                        <Grid item xs={3}>
+                        <Grid item xs={leftSideColumnWidth}>
                             <Typography>lambda Value:</Typography>
                         </Grid>
-                        <Grid item xs={9}>
-                            <Input 
+                        <Grid item xs={rightSideColumnWidth}>
+                            <Input
                                 placeholder="Enter lambda Value"
+                                fullWidth
                                 value={props.generatorObject.distributionVariables.exponentialDistribution.lambda}
                                 onChange={(event)=>{props.expDLambdaValueChangedHandler(event)}}/>
                         </Grid>
@@ -36,12 +36,13 @@ export default function DistributionInputSubElement(props){
           case 'logarithmicDistribution':
             return (
                     <>
-                    <Grid item xs={3}>
+                    <Grid item xs={leftSideColumnWidth}>
                         <Typography>p-Value:</Typography>
                     </Grid>
-                    <Grid item xs={9}>
+                    <Grid item xs={rightSideColumnWidth}>
                         <Input 
                         placeholder="Enter p-Value"
+                        fullWidth
                         value={props.generatorObject.distributionVariables.logarithmicDistribution.p}
                         onChange={(event)=>{props.logDPValueChangedHandler(event)}}/>
                     </Grid>
@@ -50,21 +51,23 @@ export default function DistributionInputSubElement(props){
 
           case 'normalDistribution':
             return (<>
-                    <Grid item xs={3}>
+                    <Grid item xs={leftSideColumnWidth}>
                         <Typography>Standard Deviation:</Typography>
                     </Grid>
-                    <Grid item xs={9}>
-                        <Input 
+                    <Grid item xs={rightSideColumnWidth}>
+                        <Input
                             placeholder="Enter Standard Deviation"
+                            fullWidth
                             value={props.generatorObject.distributionVariables.normalDistribution.standardDeviation}
                             onChange={(event)=>{props.normalDStdDevValueChangedHandler(event)}}/>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={leftSideColumnWidth}>
                         <Typography>Mean</Typography>
                     </Grid>
-                    <Grid item xs={9}>
-                        <Input 
+                    <Grid item xs={rightSideColumnWidth}>
+                        <Input
                             placeholder="Enter Mean Value"
+                            fullWidth
                             value={props.generatorObject.distributionVariables.normalDistribution.mean}
                             onChange={(event)=>{props.normalDMeanValueChangedHandler(event)}}/>
                     </Grid>
@@ -73,23 +76,25 @@ export default function DistributionInputSubElement(props){
           case 'binomialDistribution':
             return (
                     <>
-                    <Grid item xs={3}>
+                    <Grid item xs={leftSideColumnWidth}>
                         <Typography>p Value:</Typography>
                     </Grid>
-                    <Grid item xs={9}>
+                    <Grid item xs={rightSideColumnWidth}>
                         <Input 
                             placeholder="Enter p-Value"
+                            fullWidth
                             value={props.generatorObject.distributionVariables.binomialDistribution.p}
                             onChange={(event)=>{props.binomialDPValueChangedHandler(event)}}/>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={leftSideColumnWidth}>
                         <Typography>n Value:</Typography>
                     </Grid>
-                    <Grid item xs={9}>
-                        <Input 
+                    <Grid item xs={rightSideColumnWidth}>
+                        <Input
                             placeholder="Enter n-Value"
-                            value={props.generatorObject.distributionVariables.binomialDistribution.p}
-                            onChange={(event)=>{props.binomialDPValueChangedHandler(event)}}/>
+                            fullWidth
+                            value={props.generatorObject.distributionVariables.binomialDistribution.n}
+                            onChange={(event)=>{props.binomialDNValueChangedHandler(event)}}/>
                     </Grid>
                     </>);
 

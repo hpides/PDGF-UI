@@ -58,11 +58,11 @@ const dictData2 = [
 
   return (
       <>
-              <Grid direction="row" container item xs={12} style={{paddingLeft: "20px"}}>
+              <Grid direction="row" container style={{paddingLeft: "20px"}}>
                 <Grid container item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Dictionary:</Typography>
                 </Grid>
-                <Grid container item xs={8}>
+                <Grid  item xs={8}>
                 <TextField
                     id="standard-select-currency-native"
                     select
@@ -82,41 +82,41 @@ const dictData2 = [
                 ))}
                 </TextField>
                 </Grid>
-                <Grid container item xs={leftColumnWidth}>
+                <Grid item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Maximum:</Typography>
                 </Grid>
-                <Grid container item xs={rightColumnWidth}>
+                <Grid  item xs={rightColumnWidth}>
                   <Input placeholder="Enter Maximum" className={classes.input}/>
                 </Grid>
-                <Grid container item xs={leftColumnWidth}>
+                <Grid  item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Decimal Places:</Typography>
                 </Grid>
-                <Grid container item xs={rightColumnWidth}>
+                <Grid  item xs={rightColumnWidth}>
                   <Input placeholder="Enter Number of Decimalplaces" className={classes.input}/>
                 </Grid>
-                <Grid container item xs={leftColumnWidth}>
+                <Grid  item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Locale:</Typography>
                 </Grid>
-                <Grid container item xs={rightColumnWidth}>
+                <Grid  item xs={rightColumnWidth}>
                   <Input placeholder="Enter Locale (Country whose formats to apply)" className={classes.input}/>
                 </Grid>
-                <Grid container item xs={leftColumnWidth}>
+                <Grid  item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Distinct Values:</Typography>
                 </Grid>
-                <Grid container item xs={rightColumnWidth}>
+                <Grid  item xs={rightColumnWidth}>
                   <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
                 </Grid>
-                <Grid container item xs={leftColumnWidth}>
+                <Grid  item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Fixed Step Size:</Typography>
                 </Grid>
-                <Grid container item xs={rightColumnWidth}>
+                <Grid  item xs={rightColumnWidth}>
                   <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
                 </Grid>
 
               
               </Grid>       
 
-              <Grid direction="column" container item xs={12}>
+              <Grid direction="column" container>
                   <div></div>
                   
               

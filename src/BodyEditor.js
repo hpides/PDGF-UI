@@ -1,32 +1,18 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Paper from "@material-ui/core/Paper";
 import EditorButtonGroup from "./EditorButtonGroup";
 import DefaultVariablesComponent02 from "./DefaultVariablesComponent02";
 import CustomVariablesContainer from "./CustomVariablesContainer";
-import {customSystemVariables, emptySchema,  generatorDescriptions, rawGeneratorDescriptions, dictListObj, emptyGenerator} from "./data.js"; 
+import {emptySchema,  generatorDescriptions, rawGeneratorDescriptions, emptyGenerator} from "./data.js"; 
 import SchemaNameElement from "./SchemaNameElement";
 import TableComponent from "./TableComponent";
-import Button from "@material-ui/core/Button";
 import DialogGeneratorSelection from "./DialogGeneratorSelection";
 import DialogRawGeneratorSelection from "./DialogRawGeneratorSelection";
-import DialogFormDictListGenerator from "./DialogFormDictListGenerator";
-import DialogFormIdGenerator from "./DialogFormIdGenerator";
-import DialogFormDoubleGenerator from "./DialogFormDoubleGenerator";
-import SimpleDialogExample05 from "./SimpleDialogExample05";
 import DialogBlank from "./DialogBlank";
-import DialogFormLongGenerator from "./DialogFormLongGenerator";
-import DialogFormDateTimeGenerator from "./DialogFormDateTimeGenerator";
-import DialogFormRandomStringGenerator from "./DialogFormRandomStringGenerator";
-import DialogFormRandomSentenceGenerator from "./DialogFormRandomSentenceGenerator";
 import DialogSaveSchema from "./DialogSaveSchema";
 import DialogStartPage from "./DialogStartPage";
 import DialogUniversalGeneratorForm from "./DialogUniversalGeneratorForm";
 import cloneDeep from 'lodash/cloneDeep';
-import Input from "@material-ui/core/Input";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/Textfield";
 import DialogSchemaSelection from "./DialogSchemaSelection";
 
 
@@ -41,7 +27,6 @@ export default function BodyEditor(props){
     const [isOpenRawGeneratorDialog, setIsOpenRawGeneratorDialog] = useState(false);
     const [isOpenDialogSaveSchema, setIsOpenDialogSaveSchema] = useState(false);
     const [isOpenBlank, setIsOpenBlank] = useState(false);
-    const [tempGeneratorObject, setTempGeneratorObject] = useState({});
     const [universalGeneratorFormMode, setUniversalGeneratorFormMode] = useState("create");
     const [isOpenDialogStartPage, setIsOpenDialogStartPage] = useState(false);
     const [isOpenDialogSchemaSelection, setIsOpenDialogSchemaSelection] = useState(false);
@@ -94,7 +79,6 @@ export default function BodyEditor(props){
     const resetGeneratorStateVariables = () => {
         setFieldInFocus({});
         setUniversalGeneratorFormMode("create");
-        //setTempGeneratorObject({});
         setSelectedGeneratorType("BlankPage");
     }
 
@@ -177,7 +161,7 @@ export default function BodyEditor(props){
         let newRow = {
             tableId: tableId, 
             rowId: rowCounter + 1, 
-            fieldName: "Enter Table Name", 
+            fieldName: "Enter Field Name", 
             generator: "Select Generator", 
             isKey: "false",
         };
@@ -511,24 +495,6 @@ const handleClickOpenBlank = () => {
         alert("generator type: " + generatorType)
         setSelectedGeneratorType(generatorType);
         setIsOpenDialogUniGenForm(true);
-       /* 
-        const tableIndex = currentSchemaLocal.tables.findIndex(x => x.tableId === tableId);
-        alert( "tableIndex: " +tableIndex);
-        const rowIndex = currentSchemaLocal.tables[tableIndex].tableItems.findIndex(x => x.rowId === rowId);
-        alert( "rowIndex: " +rowIndex);
-        const generator = currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator;
-        const tableIndex = currentSchemaLocal.tables.findIndex(x => x.tableId === tableId);
-        alert( "tableIndex: " +tableIndex);
-        const rowIndex = currentSchemaLocal.tables[tableIndex].tableItems.findIndex(x => x.rowId === rowId);
-        alert( "rowIndex: " +rowIndex);
-        const generator = currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator;
-        setTempGeneratorObject(generator);
-        alert( "generator: " + JSON.stringify(generator));
-        //setIsInCreateMode(false);
-        setIsOpenDialogUniGenForm(true);
-        setSelectedGeneratorType(generator.type);
-        //eval("setIsOpen" + generator.type+"(true)");// setting the isOpen- Variable for the needed generator to true.
-        */
         return null;
     };
 
@@ -566,36 +532,7 @@ const handleClickOpenBlank = () => {
         <>
         <div>
             
-              <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start"}}>
-                
-                <div>
-                    <Typography>UniversalFormMode:</Typography>
-                    <Input value={universalGeneratorFormMode}/>
-                </div>
-                
-                <div>
-                    <Typography>FieldInFocus:</Typography>
-                    <Input value={JSON.stringify(fieldInFocus)}/>
-                </div>
-                
-                <div>
-                    <Typography>selectedGeneratorType:</Typography>
-                    <Input value={selectedGeneratorType}/>
-                </div>
-                
-                <div>
-                    <Typography>TempGeneratorObject:</Typography>
-                    <Input value={JSON.stringify(tempGeneratorObject)}/>
-                </div>
-                {/*} <div>Percent NullValues: {copyGeneratorObject.nullValues.percentNullValues} </div>
-
-                <div>Save in Repo: </div> <Input value={copyGeneratorObject.repoVariables.saveInRepo} />*/}
-
-            </div>
-                <div>
-                    {JSON.stringify(copyGeneratorObject)}
-                </div>
-               
+              
 
              
 
@@ -603,18 +540,20 @@ const handleClickOpenBlank = () => {
             <Grid container display="flex" direction="row" justify="flex-start" alignContent="flex-start" spacing = {0} style={{background: "white", height: "90vh"}}>
                {/*first row*/}
                <Grid container item xs={12} style={{height: "250px"}} >
-                    <Grid container item xs={9} justify="flex-start" alignContent="flex-end" style={{backgroundColor: "white", paddingBottom: "20px", paddingLeft:"20px"}}>
+                    <Grid item xs={9} style={{backgroundColor: "white", paddingBottom: "20px", paddingLeft:"20px"}}>
                     
                         <SchemaNameElement schemaName={currentSchemaLocal.info.schemaName} schemaNameChangedHandler = {schemaNameChangedHandler}/>
                        
                     </Grid>
-                    <Grid container item xs={3} direction="row" justify="flex-end" alignContent="center"  style={{background: "white", paddingRight: "20px"}}>
+                    <Grid item xs={3} style={{background: "white", paddingRight: "20px"}}>
                         <EditorButtonGroup 
                             addNewTableHandler = {addNewTableHandler}
                             resetEditor ={resetEditor}
                             toggleSidebarRight = {toggleSidebarRight}
                             handleClickOpenDialogSaveSchema={handleClickOpenDialogSaveSchema}
                             openDialogSchemaSelection={openDialogSchemaSelection}
+                            setIsOpenRawGeneratorDialog={setIsOpenRawGeneratorDialog}
+                            isOpenRawGeneratorDialog={isOpenRawGeneratorDialog}
                         ><div></div>
                         </EditorButtonGroup>
                     </Grid>
@@ -622,9 +561,9 @@ const handleClickOpenBlank = () => {
 
                  {/*second row*/}
                  
-                <Grid container item xs={12} style={{height: "80vh"}}>  
+                <Grid item xs={12} style={{height: "80vh"}}>  
                     {(isOpenSideBarRight? (
-                    <Grid container item xs={10} display="flex" direction="row" justify="center" alignContent="center"  style={{ backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>    
+                    <div fullWidth style={{ display: "flex",  flexDirection: "row",  justifyContent: "center", alignItems: "center", alignContent:"center", backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap", flexGrow: "1" }}>    
                     {currentSchemaLocal.tables.map(table => {return( 
                             <TableComponent
                                 key={table.tableId} 
@@ -645,8 +584,8 @@ const handleClickOpenBlank = () => {
                             />
                         )})
                     }
-                    </Grid>):
-                    (<Grid container item xs={12} display="flex" direction="row" justify="center" alignContent="center"  style={{ backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>
+                    </div>):
+                    (<Grid item xs={12}  style={{ backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>
                     {currentSchemaLocal.tables.map(table => {return( 
                             <TableComponent
                                 key={table.tableId} 
@@ -671,14 +610,14 @@ const handleClickOpenBlank = () => {
 
 
                     {(isOpenSideBarRight? (
-                    <Grid container item xs={2} direction="column" justify="flex-start" alignContent="flex-end" style={{ backgroundColor: "green" }}> 
-                        <Grid item  >
+                    <div   style = {{display: "flex", flexDirection: "column", justify: "flex-start", width: "300px", backgroundColor: "green" }}> 
+                        <div  style = {{width: "300px" }}>
                             <DefaultVariablesComponent02 
                                 variables={currentSchemaLocal.variables}
                                 defaultSystemVariableValueChangedHandler ={defaultSystemVariableValueChangedHandler}
                             />
-                        </Grid>
-                        <Grid item style = {{width: "300px", height: "50vh",  overflow: "scroll" }}>
+                        </div>
+                        <div style = {{width: "300px", height: "50vh",  overflow: "scroll" }}>
                             <CustomVariablesContainer 
                                 variables={currentSchemaLocal.variables} 
                                 addCustomVariableHandler = {addCustomVariableHandler}
@@ -689,8 +628,8 @@ const handleClickOpenBlank = () => {
                                 
                             />
 
-                        </Grid>
-                    </Grid>) : null)}
+                        </div>
+                    </div>) : null)}
                 </Grid>   
                           
                
@@ -718,54 +657,7 @@ const handleClickOpenBlank = () => {
                 deleteSchemaFromRepo={deleteSchemaFromRepo}
                 />
 
-            {/*
-            <DialogFormDictListGenerator 
-                isOpenDictListGenerator={isOpenDictListGenerator} 
-                handleCloseDictListGenerator={handleCloseDictListGenerator}
-                addGeneratorToSchema={addGeneratorToSchema}
-                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
-            />
-            <DialogFormIdGenerator 
-                isOpenIdGenerator={isOpenIdGenerator} 
-                handleCloseIdGenerator={handleCloseIdGenerator}
-                addGeneratorToSchema={addGeneratorToSchema}
-                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
-                tempGeneratorObject={tempGeneratorObject}
-                isInCreateMode={isInCreateMode}
-            />
-            <DialogFormLongGenerator 
-                isOpenLongGenerator={isOpenLongGenerator} 
-                handleCloseLongGenerator={handleCloseLongGenerator}
-                addGeneratorToSchema={addGeneratorToSchema}
-                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
-            />
-            <DialogFormDoubleGenerator 
-                isOpenDoubleGenerator={isOpenDoubleGenerator} 
-                handleCloseDoubleGenerator={handleCloseDoubleGenerator}
-                addGeneratorToSchema={addGeneratorToSchema}
-                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
-                
-            />
-            <DialogFormDateTimeGenerator 
-                isOpenDateTimeGenerator={isOpenDateTimeGenerator} 
-                handleCloseDateTimeGenerator={handleCloseDateTimeGenerator}
-                addGeneratorToSchema={addGeneratorToSchema}
-                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
-            />
-             <DialogFormRandomStringGenerator 
-                isOpenRandomStringGenerator={isOpenRandomStringGenerator} 
-                handleCloseRandomStringGenerator={handleCloseRandomStringGenerator}
-                addGeneratorToSchema={addGeneratorToSchema}
-                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
-            />
-            <DialogFormRandomSentenceGenerator 
-                isOpenRandomSentenceGenerator={isOpenRandomSentenceGenerator} 
-                handleCloseRandomSentenceGenerator={handleCloseRandomSentenceGenerator}
-                addGeneratorToSchema={addGeneratorToSchema}
-                saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
-            />
-
-            */}
+    
             <DialogBlank 
                 isOpenBlank={isOpenBlank} 
                 handleCloseBlank={handleCloseBlank}
@@ -806,6 +698,9 @@ const handleClickOpenBlank = () => {
                 resetGeneratorStateVariables={resetGeneratorStateVariables}
 
             />        
+
+                        
+
         </div>
         </>
     )

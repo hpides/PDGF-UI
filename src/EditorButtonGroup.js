@@ -87,8 +87,10 @@ export default function EditorButtonGroup(props) {
             color="default"
             className={classes.button}
             onClick={props.toggleSidebarRight}
-            startIcon={<BuildIcon className={classes.icon}/>}
-        />
+            startIcon={<BuildIcon className={classes.icon}/>}>
+              <div></div>
+        </Button>
+        
         </LightTooltip>
 
         <LightTooltip title="Save or export file">
@@ -99,8 +101,9 @@ export default function EditorButtonGroup(props) {
             variant="contained"
             color="default"
             className={classes.button}
-            startIcon={<SaveIcon className={classes.icon}/>}
-        />
+            startIcon={<SaveIcon className={classes.icon}/>}>
+            <div></div>
+        </Button>
         </LightTooltip>
         <Menu
             id="save-and-export-menu"
@@ -130,9 +133,11 @@ export default function EditorButtonGroup(props) {
             variant="contained"
             color="default"
             className={classes.button}
-            startIcon={<LoadIcon className={classes.icon}/>}
-        />
+            startIcon={<LoadIcon className={classes.icon}/>}>
+          <div></div>
+        </Button>
         </LightTooltip>
+
         <Menu
             id="load-elements-menu"
             anchorEl={anchorEl2}
@@ -156,8 +161,9 @@ export default function EditorButtonGroup(props) {
             variant="contained"
             color="default"
             className={classes.button}
-            startIcon={<HelpIcon className={classes.icon}/>}
-        />
+            startIcon={<HelpIcon className={classes.icon}/>}>
+        <div></div>
+        </Button>
         </LightTooltip>
 
         <LightTooltip title="Reset Editor">
@@ -166,9 +172,18 @@ export default function EditorButtonGroup(props) {
             color="default"
             className={classes.button}
             startIcon={<DeleteIcon className={classes.icon}/>}
-            onClick={()=>{props.resetEditor()}}
-        />
+            onClick={()=>{props.resetEditor()}}>
+          <div></div>
+        </Button>
+    
         </LightTooltip>
+
+        <Button
+            variant="contained"
+            color="default"
+            className={classes.button}
+            onClick={()=>{props.setIsOpenRawGeneratorDialog(true)}}
+        > RawGen</Button>
 
       </ButtonGroup>
     </div>

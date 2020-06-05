@@ -1,12 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import Grid from "@material-ui/core/Grid";
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import SearchIcon from "@material-ui/icons/Search";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
@@ -55,31 +50,39 @@ const useStyles = makeStyles({
 });
 
 export default function GeneratorSelectionCard(props) {
-  const classes = useStyles();
+const classes = useStyles();
+  
+const deleteGeneratorFromRepo = (uid) => {
+  const newGeneratorRepository = JSON.parse(localStorage.getItem("generatorRepository"));
+  let index = newGeneratorRepository.findIndex(x => x.uid = uid);
+  newGeneratorRepository.splice(index, 1);
+  localStorage.setItem("generatorRepository", newGeneratorRepository);
+}
+
 
   return (
-      <Box className={classes.root} onClick={()=>{props.selectGeneratorHandler(props.data.uid); props.handleCloseGeneratorDialog()}} style={{height: "170px", width: "200px", margin: "3px"}}>
+      <Box className={classes.root} onClick={()=>{props.selectGeneratorHandler(props.generatorInRepo.uid); props.handleCloseGeneratorDialog()}} style={{height: "170px", width: "200px", margin: "3px"}}>
         <Grid container classeName={classes.container} direction="column" xs={12} style={{background: "inherit", padding: "4px",}}>
-            <Grid container item className={classes.inner_container_top} xs={12} direction="row" justify="space-between" style={{background: "inherit"}}>
-                <Grid container item xs={9} style={{background: "inherit"}}>
-                    <Typography className={classes.name} color="textSecondary"  >
-                        {props.data.repoVariables.name}
+            <Grid container  className={classes.inner_container_top} xs={12} direction="row" justify="space-between" style={{background: "inherit"}}>
+                <Grid  item xs={9} style={{background: "inherit"}}>
+                    <Typography className={classes.name} color="textSecondary">
+                        {props.generatorInRepo.repoVariables.name}
                     </Typography >
                 </Grid>
-                <Grid container item className={classes.inner_container_middle} xs={3} style={{background: "inherit"}} display="flex" direction="row" justify="flex-end">
-                    <IconButton onClick={() => {props.deleteGeneratorInRepo(props.data.uid)}}>
+                <Grid item className={classes.inner_container_middle} xs={3} style={{background: "inherit"}}>
+                    <IconButton onClick={(event) => {event.stopPropagation(); deleteGeneratorFromRepo(props.generatorInRepo.uid); props.triggerReload()}}>
                         <DeleteIcon className={classes.icon}/>
                     </IconButton>   
                 </Grid>
             </Grid>
-            <Grid container item style={{background: "inherit"}}>
+            <Grid item style={{background: "inherit"}}>
                 <Typography className={classes.description} color="textSecondary" variant="h5" component="h2" >
-                {props.data.repoVariables.description}
+                {props.generatorInRepo.repoVariables.description}
                 </Typography >
             </Grid>
-            <Grid container item className={classes.inner_container_bottom}>
+            <Grid item className={classes.inner_container_bottom}>
                 <Typography className={classes.examples}>
-                {props.data.repoVariables.examples}
+                {props.generatorInRepo.repoVariables.examples}
                 </Typography>
             </Grid>
         </Grid>

@@ -57,11 +57,11 @@ export default function GeneratorFormNullValuesElement(props){
 
   return (
     <>
-        <Grid direction="row" container item xs={12}>
+        <Grid direction="row" container >
                 <Grid container item xs={leftColumnWidth}>
                   <Typography variant={fontSizeLeftColumn}>Null-Values:</Typography>
                 </Grid>
-                <Grid container item xs={rightColumnWidth}>
+                <Grid item xs={rightColumnWidth}>
                     <Grid item xs={4}>
                         <Slider
                             value={typeof props.nullValues === 'number' ? props.nullValues : 0}

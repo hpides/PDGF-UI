@@ -24,7 +24,7 @@ export default function CentralButtonGroup(){
 
     return(
         <div style={{background: "green", height: "90vh", display: "flex", justify: "center"}}>
-            <Grid  style={{background: "red", height: "90vh", margin: "auto"}} container item direction="column" justify="center">
+            <Grid  style={{background: "red", height: "90vh", margin: "auto"}} container  direction="column" justify="center">
                 
                 <Grid item style={{background: "yellow", height: "200px", width: "500px", padding: "30px"}}>
                     <Button

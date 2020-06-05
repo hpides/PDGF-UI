@@ -58,7 +58,7 @@ function DialogGeneratorSpecification(props) {
         TransitionComponent={Transition}
         keepMounted
         PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
-        fullwidth
+        fullWidth
         maxWidth="md"
         >
       <DialogTitle id="simple-dialog-title">Test Form 01</DialogTitle>

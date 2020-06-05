@@ -1,25 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from '@material-ui/core/Dialog';
-import PersonIcon from '@material-ui/icons/Person';
-import AddIcon from '@material-ui/icons/Add';
-import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
-import SchemaSelectionCard from "./SchemaSelectionCard";
 import BuildIcon from "@material-ui/icons/Build";
 import RawGeneratorSelectionCard from "./RawGeneratorSelectionCard";
-import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles({
   avatar: {
@@ -46,11 +35,11 @@ export default function DialogRawGeneratorSelection(props) {
         aria-labelledby="simple-dialog-title" 
         open={props.isOpenRawGeneratorDialog}
         maxWidth="md"
-        fullwidth>
+        fullWidth>
 
 
         <DialogTitle id="simple-dialog-title">
-            <Grid container display="flex" direction="row" justify="space-between" xs={12}>
+            <Grid container display="flex" direction="row" justify="space-between">
                 <Grid item xs={8}>
                     Create Generator 
                 </Grid>
@@ -68,8 +57,8 @@ export default function DialogRawGeneratorSelection(props) {
             </Grid>
         </DialogTitle>
         <DialogContent>
-            <div style={{display: "flex", flexDirection: "column", justifycontent: "flex-start"}}>    
-                <Grid container display="flex" justify="flex-start" flexWrap="wrap" xs={12}>
+            <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>    
+                <Grid container display="flex" justify="flex-start" flexWrap="wrap">
                  {props.data.map(element => { return <Grid key={element.uid} item xs={4}> <RawGeneratorSelectionCard 
                                                                               data = {element} 
                                                                               handleCloseRawGeneratorDialog = {props.handleCloseRawGeneratorDialog}
@@ -81,7 +70,11 @@ export default function DialogRawGeneratorSelection(props) {
         </DialogContent>
 
       <DialogActions>
-        <div> Here will finally be a button or something ...</div>
+        <div> 
+            <Button onClick={()=>props.handleCloseDialogRawGeneratorSelection()} color="primary">
+                Cancel
+            </Button>
+        </div>
       </DialogActions>
     </Dialog>
   );
