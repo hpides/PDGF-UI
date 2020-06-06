@@ -54,7 +54,7 @@ export default function RawGeneratorSelectionCard(props) {
   return (
       <Box className={classes.root} onClick={()=>{props.openInputMaskForSelectedGenerator(props.data.uid)}} style={{height: "170px", width: "200px", margin: "3px"}}>
         <Grid container classeName={classes.container} direction="column" style={{background: "inherit", padding: "4px",}}>
-            <Grid container className={classes.inner_container_top} xs={12} direction="row" justify="space-between" style={{background: "inherit"}}>
+            <Grid container className={classes.inner_container_top} item xs={12} direction="row" justify="space-between" style={{background: "inherit"}}>
                 <Grid item xs={9} style={{background: "inherit"}}>
                     <Typography className={classes.name} color="textSecondary"  >
                         {props.data.name}

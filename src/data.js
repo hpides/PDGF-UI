@@ -427,7 +427,7 @@ export const emptyGenerator = {
    //ggf id zur Refernzierung von Feldern.
 
    distributionVariables: {
-         type: "equalDistribution",
+         type: "uniformDistribution",
          normalDistribution: {
            standardDeviation: "",
            mean: "",

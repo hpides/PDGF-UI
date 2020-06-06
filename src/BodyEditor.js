@@ -89,12 +89,7 @@ export default function BodyEditor(props){
     const setFieldInFocusHandler = (tableId, rowId) => {
         setFieldInFocus({tableId: tableId, rowId: rowId});
     };
-
-
-    const resetFieldInFocusHandler = () => {
-        setFieldInFocus({});
-    };
-
+    
 
     const openDialogSchemaSelection = () => {
         setIsOpenDialogSchemaSelection(true);
@@ -316,14 +311,6 @@ export default function BodyEditor(props){
     
     };
   
-
-    // Load Schema from Browser Storage
-    const loadSchemaFromRepo = (schemaUid) => {
-        let schemaRepo = JSON.parse(localStorage.getItem("schemaRepository"));
-        let schemaIndex = schemaRepo.findIndex(x => x.uids.schemaUid === schemaUid);
-        setCurrentSchemaLocal(schemaRepo[schemaIndex]);
-    };
-
     const deleteSchemaFromRepo = (schemaUid) => {
         alert("deleteSchemaFromRepoCalled");
         alert("SchemaUid: " + schemaUid);
@@ -333,18 +320,6 @@ export default function BodyEditor(props){
         schemaRepo.splice(schemaIndex, 1);
         localStorage.setItem("schemaRepository", JSON.stringify(schemaRepo));
     };
-
-
-    const deleteGeneratorFromRepo = (generatorUid) => {
-        let generatorRepo = JSON.parse(localStorage.getItem("generatorRepository"));
-        let generatorIndex = generatorRepo.findIndex(x => x.uid === generatorUid);
-        generatorRepo.splice(generatorIndex, 1);
-        localStorage.setItem("generatorRepository", JSON.stringify(generatorRepo));
-    };
-
-
-
-
 
 
     // DialogGenerator Selection Operations
@@ -385,30 +360,6 @@ const handleCloseBlank = () => {
     setIsOpenBlank(false);
     return null;
 }
-
-const handleClickOpenBlank = () => {
-    setIsOpenBlank(true);
-    return null;
-}
-
-
-
-
-    // Date Time operations
-    const printTimeStamp = () => {
-        const d = new Date();
-        let timeStamp = d.getDate();
-        return timeStamp;
-    }
-
-
-    // 
-    const infoObjectChangedHandler = (infoObject) => {
-    const schemaNew =cloneDeep(currentSchemaLocal);
-    schemaNew.info = infoObject;
-    setCurrentSchemaLocal(schemaNew); 
-    }
-
 
     // DialogSaveSchema
     
@@ -520,11 +471,6 @@ const handleClickOpenBlank = () => {
         setIsOpenDialogUniGenForm(false);
     };
 
-
-    const handleClickOpenDialogUniGenForm = () => {
-        setIsOpenDialogUniGenForm(true);
-        return null;
-    };
 
 
     return(

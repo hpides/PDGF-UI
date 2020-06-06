@@ -72,19 +72,14 @@ export default function DialogGeneratorSelection(props) {
                   JSON.parse(localStorage.getItem("generatorRepository")).map(element => {
                     return <Grid item xs={4}> 
                               <GeneratorSelectionCard 
+                                  key={element.uid}
                                   generatorInRepo = {element} 
                                   loadSelectedSchema={props.loadSelectedGenerator}
                                   selectGeneratorHandler={props.selectGeneratorHandler}
                                   handleCloseGeneratorDialog={props.handleCloseGeneratorDialog}
-                                  deleteGeneratorFromRepo={props.deleteGeneratorFromRepo}
                                   triggerReload={triggerReload}/> 
                             </Grid>}): 
                     <div> There are currently no Generator in the Repository </div>}  
-
-
-                 {/* 
-                 {props.data.map(element => { return <Grid  key={element.uid} item xs={4}> <GeneratorSelectionCard data = {element} handleCloseGeneratorDialog = {props.handleCloseGeneratorDialog}/> </Grid>})}
-                 */} 
                 
                  </Grid>
             </div>

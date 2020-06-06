@@ -39,7 +39,7 @@ export default function DialogFormRandomStringGenerator(props) {
         numberOfCharacters: [10,30],
         numberOfDistinctCharacters: "",
         distributionVariables: {
-              type: "equalDistribution",
+              type: "uniformDistribution",
               normalDistribution: {
                 standardDeviation: "",
                 mean: "",
@@ -252,7 +252,7 @@ const addUidToGenerator = () => {
         titel="Dialog"
         //TransitionComponent={Transition}
         keepMounted
-        PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
+        PaperProps={{elevation: "24"}}}
         fullWidth
         maxWidth="md"
         >

@@ -89,8 +89,7 @@ export default function SwitchGeneratorInputComponent(props){
             <Input 
                 defaultValue="Enter Case" 
                 value={props.case} 
-                onChange={(event) =>
-                {caseChangedHandler(event)}}
+                onChange={(event)=>{caseChangedHandler(event)}}
             />
         </Grid>
 
@@ -98,8 +97,7 @@ export default function SwitchGeneratorInputComponent(props){
             <Input 
                 defaultValue="Enter Outcome" 
                 value={props.outcome} 
-                outcome={(event) =>
-                {outcomeChangedHandler(event)}}
+                onChange={(event)=> {outcomeChangedHandler(event)}}
             />
         </Grid>
 

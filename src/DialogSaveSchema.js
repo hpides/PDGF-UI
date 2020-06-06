@@ -49,7 +49,7 @@ export default function DialogSaveSchema(props) {
         titel="Dialog"
         //TransitionComponent={Transition}
         keepMounted
-        PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
+        PaperProps={{elevation: "24" }}
         fullWidth
         maxWidth="md"
         >
@@ -117,7 +117,7 @@ export default function DialogSaveSchema(props) {
                 <Grid  item xs={rightColumnWidth}>
                 <Input 
                     className={classes.input}  
-                    readOnly
+                    readOnly = {true}
                     value={currentDate} 
                 />
                 </Grid>

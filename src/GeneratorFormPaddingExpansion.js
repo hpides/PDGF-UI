@@ -84,12 +84,14 @@ export default function GeneratorFormPaddingExpansion(props) {
                     
 
                 </Grid>
+
                 <Grid item xs={leftColumnWidth} style={{background: "inherit"}}>
-                  <Grid xs={10}>
-                    <Typography variant={fontSizeLeftColumn}>Direction:</Typography>
-                  </Grid>
-                  <Grid item xs={2}></Grid>
+                  
+                    <Typography variant={fontSizeLeftColumn}>
+                      Direction:
+                    </Typography>
                 </Grid>
+
                 <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
                     
                     <Typography style={{fontSize: "20px"}}> From Left </Typography>

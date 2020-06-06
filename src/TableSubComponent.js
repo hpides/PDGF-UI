@@ -48,7 +48,7 @@ export default function TableSubComponent(props){
         container className={classes.container} 
         justify = "flex-end"
         styles={{display: "flex", flexDirection: "row", alignItems: "center"}} 
-        xs={12}>
+>
             
         <Grid item style={{width: "40px", height: "40px"}} className={classes.framed} xs={1}>
         <div style={{display: "flex", justifycontent: "center", width: "40px", height: "40px" }}>

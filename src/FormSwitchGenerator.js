@@ -49,7 +49,7 @@ export default function FormSwitchGenerator(props) {
 
   return (
     <>
-   {alert("Hi im John Boy!")}
+   
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
            
            
@@ -76,7 +76,7 @@ export default function FormSwitchGenerator(props) {
                                 native: true,
                             }}> 
                       
-                      <option value={null} key={0}>None</option>
+                      <option value={1} key={-1}>None</option>
                       {(JSON.parse(localStorage.getItem("generatorRepository")).map(generator => { return <option value={generator.uid} key={generator.uid}>{generator.repoVariables.name}</option>}))}
                         
                 </TextField>
@@ -85,6 +85,8 @@ export default function FormSwitchGenerator(props) {
                 
                 <Grid container className={classes.body}>
                         {props.generatorObject.caseOutcomeSets.map(set => {return <SwitchGeneratorInputComponent
+                                                                              
+                                                                              key={set.id}
                                                                               generatorObject={props.generatorObject}
                                                                               setGeneratorObject={props.setGeneratorObject}
                                                                               id={set.id}

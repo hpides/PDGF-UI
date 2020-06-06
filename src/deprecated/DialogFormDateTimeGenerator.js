@@ -42,7 +42,7 @@ export default function DialogFormDateTimeGenerator(props) {
         hasAllDistinctValues: false,
         fixedStepSize: "",
         distributionVariables: {
-              type: "equalDistribution",
+              type: "uniformDistribution",
               normalDistribution: {
                 standardDeviation: "",
                 mean: "",
@@ -221,7 +221,7 @@ export default function DialogFormDateTimeGenerator(props) {
         titel="Dialog"
         //TransitionComponent={Transition}
         keepMounted
-        PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
+        PaperProps={{elevation: "24" }}
         fullWidth
         maxWidth="md"
         >

@@ -41,7 +41,7 @@ export default function DialogFormIdGenerator(props) {
         maximum: "",
         hasAllDistinctValues: false,
         distributionVariables: {
-              type: "equalDistribution",
+              type: "uniformDistribution",
               normalDistribution: {
                 standardDeviation: "",
                 mean: "",
@@ -210,7 +210,7 @@ export default function DialogFormIdGenerator(props) {
         titel="Dialog"
         //TransitionComponent={Transition}
         keepMounted
-        PaperProps={{elevation: "24", square: "true", classes: {root : {backgroundColor: "red"} }}}
+        PaperProps={{elevation: "24" }}
         fullWidth
         maxWidth="md"
         >

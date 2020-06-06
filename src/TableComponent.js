@@ -82,7 +82,10 @@ const useStyles = makeStyles((theme) => ({
       '&:hover': {
         color: "blue",
       },
-    }
+    },
+    root: {
+      fontSize: "30px",
+    },
   }));
 
 
@@ -91,7 +94,7 @@ export default function TableComponent(props){
     const classes = useStyles();
 
     return(
-      <Grid className={classes.container} container xs={4}>
+      <Grid className={classes.container} container>
         <Grid item container className={classes.header_row}>
                 
                 <TextField 
@@ -108,7 +111,7 @@ export default function TableComponent(props){
                   /* inputLabel richtigesProp?*/
                   InputLabelProps={{
                     classes: {
-                      style: {fontSize: 30},
+                      root: classes.root,
                     },
                   }} 
                   value={props.data.tableName}

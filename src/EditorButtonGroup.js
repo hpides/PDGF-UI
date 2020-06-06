@@ -68,7 +68,7 @@ export default function EditorButtonGroup(props) {
 
   return (
     <div className={classes.root}>
-      <ButtonGroup color="primary" aria-label="outlined primary button group" size="large">
+     {/*} <ButtonGroup color="primary" aria-label="outlined primary button group" size="large">*/}
         
       <LightTooltip title="Add new table">
         <Button
@@ -185,7 +185,7 @@ export default function EditorButtonGroup(props) {
             onClick={()=>{props.setIsOpenRawGeneratorDialog(true)}}
         > RawGen</Button>
 
-      </ButtonGroup>
+     
     </div>
   );
 }

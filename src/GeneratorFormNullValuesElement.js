@@ -9,8 +9,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Slider from "@material-ui/core/slider";
-import InputAdornment from "@material-ui/core/InputAdornment";
-//import cloneDeep from 'lodash/cloneDeep';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {

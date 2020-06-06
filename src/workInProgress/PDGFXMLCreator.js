@@ -187,7 +187,7 @@ createXmlForPDGF = () => {
     let distribution = generator.distributionVariables;
     
 
-    type: "equalDistribution",
+    type: "uniformDistribution",
     normalDistribution: {
       standardDeviation: "",
       mean: "",
@@ -212,7 +212,7 @@ createXmlForPDGF = () => {
             const mean = distribution.normalDistribution.mean;
             const sd = distribution.normalDistribution.standardDeviation;
             break;
-        case equalDistribution:
+        case uniformDistribution:
             const distribution = "equal";
             break;
         case binomialDistribution:
