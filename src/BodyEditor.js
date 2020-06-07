@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Grid from "@material-ui/core/Grid";
 import EditorButtonGroup from "./EditorButtonGroup";
-import DefaultVariablesComponent02 from "./DefaultVariablesComponent02";
+import DefaultVariablesComponent from "./DefaultVariablesComponent"
 import CustomVariablesContainer from "./CustomVariablesContainer";
 import {emptySchema,  generatorDescriptions, rawGeneratorDescriptions, emptyGenerator} from "./data.js"; 
 import SchemaNameElement from "./SchemaNameElement";
@@ -14,6 +14,10 @@ import DialogStartPage from "./DialogStartPage";
 import DialogUniversalGeneratorForm from "./DialogUniversalGeneratorForm";
 import cloneDeep from 'lodash/cloneDeep';
 import DialogSchemaSelection from "./DialogSchemaSelection";
+import "./CustomScrollbar.css";
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Button from "@material-ui/core/Button";
 
 
 
@@ -94,9 +98,6 @@ export default function BodyEditor(props){
     const openDialogSchemaSelection = () => {
         setIsOpenDialogSchemaSelection(true);
     };
-
-
-
 
 
     //  save generators
@@ -483,9 +484,9 @@ const handleCloseBlank = () => {
              
 
 
-            <Grid container display="flex" direction="row" justify="flex-start" alignContent="flex-start" spacing = {0} style={{background: "white", height: "90vh"}}>
+            <Grid container display="flex" direction="row" justify="flex-start" alignContent="flex-start" spacing = {0} style={{background: "white", height: "90vh", marginTop: "30px"}}>
                {/*first row*/}
-               <Grid container item xs={12} style={{height: "250px"}} >
+               <Grid container item xs={12} style={{height: "150px"}} >
                     <Grid item xs={9} style={{backgroundColor: "white", paddingBottom: "20px", paddingLeft:"20px"}}>
                     
                         <SchemaNameElement schemaName={currentSchemaLocal.info.schemaName} schemaNameChangedHandler = {schemaNameChangedHandler}/>
@@ -506,64 +507,100 @@ const handleCloseBlank = () => {
                 </Grid>
 
                  {/*second row*/}
+                 <Grid container item xs={12} style={{height: "40px", display: "flex", flexDirection: "row", justifyContent: "flex-end"}} >
+                     {isOpenSideBarRight? 
+                     <div> 
+                        <Button
+                            variant="outlined"
+                            color="inherit"
+                            endIcon={<ExpandLessIcon/>}
+                            onClick={() => {setIsOpenSideBarRight(false)}}>
+                                Hide Variables
+                        </Button>
+                         
+                     </div> :
+
+                     <div>
+                         <Button
+                            variant="outlined"
+                            color="inherit"
+                            endIcon={<ExpandMoreIcon/>}
+                            onClick={() => {setIsOpenSideBarRight(true)}}>
+                            Show Variables
+                        </Button>
+                     </div> }
+
+
+                 </Grid>
+
+                {/*second row*/}
+
                  
-                <Grid item xs={12} style={{height: "80vh"}}>  
+                <Grid container display="flex" flexDirection="row" justify="space-between" item xs={12} style={{height: "80vh"}}>  
                     {(isOpenSideBarRight? (
-                    <div fullWidth style={{ display: "flex",  flexDirection: "row",  justifyContent: "center", alignItems: "center", alignContent:"center", backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap", flexGrow: "1" }}>    
-                    {currentSchemaLocal.tables.map(table => {return( 
-                            <TableComponent
-                                key={table.tableId} 
-                                data={table} 
-                                deleteTableHandler={deleteTableHandler} 
-                                addTableRowHandler={addTableRowHandler} 
-                                deleteTableRowHandler={deleteTableRowHandler}
-                                tableNameChangedHandler={tableNameChangedHandler}
-                                tableSizeChangedHandler ={tableSizeChangedHandler}
-                                fieldNameChangedHandler ={fieldNameChangedHandler}
-                                handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
-                                handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
-                                isOpenGeneratorDialog = {isOpenGeneratorDialog}
-                                setFieldInFocusHandler={setFieldInFocusHandler}
-                                loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
-                               
+                    <Grid item xs={9}>
+                        <div fullWidth style={{ display: "flex",  flexDirection: "row",  justifyContent: "center", alignItems: "center", alignContent:"center", backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap", flexGrow: "1" }}>    
+                        {currentSchemaLocal.tables.map(table => {return( 
+                                <TableComponent
+                                    key={table.tableId} 
+                                    data={table} 
+                                    deleteTableHandler={deleteTableHandler} 
+                                    addTableRowHandler={addTableRowHandler} 
+                                    deleteTableRowHandler={deleteTableRowHandler}
+                                    tableNameChangedHandler={tableNameChangedHandler}
+                                    tableSizeChangedHandler ={tableSizeChangedHandler}
+                                    fieldNameChangedHandler ={fieldNameChangedHandler}
+                                    handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
+                                    handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
+                                    isOpenGeneratorDialog = {isOpenGeneratorDialog}
+                                    setFieldInFocusHandler={setFieldInFocusHandler}
+                                    loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
+                                
 
-                            />
-                        )})
-                    }
-                    </div>):
-                    (<Grid item xs={12}  style={{ backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap" }}>
-                    {currentSchemaLocal.tables.map(table => {return( 
-                            <TableComponent
-                                key={table.tableId} 
-                                data={table} 
-                                deleteTableHandler={deleteTableHandler} 
-                                addTableRowHandler={addTableRowHandler} 
-                                deleteTableRowHandler={deleteTableRowHandler}
-                                tableNameChangedHandler={tableNameChangedHandler}
-                                tableSizeChangedHandler ={tableSizeChangedHandler}
-                                fieldNameChangedHandler ={fieldNameChangedHandler}
-                                handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
-                                handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
-                                isOpenGeneratorDialog = {isOpenGeneratorDialog}
-                                setFieldInFocusHandler={setFieldInFocusHandler}
-                                loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
-                               
+                                />
+                            )})
+                        }
+                        </div>
+                    </Grid>):
+            
+                    (<Grid item xs={12}>
+                        <div fullWidth style={{ display: "flex",  flexDirection: "row",  justifyContent: "center", alignItems: "center", alignContent:"center", backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap", flexGrow: "1" }}>     
+                        {currentSchemaLocal.tables.map(table => {return( 
+                                <TableComponent
+                                    key={table.tableId} 
+                                    data={table} 
+                                    deleteTableHandler={deleteTableHandler} 
+                                    addTableRowHandler={addTableRowHandler} 
+                                    deleteTableRowHandler={deleteTableRowHandler}
+                                    tableNameChangedHandler={tableNameChangedHandler}
+                                    tableSizeChangedHandler ={tableSizeChangedHandler}
+                                    fieldNameChangedHandler ={fieldNameChangedHandler}
+                                    handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
+                                    handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
+                                    isOpenGeneratorDialog = {isOpenGeneratorDialog}
+                                    setFieldInFocusHandler={setFieldInFocusHandler}
+                                    loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
+                                
 
-                            />
-                        )})
-                    }
-                    </Grid>))}
+                                />
+                            )})
+                        }    
+                        </div>   
+                    </Grid>     
+                    
+                    ))}
 
 
                     {(isOpenSideBarRight? (
-                    <div   style = {{display: "flex", flexDirection: "column", justify: "flex-start", width: "300px", backgroundColor: "green" }}> 
-                        <div  style = {{width: "300px" }}>
-                            <DefaultVariablesComponent02 
+                    <Grid item xs={3}>    
+                    <div   style = {{display: "flex", flexDirection: "column", justify: "flex-start", width: "350px", backgroundColor: "green" }}> 
+                        <div  style = {{width: "350px" }}>
+                            <DefaultVariablesComponent 
                                 variables={currentSchemaLocal.variables}
                                 defaultSystemVariableValueChangedHandler ={defaultSystemVariableValueChangedHandler}
                             />
                         </div>
-                        <div style = {{width: "300px", height: "50vh",  overflow: "scroll" }}>
+                        <div style = {{width: "350px", height: "50vh",  overflow: "scroll" }}>
                             <CustomVariablesContainer 
                                 variables={currentSchemaLocal.variables} 
                                 addCustomVariableHandler = {addCustomVariableHandler}
@@ -575,7 +612,8 @@ const handleCloseBlank = () => {
                             />
 
                         </div>
-                    </div>) : null)}
+                    </div>
+                    </Grid>) : null)}
                 </Grid>   
                           
                
