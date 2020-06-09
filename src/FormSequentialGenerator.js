@@ -16,6 +16,16 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 });
 
 
@@ -49,28 +59,35 @@ export default function FormSequentialGenerator(props) {
   return (
     <>
    
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-            <Grid direction="row" container  style={{paddingLeft: "15px", paddingRight: "30px"}}>
-
-                <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>Concatenate Elements:</Typography>
+        <Grid container className={classes.outerContainer}>
+            
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Concatenate Elements:
+                    </Typography>
                 </Grid>
+            </Grid>
 
-                <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "blue"}}>
-                    <Checkbox 
-                            inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                            checked={props.generatorObject.concatenateElements}
-                            onChange={(event)=> {concatenateElementsChangedHandler(event)}}
-                            />
-                </Grid>
+            <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "blue"}}>
+                <Checkbox 
+                    inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
+                    checked={props.generatorObject.concatenateElements}
+                    onChange={(event)=> {concatenateElementsChangedHandler(event)}}
+                    />
+            </Grid>
 
-                {props.generatorObject.concatenateElements? 
-                    (<>
-                        <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                        <Typography variant={fontSizeLeftColumn}>Delimiter:</Typography>
+            {props.generatorObject.concatenateElements? 
+                (<>
+                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                        <Grid item >
+                            <Typography variant={fontSizeLeftColumn}>
+                                Delimiter:
+                            </Typography>
                         </Grid>
+                    </Grid>
 
-                        <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
+                    <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
                         <Input 
                             className={classes.input} 
                             type="text" 
@@ -78,10 +95,10 @@ export default function FormSequentialGenerator(props) {
                             fullWidth
                             value={props.generatorObject.delimiter} 
                             onChange={(event) => delimiterChangedHandler(event)}/>
-                        </Grid>
-                      </>  
-                    ): null }
-            </Grid>       
+                    </Grid>
+                  </>  
+                ): null }
+               
       
 
             {props.generatorObject.generatorList.map((generator, index) => <SequentialGeneratorSelectionField 
@@ -94,7 +111,7 @@ export default function FormSequentialGenerator(props) {
 
 
           <Grid container item className={classes.footer_row}>
-              <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start", alignItems: "center", paddingTop: "10px"}}>
+              <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start", alignItems: "center"}}>
                     <IconButton onClick={() => {addGenerator()}}>
                         <AddCircleIcon/>
                     </IconButton>
@@ -104,10 +121,10 @@ export default function FormSequentialGenerator(props) {
                         Add Generator
                     </Typography>
               </div>
-        </Grid>  
+          </Grid>  
 
 
-      </div>
+      </Grid>
     </>
   );
 }

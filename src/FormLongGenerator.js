@@ -14,6 +14,16 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 });
 
 export default function DialogFormLongGenerator(props) {
@@ -106,67 +116,73 @@ export default function DialogFormLongGenerator(props) {
   return (
     <>
    
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-            <Grid direction="row" container  style={{paddingLeft: "15px"}}>
+       <Grid container className={classes.outerContainer}>
 
-                <Grid item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Minimum:</Typography>
+          <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+              <Grid item >
+                  <Typography variant={fontSizeLeftColumn}>
+                      Minimum:
+                  </Typography>
+              </Grid>
+          </Grid>
+
+          <Grid  item xs={rightColumnWidth}>
+              <Input 
+                  className={classes.input} 
+                  type="number" 
+                  fullWidth
+                  placeholder="Enter Minimum" 
+                  value={props.generatorObject.minimum} 
+                  onChange={(event) => minimumChangedHandler(event)}/>
+          </Grid>
+
+          <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+              <Grid item >
+                  <Typography variant={fontSizeLeftColumn}>
+                      Maximum:  
+                  </Typography>
+              </Grid>
+          </Grid>
+
+          <Grid  item xs={rightColumnWidth}>
+              <Input 
+                  className={classes.input} 
+                  type="number" 
+                  fullWidth
+                  placeholder="Enter Maximum" 
+                  value={props.generatorObject.maximum} 
+                  onChange={(event) => maximumChangedHandler(event)}/>
+          </Grid>
+
+          <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Distinct Values:
+                    </Typography>
                 </Grid>
+          </Grid>
 
-                <Grid  item xs={rightColumnWidth}>
-                  <Input 
-                    className={classes.input} 
-                    type="number" 
-                    fullWidth
-                    placeholder="Enter Minimum" 
-                    value={props.generatorObject.minimum} 
-                    onChange={(event) => minimumChangedHandler(event)}/>
-                </Grid>
-
-
-                <Grid  item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Maximum:</Typography>
-                </Grid>
-
-                <Grid  item xs={rightColumnWidth}>
-                  <Input 
-                    className={classes.input} 
-                    type="number" 
-                    fullWidth
-                    placeholder="Enter Maximum" 
-                    value={props.generatorObject.maximum} 
-                    onChange={(event) => maximumChangedHandler(event)}/>
-                </Grid>
-
-
-                <Grid  item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Distinct Values:</Typography>
-                </Grid>
-
-                <Grid  item xs={rightColumnWidth}>
-                  <Checkbox 
-                        inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={props.generatorObject.hasAllDistinctValues}
-                        onChange={(event)=> {hasAllDistinctValuesChangedHandler(event)}}
-                        />
-                </Grid>
-
-                
-                <Grid item xs={12}>
-                    <DistributionInputElement 
-                        distributionTypeChangedHandler={distributionTypeChangedHandler}
-                        expDLambdaValueChangedHandler={expDLambdaValueChangedHandler}
-                        logDPValueChangedHandler={logDPValueChangedHandler}
-                        normalDStdDevValueChangedHandler={normalDStdDevValueChangedHandler}
-                        normalDMeanValueChangedHandler={normalDMeanValueChangedHandler}
-                        binomialDPValueChangedHandler={binomialDPValueChangedHandler}
-                        binomialDNValueChangedHandler={binomialDNValueChangedHandler}
-                        generatorObject={props.generatorObject}/>
-                </Grid>
-
-            </Grid>          
+          <Grid  item xs={rightColumnWidth}>
+            <Checkbox 
+                  inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
+                  checked={props.generatorObject.hasAllDistinctValues}
+                  onChange={(event)=> {hasAllDistinctValuesChangedHandler(event)}}
+                  />
+          </Grid>
+          
+          <Grid item xs={12}>
+              <DistributionInputElement 
+                  distributionTypeChangedHandler={distributionTypeChangedHandler}
+                  expDLambdaValueChangedHandler={expDLambdaValueChangedHandler}
+                  logDPValueChangedHandler={logDPValueChangedHandler}
+                  normalDStdDevValueChangedHandler={normalDStdDevValueChangedHandler}
+                  normalDMeanValueChangedHandler={normalDMeanValueChangedHandler}
+                  binomialDPValueChangedHandler={binomialDPValueChangedHandler}
+                  binomialDNValueChangedHandler={binomialDNValueChangedHandler}
+                  generatorObject={props.generatorObject}/>
+          </Grid>      
       
-      </div>
+      </Grid>
     
     </>
   );

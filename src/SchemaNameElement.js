@@ -18,10 +18,10 @@ const useStyles = makeStyles((theme) => ({
         justifycontent: "flex-start",
     },
     inputRoot: {
-        fontSize: 24,
+        fontSize: "30px",
     },
     labelRoot: {
-        fontSize: 20,
+        fontSize: "30px",
         color: "lightgrey",
         "&$labelFocused": {
           color: "black"

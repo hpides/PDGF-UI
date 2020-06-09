@@ -13,7 +13,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 
 
-import DistributionInputElement from "./DistributionInputElement";
+import DistributionInputElement from "../DistributionInputElement";
 import cloneDeep from 'lodash/cloneDeep';
 
 
@@ -26,17 +26,7 @@ const useStyles = makeStyles({
   },
   select: {
     fontSize: 22,
-  },
-  outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
-    backgroundColor: "yellow",
-  }, 
+  }
 });
 
 export default function DialogFormDictListGenerator(props) {
@@ -146,15 +136,13 @@ export default function DialogFormDictListGenerator(props) {
 
   return (
     <>
-    <Grid container className={classes.outerContainer}>
+      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
+      
+            <Grid direction="row" container  style={{paddingLeft: "15px"}}>
 
-                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                        <Grid item >
-                            <Typography variant={fontSizeLeftColumn}>Dictionary:</Typography>
-                        </Grid>
+                <Grid item xs={leftColumnWidth}>
+                  <Typography variant={fontSizeLeftColumn}>Dictionary:</Typography>
                 </Grid>
-
-
                 <Grid  item xs={rightColumnWidth}>
                     <TextField
                         id="standard-select-currency-native"
@@ -177,10 +165,8 @@ export default function DialogFormDictListGenerator(props) {
 
 
 
-                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                        <Grid item >
-                              <Typography variant={fontSizeLeftColumn}>Size:</Typography>
-                        </Grid>
+                <Grid item xs={leftColumnWidth}>
+                  <Typography variant={fontSizeLeftColumn}>Size:</Typography>
                 </Grid>
 
                 <Grid  item xs={rightColumnWidth}>
@@ -193,12 +179,10 @@ export default function DialogFormDictListGenerator(props) {
                     onChange={(event) => sizeChangedHandler(event)}/>
                 </Grid>
 
-                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                        <Grid item >
-                            <Typography variant={fontSizeLeftColumn}>
-                                  Separator:
-                            </Typography>
-                        </Grid>
+
+
+                <Grid  item xs={leftColumnWidth}>
+                  <Typography variant={fontSizeLeftColumn}>Separator:</Typography>
                 </Grid>
 
                 <Grid  item xs={rightColumnWidth}>
@@ -212,12 +196,8 @@ export default function DialogFormDictListGenerator(props) {
                 </Grid>
 
 
-                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                        <Grid item >
-                            <Typography variant={fontSizeLeftColumn}>
-                                Distinct Values:
-                            </Typography>
-                        </Grid>
+                <Grid  item xs={leftColumnWidth}>
+                  <Typography variant={fontSizeLeftColumn}>Distinct Values:</Typography>
                 </Grid>
 
                 <Grid  item xs={rightColumnWidth}>
@@ -228,12 +208,9 @@ export default function DialogFormDictListGenerator(props) {
                         />
                 </Grid>
 
-                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                        <Grid item >
-                            <Typography variant={fontSizeLeftColumn}>
-                                Disable RNG:
-                            </Typography>
-                        </Grid>    
+
+                <Grid  item xs={leftColumnWidth}>
+                  <Typography variant={fontSizeLeftColumn}>Disable RNG:</Typography>
                 </Grid>
 
                 <Grid  item xs={rightColumnWidth}>
@@ -256,7 +233,9 @@ export default function DialogFormDictListGenerator(props) {
                         generatorObject={props.generatorObject}/>
                 </Grid>
 
-          </Grid>
+            </Grid>
+
+      </div>
     </>
   );
 }

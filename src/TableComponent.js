@@ -8,6 +8,8 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
 import React from "react";
 import TableSubComponent from "./TableSubComponent";
+import Button from "@material-ui/core/Button";
+import DraggableCore from "react-draggable";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -28,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid black",
   },
   tr1: {
-    backgroundColor: "orange",
+    backgroundColor: "red",
   },
   tr2: {
     backgroundColor: "lightgreen",
@@ -45,7 +47,11 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid black",
     textAlign: "right",
   },
-
+  addButton: {
+    margin: "3px",
+    width: "150px",
+    height: "34",
+  },
   
   }));
 
@@ -60,7 +66,26 @@ export default function TableComponent(props){
       <table className={classes.table}>
         <tbody>
           <tr className={classes.tr1}>
-            <td className={classes.td} colspan="2">
+            <td className={classes.td} colSpan="2">
+                   
+                <input 
+                    style={{fontSize: "20px", 
+                            width: "", 
+                            height: "44px", 
+                            outlineColor: "darkblue", 
+                            border: "none", 
+                            background: "rgb(216, 72, 34)",
+                            boxShadow: "inset 2px 2px 3px rgba(0,0,0,0.2)", 
+                            paddingLeft: "10px", 
+                            borderRadius: "4px",
+                            margin: "2px"}}
+                    placeholder = "Enter Table Name"
+                    value={props.data.tableName}
+                    onChange={(event) => {console.log("Wert: " + event.target.value + "TableId: " + props.data.tableId); props.tableNameChangedHandler(event, props.data.tableId)}}
+                />  
+
+
+             {/*}      
                     <TextField 
                           className={classes.nameField} 
                           label="Table Name" 
@@ -72,7 +97,6 @@ export default function TableComponent(props){
                               input: classes.resizeFont,
                             },
                           }} 
-                          /* inputLabel richtigesProp?*/
                           InputLabelProps={{
                             classes: {
                               root: classes.root,
@@ -80,16 +104,50 @@ export default function TableComponent(props){
                           }} 
                           value={props.data.tableName}
                           onChange={(event) => {console.log("Wert: " + event.target.value + "TableId: " + props.data.tableId); props.tableNameChangedHandler(event, props.data.tableId)}}/>
-                    
+                        */}
             </td>
-            <td className={classes.sizeField} colspan="2">                           
+
+            <td colSpan="2">
+                        <div style={{display: "flex", flexDirection: "column"}}>
+                            <div> 
+                              <Typography style={{fontSize: "16"}}> 
+                                Table Size: 
+                              </Typography>
+                            </div>
+
+                            <div>
+                              <input 
+                                style={{fontSize: "16px", 
+                                        width: "", 
+                                        height: "22px", 
+                                        outlineColor: "darkblue", 
+                                        border: "none", 
+                                        background: "rgb(216, 72, 34)",
+                                        boxShadow: "inset 2px 2px 3px rgba(0,0,0,0.2)", 
+                                        paddingLeft: "10px",
+
+                                        borderRadius: "4px",
+                                        margin: "2px"}}
+                                placeholder = "Enter Table Name"
+                                value={props.data.tableSize}
+                                onChange={(event)=> {props.tableSizeChangedHandler(event, props.data.tableId)}}
+                              />  
+                          </div>
+                      </div>
+              </td>
+            {/*<td className={classes.sizeField} colspan="2">                           
                           <TextField
                               style={{width: "80px"}}
                               label="Size in Rows" 
                               value={props.data.tableSize}
                               onChange={(event)=> {props.tableSizeChangedHandler(event, props.data.tableId)}}
-                          />
-             </td>
+                      /> */}
+
+
+
+
+
+             
              <td className={classes.closeIconField}>
                           <IconButton className={classes.closeIcon} aria-label="delete table" onClick={() => {props.deleteTableHandler(props.data.tableId)}}> 
                             <CloseIcon />
@@ -107,13 +165,39 @@ export default function TableComponent(props){
                                                             isOpenGeneratorDialog = {props.isOpenGeneratorDialog}
                                                             setFieldInFocusHandler={props.setFieldInFocusHandler}
                                                             loadGeneratorToEditDialog={props.loadGeneratorToEditDialog}
-                                                           
-                                                            />})}
+                                                            /> 
+                                                            })}
 
 
           <tr className={classes.tr2}>
-            <td className={classes.td} colspan="5">
-              <Grid container item className={classes.footer_row}>
+            <td className={classes.td} colSpan="5">
+              
+            <Button
+                variant="outlined"
+                color="green"
+                className={classes.addButton}
+                startIcon={<AddCircleIcon/>}
+                onClick={() => {props.addTableRowHandler(props.data.tableId)}}>
+                    Add Field
+            </Button>
+
+             </td>
+            
+            </tr>                                                  
+        </tbody>
+      </table>
+
+      </div> 
+    )
+}
+
+
+
+
+
+
+/*
+<Grid container item className={classes.footer_row}>
                   <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start", alignItems: "center", paddingTop: "10px"}}>
                       <IconButton onClick={() => {props.addTableRowHandler(props.data.tableId)}}>
                           <AddCircleIcon/>
@@ -125,12 +209,4 @@ export default function TableComponent(props){
                           </Typography>
                   </div>
             </Grid> 
-            </td>
-            
-            </tr>                                                  
-        </tbody>
-      </table>
-
-      </div> 
-    )
-}
+*/

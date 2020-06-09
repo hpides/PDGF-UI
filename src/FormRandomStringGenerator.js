@@ -13,6 +13,16 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 });
 
 export default function DialogFormRandomStringGenerator(props) {
@@ -96,38 +106,42 @@ export default function DialogFormRandomStringGenerator(props) {
 
   return (
     <>
-    
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
+        <Grid container className={classes.outerContainer}>
       
-            <Grid direction="row" container style={{paddingLeft: "15px"}}>
-                
-                <Grid item xs={leftColumnWidth} style={{paddingTop:25}}>
-                  <Typography variant={fontSizeLeftColumn}>Number of Characters:</Typography>
-                </Grid>
-
-                <Grid item xs={rightColumnWidth} style={{paddingTop:25}}>
-                  <Input 
-                      className={classes.input} 
-                      type="number" 
-                      fullWidth
-                      placeholder="Enter # of characters" 
-                      value={props.generatorObject.numberOfCharacters} 
-                      onChange={(event) => numberOfCharactersChangedHandler(event)}/>
-                </Grid>
-
-
-                <Grid item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Number of Distinct Characters:</Typography>
+                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                    <Grid item >
+                        <Typography variant={fontSizeLeftColumn}>
+                            Number of Characters:
+                        </Typography>
+                    </Grid>
                 </Grid>
 
                 <Grid item xs={rightColumnWidth}>
-                  <Input 
-                    className={classes.input} 
-                    type="number" 
-                    fullWidth
-                    placeholder="Enter # of distinct characters" 
-                    value={props.generatorObject.numberDistinctCharacters} 
-                    onChange={(event) => numberOfDistinctCharactersChangedHandler(event)}/>
+                    <Input 
+                        className={classes.input} 
+                        type="number" 
+                        fullWidth
+                        placeholder="Enter # of characters" 
+                        value={props.generatorObject.numberOfCharacters} 
+                        onChange={(event) => numberOfCharactersChangedHandler(event)}/>
+                </Grid>
+
+                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                    <Grid item >
+                        <Typography variant={fontSizeLeftColumn}>
+                            Number of Distinct Characters:
+                        </Typography>
+                    </Grid>
+                </Grid>
+
+                <Grid item xs={rightColumnWidth}>
+                    <Input 
+                        className={classes.input} 
+                        type="number" 
+                        fullWidth
+                        placeholder="Enter # of distinct characters" 
+                        value={props.generatorObject.numberDistinctCharacters} 
+                        onChange={(event) => numberOfDistinctCharactersChangedHandler(event)}/>
                 </Grid>
 
                 <Grid item xs={12}>
@@ -140,9 +154,8 @@ export default function DialogFormRandomStringGenerator(props) {
                         binomialDPValueChangedHandler={binomialDPValueChangedHandler}
                         binomialDNValueChangedHandler={binomialDNValueChangedHandler}
                         generatorObject={props.generatorObject}/>
-                </Grid>             
-            </Grid>           
-      </div>
+                </Grid>                      
+      </Grid>
     </>
   );
 }

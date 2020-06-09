@@ -20,7 +20,7 @@ export default function DialogSchemaSelection(props) {
 
   return (
     <Dialog onClose={props.handleCloseDialogSchemaSelection} aria-labelledby="simple-dialog-title" open={props.isOpenDialogSchemaSelection}>
-      <DialogTitle id="simple-dialog-title">Select Schema</DialogTitle>
+      <DialogTitle id="simple-dialog-title" style={{fontSize: "30px"}}>Select Schema</DialogTitle>
       <DialogContent>
           <div style={{display: "flex", flexDirection: "column", justifycontent: "flex-start"}}>    
           

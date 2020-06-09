@@ -17,10 +17,16 @@ export default function Header(){
     return(
         <div className={classes.root}>
             <AppBar position="static">
-                <Toolbar  display="flex" justifycontent="space-between">
-                    <Typography variant="h6" >
+                <Toolbar  display="flex" style={{paddingRight: "45px"}}>
+                    
+                    <Typography variant="h4" style={{flex: "1"}}>
                     Bankmark - PDGF-Online
                     </Typography>
+                    <Typography variant="h6" >
+                    Help 
+                    </Typography>
+
+
                 </Toolbar>
             </AppBar>
         </div>

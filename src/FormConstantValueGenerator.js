@@ -13,6 +13,16 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 });
 
 export default function FormConstantValueGenerator(props) {
@@ -35,14 +45,14 @@ export default function FormConstantValueGenerator(props) {
   return (
     <>
    
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-            <Grid direction="row" container  style={{paddingLeft: "15px", paddingRight: "30px"}}>
+      <Grid container className={classes.outerContainer}>
+          <Grid direction="row" container  style={{paddingLeft: "15px", paddingRight: "30px"}}>
 
-                <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
+              <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
                   <Typography variant={fontSizeLeftColumn}>Constant Value:</Typography>
-                </Grid>
+              </Grid>
 
-                <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
+              <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
                   <Input 
                     className={classes.input} 
                     type="text" 
@@ -50,10 +60,10 @@ export default function FormConstantValueGenerator(props) {
                     fullWidth
                     value={props.generatorObject.constantValue} 
                     onChange={(event) => constantValueChangedHandler(event)}/>
-                </Grid>
-            </Grid>       
+              </Grid>
+          </Grid>       
       
-      </div>
+      </Grid>
     </>
   );
 }

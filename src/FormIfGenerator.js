@@ -14,6 +14,16 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 });
 
 export default function FormIfGenerator(props) {
@@ -49,11 +59,12 @@ export default function FormIfGenerator(props) {
     <>
     
   
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
+    <Grid container className={classes.outerContainer}>
+
             <Grid direction="row" container  style={{paddingLeft: "15px", paddingRight: "0px"}}>
 
                 <Grid item xs={12} style={{padding: "0px 0px",}}>
-                  <Typography variant={fontSizeLeftColumn}>Select Generator:</Typography>
+                    <Typography variant={fontSizeLeftColumn}>Select Generator:</Typography>
                 </Grid>
 
 
@@ -64,52 +75,58 @@ export default function FormIfGenerator(props) {
                 </Grid>
 
 
-                <Grid  item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>If:</Typography>
+                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                    <Grid item >
+                        <Typography variant={fontSizeLeftColumn}>
+                          If:
+                        </Typography>
+                    </Grid>
                 </Grid>
 
                 <Grid item xs={rightColumnWidth}>
-                  <Input 
-                    className={classes.input} 
-                    type="text" 
-                    placeholder="Enter If-Condition" 
-                    value={props.generatorObject.if} 
-                    fullWidth
-                    multiline
-                    onChange={(event) => ifChangedHandler(event)}/>
+                    <Input 
+                        className={classes.input} 
+                        type="text" 
+                        placeholder="Enter If-Condition" 
+                        value={props.generatorObject.if} 
+                        fullWidth
+                        multiline
+                        onChange={(event) => ifChangedHandler(event)}/>
                 </Grid>
-
             
-                <Grid  item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Then:</Typography>
+                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                    <Grid item >
+                        <Typography variant={fontSizeLeftColumn}>
+                            Then:
+                        </Typography>
+                    </Grid>
                 </Grid>
 
                 <Grid  item xs={rightColumnWidth}>
-                  <Input 
-                    className={classes.input} 
-                    type="text" 
-                    placeholder="Enter Output for if = true" 
-                    value={props.generatorObject.then} 
-                    fullWidth
-                    onChange={(event) => thenChangedHandler(event)}/>
+                    <Input 
+                        className={classes.input} 
+                        type="text" 
+                        placeholder="Enter Output for if = true" 
+                        value={props.generatorObject.then} 
+                        fullWidth
+                        onChange={(event) => thenChangedHandler(event)}/>
                 </Grid>
 
-
                 <Grid  item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Else:</Typography>
+                    <Typography variant={fontSizeLeftColumn}>Else:</Typography>
                 </Grid>
 
                 <Grid  item xs={rightColumnWidth} style={{padding: "0px 0px",}}>
-                  <Input 
-                    className={classes.input} 
-                    type="text" 
-                    placeholder="Enter Output for If=false" 
-                    fullWidth
-                    value={props.generatorObject.else} 
-                    onChange={(event) => elseChangedHandler(event)}/>
+                    <Input 
+                        className={classes.input} 
+                        type="text" 
+                        placeholder="Enter Output for If=false" 
+                        fullWidth
+                        value={props.generatorObject.else} 
+                        onChange={(event) => elseChangedHandler(event)}/>
                 </Grid>
             </Grid>       
-      </div>
+      </Grid>
   
     </>
   );

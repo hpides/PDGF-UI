@@ -3,17 +3,18 @@ import Box from "@material-ui/core/Box";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from "@material-ui/core/Typography";
+import DefaultVariablesSubComponent from "./DefaultVariablesSubComponent";
 
 
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex", 
     flexDirection: "column", 
-    width: "240px",
-    borderColor: "black", 
-    borderWidth: "3px", 
-    borderStyle: "dashed", 
-    borderRadius: "15px", 
+    width: "300px",
+    //borderColor: "black", 
+    //borderWidth: "3px", 
+    //borderStyle: "dashed", 
+    borderRadius: "5px", 
     background: "lightgrey",
     paddingTop: "0px",
     paddingRight: "5px",
@@ -25,12 +26,16 @@ const useStyles = makeStyles((theme) => ({
   containerLabel: {
     position: "relative",
     top: "0px",
-    fontSize: 20,
+    fontWeight: 500,
+    marginBottom: 20,
   },
 
   textField: {
-    margin: "5px",
-    width: "200px",
+    marginTop: "5px",
+    marginBottom: "5px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: "240px",
   },
 
   inputRoot: {
@@ -50,43 +55,47 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function DefaultVariablesComponent(){
+export default function DefaultVariablesComponent(props){
     const classes = useStyles();
     
     return (
         <div>
-        <Box className={classes.container} style={{ }}>
-                <Typography 
-                  className={classes.containerLabel}>
-                    Default System Variables
-                </Typography>
-                <TextField 
-                  className={classes.textField} 
-                  id="outlined-basic1" 
-                  label="Root-Seed" 
-                  variant="outlined" 
-                  InputProps={{ classes: { root: classes.inputRoot } }}
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.labelRoot,
-                      focused: classes.labelFocused
-                    }
-                  }}/>
-                <TextField 
-                  className={classes.textField} 
-                  id="outlined-basic2" 
-                  label="Scale Factor" 
-                  variant="outlined" 
-                  InputProps={{ 
-                    classes: { root: classes.inputRoot } }}
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.labelRoot,
-                      focused: classes.labelFocused
-                    }
-                  }}/>
+            <Box className={classes.container} boxShadow={3}>
+                    <Typography 
+                      variant="h4"
+                      className={classes.containerLabel}>
+                        Default System Variables
+                    </Typography>
+                    
+                    {props.variables.defaultVariables.map((variable)=>{ return <DefaultVariablesSubComponent 
+                                                                                    defaultVariable={variable} 
+                                                                                    defaultVariableValueChangedHandler = {props.defaultSystemVariableValueChangedHandler}
+                                                                                /> 
+                                                                      })}     
 
-        </Box>
+                    {/*}
+                    {props.variables.defaultVariables.map((variable)=>{ return <TextField 
+                                                                                  key={variable.variableId}
+                                                                                  className={classes.textField} 
+                                                                                  id="outined-basic3" 
+                                                                                  label={variable.name}
+                                                                                  value={variable.value}
+                                                                                  onChange={(event) => {props.defaultSystemVariableValueChangedHandler(event, variable.variableId)}}
+                                                                                  variant="outlined" 
+                                                                                  InputProps={{ classes: { root: classes.inputRoot } }}
+                                                                                  InputLabelProps={{
+                                                                                    classes: {
+                                                                                      root: classes.labelRoot,
+                                                                                      focused: classes.labelFocused
+                                                                                    }}}
+                                                                                />
+                                                                        }
+                                                            )
+                    }
+                  */}    
+
+            </Box>
         </div>
     )
 }
+

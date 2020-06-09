@@ -58,60 +58,73 @@ const dictData2 = [
 
   return (
       <>
-              <Grid direction="row" container style={{paddingLeft: "20px"}}>
-                <Grid container item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Dictionary:</Typography>
-                </Grid>
-                <Grid  item xs={8}>
-                <TextField
-                    id="standard-select-currency-native"
-                    select
-                    label="Native select"
-                    value={dictList}
-                    onChange={handleChange}
-                    InputProps={{ classes: { root: classes.inputSelect } }}
-                    SelectProps={{
-                        native: true,
-                    }}
-                    helperText="Please select your currency"
-                    >
-                {dictData2.map((option) => (
-                    <option key={option.value} value={option.value}>
-                    {option.label}
-                    </option>
-                ))}
-                </TextField>
-                </Grid>
-                <Grid item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Maximum:</Typography>
-                </Grid>
-                <Grid  item xs={rightColumnWidth}>
-                  <Input placeholder="Enter Maximum" className={classes.input}/>
-                </Grid>
-                <Grid  item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Decimal Places:</Typography>
-                </Grid>
-                <Grid  item xs={rightColumnWidth}>
-                  <Input placeholder="Enter Number of Decimalplaces" className={classes.input}/>
-                </Grid>
-                <Grid  item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Locale:</Typography>
-                </Grid>
-                <Grid  item xs={rightColumnWidth}>
-                  <Input placeholder="Enter Locale (Country whose formats to apply)" className={classes.input}/>
-                </Grid>
-                <Grid  item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Distinct Values:</Typography>
-                </Grid>
-                <Grid  item xs={rightColumnWidth}>
-                  <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
-                </Grid>
-                <Grid  item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Fixed Step Size:</Typography>
-                </Grid>
-                <Grid  item xs={rightColumnWidth}>
-                  <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
-                </Grid>
+              <Grid container display="flex" direction="row"  style={{paddingLeft: "20px"}}>
+
+                    <Grid container item xs={4} display="flex" justify="flex-end" alignContent= "center">
+                          <Grid item style={{backgroundColor: "blue"}} >
+                              <Typography variant={fontSizeLeftColumn}>
+                                  Dictionary x:
+                              </Typography>
+                          </Grid>
+                    </Grid>
+
+                    <Grid  item xs={rightColumnWidth}>
+                        <TextField
+                            id="standard-select-currency-native"
+                            select
+                            label="Native select"
+                            value={dictList}
+                            onChange={handleChange}
+                            InputProps={{ classes: { root: classes.inputSelect } }}
+                            SelectProps={{
+                                native: true,
+                            }}
+                            helperText=""
+                            >
+                        {dictData2.map((option) => (
+                            <option key={option.value} value={option.value}>
+                            {option.label}
+                            </option>
+                        ))}
+                        </TextField>
+                    </Grid>
+
+
+                    <Grid container display="flex" justify="flex-end" alignItem="center" item xs={leftColumnWidth}>
+                         <Grid item> 
+                              <Typography variant={fontSizeLeftColumn}>
+                                  Maximum:
+                              </Typography>
+                          </Grid>    
+                    </Grid>
+
+                    <Grid  item xs={rightColumnWidth}>
+                      <Input placeholder="Enter Maximum" className={classes.input}/>
+                    </Grid>
+                    <Grid  item xs={leftColumnWidth}>
+                      <Typography variant={fontSizeLeftColumn}>Decimal Places:</Typography>
+                    </Grid>
+                    <Grid  item xs={rightColumnWidth}>
+                      <Input placeholder="Enter Number of Decimalplaces" className={classes.input}/>
+                    </Grid>
+                    <Grid  item xs={leftColumnWidth}>
+                      <Typography variant={fontSizeLeftColumn}>Locale:</Typography>
+                    </Grid>
+                    <Grid  item xs={rightColumnWidth}>
+                      <Input placeholder="Enter Locale (Country whose formats to apply)" className={classes.input}/>
+                    </Grid>
+                    <Grid  item xs={leftColumnWidth}>
+                      <Typography variant={fontSizeLeftColumn}>Distinct Values:</Typography>
+                    </Grid>
+                    <Grid  item xs={rightColumnWidth}>
+                      <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
+                    </Grid>
+                    <Grid  item xs={leftColumnWidth}>
+                      <Typography variant={fontSizeLeftColumn}>Fixed Step Size:</Typography>
+                    </Grid>
+                    <Grid  item xs={rightColumnWidth}>
+                      <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
+                    </Grid>
 
               
               </Grid>       

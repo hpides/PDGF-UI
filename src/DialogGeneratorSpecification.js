@@ -57,11 +57,11 @@ function DialogGeneratorSpecification(props) {
         titel="Dialog"
         TransitionComponent={Transition}
         keepMounted
-        PaperProps={{elevation: "24" }}
+        PaperProps={{elevation: 24 }}
         fullWidth
         maxWidth="md"
         >
-      <DialogTitle id="simple-dialog-title">Test Form 01</DialogTitle>
+      <DialogTitle id="simple-dialog-title" style={{fontSize: "30px"}}>Test Form 01</DialogTitle>
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "yellow"}}>
       <FormDictListGenerator/>
       </div>

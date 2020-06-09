@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
 import React from "react";
-import TableSubComponent from "./TableSubComponent";
+import TableSubComponent from "../TableSubComponent";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -108,7 +108,6 @@ export default function TableComponent(props){
                       input: classes.resizeFont,
                     },
                   }} 
-                  /* inputLabel richtigesProp?*/
                   InputLabelProps={{
                     classes: {
                       root: classes.root,

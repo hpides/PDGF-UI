@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function DefaultVariablesComponent02(props){
+export default function DefaultVariablesComponent(props){
     const classes = useStyles();
     
     return (

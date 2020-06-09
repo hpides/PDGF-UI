@@ -311,7 +311,7 @@ const addUidToGenerator = () => {
         titel="Dialog"
         //TransitionComponent={Transition}
         keepMounted
-        PaperProps={{elevation: "24" }}
+        PaperProps={{elevation: 24 }}
         fullWidth
         maxWidth="md"
         >

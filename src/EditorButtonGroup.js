@@ -25,11 +25,18 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     height: "80px",
-    width: "80px",
+    width: "120px",
+  },
+  label: {
+    // Aligns the content of the button vertically.
+    fontSize: "16px",
+    flexDirection: 'column',
+    alignContent: "center",
+    justifyContent: "center",
   },
   icon: {
-      height: "50px",
-      width: "50px",
+      height: "30px",
+      width: "30px",
   },
 }));
 
@@ -72,37 +79,28 @@ export default function EditorButtonGroup(props) {
         
       <LightTooltip title="Add new table">
         <Button
+            classes={{ root: classes.button, label: classes.label }}
+            className={classes.button}
             variant="contained"
             color="default"
-            className={classes.button}
             startIcon={<AddCircleIcon className={classes.icon}/>}
-            onClick={props.addNewTableHandler}
-            ><div></div>
+            onClick={props.addNewTableHandler}>
+            Add Table
         </Button>
       </LightTooltip>
 
-      <LightTooltip title="Edit system variables">
-        <Button
-            variant="contained"
-            color="default"
-            className={classes.button}
-            onClick={props.toggleSidebarRight}
-            startIcon={<BuildIcon className={classes.icon}/>}>
-              <div></div>
-        </Button>
-        
-        </LightTooltip>
 
         <LightTooltip title="Save or export file">
         <Button
+            classes={{}}classes={{ root: classes.button, label: classes.label }}
+            className={classes.button}
             aria-controls="save-and-export-menu" 
             aria-haspopup="true" 
             onClick={handleClick}
             variant="contained"
             color="default"
-            className={classes.button}
             startIcon={<SaveIcon className={classes.icon}/>}>
-            <div></div>
+            Save 
         </Button>
         </LightTooltip>
         <Menu
@@ -127,14 +125,15 @@ export default function EditorButtonGroup(props) {
 
         <LightTooltip title="Load Elements">
         <Button
+            classes={{}}classes={{ root: classes.button, label: classes.label }}
+            className={classes.button}
             aria-controls="load-elements-menu" 
             aria-haspopup="true" 
             onClick={handleClick2}
             variant="contained"
             color="default"
-            className={classes.button}
             startIcon={<LoadIcon className={classes.icon}/>}>
-          <div></div>
+          Load
         </Button>
         </LightTooltip>
 
@@ -155,37 +154,20 @@ export default function EditorButtonGroup(props) {
         </Menu>
 
 
-
-        <LightTooltip title="Show help">
-        <Button
-            variant="contained"
-            color="default"
-            className={classes.button}
-            startIcon={<HelpIcon className={classes.icon}/>}>
-        <div></div>
-        </Button>
-        </LightTooltip>
-
         <LightTooltip title="Reset Editor">
         <Button
+            classes={{}}classes={{ root: classes.button, label: classes.label }}
+            className={classes.button}
             variant="contained"
             color="default"
-            className={classes.button}
             startIcon={<DeleteIcon className={classes.icon}/>}
             onClick={()=>{props.resetEditor()}}>
-          <div></div>
+          Reset
         </Button>
     
         </LightTooltip>
 
-        <Button
-            variant="contained"
-            color="default"
-            className={classes.button}
-            onClick={()=>{props.setIsOpenRawGeneratorDialog(true)}}
-        > RawGen</Button>
-
-     
     </div>
   );
 }
+

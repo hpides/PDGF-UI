@@ -14,6 +14,16 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 });
 
 export default function FormPrePostFixGenerator(props) {
@@ -46,64 +56,69 @@ export default function FormPrePostFixGenerator(props) {
   return (
     <>
    
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-            <Grid direction="row" container  style={{paddingLeft: "15px", paddingRight: "30px"}}>
+        <Grid container className={classes.outerContainer}>
 
-                <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>PreFix:</Typography>
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        PreFix:
+                    </Typography>
                 </Grid>
+            </Grid>>
 
-                <Grid  item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Input 
+            <Grid  item xs={rightColumnWidth}>
+                <Input 
                     className={classes.input} 
                     type="text" 
                     placeholder="Enter PreFix" 
                     fullWidth
                     value={props.generatorObject.preFix} 
                     onChange={(event) => preFixChangedHandler(event)}/>
+            </Grid>
+
+
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        PostFix:
+                    </Typography>
                 </Grid>
+            </Grid>
+
+            <Grid  item xs={rightColumnWidth}>
+              <Input 
+                className={classes.input} 
+                type="text" 
+                placeholder="Enter PostFix" 
+                fullWidth
+                value={props.generatorObject.postFix} 
+                onChange={(event) => postFixChangedHandler(event)}/>
+            </Grid>
+
+            <Grid  item xs={leftColumnWidth}>
+              <Typography variant={fontSizeLeftColumn}>Generator:</Typography>
+            </Grid>
 
 
-                <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>PostFix:</Typography>
-                </Grid>
-
-                <Grid  item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Input 
-                    className={classes.input} 
-                    type="text" 
-                    placeholder="Enter PostFix" 
-                    fullWidth
-                    value={props.generatorObject.postFix} 
-                    onChange={(event) => postFixChangedHandler(event)}/>
-                </Grid>
-
-                <Grid  item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>Generator:</Typography>
-                </Grid>
-
-
-                <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
+            <Grid item xs={rightColumnWidth}>
                 <TextField
-                            id="standard-select-currency-native"
-                            className={classes.select}                      
-                            select
-                            fullWidth
-                            value={props.generatorObject.underlyingGenerator}
-                            onChange={(event) => underlyingGeneratorChangedHandler(event)}
-                            SelectProps={{
-                                native: true,
-                            }}> 
+                    id="standard-select-currency-native"
+                    className={classes.select}                      
+                    select
+                    fullWidth
+                    value={props.generatorObject.underlyingGenerator}
+                    onChange={(event) => underlyingGeneratorChangedHandler(event)}
+                    SelectProps={{
+                        native: true,
+                    }}> 
                       
-                      <option value={null} key={0}>None</option>
-                      {(JSON.parse(localStorage.getItem("generatorRepository")).map(generator => { return <option value={generator.uid} key={generator.uid}>{generator.repoVariables.name}</option>}))}
-                        
+                        <option value={null} key={0}>None</option>
+                        {(JSON.parse(localStorage.getItem("generatorRepository")).map(generator => { return <option value={generator.uid} key={generator.uid}>{generator.repoVariables.name}</option>}))}
+                    
                 </TextField>
-                </Grid>
+            </Grid>
 
-            </Grid>       
-      
-      </div>
+        </Grid>       
     </>
   );
 }

@@ -13,7 +13,7 @@ export default function DialogStartPage(props){
          open={props.isOpenDialogStartPage}
          titel="Dialog"
          keepMounted
-         PaperProps={{elevation: "24" }}
+         PaperProps={{elevation: 24 }}
          fullScreen    
          >
      

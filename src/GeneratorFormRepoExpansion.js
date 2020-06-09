@@ -1,13 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
+import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +17,16 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 }));
 
 export default function GeneratorFormRepoExpansion(props) {
@@ -31,34 +38,36 @@ export default function GeneratorFormRepoExpansion(props) {
   
 
   return (
-    <Grid container style={{background: "inherit"}}>
     
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Grid  item xs={leftColumnWidth} style={{background: "inherit"}}>
-            <Typography variant={fontSizeLeftColumn}>
-              Save in Repo:
-            </Typography>
+    <>
+      <Grid  container className={classes.outerContainer}>
+          <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+              <Grid item >
+                  <Typography variant={fontSizeLeftColumn}>
+                      Save in Repo:
+                  </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={rightColumnWidth} style={{background: "inherit", paddingLeft: 10}}>
+
+          <Grid item xs={rightColumnWidth}>
               <Checkbox 
                   inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
                   checked={props.generatorObject.repoVariables.saveInRepo}
                   onChange={event => {props.saveInRepoChangedHandler(event)}}/>
           </Grid>  
+      </Grid>
 
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-              <Grid  container style={{background: "inherit"}}>
-                <Grid item xs={leftColumnWidth} style={{background: "inherit"}}>
-                  <Typography 
-                      variant={fontSizeLeftColumn}>Name:</Typography>
-                </Grid>
-                <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
+      <Collapse in={props.generatorObject.repoVariables.saveInRepo}>
+          <Grid  container className={classes.outerContainer}>
+              <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                  <Grid item >
+                      <Typography variant={fontSizeLeftColumn}>
+                          Name:
+                      </Typography>
+                  </Grid>
+              </Grid>
+
+              <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
                   <Input 
                       placeholder="Enter Name" 
                       className={classes.input}
@@ -66,11 +75,17 @@ export default function GeneratorFormRepoExpansion(props) {
                       onChange={event => {props.nameChangedHandler(event)}}
                       fullWidth
                       />
-                </Grid>
-                <Grid item xs={leftColumnWidth} style={{background: "inherit"}}>
-                  <Typography variant={fontSizeLeftColumn}>Description:</Typography>
-                </Grid>
-                <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
+              </Grid>
+
+              <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                  <Grid item >
+                      <Typography variant={fontSizeLeftColumn}>
+                          Description:
+                      </Typography>
+                  </Grid>
+              </Grid>
+
+              <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
                   <Input 
                       placeholder="Enter Description" 
                       multiline 
@@ -79,26 +94,28 @@ export default function GeneratorFormRepoExpansion(props) {
                       onChange={event => {props.descriptionChangedHandler(event)}}
                       fullWidth
                   />
-                </Grid>
-                <Grid item xs={leftColumnWidth} style={{background: "inherit"}}>
-                  <Typography variant={fontSizeLeftColumn}>Examples:</Typography>
-                </Grid>
-                <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
-                        <Input 
-                            placeholder="Enter Examples" 
-                            multiline 
-                            fullWidth
-                            className={classes.input}
-                            value={props.generatorObject.repoVariables.examples}
-                            onChange={event => {props.examplesChangedHandler(event)}}
-                            />
-                </Grid>
-               
               </Grid>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-     
-    </Grid>
+
+              <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                  <Grid item >
+                      <Typography variant={fontSizeLeftColumn}>Examples:</Typography>
+                  </Grid>
+              </Grid>
+
+              <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
+                      <Input 
+                          placeholder="Enter Examples" 
+                          multiline 
+                          fullWidth
+                          className={classes.input}
+                          value={props.generatorObject.repoVariables.examples}
+                          onChange={event => {props.examplesChangedHandler(event)}}
+                          />
+              </Grid>
+          </Grid>
+      </Collapse> 
+    </>
+    
   );
 }
 

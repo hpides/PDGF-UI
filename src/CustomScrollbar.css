@@ -1,0 +1,19 @@
+* {
+    scrollbar-with: thin;
+    scrollbar-color: blue orange;
+}
+
+*::-webkit-scrollbar {
+    width: 12px;
+}
+
+*::-webkit-scrollbar-track{
+    background: green;
+}
+
+*::-webkit-scrollbar-thumb{
+    background-color: lightgreen;
+    border-radius: 20px;
+    border: 3px solid grey;
+}
+

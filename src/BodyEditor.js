@@ -18,6 +18,7 @@ import "./CustomScrollbar.css";
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from "@material-ui/core/Button";
+import DraggableCore from "react-draggable";
 
 
 
@@ -158,7 +159,7 @@ export default function BodyEditor(props){
             tableId: tableId, 
             rowId: rowCounter + 1, 
             fieldName: "Enter Field Name", 
-            generator: "Select Generator", 
+            generator: {}, 
             isKey: "false",
         };
         schemaNew.tables[tableIndex].tableItems.push(newRow);
@@ -442,11 +443,22 @@ const handleCloseBlank = () => {
     // loadGeneratorToEditDialog
    
     const loadGeneratorToEditDialog = (tableId, rowId, generatorType) => {
+        let tableIndex = currentSchemaLocal.tables.findIndex( x => x.tableId === tableId);
+        let rowIndex = currentSchemaLocal.tables[tableIndex].tableItems.findIndex(x => x.rowId === rowId);
+        console.log("GeneratorData: " + JSON.stringify(currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator));
+        (Object.keys(currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator).length !==0)? setUpEditDialog(tableId, rowId, generatorType) : alert("You have first to select a generator before you can edit it!")
+        alert("length generator object: " + Object.keys(currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator).length)};
+
+    const setUpEditDialog = (tableId, rowId, generatorType) => {
+        console.log("Entered loadGeneratorToEditDialog");
         setFieldInFocus({tableId: tableId, rowId: rowId});
+        console.log("field in focus: tableId: " + tableId + "   / rowId: " + rowId);
         setUniversalGeneratorFormMode("edit");
-        alert("generator type: " + generatorType)
+        console.log("Mode set to: " + universalGeneratorFormMode);
         setSelectedGeneratorType(generatorType);
+        console.log("generator type set to: " + generatorType);
         setIsOpenDialogUniGenForm(true);
+        console.log("isOpenDialogUniGenForm set to: " + isOpenDialogUniGenForm);
         return null;
     };
 
@@ -486,28 +498,30 @@ const handleCloseBlank = () => {
 
             <Grid container display="flex" direction="row" justify="flex-start" alignContent="flex-start" spacing = {0} style={{background: "white", height: "90vh", marginTop: "30px"}}>
                {/*first row*/}
-               <Grid container item xs={12} style={{height: "150px"}} >
-                    <Grid item xs={9} style={{backgroundColor: "white", paddingBottom: "20px", paddingLeft:"20px"}}>
+               <Grid container item xs={12} style={{height: "120px"}} >
+                    <Grid item xs={9} style={{backgroundColor: "white", paddingBottom: "20px", paddingLeft:"40px"}}>
                     
                         <SchemaNameElement schemaName={currentSchemaLocal.info.schemaName} schemaNameChangedHandler = {schemaNameChangedHandler}/>
                        
                     </Grid>
                     <Grid item xs={3} style={{background: "white", paddingRight: "20px"}}>
-                        <EditorButtonGroup 
-                            addNewTableHandler = {addNewTableHandler}
-                            resetEditor ={resetEditor}
-                            toggleSidebarRight = {toggleSidebarRight}
-                            handleClickOpenDialogSaveSchema={handleClickOpenDialogSaveSchema}
-                            openDialogSchemaSelection={openDialogSchemaSelection}
-                            setIsOpenRawGeneratorDialog={setIsOpenRawGeneratorDialog}
-                            isOpenRawGeneratorDialog={isOpenRawGeneratorDialog}
-                        ><div></div>
-                        </EditorButtonGroup>
+                        <DraggableCore>
+                            <div>
+                                <EditorButtonGroup 
+                                    addNewTableHandler = {addNewTableHandler}
+                                    resetEditor ={resetEditor}
+                                    toggleSidebarRight = {toggleSidebarRight}
+                                    handleClickOpenDialogSaveSchema={handleClickOpenDialogSaveSchema}
+                                    openDialogSchemaSelection={openDialogSchemaSelection}
+                                    setIsOpenRawGeneratorDialog={setIsOpenRawGeneratorDialog}
+                                    isOpenRawGeneratorDialog={isOpenRawGeneratorDialog}/>
+                            </div>
+                        </DraggableCore>
                     </Grid>
                 </Grid>
 
                  {/*second row*/}
-                 <Grid container item xs={12} style={{height: "40px", display: "flex", flexDirection: "row", justifyContent: "flex-end"}} >
+                 <Grid container item xs={12} style={{height: "40px", display: "flex", flexDirection: "row", justifyContent: "flex-end", paddingRight: "45px"}} >
                      {isOpenSideBarRight? 
                      <div> 
                         <Button
@@ -538,51 +552,55 @@ const handleCloseBlank = () => {
                  
                 <Grid container display="flex" flexDirection="row" justify="space-between" item xs={12} style={{height: "80vh"}}>  
                     {(isOpenSideBarRight? (
-                    <Grid item xs={9}>
-                        <div fullWidth style={{ display: "flex",  flexDirection: "row",  justifyContent: "center", alignItems: "center", alignContent:"center", backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap", flexGrow: "1" }}>    
+                    <Grid item xs={9.5}>
+                        <div style={{ height: "100%", width: "100%", display: "flex",  flexDirection: "row",  justifyContent: "center", alignItems: "center", alignContent:"center", backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap", flexGrow: "1" }}>    
                         {currentSchemaLocal.tables.map(table => {return( 
-                                <TableComponent
-                                    key={table.tableId} 
-                                    data={table} 
-                                    deleteTableHandler={deleteTableHandler} 
-                                    addTableRowHandler={addTableRowHandler} 
-                                    deleteTableRowHandler={deleteTableRowHandler}
-                                    tableNameChangedHandler={tableNameChangedHandler}
-                                    tableSizeChangedHandler ={tableSizeChangedHandler}
-                                    fieldNameChangedHandler ={fieldNameChangedHandler}
-                                    handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
-                                    handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
-                                    isOpenGeneratorDialog = {isOpenGeneratorDialog}
-                                    setFieldInFocusHandler={setFieldInFocusHandler}
-                                    loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
-                                
-
-                                />
+                            <DraggableCore>
+                                <div>
+                                    <TableComponent
+                                        key={table.tableId} 
+                                        data={table} 
+                                        deleteTableHandler={deleteTableHandler} 
+                                        addTableRowHandler={addTableRowHandler} 
+                                        deleteTableRowHandler={deleteTableRowHandler}
+                                        tableNameChangedHandler={tableNameChangedHandler}
+                                        tableSizeChangedHandler ={tableSizeChangedHandler}
+                                        fieldNameChangedHandler ={fieldNameChangedHandler}
+                                        handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
+                                        handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
+                                        isOpenGeneratorDialog = {isOpenGeneratorDialog}
+                                        setFieldInFocusHandler={setFieldInFocusHandler}
+                                        loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
+                                    />
+                                </div>
+                            </DraggableCore>
                             )})
                         }
                         </div>
                     </Grid>):
             
                     (<Grid item xs={12}>
-                        <div fullWidth style={{ display: "flex",  flexDirection: "row",  justifyContent: "center", alignItems: "center", alignContent:"center", backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap", flexGrow: "1" }}>     
+                        <div fullWidth style={{ height: "100%", width: "100%", display: "flex",  flexDirection: "row",  justifyContent: "center", alignItems: "center", alignContent:"center", backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap", flexGrow: "1" }}>     
                         {currentSchemaLocal.tables.map(table => {return( 
-                                <TableComponent
-                                    key={table.tableId} 
-                                    data={table} 
-                                    deleteTableHandler={deleteTableHandler} 
-                                    addTableRowHandler={addTableRowHandler} 
-                                    deleteTableRowHandler={deleteTableRowHandler}
-                                    tableNameChangedHandler={tableNameChangedHandler}
-                                    tableSizeChangedHandler ={tableSizeChangedHandler}
-                                    fieldNameChangedHandler ={fieldNameChangedHandler}
-                                    handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
-                                    handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
-                                    isOpenGeneratorDialog = {isOpenGeneratorDialog}
-                                    setFieldInFocusHandler={setFieldInFocusHandler}
-                                    loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
-                                
-
-                                />
+                            <DraggableCore>
+                                <div>
+                                    <TableComponent
+                                        key={table.tableId} 
+                                        data={table} 
+                                        deleteTableHandler={deleteTableHandler} 
+                                        addTableRowHandler={addTableRowHandler} 
+                                        deleteTableRowHandler={deleteTableRowHandler}
+                                        tableNameChangedHandler={tableNameChangedHandler}
+                                        tableSizeChangedHandler ={tableSizeChangedHandler}
+                                        fieldNameChangedHandler ={fieldNameChangedHandler}
+                                        handleClickOpenGeneratorDialog = {handleClickOpenGeneratorDialog}
+                                        handleCloseGeneratorDialog = {handleCloseGeneratorDialog}
+                                        isOpenGeneratorDialog = {isOpenGeneratorDialog}
+                                        setFieldInFocusHandler={setFieldInFocusHandler}
+                                        loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
+                                    />
+                                </div>
+                            </DraggableCore>
                             )})
                         }    
                         </div>   
@@ -592,7 +610,7 @@ const handleCloseBlank = () => {
 
 
                     {(isOpenSideBarRight? (
-                    <Grid item xs={3}>    
+                    <Grid item xs={2.5}>    
                     <div   style = {{display: "flex", flexDirection: "column", justify: "flex-start", width: "350px", backgroundColor: "green" }}> 
                         <div  style = {{width: "350px" }}>
                             <DefaultVariablesComponent 

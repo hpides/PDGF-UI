@@ -16,6 +16,16 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 });
 
 export default function FormSwitchGenerator(props) {
@@ -50,83 +60,79 @@ export default function FormSwitchGenerator(props) {
   return (
     <>
    
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
+        <Grid container className={classes.outerContainer}>    
            
-           
-        
-           
-           
-            <Grid direction="row" container  style={{paddingLeft: "15px", paddingRight: "30px"}}>
-
-
-                <Grid  item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>Generator:</Typography>
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Generator:
+                    </Typography>
                 </Grid>
+            </Grid>
+
+            <Grid item xs={rightColumnWidth}>
+            <TextField
+                id="standard-select-currency-native"
+                className={classes.select}                      
+                select
+                fullWidth
+                value={props.generatorObject.underlyingGenerator}
+                onChange={(event) => underlyingGeneratorChangedHandler(event)}
+                SelectProps={{
+                    native: true,
+                }}> 
+                  
+                    <option value={1} key={-1}>None</option>
+                    {(JSON.parse(localStorage.getItem("generatorRepository")).map(generator => { return <option value={generator.uid} key={generator.uid}>{generator.repoVariables.name}</option>}))}
+                    
+            </TextField>
+            </Grid>
+
+            <Grid container className={classes.body}>
+                    {props.generatorObject.caseOutcomeSets.map(set => {return <SwitchGeneratorInputComponent
+                                                                          
+                                                                          key={set.id}
+                                                                          generatorObject={props.generatorObject}
+                                                                          setGeneratorObject={props.setGeneratorObject}
+                                                                          id={set.id}
+                                                                          case={set.case}
+                                                                          outcome={set.outcome}
+                                                                          />})} 
+            </Grid>  
+
+            <Grid container item className={classes.footer_row}>
+                  <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start", alignItems: "center", paddingTop: "10px"}}>
+                      <IconButton onClick={() => {addCaseOutcomeSet()}}>
+                          <AddCircleIcon/>
+                      </IconButton>
+                      <Typography 
+                          className={classes.actionLink} 
+                          onClick={() => {addCaseOutcomeSet()}}>
+                          Add Generator
+                      </Typography>
+                  </div>
+            </Grid>        
 
 
-                <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                <TextField
-                            id="standard-select-currency-native"
-                            className={classes.select}                      
-                            select
-                            fullWidth
-                            value={props.generatorObject.underlyingGenerator}
-                            onChange={(event) => underlyingGeneratorChangedHandler(event)}
-                            SelectProps={{
-                                native: true,
-                            }}> 
-                      
-                      <option value={1} key={-1}>None</option>
-                      {(JSON.parse(localStorage.getItem("generatorRepository")).map(generator => { return <option value={generator.uid} key={generator.uid}>{generator.repoVariables.name}</option>}))}
-                        
-                </TextField>
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Default:
+                    </Typography>
                 </Grid>
+            </Grid>
 
-                
-                <Grid container className={classes.body}>
-                        {props.generatorObject.caseOutcomeSets.map(set => {return <SwitchGeneratorInputComponent
-                                                                              
-                                                                              key={set.id}
-                                                                              generatorObject={props.generatorObject}
-                                                                              setGeneratorObject={props.setGeneratorObject}
-                                                                              id={set.id}
-                                                                              case={set.case}
-                                                                              outcome={set.outcome}
-                                                                              />})} 
-                </Grid>  
-
-
-                  <Grid container item className={classes.footer_row}>
-                        <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start", alignItems: "center", paddingTop: "10px"}}>
-                              <IconButton onClick={() => {addCaseOutcomeSet()}}>
-                                  <AddCircleIcon/>
-                              </IconButton>
-                              <Typography 
-                                  className={classes.actionLink} 
-                                  onClick={() => {addCaseOutcomeSet()}}>
-                                  Add Generator
-                              </Typography>
-                        </div>
-                  </Grid>        
-
-
-                  <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>Default:</Typography>
-                </Grid>
-
-                <Grid  item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Input 
+            <Grid  item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
+                <Input 
                     className={classes.input} 
                     type="text" 
                     placeholder="Enter Default" 
                     fullWidth
                     value={props.generatorObject.default} 
                     onChange={(event) => defaultChangedHandler(event)}/>
-                </Grid>
-
-            </Grid>       
+            </Grid>     
       
-      </div>
+      </Grid>
     </>
   );
 }

@@ -13,6 +13,16 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 });
 
 export default function FormReferenceGenerator(props) {
@@ -61,142 +71,133 @@ export default function FormReferenceGenerator(props) {
   return (
     <>
    
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-            <Grid direction="row" container style={{paddingLeft: "15px", paddingRight: "30px"}}>
-
-
-
-                <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
-                    <Typography variant={fontSizeLeftColumn}>Reference Table:</Typography>
+        <Grid container className={classes.outerContainer}>
+           
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Reference Table:
+                    </Typography>
                 </Grid>
+            </Grid>
 
-                <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
-                    <TextField
-                            id="standard-select-currency-native"
-                            className={classes.select}                      
-                            select
-                            fullWidth
-                            value={props.generatorObject.referenceTable}
-                            onChange={(event) => referenceTableChangedHandler(event)}
-                            SelectProps={{
-                                native: true,
-                            }}
-                            > 
-                            {props.currentSchemaLocal.tables.map(table => { 
-                            return <option key={table.tableId} value={table.tableId}> {table.tableName} </option>
-                            })}
-                    </TextField>  
+            <Grid item xs={rightColumnWidth}>
+                <TextField
+                    id="standard-select-currency-native"
+                    className={classes.select}                      
+                    select
+                    fullWidth
+                    value={props.generatorObject.referenceTable}
+                    onChange={(event) => referenceTableChangedHandler(event)}
+                    SelectProps={{
+                        native: true,
+                    }}
+                    > 
+                    {props.currentSchemaLocal.tables.map(table => { 
+                    return <option key={table.tableId} value={table.tableId}> {table.tableName} </option>
+                    })}
+                </TextField>  
+            </Grid>
+
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Reference Field:
+                    </Typography>
                 </Grid>
+            </Grid>
 
-    
+            <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
+                <TextField
+                    id="standard-select-currency-native"
+                    className={classes.select}                      
+                    select
+                    fullWidth
+                    value={props.generatorObject.referenceField}
+                    onChange={(event) => referenceFieldChangedHandler(event)}
+                    SelectProps={{
+                        native: true,
+                    }}
+                    > 
+                    debbuger
+                    {/*{props.currentSchemaLocal.tables.filter(x => { return x.tableId === props.generatorObject.referenceTable})[0].tableItems.map(row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}
+                    
+                    {alert("currentSchemaLocal.tables: " + JSON.stringify(props.currentSchemaLocal.tables))}
+                    {alert("referenceTable: " + props.generatorObject.referenceTable )}
+                    */} 
+                    {/*alert("referenceTable: " + props.generatorObject.referenceTable)*/}
+                    {/*alert("Tabellen SchemaLocal: " + JSON.stringify(props.currentSchemaLocal.tables))*/}
+                    {/*alert("Tabellen SchemaLocal gefilter mit ReferenceTable: " + JSON.stringify(props.currentSchemaLocal.tables.filter(x => { 
+                        return (x.tableId === props.generatorObject.referenceTable)})))*/}
+                        {/*props.currentSchemaLocal.tables.map(x => 
+                        { console.log("x.tableId: " + x.tableId + "  type: " + typeof(x.tableId) + "  RefTableId: " + props.generatorObject.referenceTable + "  typ: " + typeof(props.generatorObject.referenceTable) + "  Vergleich:  " + (x.tableId === props.generatorObject.referenceTable))})*/}
 
+                    {(props.currentSchemaLocal.tables.filter(x => { 
+                        return (x.tableId === Number(props.generatorObject.referenceTable))}))[0].tableItems.map(
+                            row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}
+                </TextField>
+            </Grid>
 
-                <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
-                    <Typography variant={fontSizeLeftColumn}>Reference Field:</Typography>
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Choose by:
+                    </Typography>
                 </Grid>
+            </Grid>
 
+            <Grid  item xs={rightColumnWidth}>
+                <TextField
+                    id="standard-select-currency-native"
+                    className={classes.select}                      
+                    select
+                    fullWidth
+                    value={props.generatorObject.chooseBy}
+                    onChange={(event) => chooseByChangedHandler(event)}
+                    SelectProps={{
+                        native: true,
+                    }}
+                    > 
+                        <option value="random">random</option>
+                        <option value="randomShuffle">randomShuffle</option>
+                        <option value="permutationRandom">permutationRandom</option>
+                        <option value="sameChoiceAs">sameChoiceAs</option>
+                        <option value="relativeRowMapping">relativeRowMapping</option>
+                        <option value="relativeUnique">relativeUnique</option>                        
+                </TextField>
+            </Grid>
 
-                <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
-                    <TextField
-                            id="standard-select-currency-native"
-                            className={classes.select}                      
-                            select
-                            fullWidth
-                            value={props.generatorObject.referenceField}
-                            onChange={(event) => referenceFieldChangedHandler(event)}
-                            SelectProps={{
-                                native: true,
-                            }}
-                            > 
-                            debbuger
-                            {/*{props.currentSchemaLocal.tables.filter(x => { return x.tableId === props.generatorObject.referenceTable})[0].tableItems.map(row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}
-                            
-                            {alert("currentSchemaLocal.tables: " + JSON.stringify(props.currentSchemaLocal.tables))}
-                            {alert("referenceTable: " + props.generatorObject.referenceTable )}
-                            */} 
-                            {/*alert("referenceTable: " + props.generatorObject.referenceTable)*/}
-                            {/*alert("Tabellen SchemaLocal: " + JSON.stringify(props.currentSchemaLocal.tables))*/}
-                            {/*alert("Tabellen SchemaLocal gefilter mit ReferenceTable: " + JSON.stringify(props.currentSchemaLocal.tables.filter(x => { 
-                                return (x.tableId === props.generatorObject.referenceTable)})))*/}
-                             {/*props.currentSchemaLocal.tables.map(x => 
-                                { console.log("x.tableId: " + x.tableId + "  type: " + typeof(x.tableId) + "  RefTableId: " + props.generatorObject.referenceTable + "  typ: " + typeof(props.generatorObject.referenceTable) + "  Vergleich:  " + (x.tableId === props.generatorObject.referenceTable))})*/}
-
-                            {(props.currentSchemaLocal.tables.filter(x => { 
-                                return (x.tableId === Number(props.generatorObject.referenceTable))}))[0].tableItems.map(
-                                    row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}
-                        
-{/*}
-                            {const tables = props.currentSchemaLocal.tables;
-                    const filteredTables = tables.filter(table => { return table.tableName === selectedTable });
-                    const targetTable = filteredTables[0];
-                    const targetArray = targetTable.tableItems;
-                            targetArray.map(row => { return <option value={row.fieldName}>{row.fieldName}</option>})}*/}
-
-
-
-                    </TextField>
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Select From:
+                    </Typography>
                 </Grid>
-
-                <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
-                    <Typography variant={fontSizeLeftColumn}>Choose by:</Typography>
-                </Grid>
+            </Grid>
 
 
-                <Grid  item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
-                    <TextField
-                            id="standard-select-currency-native"
-                            className={classes.select}                      
-                            select
-                            fullWidth
-                            value={props.generatorObject.chooseBy}
-                            onChange={(event) => chooseByChangedHandler(event)}
-                            SelectProps={{
-                                native: true,
-                            }}
-                            > 
-                                <option value="random">random</option>
-                                <option value="randomShuffle">randomShuffle</option>
-                                <option value="permutationRandom">permutationRandom</option>
-                                <option value="sameChoiceAs">sameChoiceAs</option>
-                                <option value="relativeRowMapping">relativeRowMapping</option>
-                                <option value="relativeUnique">relativeUnique</option>                        
-                    </TextField>
-                </Grid>
-
-
-
-
-                <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
-                    <Typography variant={fontSizeLeftColumn}>Select From:</Typography>
-                </Grid>
-
-
-                <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
-                    <TextField
-                            id="standard-select-currency-native"
-                            className={classes.select}                      
-                            select
-                            fullWidth
-                            value={props.generatorObject.selectFrom}
-                            onChange={(event) => selectFromChangedHandler(event)}
-                            SelectProps={{
-                                native: true,
-                            }}
-                            > 
-                                <option value="historical">historical</option>
-                                <option value="atInsert">atInsert</option>
-                                <option value="fixedTimeFrame">fixedTimeFrame</option>
-                                <option value="sameTimeFrame">sameTimeFrame</option>
-                                <option value="relativeTimeFrame">relativeTimeFrame</option>
-                        
-                    </TextField>
-                </Grid>
-
-
-
-            </Grid>       
+            <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
+                <TextField
+                        id="standard-select-currency-native"
+                        className={classes.select}                      
+                        select
+                        fullWidth
+                        value={props.generatorObject.selectFrom}
+                        onChange={(event) => selectFromChangedHandler(event)}
+                        SelectProps={{
+                            native: true,
+                        }}
+                        > 
+                            <option value="historical">historical</option>
+                            <option value="atInsert">atInsert</option>
+                            <option value="fixedTimeFrame">fixedTimeFrame</option>
+                            <option value="sameTimeFrame">sameTimeFrame</option>
+                            <option value="relativeTimeFrame">relativeTimeFrame</option>
+                    
+                </TextField>
+            </Grid>
       
-      </div>
+      </Grid>
     </>
   );
 }

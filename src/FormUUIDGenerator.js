@@ -13,6 +13,16 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 });
 
 export default function FormUUIDGenerator(props) {
@@ -35,18 +45,15 @@ export default function FormUUIDGenerator(props) {
   return (
     <>
    
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-            <Grid direction="row" container style={{paddingLeft: "15px", paddingRight: "30px"}}>
-
-                <Grid container item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>No Input required. Just save now. </Typography>
+        <Grid container className={classes.outerContainer}>
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        No Input required. Just save now. 
+                    </Typography>
                 </Grid>
-
-
-
-            </Grid>       
-      
-      </div>
+            </Grid>     
+      </Grid>
     </>
   );
 }

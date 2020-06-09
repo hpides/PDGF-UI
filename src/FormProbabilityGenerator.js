@@ -16,6 +16,16 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 });
 
 export default function FormProbabilityGenerator(props) {
@@ -50,49 +60,52 @@ export default function FormProbabilityGenerator(props) {
   return (
     <>
    
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
+      <Grid container className={classes.outerContainer}>
             
-        <Grid container className={classes.body}>
-         {props.generatorObject.valueProbabilitySets.map(set => {return <ProbabilityValueInputComponent
-                                                                              generatorObject={props.generatorObject}
-                                                                              setGeneratorObject={props.setGeneratorObject}
-                                                                              id={set.id}
-                                                                              value={set.value}
-                                                                              probability={set.probability}
-                                                                              />})} 
-        </Grid>  
-    
-
-        <Grid item className={classes.footer_row}>
-          <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start", alignItems: "center", paddingTop: "10px"}}>
-                <IconButton onClick={() => {addValueProbabilitySet()}}>
-                    <AddCircleIcon/>
-                </IconButton>
-                <Typography 
-                    className={classes.actionLink} 
-                    onClick={() => {addValueProbabilitySet()}}>
-                    Add Set
-                </Typography>
-          </div>
-        </Grid>     
-
-
-            <Grid direction="row" container  style={{paddingLeft: "15px", paddingRight: "30px"}}>
-
-                <Grid  item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>Disable Shuffling:</Typography>
-                </Grid>
-
-                <Grid  item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                <Checkbox 
-                        inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={props.generatorObject.disableShuffling}
-                        onChange={(event)=> {disableShufflingChangedHandler(event)}}
-                        />
-                </Grid>
-            </Grid>       
+          <Grid container className={classes.body}>
+          {props.generatorObject.valueProbabilitySets.map(set => {return <ProbabilityValueInputComponent
+                                                                                generatorObject={props.generatorObject}
+                                                                                setGeneratorObject={props.setGeneratorObject}
+                                                                                id={set.id}
+                                                                                value={set.value}
+                                                                                probability={set.probability}
+                                                                                />})} 
+          </Grid>  
       
-      </div>
+
+          <Grid item className={classes.footer_row}>
+              <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start", alignItems: "center", paddingTop: "10px"}}>
+                  <IconButton onClick={() => {addValueProbabilitySet()}}>
+                      <AddCircleIcon/>
+                  </IconButton>
+                  <Typography 
+                      className={classes.actionLink} 
+                      onClick={() => {addValueProbabilitySet()}}>
+                      Add Set
+                  </Typography>
+              </div>
+          </Grid>     
+
+              <Grid direction="row" container>
+
+                  <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                      <Grid item >
+                          <Typography variant={fontSizeLeftColumn}>
+                              Disable Shuffling:
+                          </Typography>
+                      </Grid>
+                  </Grid>
+
+                  <Grid  item xs={rightColumnWidth}>
+                      <Checkbox 
+                              inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
+                              checked={props.generatorObject.disableShuffling}
+                              onChange={(event)=> {disableShufflingChangedHandler(event)}}
+                              />
+                  </Grid>
+              </Grid>       
+        
+        </Grid>
     </>
   );
 }

@@ -24,6 +24,7 @@ import {emptyGenerator} from "./data";
 import GeneratorFormPaddingExpansion from "./GeneratorFormPaddingExpansion";
 import GeneratorFormRepoExpansion  from "./GeneratorFormRepoExpansion";
 import GeneratorFormNullValuesElement from "./GeneratorFormNullValuesElement";
+import Typography from "@material-ui/core/Typography";
 import cloneDeep from 'lodash/cloneDeep';
 
 /*const useStyles = makeStyles({
@@ -302,14 +303,16 @@ export default function DialogUniversalGeneratorForm(props) {
         open={props.isOpenDialogUniGenForm}
         titel="Dialog"
         keepMounted
-        PaperProps={{elevation: "24" }}
+        PaperProps={{elevation: 24 }}
         fullWidth
         maxWidth="md"
         >
-      <DialogTitle style={{fontSize: 80}} id="simple-dialog-title">{props.selectedGeneratorType}</DialogTitle>
+      <DialogTitle disableTypography id="simple-dialog-title">
+        <Typography style={{fontSize: "30px"}}>{props.selectedGeneratorType}</Typography>
+      </DialogTitle>
       
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-
+      <div  style={{overflow: "auto", margin: "auto", paddingLeft: "15px", background: "inherit"}}> 
+      
     
           {renderSwitch()}
 

@@ -46,7 +46,7 @@ function SimpleDialog(props) {
         open={open}
         titel="Dialog"
         keepMounted
-        PaperProps={{elevation: "24" }}
+        PaperProps={{elevation: 24 }}
         fullWidth
         maxWidth="md"
         >

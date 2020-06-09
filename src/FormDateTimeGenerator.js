@@ -15,6 +15,16 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 });
 
 export default function FormDateTimeGenerator(props) {
@@ -57,7 +67,7 @@ export default function FormDateTimeGenerator(props) {
   return (
     <>
   
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
+        <Grid container className={classes.outerContainer}>
       
             <Grid direction="row" container  style={{paddingLeft: "15px", paddingRight: "30px",}}>          
 
@@ -120,7 +130,7 @@ export default function FormDateTimeGenerator(props) {
                 
             </Grid>           
       
-      </div>
+      </Grid>
 
     </>
   );

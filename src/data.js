@@ -334,7 +334,7 @@ export const emptySchema0 = {
                         {variableCounter: 0,
                         variableItems: [
                            {variableId: 0, 
-                           name: "Enter Variable Name", 
+                           name: "Enter Name", 
                            value: "Enter Value", 
                            type: "Enter Type"},
                         ],
@@ -379,7 +379,7 @@ export const emptySchema = {
          {variableCounter: 1,
          variableItems: [
             {variableId: 1, 
-            name: "Enter Variable Name", 
+            name: "Variable Name", 
             value: "Enter Value", 
             type: "Enter Type"},
          ],

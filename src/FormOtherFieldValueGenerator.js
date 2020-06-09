@@ -13,6 +13,16 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 });
 
 export default function FormOtherFieldValueGenerator(props) {
@@ -31,36 +41,37 @@ export default function FormOtherFieldValueGenerator(props) {
 
 
   return (
-    <>
-   
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-            <Grid direction="row" container item xs={12} style={{paddingLeft: "15px", paddingRight: "30px"}}>
-
-                <Grid container item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>Reference:</Typography>
+    <> 
+        <Grid container className={classes.outerContainer}>
+            
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Reference:
+                    </Typography>
                 </Grid>
+            </Grid>
 
-                <Grid container item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
+            <Grid container item xs={rightColumnWidth}>
                 <TextField
-                            id="standard-select-currency-native"
-                            className={classes.select}                      
-                            select
-                            fullWidth
-                            value={props.generatorObject.referenceField}
-                            onChange={(event) => referenceFieldChangedHandler(event)}
-                            SelectProps={{
-                                native: true,
-                            }}
-                            > 
-                                                       {(props.currentSchemaLocal.tables.filter(x => { 
-                                return (x.tableId === props.fieldInFocus.tableId)}))[0].tableItems.map(
-                                    row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}
-                        
+                    id="standard-select-currency-native"
+                    className={classes.select}                      
+                    select
+                    fullWidth
+                    value={props.generatorObject.referenceField}
+                    onChange={(event) => referenceFieldChangedHandler(event)}
+                    SelectProps={{
+                        native: true,
+                    }}
+                    > 
+
+                        {(props.currentSchemaLocal.tables.filter(x => { 
+                            return (x.tableId === props.fieldInFocus.tableId)}))[0].tableItems.map(
+                                row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}          
                 </TextField>
-                </Grid>
-            </Grid>       
-      
-      </div>
-    </>
+            </Grid>     
+  
+  </Grid>
+</>
   );
 }

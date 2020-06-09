@@ -13,6 +13,16 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+  }, 
 });
 
 export default function FormIdGenerator(props) {
@@ -34,26 +44,30 @@ export default function FormIdGenerator(props) {
 
   return (
     <>
-   
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-            <Grid direction="row" container style={{paddingLeft: "15px", paddingRight: "30px"}}>
+  
+      <Grid container className={classes.outerContainer}>
 
-                <Grid  item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>Minimum:</Typography>
+
+                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                    <Grid item >
+                        <Typography variant={fontSizeLeftColumn}>
+                            Minimum:
+                        </Typography>
+                    </Grid>
                 </Grid>
 
                 <Grid  item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Input 
-                    className={classes.input} 
-                    type="number" 
-                    placeholder="Enter Minimum" 
-                    fullWidth
-                    value={props.generatorObject.minimum} 
-                    onChange={(event) => minimumChangedHandler(event)}/>
+                    <Input 
+                        className={classes.input} 
+                        type="number" 
+                        placeholder="Enter Minimum" 
+                        fullWidth
+                        value={props.generatorObject.minimum} 
+                        onChange={(event) => minimumChangedHandler(event)}/>
                 </Grid>
-            </Grid>       
-      
-      </div>
+
+      </Grid>          
+         
     </>
   );
 }

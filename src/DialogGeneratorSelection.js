@@ -48,7 +48,7 @@ export default function DialogGeneratorSelection(props) {
 
         <DialogTitle id="simple-dialog-title">
             <Grid container display="flex" direction="row" justify="space-between">
-                <Grid item xs={8}>
+                <Grid item xs={8} style={{fontSize: "30px"}}>
                     Select Generator 
                 </Grid>
                 <Grid item xs={4}>

@@ -17,19 +17,19 @@ const useStyles = makeStyles((theme) => ({
     },
 
     keyIconField: {
-        width: "40px",
+        width: "60px",
         border: "1px solid black",
         textAlign: "center",
     },
 
     deleteIconField: {
-        width: "40px",
+        width: "60px",
         border: "1px solid black",
         textAlign: "center",
     },
 
     editGeneratorField : {
-        width: "40px",
+        width: "60px",
         border: "1px solid black",
         textAlign: "center",
     },
@@ -69,8 +69,8 @@ export default function TableSubComponent(props){
     <tr className={classes.tr3}>
         <td className={classes.keyIconField}>
         
-                <div style={{display: "flex", justifycontent: "center", width: "40px", height: "40px" }}>
-                    <IconButton>
+                <div style={{display: "flex", justifycontent: "center" }}>
+                    <IconButton style={{marginLeft: "auto", marginRight: "auto"}}>
                         <VpnKeyIcon className={classes.icon}/>
                     </IconButton>
                 </div>
@@ -80,9 +80,17 @@ export default function TableSubComponent(props){
 
         <td className={classes.fieldNameField}>     
 
-            <Input 
-                defaultValue="Enter Field Name" 
-                style={{width: "150px"}}
+            <input 
+                style={{fontSize: "16px", 
+                        width: "", 
+                        height: "36px", 
+                        outlineColor: "darkblue", 
+                        border: "none", 
+                        background: "white", 
+                        boxShadow: "inset 2px 2px 3px rgba(0,0,0,0.2)", 
+                        paddingLeft: "10px", 
+                        borderRadius: "4px",
+                        margin: "2px"}}
                 value={props.data.fieldName} 
                 onChange={(event) =>
                 {props.fieldNameChangedHandler(event, props.data.tableId, props.data.rowId)}}
@@ -91,27 +99,31 @@ export default function TableSubComponent(props){
 
 
         <td className={classes.generatorButtonField}>           
-                <div style={{display: "flex", justifyContent: "center", alignContent: "center", width: "90px"}}>
+                <div style={{display: "flex", justifyContent: "center", alignContent: "center"}}>
                         <Button
+                            style={{marginLeft: "auto", marginRight: "auto"}}
                             onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorDialog() }}>
-                                Generator
+                                Select Generator
                         </Button>
                 </div>
         </td>            
 
         <td className={classes.editGeneratorField}>
-                <div style={{display: "flex", justifyContent: "center", alignContent: "center", width: "40px", height: "40px" }}>
+                <div style={{display: "flex", justifyContent: "center", alignContent: "center" }}>
                         <IconButton
+                            style={{marginLeft: "auto", marginRight: "auto"}}
                             onClick={() => {props.loadGeneratorToEditDialog(props.data.tableId, props.data.rowId, props.data.generator.type)}}> 
-                            <BuildIcon className={classes.icon} />
+                            <BuildIcon  style={(Object.keys(props.data.generator).length===0)? {color: "red"}: undefined} className={classes.icon} />
                         </IconButton>    
                 </div>
         </td>
         
 
         <td className={classes.deleteIconField}>
-                <div style={{display: "flex", justifyContent: "center", alignContent: "center", width: "40px", height: "40px" }}>
-                    <IconButton onClick={() => {props.deleteTableRowHandler(props.data.tableId, props.data.rowId)}}>
+                <div style={{display: "flex", justifyContent: "center", alignContent: "center" }}>
+                    <IconButton 
+                        style={{marginLeft: "auto", marginRight: "auto"}}
+                        onClick={() => {props.deleteTableRowHandler(props.data.tableId, props.data.rowId)}}>
                         <DeleteIcon className={classes.icon}/>
                     </IconButton>    
                 </div>
