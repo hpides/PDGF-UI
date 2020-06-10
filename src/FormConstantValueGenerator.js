@@ -45,25 +45,26 @@ export default function FormConstantValueGenerator(props) {
   return (
     <>
    
-      <Grid container className={classes.outerContainer}>
-          <Grid direction="row" container  style={{paddingLeft: "15px", paddingRight: "30px"}}>
+        <Grid container className={classes.outerContainer}>
+          
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>Constant Value:</Typography>
+                </Grid>
+            </Grid>
 
-              <Grid item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>Constant Value:</Typography>
-              </Grid>
-
-              <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Input 
-                    className={classes.input} 
-                    type="text" 
-                    placeholder="Enter Constant Value" 
-                    fullWidth
-                    value={props.generatorObject.constantValue} 
-                    onChange={(event) => constantValueChangedHandler(event)}/>
-              </Grid>
-          </Grid>       
-      
-      </Grid>
+            <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
+                <Input 
+                  className={classes.input} 
+                  type="text" 
+                  placeholder="Enter Constant Value" 
+                  fullWidth
+                  value={props.generatorObject.constantValue} 
+                  onChange={(event) => constantValueChangedHandler(event)}/>
+            </Grid>
+          
+        
+        </Grid>
     </>
   );
 }

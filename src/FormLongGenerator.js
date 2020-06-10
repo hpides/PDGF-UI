@@ -31,15 +31,14 @@ export default function DialogFormLongGenerator(props) {
     const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
-   
-    //alert("generatorObject: " + props.generatorObject);
+    console.log("generatorObject: " + props.generatorObject);
     
     // Change Handler Input Fields
     const minimumChangedHandler = (event) => {
     const newGenerator = cloneDeep(props.generatorObject);
     newGenerator.minimum = event.target.value;
     props.setGeneratorObject(newGenerator);
-    //alert("neuer Generator mit Minumum: " + newGenerator );
+    console.log("neuer Generator mit Minumum: " + newGenerator );
     };
 
 // Change Handler Input Fields

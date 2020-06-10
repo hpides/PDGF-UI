@@ -7,17 +7,23 @@ import Select from "@material-ui/core/Select";
 import DistributionInputSubElement from "./DistributionInputSubElement";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      width: '100%',
+    input: {
+    fontSize: 22,
     },
-    select: {
-      fontSize: 20,
+    inputSelect: {
+    fontSize: 22,
     },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
+    outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
     },
-  }));
+    innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    backgroundColor: "yellow",
+    }, 
+    }));
 
 
 export default function DistributionInputElement(props){
@@ -28,36 +34,35 @@ export default function DistributionInputElement(props){
 
 return (
     <>
-            <Grid container>
-                <Grid item xs={leftColumnWidth}>
+        <Grid container className={classes.outerContainer}>      
+
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
                     <Typography  variant={fontSizeLeftColumn}>
                         Distribution
                     </Typography>
                 </Grid>
-                <Grid item xs={rightColumnWidth}>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        className={classes.select}
-                        fullWidth
-                        value={props.generatorObject.distributionVariables.type}
-                        onChange={(event) => props.distributionTypeChangedHandler(event)}
-                    >
-                        <MenuItem value="uniformDistribution">Uniform Distribution</MenuItem>
-                        <MenuItem value="normalDistribution">Normal Distribution</MenuItem>
-                        <MenuItem value="binomialDistribution">Binomial Distribution</MenuItem>
-                        <MenuItem value="exponentialDistribution">Exponential Distribution</MenuItem>
-                        <MenuItem value="logarithmicDistribution">Logarithmic Distribution</MenuItem>
-                    </Select>
-                </Grid>
-            </Grid>
-        
-        <Grid container>
-            <Grid item xs={leftColumnWidth}> 
-            <div/>      
             </Grid>
 
             <Grid item xs={rightColumnWidth}>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    className={classes.select}
+                    fullWidth
+                    value={props.generatorObject.distributionVariables.type}
+                    onChange={(event) => props.distributionTypeChangedHandler(event)}
+                >
+                    <MenuItem value="uniformDistribution">Uniform Distribution</MenuItem>
+                    <MenuItem value="normalDistribution">Normal Distribution</MenuItem>
+                    <MenuItem value="binomialDistribution">Binomial Distribution</MenuItem>
+                    <MenuItem value="exponentialDistribution">Exponential Distribution</MenuItem>
+                    <MenuItem value="logarithmicDistribution">Logarithmic Distribution</MenuItem>
+                </Select>
+            </Grid>
+        
+            
+            
             <DistributionInputSubElement 
                 expDLambdaValueChangedHandler={props.expDLambdaValueChangedHandler}
                 logDPValueChangedHandler={props.logDPValueChangedHandler}
@@ -66,7 +71,8 @@ return (
                 binomialDPValueChangedHandler={props.binomialDPValueChangedHandler}
                 binomialDNValueChangedHandler={props.binomialDNValueChangedHandler}
                 generatorObject={props.generatorObject}/>  
-            </Grid>
+        
+
         </Grid>    
     </>
                 

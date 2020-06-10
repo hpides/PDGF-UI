@@ -122,12 +122,12 @@ export default function FormReferenceGenerator(props) {
                     debbuger
                     {/*{props.currentSchemaLocal.tables.filter(x => { return x.tableId === props.generatorObject.referenceTable})[0].tableItems.map(row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}
                     
-                    {alert("currentSchemaLocal.tables: " + JSON.stringify(props.currentSchemaLocal.tables))}
-                    {alert("referenceTable: " + props.generatorObject.referenceTable )}
+                    {console.log("currentSchemaLocal.tables: " + JSON.stringify(props.currentSchemaLocal.tables))}
+                    {console.log("referenceTable: " + props.generatorObject.referenceTable )}
                     */} 
-                    {/*alert("referenceTable: " + props.generatorObject.referenceTable)*/}
-                    {/*alert("Tabellen SchemaLocal: " + JSON.stringify(props.currentSchemaLocal.tables))*/}
-                    {/*alert("Tabellen SchemaLocal gefilter mit ReferenceTable: " + JSON.stringify(props.currentSchemaLocal.tables.filter(x => { 
+                    {/*console.log("referenceTable: " + props.generatorObject.referenceTable)*/}
+                    {/*console.log("Tabellen SchemaLocal: " + JSON.stringify(props.currentSchemaLocal.tables))*/}
+                    {/*console.log("Tabellen SchemaLocal gefilter mit ReferenceTable: " + JSON.stringify(props.currentSchemaLocal.tables.filter(x => { 
                         return (x.tableId === props.generatorObject.referenceTable)})))*/}
                         {/*props.currentSchemaLocal.tables.map(x => 
                         { console.log("x.tableId: " + x.tableId + "  type: " + typeof(x.tableId) + "  RefTableId: " + props.generatorObject.referenceTable + "  typ: " + typeof(props.generatorObject.referenceTable) + "  Vergleich:  " + (x.tableId === props.generatorObject.referenceTable))})*/}

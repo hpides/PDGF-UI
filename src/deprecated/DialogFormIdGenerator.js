@@ -191,12 +191,12 @@ export default function DialogFormIdGenerator(props) {
     const addUidToGenerator = () => {
       const miliSecondsFrom1970To2020 = 1577785488*1000;
       const uid = Date.now() - miliSecondsFrom1970To2020; 
-      //alert(uid);
+      //console.log(uid);
       const newGenerator = cloneDeep(generatorObject);
       newGenerator.uid = uid;
-      //alert(JSON.stringify(newGenerator));
+      //console.log(JSON.stringify(newGenerator));
       setGeneratorObject(newGenerator);
-      //alert(JSON.stringify(newGenerator));
+      //console.log(JSON.stringify(newGenerator));
       return null;
   }
 

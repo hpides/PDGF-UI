@@ -196,7 +196,7 @@ export default function DialogUniversalGeneratorForm(props) {
 
 
     const renderSwitch = () => {
-        //alert("entered renderSwitch-Statement with generatorTpye: " + props.generatorType);
+        console.log("entered renderSwitch-Statement with generatorTpye: " + props.generatorType);
         switch (props.selectedGeneratorType) {
           
           case "IdGenerator":

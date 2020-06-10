@@ -44,9 +44,9 @@ createXmlForPDGF = () => {
     const createCustomSystemVariableTags = (customSystemVariables) => {
       let result = "";
       customSystemVariables.map((variable) => {
-      //alert(variable.name + " " + variable.type + " " + variable.value);
+      //console.log(variable.name + " " + variable.type + " " + variable.value);
       let output = `<property name= "${variable.name}" type="${variable.type}">${variable.value}</property>` + `\r\n`;
-      //alert(output);
+      //console.log(output);
       result = result + output;
       return output;
     })

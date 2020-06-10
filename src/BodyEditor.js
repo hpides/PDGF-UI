@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Grid from "@material-ui/core/Grid";
 import EditorButtonGroup from "./EditorButtonGroup";
 import DefaultVariablesComponent from "./DefaultVariablesComponent"
@@ -19,6 +19,9 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from "@material-ui/core/Button";
 import DraggableCore from "react-draggable";
+import Hotkeys from "react-hot-keys";
+import {useHotkeys} from "react-hotkeys-hook";
+
 
 
 
@@ -39,9 +42,26 @@ export default function BodyEditor(props){
     const [fieldInFocus, setFieldInFocus] = useState({tableId: "", rowId: ""});
     const [isOpenDialogUniGenForm, setIsOpenDialogUniGenForm] = useState(false);
     const [copyGeneratorObject, setCopyGeneratorObject] = useState({emptyGenerator});
+    const [dragTableEnabled, setDragTableEnabled] = useState(true);
+    const [dragButtonGroupEnabled, setDragButtonGroupEnabled] = useState(true);
+    const [tableCounter, setTableCounter] = useState(1);
+
+
+    const nodeRef = React.useRef(null);
+
+
+    useHotkeys("alt+a", (event)=>{addNewTableHandler2()} );
+    useHotkeys("ctrl+k", (event)=>{event.preventDefault(); resetEditor()} );
+    useHotkeys("ctrl+c", (event)=>{event.preventDefault(); addNewTableHandler2()} );
+    useEffect(() => increaseTableCounter(), [tableCounter]);
 
 
 
+    const increaseTableCounter = () => {
+        const schemaNew = cloneDeep(currentSchemaLocal);
+        schemaNew.uids.tableCounter = tableCounter;
+        setCurrentSchemaLocal(schemaNew);
+    }
 
     const saveSchemaOnClickHandler = () => {
         addUidToSchema();
@@ -64,19 +84,19 @@ export default function BodyEditor(props){
 
 
     const selectGeneratorHandler = (uid) => {
-        alert("uid passed: " + uid);
+        console.log("uid passed: " + uid);
         const schemaNew = cloneDeep(currentSchemaLocal);
         const tableIndex = schemaNew.tables.findIndex(x => x.tableId === fieldInFocus.tableId);
-        alert("tableIndex:   " + tableIndex);
+        console.log("tableIndex:   " + tableIndex);
         const rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x=> x.rowId === fieldInFocus.rowId);
-        alert("rowIndex:   " + rowIndex);
+        console.log("rowIndex:   " + rowIndex);
         const generatorRepo = JSON.parse(localStorage.getItem("generatorRepository"));
-        alert("generatorRepo: " + generatorRepo);
+        console.log("generatorRepo: " + generatorRepo);
         const indexGenerator = generatorRepo.findIndex(x=> x.uid === uid);
-        alert("generatorIndex:   " + indexGenerator);
+        console.log("generatorIndex:   " + indexGenerator);
         schemaNew.tables[tableIndex].tableItems[rowIndex].generator = generatorRepo[indexGenerator];
         setCurrentSchemaLocal(schemaNew);
-        //alert("operation done!")
+        console.log("operation done!");
     };
 
 
@@ -106,7 +126,7 @@ export default function BodyEditor(props){
     const addGeneratorToSchema = (generatorObject) => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === fieldInFocus.tableId);
-        alert("addGeneratorToSchema tableIndex: " + tableIndex);
+        console.log("addGeneratorToSchema tableIndex: " + tableIndex);
         let rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x => x.rowId === fieldInFocus.rowId);
         schemaNew.tables[tableIndex].tableItems[rowIndex].generator = generatorObject;
         setCurrentSchemaLocal(schemaNew);
@@ -116,6 +136,7 @@ export default function BodyEditor(props){
     const addNewTableHandler = () => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let tableCounter = parseInt(schemaNew.uids.tableCounter);
+        console.log("tableCounter: " + tableCounter);
         let newTableName = "Table " + (tableCounter+1);
         let newTableJSON = {          
                 tableName: newTableName, 
@@ -136,6 +157,40 @@ export default function BodyEditor(props){
         schemaNew.tables.push(newTableJSON);
         setCurrentSchemaLocal(schemaNew);
     };
+
+
+
+    const addNewTableHandler2 = () => {
+        console.log("yoyo in da house!! - addNewTableHandler2");
+        let schemaNew = cloneDeep(currentSchemaLocal);
+        let t_count = tableCounter;
+        console.log("tableCounter: " + t_count);
+        let newTableName = "Table " + (t_count+1);
+        let newTableJSON = {          
+                tableName: newTableName, 
+                tableSize: defaultTableSize, 
+                tableId: (t_count+1),
+                rowCounter: 1,
+                tableItems: [
+                    {
+                        tableId: (tableCounter+1), 
+                        rowId: 1, 
+                        fieldName: "Enter Table Name", 
+                        generator: "Gen01", 
+                        isKey: "false"},
+                ],
+                functions: {},
+            };
+        setTableCounter(tableCounter + 1);
+        schemaNew.tables.push(newTableJSON);
+        setCurrentSchemaLocal(schemaNew);
+    };
+
+
+
+
+
+
 
 
     
@@ -314,11 +369,11 @@ export default function BodyEditor(props){
     };
   
     const deleteSchemaFromRepo = (schemaUid) => {
-        alert("deleteSchemaFromRepoCalled");
-        alert("SchemaUid: " + schemaUid);
+        console.log("deleteSchemaFromRepoCalled");
+        console.log("SchemaUid: " + schemaUid);
         let schemaRepo = JSON.parse(localStorage.getItem("schemaRepository"));
         let schemaIndex = schemaRepo.findIndex(x => x.uids.schemaUid === schemaUid);
-        alert("schemaIndex: " + schemaIndex);
+        console.log("schemaIndex: " + schemaIndex);
         schemaRepo.splice(schemaIndex, 1);
         localStorage.setItem("schemaRepository", JSON.stringify(schemaRepo));
     };
@@ -434,7 +489,7 @@ const handleCloseBlank = () => {
         const currentSchema = {...currentSchemaLocal};
         currentSchema.uids.schemaUid = uid;
         setCurrentSchemaLocal(currentSchema);
-        alert("In addVidToSchema. Uid Added: " + currentSchema.uids.schemaUid);
+        console.log("In addVidToSchema. Uid Added: " + currentSchema.uids.schemaUid);
         return null;
     };
 
@@ -446,8 +501,8 @@ const handleCloseBlank = () => {
         let tableIndex = currentSchemaLocal.tables.findIndex( x => x.tableId === tableId);
         let rowIndex = currentSchemaLocal.tables[tableIndex].tableItems.findIndex(x => x.rowId === rowId);
         console.log("GeneratorData: " + JSON.stringify(currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator));
-        (Object.keys(currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator).length !==0)? setUpEditDialog(tableId, rowId, generatorType) : alert("You have first to select a generator before you can edit it!")
-        alert("length generator object: " + Object.keys(currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator).length)};
+        (Object.keys(currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator).length !==0)? setUpEditDialog(tableId, rowId, generatorType) : console.log("You have first to select a generator before you can edit it!")
+        console.log("length generator object: " + Object.keys(currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator).length)};
 
     const setUpEditDialog = (tableId, rowId, generatorType) => {
         console.log("Entered loadGeneratorToEditDialog");
@@ -480,9 +535,19 @@ const handleCloseBlank = () => {
 
     
     const handleCloseDialogUniGenForm = () => {
-        //alert("entered: in handleCloseDialogUniGenForm");
+        console.log("entered: in handleCloseDialogUniGenForm");
         setIsOpenDialogUniGenForm(false);
     };
+
+
+
+    const bringToFront = (event) => {
+        let elems = document.getElementsByClassName('react-draggable');
+        for(let i=0; i< elems.length; i++){
+            elems[i].style.zIndex = 1;
+            event.currentTarget.style.zIndex = 2;
+            }
+    }
 
 
 
@@ -505,8 +570,8 @@ const handleCloseBlank = () => {
                        
                     </Grid>
                     <Grid item xs={3} style={{background: "white", paddingRight: "20px"}}>
-                        <DraggableCore>
-                            <div>
+                        <DraggableCore onStart={bringToFront} style={{position: "relative"}}>
+                            <div ref={nodeRef}>
                                 <EditorButtonGroup 
                                     addNewTableHandler = {addNewTableHandler}
                                     resetEditor ={resetEditor}
@@ -555,8 +620,8 @@ const handleCloseBlank = () => {
                     <Grid item xs={9.5}>
                         <div style={{ height: "100%", width: "100%", display: "flex",  flexDirection: "row",  justifyContent: "center", alignItems: "center", alignContent:"center", backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap", flexGrow: "1" }}>    
                         {currentSchemaLocal.tables.map(table => {return( 
-                            <DraggableCore>
-                                <div>
+                            <DraggableCore bounds="parent" onStart={bringToFront} style={{position: "relative"}}>
+                                <div ref={nodeRef}>
                                     <TableComponent
                                         key={table.tableId} 
                                         data={table} 
@@ -582,8 +647,8 @@ const handleCloseBlank = () => {
                     (<Grid item xs={12}>
                         <div fullWidth style={{ height: "100%", width: "100%", display: "flex",  flexDirection: "row",  justifyContent: "center", alignItems: "center", alignContent:"center", backgroundColor: "yellow", padding: "20px", borderColor: "white", borderStyle: "dashed", borderWidth: "1px", flexWrap: "wrap", flexGrow: "1" }}>     
                         {currentSchemaLocal.tables.map(table => {return( 
-                            <DraggableCore>
-                                <div>
+                            <DraggableCore bounds="parent" onStart={bringToFront} style={{position: "relative"}}>
+                                <div ref={nodeRef}>
                                     <TableComponent
                                         key={table.tableId} 
                                         data={table} 

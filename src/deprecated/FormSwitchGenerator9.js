@@ -52,9 +52,7 @@ export default function FormSwitchGenerator9(props) {
    
       <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
             <Grid direction="row" container style={{paddingLeft: "15px", paddingRight: "30px"}}>
-
-                {alert("Hi, I am Maverick!")}
-
+                
                 <Grid  item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
                   <Typography variant={fontSizeLeftColumn}>Generator:</Typography>
                 </Grid>

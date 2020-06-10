@@ -10,6 +10,7 @@ import React from "react";
 import TableSubComponent from "./TableSubComponent";
 import Button from "@material-ui/core/Button";
 import DraggableCore from "react-draggable";
+import NumberFormat from 'react-number-format'
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -68,7 +69,7 @@ export default function TableComponent(props){
           <tr className={classes.tr1}>
             <td className={classes.td} colSpan="2">
                    
-                <input 
+                <NumberFormat 
                     style={{fontSize: "20px", 
                             width: "", 
                             height: "44px", 
@@ -116,6 +117,23 @@ export default function TableComponent(props){
                             </div>
 
                             <div>
+                             
+                            <NumberFormat thousandSeparator={'.'} decimalSeparator={null} style={{fontSize: "16px", 
+                                        width: "", 
+                                        height: "22px", 
+                                        outlineColor: "darkblue", 
+                                        border: "none", 
+                                        background: "rgb(216, 72, 34)",
+                                        boxShadow: "inset 2px 2px 3px rgba(0,0,0,0.2)", 
+                                        paddingLeft: "10px",
+
+                                        borderRadius: "4px",
+                                        margin: "2px"}}
+                                        value={props.data.tableSize}
+                                        onChange={(event)=> {props.tableSizeChangedHandler(event, props.data.tableId)}} />
+                             
+                             
+                  {/*}           
                               <input 
                                 style={{fontSize: "16px", 
                                         width: "", 
@@ -131,7 +149,7 @@ export default function TableComponent(props){
                                 placeholder = "Enter Table Name"
                                 value={props.data.tableSize}
                                 onChange={(event)=> {props.tableSizeChangedHandler(event, props.data.tableId)}}
-                              />  
+                      />  */}
                           </div>
                       </div>
               </td>

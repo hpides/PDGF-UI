@@ -26,9 +26,9 @@ export default function IfGeneratorInputSubElement(props){
 
     const selectedGeneratorChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
-        alert("target.value: " + event.target.value);
+        console.log("target.value: " + event.target.value);
         newGenerator.generatorList[props.index].uid = event.target.value;
-        alert("newGenerator: " + JSON.stringify(newGenerator));
+        console.log("newGenerator: " + JSON.stringify(newGenerator));
 
         props.setGeneratorObject(newGenerator);
         //setGeneratorName();
@@ -45,7 +45,7 @@ export default function IfGeneratorInputSubElement(props){
     const setGeneratorName = () => {
         const newGenerator = cloneDeep(props.generatorObject);
         newGenerator.generatorList[props.index].name = props.selectedGenerator.name;
-        alert(JSON.stringify(newGenerator));
+        console.log(JSON.stringify(newGenerator));
         props.setGeneratorObject(newGenerator);
     };
 */
@@ -105,7 +105,7 @@ export default function IfGeneratorInputSubElement(props){
                 </Grid>
 
                 <Grid item style={{width: "40px", height: "40px"}} className={classes.framed} xs={1}>
-                    <IconButton onClick={() => {alert("More Information is coming soon!")}}>
+                    <IconButton onClick={() => {console.log("More Information is coming soon!")}}>
                         <SearchIcon className={classes.icon}/>
                     </IconButton>   
                 </Grid>

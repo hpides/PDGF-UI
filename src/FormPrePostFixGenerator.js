@@ -58,20 +58,20 @@ export default function FormPrePostFixGenerator(props) {
    
         <Grid container className={classes.outerContainer}>
 
-            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth}>
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
                         PreFix:
                     </Typography>
                 </Grid>
-            </Grid>>
+            </Grid>
 
             <Grid  item xs={rightColumnWidth}>
                 <Input 
                     className={classes.input} 
                     type="text" 
-                    placeholder="Enter PreFix" 
                     fullWidth
+                    placeholder="Enter PreFix" 
                     value={props.generatorObject.preFix} 
                     onChange={(event) => preFixChangedHandler(event)}/>
             </Grid>
@@ -89,16 +89,19 @@ export default function FormPrePostFixGenerator(props) {
               <Input 
                 className={classes.input} 
                 type="text" 
-                placeholder="Enter PostFix" 
                 fullWidth
+                placeholder="Enter PostFix" 
                 value={props.generatorObject.postFix} 
                 onChange={(event) => postFixChangedHandler(event)}/>
             </Grid>
 
-            <Grid  item xs={leftColumnWidth}>
-              <Typography variant={fontSizeLeftColumn}>Generator:</Typography>
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Generator:
+                    </Typography>
+                </Grid>
             </Grid>
-
 
             <Grid item xs={rightColumnWidth}>
                 <TextField

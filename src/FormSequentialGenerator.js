@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import SequentialGeneratorSelectionField from "./SequentialGeneratorSelectionField";
 import cloneDeep from 'lodash/cloneDeep';
+import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles({
     input: {
@@ -77,8 +78,8 @@ export default function FormSequentialGenerator(props) {
                     />
             </Grid>
 
-            {props.generatorObject.concatenateElements? 
-                (<>
+            <Collapse in={props.generatorObject.concatenateElements}>
+                <>
                     <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                         <Grid item >
                             <Typography variant={fontSizeLeftColumn}>
@@ -96,11 +97,10 @@ export default function FormSequentialGenerator(props) {
                             value={props.generatorObject.delimiter} 
                             onChange={(event) => delimiterChangedHandler(event)}/>
                     </Grid>
-                  </>  
-                ): null }
-               
+                </>  
+               </Collapse>
       
-
+            <Grid container item xs={12}>
             {props.generatorObject.generatorList.map((generator, index) => <SequentialGeneratorSelectionField 
                                                                                 generator={generator} 
                                                                                 index={index}
@@ -108,20 +108,20 @@ export default function FormSequentialGenerator(props) {
                                                                                 setGeneratorObject={props.setGeneratorObject}/>
                
             )}
+            </Grid>
 
-
-          <Grid container item className={classes.footer_row}>
-              <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start", alignItems: "center"}}>
-                    <IconButton onClick={() => {addGenerator()}}>
-                        <AddCircleIcon/>
-                    </IconButton>
-                    <Typography 
-                        className={classes.actionLink} 
-                        onClick={() => {addGenerator()}}>
-                        Add Generator
-                    </Typography>
-              </div>
-          </Grid>  
+            <Grid container item xs={12}>
+                <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start", alignItems: "center"}}>
+                      <IconButton onClick={() => {addGenerator()}}>
+                          <AddCircleIcon/>
+                      </IconButton>
+                      <Typography 
+                          className={classes.actionLink} 
+                          onClick={() => {addGenerator()}}>
+                          Add Generator
+                      </Typography>
+                </div>
+            </Grid>  
 
 
       </Grid>

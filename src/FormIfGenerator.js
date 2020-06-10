@@ -58,75 +58,74 @@ export default function FormIfGenerator(props) {
   return (
     <>
     
-  
-    <Grid container className={classes.outerContainer}>
+        <Grid container className={classes.outerContainer}>
 
-            <Grid direction="row" container  style={{paddingLeft: "15px", paddingRight: "0px"}}>
+            <Grid item xs={12} style={{padding: "0px 0px",}}>
+                <Typography variant={fontSizeLeftColumn}>Select Generator:</Typography>
+            </Grid>
 
-                <Grid item xs={12} style={{padding: "0px 0px",}}>
-                    <Typography variant={fontSizeLeftColumn}>Select Generator:</Typography>
+            <Grid item xs={12} >
+                <IfGeneratorInputComponent
+                    generatorObject={props.generatorObject}
+                    setGeneratorObject={props.setGeneratorObject}/>
+            </Grid>
+
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        If:
+                    </Typography>
                 </Grid>
+            </Grid>
 
-
-                <Grid item xs={12} >
-                    <IfGeneratorInputComponent
-                        generatorObject={props.generatorObject}
-                        setGeneratorObject={props.setGeneratorObject}/>
+            <Grid item xs={rightColumnWidth}>
+                <Input 
+                    className={classes.input} 
+                    type="text" 
+                    placeholder="Enter If-Condition" 
+                    value={props.generatorObject.if} 
+                    fullWidth
+                    multiline
+                    onChange={(event) => ifChangedHandler(event)}/>
+            </Grid>
+        
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Then:
+                    </Typography>
                 </Grid>
+            </Grid>
 
+            <Grid  item xs={rightColumnWidth}>
+                <Input 
+                    className={classes.input} 
+                    type="text" 
+                    placeholder="Enter Output for if = true" 
+                    value={props.generatorObject.then} 
+                    fullWidth
+                    onChange={(event) => thenChangedHandler(event)}/>
+            </Grid>
 
-                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                    <Grid item >
-                        <Typography variant={fontSizeLeftColumn}>
-                          If:
-                        </Typography>
-                    </Grid>
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Else:
+                    </Typography>
                 </Grid>
+            </Grid>
 
-                <Grid item xs={rightColumnWidth}>
-                    <Input 
-                        className={classes.input} 
-                        type="text" 
-                        placeholder="Enter If-Condition" 
-                        value={props.generatorObject.if} 
-                        fullWidth
-                        multiline
-                        onChange={(event) => ifChangedHandler(event)}/>
-                </Grid>
-            
-                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                    <Grid item >
-                        <Typography variant={fontSizeLeftColumn}>
-                            Then:
-                        </Typography>
-                    </Grid>
-                </Grid>
+            <Grid  item xs={rightColumnWidth} style={{padding: "0px 0px",}}>
+                <Input 
+                    className={classes.input} 
+                    type="text" 
+                    placeholder="Enter Output for If=false" 
+                    fullWidth
+                    value={props.generatorObject.else} 
+                    onChange={(event) => elseChangedHandler(event)}/>
+            </Grid>
 
-                <Grid  item xs={rightColumnWidth}>
-                    <Input 
-                        className={classes.input} 
-                        type="text" 
-                        placeholder="Enter Output for if = true" 
-                        value={props.generatorObject.then} 
-                        fullWidth
-                        onChange={(event) => thenChangedHandler(event)}/>
-                </Grid>
-
-                <Grid  item xs={leftColumnWidth}>
-                    <Typography variant={fontSizeLeftColumn}>Else:</Typography>
-                </Grid>
-
-                <Grid  item xs={rightColumnWidth} style={{padding: "0px 0px",}}>
-                    <Input 
-                        className={classes.input} 
-                        type="text" 
-                        placeholder="Enter Output for If=false" 
-                        fullWidth
-                        value={props.generatorObject.else} 
-                        onChange={(event) => elseChangedHandler(event)}/>
-                </Grid>
-            </Grid>       
-      </Grid>
+        </Grid>
   
     </>
   );

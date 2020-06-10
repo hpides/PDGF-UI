@@ -66,69 +66,75 @@ export default function FormDateTimeGenerator(props) {
 
   return (
     <>
-  
-        <Grid container className={classes.outerContainer}>
-      
-            <Grid direction="row" container  style={{paddingLeft: "15px", paddingRight: "30px",}}>          
-
-                <Grid item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn}>Start-Date:</Typography>
+        <Grid container className={classes.outerContainer}>        
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Start-Date:
+                    </Typography>
                 </Grid>
+            </Grid>
 
-                <Grid item xs={rightColumnWidth}>
-                  <Input 
+            <Grid item xs={rightColumnWidth}>
+                <Input 
                     className={classes.input} 
                     type="date" 
                     placeholder="Enter Start-Date" 
                     value={props.generatorObject.startDate} 
                     onChange={(event) => startDateChangedHandler(event)}
                     fullWidth/>
+            </Grid>
+
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn} fullwidth>
+                        End-Date:
+                    </Typography>
                 </Grid>
+            </Grid>
 
-
-
-                <Grid item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn} fullwidth>End-Date:</Typography>
-                </Grid>
-
-                <Grid item xs={rightColumnWidth}>
-                  <Input 
+            <Grid item xs={rightColumnWidth}>
+                <Input 
                     className={classes.input} 
                     type="date" 
                     placeholder="Enter End-Date" 
                     value={props.generatorObject.endDate} 
                     onChange={(event) => endDateChangedHandler(event)}
                     fullWidth/>
+            </Grid>
+
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn} fullWidth >
+                        Disable RNG:
+                    </Typography>
                 </Grid>
+            </Grid>
+
+            <Grid item xs={rightColumnWidth}>
+              <Checkbox 
+                    inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
+                    checked={props.generatorObject.disableRNG}
+                    onChange={(event)=> {disableRNGChangedHandler(event)}}
+                    />
+            </Grid>
 
 
-                <Grid item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn} fullWidth >Disable RNG:</Typography>
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn} fullWidth>
+                        Fixed Step Size:
+                    </Typography>
                 </Grid>
+            </Grid>
 
-                <Grid item xs={rightColumnWidth}>
-                  <Checkbox 
-                        inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={props.generatorObject.disableRNG}
-                        onChange={(event)=> {disableRNGChangedHandler(event)}}
-                        />
-                </Grid>
-
-
-                <Grid item xs={leftColumnWidth}>
-                  <Typography variant={fontSizeLeftColumn} fullWidth>Fixed Step Size:</Typography>
-                </Grid>
-
-                <Grid item xs={rightColumnWidth}>
-                  <Checkbox 
-                        inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={props.generatorObject.fixedStepSize}
-                        onChange={(event)=> {fixedStepSizeChangedHandler(event)}}
-                        />
-                </Grid>
-
-                
-            </Grid>           
+            <Grid item xs={rightColumnWidth}>
+              <Checkbox 
+                    inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
+                    checked={props.generatorObject.fixedStepSize}
+                    onChange={(event)=> {fixedStepSizeChangedHandler(event)}}
+                    />
+            </Grid>       
       
       </Grid>
 

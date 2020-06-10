@@ -39,42 +39,44 @@ export default function SequentialGeneratorSelectionFields(props) {
         props.setGeneratorObject(newGenerator);
     };
 
-
   return (
     <>
-   
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-            <Grid direction="row" container  style={{paddingLeft: "15px", paddingRight: "30px"}}>
+        <Grid container className={classes.outerContainer}>
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Generator {props.index+1}:
+                    </Typography>
+                </Grid>
+            </Grid>
 
-                <Grid  item xs={leftColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                  <Typography variant={fontSizeLeftColumn}>Generator {toString(props.index+1)}:</Typography>
+            <Grid container display= "flex" flexDirection="row" justify="space-between" item xs={rightColumnWidth}>
+                <Grid item xs={10}>
+                    <TextField
+                        id="some-id"
+                        className={classes.select}                      
+                        select
+                        fullWidth
+                        value={props.generator.uid}
+                        onChange={(event) => selectedGeneratorChangedHandler(event)}
+                        SelectProps={{
+                            native: true,
+                        }}> 
+                        {(JSON.parse(localStorage.getItem("generatorRepository")).map(generator => { return <option value={generator.uid} key={generator.uid}>{generator.repoVariables.name}</option>}))}   
+                    </TextField>
                 </Grid>
 
-                <Grid  item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                <TextField
-                            id="standard-select-currency-native"
-                            className={classes.select}                      
-                            select
-                            fullWidth
-                            value={props.generator.uid}
-                            onChange={(event) => selectedGeneratorChangedHandler(event)}
-                            SelectProps={{
-                                native: true,
-                            }}> 
-                      {(JSON.parse(localStorage.getItem("generatorRepository")).map(generator => { return <option value={generator.uid} key={generator.uid}>{generator.repoVariables.name}</option>}))}
-                        
-                </TextField>
-                </Grid>
 
-
-                <Grid item xs={1}>
+                <Grid item xs={2}>
                     <IconButton aria-label="delete table" onClick={() => {deleteGenerator()}}> 
-                    <CloseIcon />
+                        <CloseIcon />
                     </IconButton>
                 </Grid>  
-            </Grid>       
+
+            </Grid>
+
+        </Grid>       
       
-      </div>
     </>
   );
 }
