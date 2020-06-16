@@ -64,7 +64,7 @@ export default function FormOtherFieldValueGenerator(props) {
                         native: true,
                     }}
                     > 
-
+                        <option value=""  key="-1">select</option>
                         {(props.currentSchemaLocal.tables.filter(x => { 
                             return (x.tableId === props.fieldInFocus.tableId)}))[0].tableItems.map(
                                 row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}          

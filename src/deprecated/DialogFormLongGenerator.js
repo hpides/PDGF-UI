@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function DialogFormLongGenerator(props) {
+export default function DialogFormLongNumberGenerator(props) {
     const classes = useStyles();
     const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
@@ -35,7 +35,7 @@ export default function DialogFormLongGenerator(props) {
 
     const intialGeneratorObject = {
         uid: "",
-        type: "longGenerator", 
+        generatorType: "longNumberGenerator", 
         minimum: "",
         maximum: "",
         hasAllDistinctValues: false,
@@ -64,7 +64,7 @@ export default function DialogFormLongGenerator(props) {
               fromLeft: "true"
         },
         repoVariables: {
-              type: "longGenerator",
+              generatorType: "longNumberGenerator",
               name: "",
               description: "",
               examples: "",
@@ -239,10 +239,10 @@ export default function DialogFormLongGenerator(props) {
     if (generatorObject.repoVariables.saveInRepo === true){
       props.saveGeneratorInLocalStorage(generatorObject);
       props.addGeneratorToSchema(generatorObject);
-      props.handleCloseLongGenerator();
+      props.handleCloseLongNumberGenerator();
     } else {
       props.addGeneratorToSchema(generatorObject);
-      props.handleCloseLongGenerator();
+      props.handleCloseLongNumberGenerator();
     }
   }
 
@@ -260,9 +260,9 @@ export default function DialogFormLongGenerator(props) {
   return (
     <>
     <Dialog 
-        onClose={props.handleCloseLongGenerator} 
+        onClose={props.handleCloseLongNumberGenerator} 
         aria-labelledby="simple-dialog-title" 
-        open={props.isOpenLongGenerator}
+        open={props.isOpenLongNumberGenerator}
         titel="Dialog"
         //TransitionComponent={Transition}
         keepMounted
@@ -384,7 +384,7 @@ export default function DialogFormLongGenerator(props) {
       </div>
 
       <DialogActions>
-          <Button onClick={()=>props.handleCloseLongGenerator} color="primary">
+          <Button onClick={()=>props.handleCloseLongNumberGenerator} color="primary">
             Cancel
           </Button>
           <Button 

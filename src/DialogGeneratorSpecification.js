@@ -19,7 +19,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import Slide from '@material-ui/core/Slide';
 import DialogActions from "@material-ui/core/DialogActions";
 import FormAggregationTest01 from "./FormAggregationTest01";
-import FormLongGenerator from "./FormLongGenerator";
+import FormLongNumberGenerator from "./FormLongNumberGenerator";
 import FormDoubleGenerator from "./FormDoubleGenerator";
 import FormRandomStringGenerator from "./FormRandomStringGenerator";
 import FormDictListGenerator from "./FormDictListGenerator";

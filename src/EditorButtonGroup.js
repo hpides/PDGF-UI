@@ -12,11 +12,12 @@ import BuildIcon from "@material-ui/icons/Build";
 import HelpIcon from "@material-ui/icons/Help";
 import DeleteIcon from "@material-ui/icons/Delete";
 import LoadIcon from '@material-ui/icons/SystemUpdateAlt';
+import PanToolIcon from "@material-ui/icons/PanTool";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    //display: 'flex',
-    //flexDirection: 'column',
+    display: 'flex',
+    flexDirection: 'row',
     //alignItems: 'center',
     //padding: "10px",
     //'& > *': {
@@ -34,9 +35,21 @@ const useStyles = makeStyles((theme) => ({
     alignContent: "center",
     justifyContent: "center",
   },
-  icon: {
+  iconButton: {
       height: "30px",
       width: "30px",
+  },
+  dragHandle: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignContent: "flex-start",
+    width: "20px",
+  },
+  handle: {
+    height: "16px",
+    width: "16px",
+    color: "rgba(190,190,190,0.2)",
   },
 }));
 
@@ -83,7 +96,7 @@ export default function EditorButtonGroup(props) {
             className={classes.button}
             variant="contained"
             color="default"
-            startIcon={<AddCircleIcon className={classes.icon}/>}
+            startIcon={<AddCircleIcon className={classes.iconButton}/>}
             onClick={props.addNewTableHandler}>
             Add Table
         </Button>
@@ -99,7 +112,7 @@ export default function EditorButtonGroup(props) {
             onClick={handleClick}
             variant="contained"
             color="default"
-            startIcon={<SaveIcon className={classes.icon}/>}>
+            startIcon={<SaveIcon className={classes.iconButton}/>}>
             Save 
         </Button>
         </LightTooltip>
@@ -110,13 +123,13 @@ export default function EditorButtonGroup(props) {
             open={Boolean(anchorEl)}
             onClose={handleCloseMenu}
             >
-                <MenuItem onClick={handleCloseMenu}>Save Schema on Disc</MenuItem>
+                <MenuItem onClick={() => {props.exportSchemaAsJSON(); handleCloseMenu()}}>Save Schema on Disc</MenuItem>
                 <MenuItem 
                     onClick={() => {handleCloseMenu(); props.handleClickOpenDialogSaveSchema()}}>
                       Save Schema in LocalStorage 
                 </MenuItem>
                 <MenuItem onClick={handleCloseMenu}>Save complete State on Disc</MenuItem>
-                <MenuItem onClick={handleCloseMenu}>Export PDGF-XML</MenuItem>
+                <MenuItem onClick={() => {props.createXmlForPDGF(); handleCloseMenu()}}>Export PDGF-XML</MenuItem>
                 <MenuItem onClick={handleCloseMenu}>Export JSON</MenuItem>
 
         </Menu>
@@ -132,7 +145,7 @@ export default function EditorButtonGroup(props) {
             onClick={handleClick2}
             variant="contained"
             color="default"
-            startIcon={<LoadIcon className={classes.icon}/>}>
+            startIcon={<LoadIcon className={classes.iconButton}/>}>
           Load
         </Button>
         </LightTooltip>
@@ -160,12 +173,13 @@ export default function EditorButtonGroup(props) {
             className={classes.button}
             variant="contained"
             color="default"
-            startIcon={<DeleteIcon className={classes.icon}/>}
+            startIcon={<DeleteIcon className={classes.iconButton}/>}
             onClick={()=>{props.resetEditor()}}>
           Reset
         </Button>
     
         </LightTooltip>
+        <div className={classes.dragHandle}> <PanToolIcon className={classes.handle}/> </div>
 
     </div>
   );

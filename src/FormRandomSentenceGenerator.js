@@ -34,19 +34,25 @@ export default function DialogFormRandomSentenceGenerator(props) {
     
     // Change Handler numberOfCharacters
 
-    const numberOfCharactersChangedHandler = (event, newValue) => {
+    const minimumNumberOfCharactersChangedHandler = (event, newValue) => {
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.numberOfCharacters = newValue;
+        newGenerator.minimum = newValue;
         props.setGeneratorObject(newGenerator);
     };
 
     // Change Handler Input Fields
+    const maximumNumberOfCharactersChangedHandler = (event) => {
+        const newGenerator = cloneDeep(props.generatorObject);
+        newGenerator.maximum = event.target.value;
+        props.setGeneratorObject(newGenerator);
+    };
+
+  
     const numberOfDistinctCharactersChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
         newGenerator.numberOfDistinctCharacters = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
-
    
     // Change Handler Distribution Component
     
@@ -112,7 +118,7 @@ export default function DialogFormRandomSentenceGenerator(props) {
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                        Number of Characters:
+                        Minimum Number of Characters:
                     </Typography>
                 </Grid>
             </Grid>
@@ -122,17 +128,15 @@ export default function DialogFormRandomSentenceGenerator(props) {
                   className={classes.input} 
                   type="number" 
                   fullWidth
-                  placeholder="Enter # of characters" 
-                  value={props.generatorObject.numberOfCharacters} 
-                  onChange={(event) => numberOfCharactersChangedHandler(event)}/>
-
+                  placeholder="Enter minimal number of characters" 
+                  value={props.generatorObject.minimum} 
+                  onChange={(event) => minimumNumberOfCharactersChangedHandler(event)}/>
             </Grid>
-
 
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                        Number of Distinct Characters:
+                       Maximum Number of Characters:
                     </Typography>
                 </Grid>
             </Grid>
@@ -142,11 +146,32 @@ export default function DialogFormRandomSentenceGenerator(props) {
                 className={classes.input} 
                 type="number" 
                 fullWidth
-                placeholder="Enter # of distinct characters" 
-                value={props.generatorObject.numberDistinctCharacters} 
-                onChange={(event) => numberOfDistinctCharactersChangedHandler(event)}/>
+                placeholder="Enter maximum number characters" 
+                value={props.generatorObject.maximum} 
+                onChange={(event) => maximumNumberOfCharactersChangedHandler(event)}/>
             </Grid>
                
+
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                       Number of distinct Characters:
+                    </Typography>
+                </Grid>
+            </Grid>
+
+            <Grid  item xs={rightColumnWidth}>
+              <Input 
+                className={classes.input} 
+                type="number" 
+                fullWidth
+                placeholder="Enter maximum number characters" 
+                value={props.generatorObject.numberOfDistinctCharacters} 
+                onChange={(event) => numberOfDistinctCharactersChangedHandler(event)}/>
+            </Grid>
+
+
+
             <Grid  item xs={12}>
                 <DistributionInputElement 
                     distributionTypeChangedHandler={distributionTypeChangedHandler}

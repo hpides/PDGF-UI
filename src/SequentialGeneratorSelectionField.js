@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React , {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -25,11 +25,20 @@ export default function SequentialGeneratorSelectionFields(props) {
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
 
+    const [selectedValue, setSelectedValue] = useState(0);
+   
+   /* useEffect(() => {
+        const newGenerator = cloneDeep(props.generatorObject);
+        const generatorRepo = JSON.parse(localStorage.getItem("generatorRepository"));
+        newGenerator.generatorList[props.index] = event.target.value;
+    })*/
   
     // Change Handler Input Fields
     const selectedGeneratorChangedHandler = (event) => {
+        setSelectedValue(event.target.value);
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.generatorList[props.index].uid = event.target.value;
+        const generatorRepo = JSON.parse(localStorage.getItem("generatorRepository"));
+        newGenerator.generatorList[props.index]= generatorRepo[event.target.value];
         props.setGeneratorObject(newGenerator);
     };
 
@@ -57,12 +66,14 @@ export default function SequentialGeneratorSelectionFields(props) {
                         className={classes.select}                      
                         select
                         fullWidth
-                        value={props.generator.uid}
+                        value={selectedValue}
                         onChange={(event) => selectedGeneratorChangedHandler(event)}
                         SelectProps={{
                             native: true,
                         }}> 
-                        {(JSON.parse(localStorage.getItem("generatorRepository")).map(generator => { return <option value={generator.uid} key={generator.uid}>{generator.repoVariables.name}</option>}))}   
+
+                        <option value="" key="-1">select</option>
+                        {(JSON.parse(localStorage.getItem("generatorRepository")).map((generator, index) => { return <option value={index} key={generator.uid}>{generator.repoVariables.name}</option>}))}   
                     </TextField>
                 </Grid>
 

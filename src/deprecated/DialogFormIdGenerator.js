@@ -36,7 +36,7 @@ export default function DialogFormIdGenerator(props) {
 
     const intialGeneratorObject = {
         uid:"",
-        type: "IdGenerator", 
+        generatorType: "IdGenerator", 
         minimum: "",
         maximum: "",
         hasAllDistinctValues: false,
@@ -65,7 +65,7 @@ export default function DialogFormIdGenerator(props) {
               fromLeft: "true"
         },
         repoVariables: {
-              type: "idGenerator",
+              generatorType: "idGenerator",
               saveInRepo: false,
               name: "",
               description: "",

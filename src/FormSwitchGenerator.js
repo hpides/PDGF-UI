@@ -34,23 +34,25 @@ export default function FormSwitchGenerator(props) {
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
     const [caseOutcomeSetIdCounter, setCaseOutcomeSetIdCounter] = useState(1);
+    const [indexSelectedGenerator, setIndexSelectedGenerator] = useState(0);
 
     // Change Handler Input Fields
     const defaultChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.default = event.target.value;
+        newGenerator.default.staticValue = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
 
-    const underlyingGeneratorChangedHandler = (event) => {
+    const subGeneratorChangedHandler = (event) => {
+      setIndexSelectedGenerator(event.target.value);
       const newGenerator = cloneDeep(props.generatorObject);
-      newGenerator.underlyingGenerator = event.target.value;
+      newGenerator.subGeneratorObject = JSON.parse(localStorage.getItem("generatorRepository"))[event.target.value];
       props.setGeneratorObject(newGenerator);
   }; 
 
     const addCaseOutcomeSet = () => {
       const newGenerator = cloneDeep(props.generatorObject);
-      const newCaseOutcomeSet = {id: caseOutcomeSetIdCounter, case: "", outcome: ""};
+      const newCaseOutcomeSet = {id: caseOutcomeSetIdCounter, caseValue: "", outcomeGeneratorObject: "", generatorType: "staticValueGenerator", staticValue: ""};
       newGenerator.caseOutcomeSets.push(newCaseOutcomeSet);
       props.setGeneratorObject(newGenerator); 
       setCaseOutcomeSetIdCounter(caseOutcomeSetIdCounter +1);
@@ -76,14 +78,14 @@ export default function FormSwitchGenerator(props) {
                 className={classes.select}                      
                 select
                 fullWidth
-                value={props.generatorObject.underlyingGenerator}
-                onChange={(event) => underlyingGeneratorChangedHandler(event)}
+                value={indexSelectedGenerator}
+                onChange={(event) => subGeneratorChangedHandler(event)}
                 SelectProps={{
                     native: true,
                 }}> 
                   
                     <option value={1} key={-1}>None</option>
-                    {(JSON.parse(localStorage.getItem("generatorRepository")).map(generator => { return <option value={generator.uid} key={generator.uid}>{generator.repoVariables.name}</option>}))}
+                    {(JSON.parse(localStorage.getItem("generatorRepository")).map((generator,index) => { return <option value={index} key={generator.uid}>{generator.repoVariables.name}</option>}))}
                     
             </TextField>
             </Grid>
@@ -95,8 +97,8 @@ export default function FormSwitchGenerator(props) {
                                                                           generatorObject={props.generatorObject}
                                                                           setGeneratorObject={props.setGeneratorObject}
                                                                           id={set.id}
-                                                                          case={set.case}
-                                                                          outcome={set.outcome}
+                                                                          caseValue={set.caseValue}
+                                                                          outcome={set.staticValue}
                                                                           />})} 
             </Grid>  
 
@@ -128,7 +130,7 @@ export default function FormSwitchGenerator(props) {
                     type="text" 
                     placeholder="Enter Default" 
                     fullWidth
-                    value={props.generatorObject.default} 
+                    value={props.generatorObject.default.staticValue} 
                     onChange={(event) => defaultChangedHandler(event)}/>
             </Grid>     
       

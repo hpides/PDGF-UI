@@ -37,9 +37,9 @@ export default function FormSequentialGenerator(props) {
     const fontSizeLeftColumn = "h5";
     
     // Change Handler Input Fields
-    const concatenateElementsChangedHandler = (event) => {
+    const concatenateResultsChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.concatenateElements = event.target.checked;
+        newGenerator.concatenateResults = event.target.checked;
         props.setGeneratorObject(newGenerator);
     };
 
@@ -49,6 +49,12 @@ export default function FormSequentialGenerator(props) {
         props.setGeneratorObject(newGenerator);
     };
    
+    const delimitEmptyValuesChangedHandler = (event) => {
+        const newGenerator = cloneDeep(props.generatorObject);
+        newGenerator.delimitEmptyValues = event.target.checked;
+        props.setGeneratorObject(newGenerator);
+    };
+
     const addGenerator = () => {
       const newGenerator = cloneDeep(props.generatorObject);
       const newGeneratorSelection = {uid: ""};
@@ -65,7 +71,7 @@ export default function FormSequentialGenerator(props) {
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                        Concatenate Elements:
+                        Concatenate Results:
                     </Typography>
                 </Grid>
             </Grid>
@@ -73,13 +79,15 @@ export default function FormSequentialGenerator(props) {
             <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "blue"}}>
                 <Checkbox 
                     inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                    checked={props.generatorObject.concatenateElements}
-                    onChange={(event)=> {concatenateElementsChangedHandler(event)}}
+                    checked={props.generatorObject.concatenateResults}
+                    onChange={(event)=> {concatenateResultsChangedHandler(event)}}
                     />
             </Grid>
 
-            <Collapse in={props.generatorObject.concatenateElements}>
+            <Collapse in={props.generatorObject.concatenateResults}>
                 <>
+                <Grid container className={classes.outerContainer}>
+                    
                     <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                         <Grid item >
                             <Typography variant={fontSizeLeftColumn}>
@@ -97,8 +105,26 @@ export default function FormSequentialGenerator(props) {
                             value={props.generatorObject.delimiter} 
                             onChange={(event) => delimiterChangedHandler(event)}/>
                     </Grid>
+
+                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                        <Grid item >
+                            <Typography variant={fontSizeLeftColumn}>
+                                Delimit Empty Values:
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
+                    <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "blue"}}>
+                        <Checkbox 
+                            inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
+                            checked={props.generatorObject.delimitEmptyValues}
+                            onChange={(event)=> {delimitEmptyValuesChangedHandler(event)}}
+                        />
+                    </Grid>
+                </Grid>
+
                 </>  
-               </Collapse>
+            </Collapse>
       
             <Grid container item xs={12}>
             {props.generatorObject.generatorList.map((generator, index) => <SequentialGeneratorSelectionField 

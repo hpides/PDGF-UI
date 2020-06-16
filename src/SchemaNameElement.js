@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from '@material-ui/icons/Info';
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,6 +36,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SchemaNameElement(props){
     const classes = useStyles();
+    const toolTipSchemaName = `
+        Here some infos about the Schema ${props.schemaName}. 
+        It has been authored by author. Description here: 
+        But dont forget hapiness in life.`
+
     return(
         <Grid container display="flex" direction="row" justify="flex-start" className={classes.container}>
             {/* <Grid item>
@@ -62,9 +68,11 @@ export default function SchemaNameElement(props){
             </form>
             </Grid>
             <Grid item  >
+              <Tooltip title={toolTipSchemaName} placement="right">
                 <IconButton>
                   <InfoIcon/>
                 </IconButton>
+              </Tooltip>
             </Grid>
         </Grid>
     )

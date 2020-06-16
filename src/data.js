@@ -18,7 +18,7 @@ export const schemaDescriptionShort = {name: "Uni-Schema", description: "A schem
 export const defaultSystemVariables = [
     {name: "Root-Seed", value: "123456789", type: "number"},
     {name: "ScalingFactor", value: "1", type: "number"},
-    {name: "RNG", value: "DefaultRNG", type: "string"}] ;
+    ] ;
 
 
 
@@ -67,22 +67,22 @@ export const customSystemVariables = [
 
 
 export const rawGeneratorDescriptions = [
-   {name: "IdGenerator", description: "Generates consecutive Ids from 0 or any given minimum value.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "IdGenerator",},
-   {name: "DoubleGenerator", description: "Generate a 64bit floating point values between min and max..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DoubleGenerator",},
-   {name: "LongGenerator", description: "Generates a 64Bit integer value between min and max.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "LongGenerator",},
-   {name: "DateTimeGenerator", description: "Generates dates within a specified time range.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DateTimeGenerator",},
-   {name: "RandomStringGenerator", description: "Generates strings in a size range with a specified set of characters.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "RandomStringGenerator",},
-   {name: "RandomSentenceGenerator", description: "Generates a sentence within a size range with pseudo grammar.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "RandomSentenceGenerator",},
-   {name: "DictListGenerator", description: "Uses a dictionary to generate single values or lists.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "DictListGenerator",},
-   {name: "ReferenceGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "ReferenceGenerator",},
-   {name: "IfGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "IfGenerator",},
-   {name: "ConstantValueGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "ConstantValueGenerator",},
-   {name: "PrePostFixGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "PrePostFixGenerator",},
-   {name: "SequentialGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "SequentialGenerator",},
-   {name: "SwitchGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "SwitchGenerator",},
-   {name: "Probability", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "ProbabilityGenerator",},
-   {name: "OtherFieldValueGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "OtherFieldValueGenerator",},
-   {name: "FormUUIDGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "FormUUIDGenerator",},
+   {name: "IdGenerator", description: "Generates consecutive Ids from 0 or any given minimum value.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "idGenerator",},
+   {name: "DoubleGenerator", description: "Generate a 64bit floating point values between min and max..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "doubleGenerator",},
+   {name: "LongNumberGenerator", description: "Generates a 64Bit integer value between min and max.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "longNumberGenerator",},
+   {name: "DateTimeGenerator", description: "Generates dates within a specified time range.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "dateTimeGenerator",},
+   {name: "RandomStringGenerator", description: "Generates strings in a size range with a specified set of characters.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "randomStringGenerator",},
+   {name: "RandomSentenceGenerator", description: "Generates a sentence within a size range with pseudo grammar.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "randomSentenceGenerator",},
+   {name: "DictListGenerator", description: "Uses a dictionary to generate single values or lists.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "dictListGenerator",},
+   {name: "ReferenceValueGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "referenceValueGenerator",},
+   {name: "IfGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "ifGenerator",},
+   {name: "StaticValueGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "staticValueGenerator",},
+   {name: "PrePostFixGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "prePostFixGenerator",},
+   {name: "SequentialGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "sequentialGenerator",},
+   {name: "SwitchGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "switchGenerator",},
+   {name: "Probability", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "probabilityGenerator",},
+   {name: "OtherFieldValueGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "otherFieldValueGenerator",},
+   {name: "UUIDGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "uuidGenerator",},
 ];
 
 
@@ -296,54 +296,6 @@ export const localeList = [
 
 
 
-export const emptySchema0 = {
-                  uids: {
-                     schemaUid: "007",
-                     tableCounter: 1,
-                  },
-                  info: {
-                     schemaName: "",
-                     description: "not yet described",
-                     author: "john doe",
-                     lastEdited: "",
-                  },
-                  tables: 
-                     [
-                        {
-                           tableName: "Table 1", 
-                           tableSize: 10, 
-                           tableId: 1,
-                           rowCounter: 1,
-                           tableItems: [
-                              {tableId: 1, 
-                                 rowId: 1, 
-                                 fieldName: "Enter Name", 
-                                 generator: {}, 
-                                 isKey: false},
-                           ],
-                        }
-                     ],
-                  functions: {},
-                  variables: {
-                     defaultVariables: [
-                        {variableId: 1, name: "Root-Seed", value: "123456789", type: "number"},
-                        {variableId: 2, name: "ScalingFactor", value: "1", type: "number"},
-                        {variableId: 3, name: "RNG", value: "DefaultRNG", type: "string"}
-                     ],
-                     customVariables:
-                        {variableCounter: 0,
-                        variableItems: [
-                           {variableId: 0, 
-                           name: "Enter Name", 
-                           value: "Enter Value", 
-                           type: "Enter Type"},
-                        ],
-                     },
-                  }
-}
-
-
-
 
 export const emptySchema = {
    uids: {
@@ -371,9 +323,8 @@ export const emptySchema = {
    functions: {},
    variables: {
       defaultVariables: [
-         {variableId: 1, name: "Root-Seed", value: "123456789", type: "number"},
-         {variableId: 2, name: "ScalingFactor", value: "1", type: "number"},
-         {variableId: 3, name: "RNG", value: "DefaultRNG", type: "string"}
+         {variableId: 1, name: "Root-Seed", value: "123456789", dataType: "long"},
+         {variableId: 2, name: "ScalingFactor", value: "1", dataType: "double"},
       ],
       customVariables:
          {variableCounter: 1,
@@ -381,7 +332,7 @@ export const emptySchema = {
             {variableId: 1, 
             name: "Variable Name", 
             value: "Enter Value", 
-            type: "Enter Type"},
+            dataType: "Enter Type"},
          ],
       },
    }
@@ -389,10 +340,79 @@ export const emptySchema = {
 
 
 
+export const specificGeneratorAttributes = {
+   dateTimeGenerator: {fieldType: "DATE", startDate: "", endDate: "", diableRng: false, fixedStepSize: false},
+   dictListGenerator: {fieldType: "VARCHAR", dictionary: "", size: 1, separator: "", disableRng: false, distribution: "", uniqueEntries: false},
+   doubleGenerator: {fieldType: "DOUBLE", minD: "", maxD: "", decimalPlaces: "", locale: "en-US", distinctValues: "", distribution: ""},
+   idGenerator: {fieldType: "NUMERIC",minimum: 0},
+   ifGenerator: {fieldType: "",generators: [], if: "", then: "", else: ""},
+   longNumberGenerator: {fieldType: "NUMERIC",minimum: "", maximum: "", numberOfDistinctCharacters:"", distribution: ""},
+   otherFieldValueGenerator: {fieldType: "", referenceField: ""},
+   prePostFixGenerator: {fieldType: "", preFix: "", postFix: "", generator: {}},
+   probabilityGenerator: {fieldType: "", disableShuffling: false, probabilityValueSets: []},
+   randomSentenceGenerator: {fieldType: "VARCHAR", minimumNumberOfCharacters: "", maximumNumberOfCharacters: "",  numberOfDistinctCharacters: "", unique: "", distribution: {}},
+   randomStringGenerator: {fieldType: "VARCHAR", minimumNumberOfCharacters: "", maximumNumberOfCharacters: "", charachters: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W","X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]},
+   referenceValueGenerator: {fieldType: "", referenceTable: "", referenceField: "", chooseBy: "", selectFrom: ""},
+   sequentialGenerator: {fieldType: "VARCHAR", concatenateResults: false, delimiter: "", delimitEmptyValues: true, generators: {}}, 
+   staticValueGenerator: {fieldType: "", staticValue: ""},
+   switchGenerator: {fieldType: "", generator: {}, caseSwitchSets: [], default: ""},
+   uuidGenerator: {fieldType: "VARCHAR", },
+}
+
+
+
+export const commonGeneratorAttributes = {
+   distributionVariables: {
+      type: "uniformDistribution",
+      normalDistribution: {
+        standardDeviation: "",
+        mean: "",
+      },
+      binomialDistribution: {
+        n: "",
+        p: "",
+      },
+      exponentialDistribution: {
+        lambda: "",
+      },
+      logarithmicDistribution: {
+        p: "",
+      },
+      },
+      nullValues: {
+         withNullValues: false,
+         percentNullValues: 0,
+      },
+      paddingVariables: {
+            withPadding: false,
+            numberCharacters: "",
+            fillCharacter: "",
+            fromLeft: true,
+      },
+      repoVariables: {
+            saveInRepo: false,
+            name: "",
+            description: "",
+            examples: "",
+            uid: "",
+            generatorType: "",
+            isRawGenerator: false,
+      },
+}
+
+
+
+
+
+
+
 export const emptyGenerator = {
    isRawGenerator: false,
    uid: "",
-   type: "", 
+   uniqueEntries: false,
+   generatorType: "", 
+   dataType: "",
+   characterSet: "",
    minimum: "",
    maximum: "",
    dictionary: "",
@@ -404,7 +424,7 @@ export const emptyGenerator = {
    hasAllDistinctValues: false,
    startDate: "",
    endDate: "",
-   disableRNG: false,
+   disableRng: false,
    numberOfCharacters: "",
    numberOfDistinctCharacters: "",
    generatorList: [{name: null, uid: null}],
@@ -418,12 +438,15 @@ export const emptyGenerator = {
    constantValue: "",
    probabilityList: [],
    disableShuffling: "",
-   concatenateElements: false,
+   concatenateResults: false,
    delimiter: "",
-   underlyingGenerator: "",
+   delimitEmptyValues: true,
+   subGenerator: "",
+   subGeneratorObject: {},
    valueProbabilitySets: [{id: 0, value: "another Value", probability: "another Probability",}],
-   caseOutcomeSets: [{id: 0, case: "", outcome: ""}],
-   default: "",
+   caseOutcomeSets: [{id: 0, caseValue: "", outcomeGeneratorObject: "", generatorType: "staticValueGenerator", staticValue: ""}],
+   staticValue: "",
+   default: {generatorType: "staticValueGenerator", staticValue: ""},
    //ggf id zur Refernzierung von Feldern.
 
    distributionVariables: {
@@ -464,3 +487,136 @@ export const emptyGenerator = {
 
 
 
+
+/*
+
+
+constantValueGenerator : {
+   constantValue: "",
+}
+
+dateTimeGenerator : {
+   startDate: "",
+   endDate: "",
+   disableRng: false,
+   useFixedStepSize: false,
+
+   outputFormat:  "yyyy-MM-dd H:mm:ss",
+   inputFormat: "yyyy-MM-dd H:mm:ss",
+}
+
+
+dictListGenerator: {
+   dictionary: "",
+   size: 0,
+   separator: "",
+   unique: false,
+   disableRng: false,
+   distribution: {uniformDistribution},
+   
+}
+
+doubleNumberGenerator: {
+   minD: "",
+   maxD: "",
+   decimalPlaces: -1,
+   locale: "en-US",
+   distinct: 0,
+   distribution: {uniformDistribution},
+
+   format:
+}
+
+idGenerator: {
+   minimum: 0,
+
+}
+
+ifGenerator: {
+   generators: {},
+   _if: "",
+   _then: "",
+   _else: "", 
+     
+
+}
+
+longNumberGenerator: {
+   max: "",
+   min: "",
+   unique: false,
+   distinct: 0,
+   distribution: {uniformDistribution},
+}
+
+
+otherFieldValueGenerator: {
+   reference: "",
+}
+
+prePostFixGenerator: {
+   preFix:
+   postFix:
+   generator: 
+}
+
+
+probabilityGenerator: {
+   disableRng: false,
+   valueProbabilitySets: {},
+
+}
+
+
+randomSentenceGenerator: {
+   min: "",
+   max: "",
+   unique: false,
+   distinct: 0,
+   distribution: {uniformDistribution},
+
+}
+
+randomStringGenerator: {
+   min: "",
+   max: "",
+   characters:  [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+}
+
+
+referenceValueGenerator: {
+   referenceField: "",
+   referenceTable: "",
+   choose: "",
+   from: "",
+
+}
+
+
+switchGenerator: {
+   generator: {},
+   _case: {},
+   default: {}
+}
+
+
+
+UUID Generator: {
+
+}
+
+
+
+
+
+
+
+}
+
+
+
+inputFormatArray = [ ""]
+
+
+
+*/

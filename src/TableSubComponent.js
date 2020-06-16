@@ -7,6 +7,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
 import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -79,32 +80,35 @@ export default function TableSubComponent(props){
         </td>
 
         <td className={classes.fieldNameField}>     
-
-            <input 
-                style={{fontSize: "16px", 
-                        width: "", 
-                        height: "36px", 
-                        outlineColor: "darkblue", 
-                        border: "none", 
-                        background: "white", 
-                        boxShadow: "inset 2px 2px 3px rgba(0,0,0,0.2)", 
-                        paddingLeft: "10px", 
-                        borderRadius: "4px",
-                        margin: "2px"}}
-                value={props.data.fieldName} 
-                onChange={(event) =>
-                {props.fieldNameChangedHandler(event, props.data.tableId, props.data.rowId)}}
-            />
+            <Tooltip placement="right" title='Enter the name of the field to be generated. Please do not use empty spaces and any special characters besides "-", "_"'>
+                <input 
+                    style={{fontSize: "16px", 
+                            width: "", 
+                            height: "36px", 
+                            outlineColor: "darkblue", 
+                            border: "none", 
+                            background: "white", 
+                            boxShadow: "inset 2px 2px 3px rgba(0,0,0,0.2)", 
+                            paddingLeft: "10px", 
+                            borderRadius: "4px",
+                            margin: "2px"}}
+                    value={props.data.fieldName} 
+                    onChange={(event) =>
+                    {props.fieldNameChangedHandler(event, props.data.tableId, props.data.rowId)}}
+                />
+            </Tooltip>
         </td>
 
 
         <td className={classes.generatorButtonField}>           
                 <div style={{display: "flex", justifyContent: "center", alignContent: "center"}}>
-                        <Button
-                            style={{marginLeft: "auto", marginRight: "auto"}}
-                            onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorDialog() }}>
-                                Select Generator
-                        </Button>
+                        <Tooltip placement="right" title="Press Button and get to the dialoge to select or create your generator.">
+                            <Button
+                                style={{marginLeft: "auto", marginRight: "auto"}}
+                                onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorSelectionDialog() }}>
+                                    Select Generator
+                            </Button>
+                        </Tooltip>
                 </div>
         </td>            
 
@@ -112,8 +116,10 @@ export default function TableSubComponent(props){
                 <div style={{display: "flex", justifyContent: "center", alignContent: "center" }}>
                         <IconButton
                             style={{marginLeft: "auto", marginRight: "auto"}}
-                            onClick={() => {props.loadGeneratorToEditDialog(props.data.tableId, props.data.rowId, props.data.generator.type)}}> 
-                            <BuildIcon  style={(Object.keys(props.data.generator).length===0)? {color: "red"}: undefined} className={classes.icon} />
+                            onClick={() => {props.loadGeneratorToEditDialog(props.data.tableId, props.data.rowId, props.data.generator.generatorType)}}> 
+                                <Tooltip placement="right" title="Edit Generator. Only clickable when a Generator is attached to the field">
+                                    <BuildIcon  style={(Object.keys(props.data.generator).length===0)? {color: "red"}: undefined} className={classes.icon} />
+                                </Tooltip>
                         </IconButton>    
                 </div>
         </td>
@@ -124,7 +130,9 @@ export default function TableSubComponent(props){
                     <IconButton 
                         style={{marginLeft: "auto", marginRight: "auto"}}
                         onClick={() => {props.deleteTableRowHandler(props.data.tableId, props.data.rowId)}}>
-                        <DeleteIcon className={classes.icon}/>
+                            <Tooltip placement="right" title="Delete Row">
+                                <DeleteIcon className={classes.icon}/>
+                            </Tooltip>
                     </IconButton>    
                 </div>
 
@@ -136,69 +144,3 @@ export default function TableSubComponent(props){
          
     )
 }
-
-
-
-
-
-/*
-export default function TableSubComponent(props){
-    const classes = useStyles();
-
-    return(
-    <Grid 
-        container className={classes.container} 
-        justify = "flex-end"
-        styles={{display: "flex", flexDirection: "row", alignItems: "center"}} 
-        xs={12}>
-            
-        <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed} xs={1}>
-        <div style={{display: "flex", justifycontent: "center", width: "40px", height: "40px" }}>
-            <IconButton>
-                <VpnKeyIcon className={classes.icon}/>
-            </IconButton>
-        </div>
-        </Grid>
-
-        <Grid container item style={{width: "200px"}} className={classes.framed}xs={6}>
-            <Input 
-                defaultValue="Enter Field Name" 
-                value={props.data.fieldName} 
-                onChange={(event) =>
-                {props.fieldNameChangedHandler(event, props.data.tableId, props.data.rowId)}}
-            />
-        </Grid>
-
-        <Grid container item style={{width: "150px"}} className={classes.framed}xs={3}>
-            <Button
-                onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorDialog() }}>
-                    Generator
-            </Button> 
-        </Grid>
-
-        <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed} xs={1}>
-        <div style={{display: "flex", justifycontent: "center", width: "40px", height: "40px" }}>
-            <IconButton
-                onClick={() => {props.loadGeneratorToEditDialog(props.data.tableId, props.data.rowId, props.data.generator.type)}}> 
-                <BuildIcon className={classes.icon} />
-            </IconButton>    
-        </div>
-        </Grid>
-
-        <Grid container item style={{width: "40px", height: "40px"}} className={classes.framed} xs={1}>
-        <div style={{display: "flex", justifycontent: "center", width: "40px", height: "40px" }}>
-            
-            <IconButton onClick={() => {props.deleteTableRowHandler(props.data.tableId, props.data.rowId)}}>
-                <DeleteIcon className={classes.icon}/>
-            </IconButton>    
-        </div>
-        </Grid> 
-               
-    </Grid>
-
-
-
-         
-    )
-}
-*/

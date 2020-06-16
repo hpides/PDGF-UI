@@ -48,10 +48,10 @@ export default function FormDateTimeGenerator(props) {
       props.setGeneratorObject(newGenerator);
     };
 
-    // Change Handler disableRNG
-    const disableRNGChangedHandler = (event) => {
+    // Change Handler disableRng
+    const disableRngChangedHandler = (event) => {
       const newGenerator = cloneDeep(props.generatorObject);
-      newGenerator.disableRNG = event.target.checked;
+      newGenerator.disableRng = event.target.checked;
       props.setGeneratorObject(newGenerator);
     };
 
@@ -114,8 +114,8 @@ export default function FormDateTimeGenerator(props) {
             <Grid item xs={rightColumnWidth}>
               <Checkbox 
                     inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                    checked={props.generatorObject.disableRNG}
-                    onChange={(event)=> {disableRNGChangedHandler(event)}}
+                    checked={props.generatorObjectRng}
+                    onChange={(event)=> {disableRngChangedHandler(event)}}
                     />
             </Grid>
 

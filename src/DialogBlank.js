@@ -49,7 +49,7 @@ export default function DialogBlank(props) {
 
       <DialogActions>
           
-          <Button onClick={()=>console.log("bye")} color="primary">
+          <Button style={{ color:"red"}} onClick={() => {console.log("bye")}}>
             Bye
           </Button>
       </DialogActions>  

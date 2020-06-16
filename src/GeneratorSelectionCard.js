@@ -21,14 +21,14 @@ const useStyles = makeStyles({
     transform: 'scale(0.8)',
   },
   name: {
-    fontSize: 20,
+    fontSize: 28,
   },
   description: {
-    fontSize: 12,
+    fontSize: 18,
     fontStyle: "italic",
   },
   examples: {
-    fontSize: 12,
+    fontSize: 18,
   },
 
   container: {
@@ -61,7 +61,7 @@ const deleteGeneratorFromRepo = (uid) => {
 
 
   return (
-      <Box className={classes.root} onClick={()=>{props.selectGeneratorHandler(props.generatorInRepo.uid); props.handleCloseGeneratorDialog()}} style={{height: "170px", width: "200px", margin: "3px"}}>
+      <Box className={classes.root} onClick={()=>{props.selectGeneratorHandler(props.generatorInRepo.uid); props.handleCloseGeneratorSelectionDialog()}} style={{height: "170px", width: "200px", margin: "3px"}}>
         <Grid container classeName={classes.container} direction="column" xs={12} style={{background: "inherit", padding: "4px",}}>
             <Grid container  className={classes.inner_container_top} xs={12} direction="row" justify="space-between" style={{background: "inherit"}}>
                 <Grid  item xs={9} style={{background: "inherit"}}>

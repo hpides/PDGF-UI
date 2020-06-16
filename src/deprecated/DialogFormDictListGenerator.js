@@ -38,13 +38,13 @@ export default function DialogFormDictListGenerator(props) {
 
     const intialGeneratorObject = {
         uid: "",
-        type: "dictListGenerator", 
+        generatorType: "dictListGenerator", 
         dictionary: "",
         size: "",
         separator: "",
         fixedStepSize: "",
         hasAllDistinctValues: false,
-        disableRNG: "",
+        disableRng: "",
         distributionVariables: {
               type: "uniformDistribution",
               normalDistribution: {
@@ -70,7 +70,7 @@ export default function DialogFormDictListGenerator(props) {
               fromLeft: "true"
         },
         repoVariables: {
-              type: "dictListGenerator",
+              generatorType: "dictListGenerator",
               name: "",
               description: "",
               examples: "",
@@ -132,9 +132,9 @@ export default function DialogFormDictListGenerator(props) {
   };
 
     // Change Handler Input Fields
-    const disableRNGChangedHandler = (event) => {
+    const disableRngChangedHandler = (event) => {
         const newGenerator = cloneDeep(generatorObject);
-        newGenerator.disableRNG = event.target.checked;
+        newGenerator.disableRng = event.target.checked;
         setGeneratorObject(newGenerator);
     };
 
@@ -394,8 +394,8 @@ const addUidToGenerator = () => {
                 <Grid container item xs={rightColumnWidth}>
                   <Checkbox 
                         inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={generatorObject.disableRNG}
-                        onChange={(event)=> {disableRNGChangedHandler(event)}}
+                        checked={generatorObject.disableRng}
+                        onChange={(event)=> {disableRngChangedHandler(event)}}
                         />
                 </Grid>
 

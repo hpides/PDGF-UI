@@ -33,9 +33,9 @@ export default function FormSwitchGenerator9(props) {
         props.setGeneratorObject(newGenerator);
     };
 
-    const underlyingGeneratorChangedHandler = (event) => {
+    const subGeneratorChangedHandler = (event) => {
       const newGenerator = cloneDeep(props.generatorObject);
-      newGenerator.underlyingGenerator = event.target.value;
+      newGenerator.subGenerator = event.target.value;
       props.setGeneratorObject(newGenerator);
   }; 
 
@@ -64,8 +64,8 @@ export default function FormSwitchGenerator9(props) {
                  
                             select
                             fullWidth
-                            value={props.generatorObject.underlyingGenerator}
-                            onChange={(event) => underlyingGeneratorChangedHandler(event)}
+                            value={props.generatorObject.subGenerator}
+                            onChange={(event) => subGeneratorChangedHandler(event)}
                             SelectProps={{
                                 native: true,
                             }}> 

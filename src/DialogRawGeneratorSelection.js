@@ -31,7 +31,7 @@ export default function DialogRawGeneratorSelection(props) {
 
   return (
     <Dialog 
-        onClose={props.handleCloseRawGeneratorDialog} 
+        onClose={props.handleCloseRawGeneratorSelectionDialog} 
         aria-labelledby="simple-dialog-title" 
         open={props.isOpenRawGeneratorDialog}
         maxWidth="md"
@@ -47,7 +47,7 @@ export default function DialogRawGeneratorSelection(props) {
                     <Button
                         variant="contained"
                         color="white"
-                        onClick={()=>{props.handleClickOpenGeneratorDialog()}}
+                        onClick={()=>{props.handleClickOpenGeneratorSelectionDialog()}}
                         className={classes.button}
                         endIcon={<BuildIcon />}
                     >
@@ -61,7 +61,7 @@ export default function DialogRawGeneratorSelection(props) {
                 <Grid container display="flex" justify="flex-start" flexWrap="wrap">
                  {props.data.map(element => { return <Grid key={element.uid} item xs={4}> <RawGeneratorSelectionCard 
                                                                               data = {element} 
-                                                                              handleCloseRawGeneratorDialog = {props.handleCloseRawGeneratorDialog}
+                                                                              handleCloseRawGeneratorSelectionDialog = {props.handleCloseRawGeneratorSelectionDialog}
                                                                               openInputMaskForSelectedGenerator={props.openInputMaskForSelectedGenerator}
                                                                               /> 
                                                       </Grid>})}
@@ -71,7 +71,7 @@ export default function DialogRawGeneratorSelection(props) {
 
       <DialogActions>
         <div> 
-            <Button onClick={()=>props.handleCloseDialogRawGeneratorSelection()} color="primary">
+            <Button onClick={()=>props.handleCloseRawGeneratorSelectionDialog()} color="primary">
                 Cancel
             </Button>
         </div>

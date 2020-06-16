@@ -35,7 +35,7 @@ export default function DialogFormRandomStringGenerator(props) {
 
     const intialGeneratorObject = {
         uid: "",
-        type: "randomStringGenerator", 
+        generatorType: "randomStringGenerator", 
         numberOfCharacters: [10,30],
         numberOfDistinctCharacters: "",
         distributionVariables: {
@@ -63,7 +63,7 @@ export default function DialogFormRandomStringGenerator(props) {
               fromLeft: "true"
         },
         repoVariables: {
-              type: "randomStringGenerator",
+              generatorType: "randomStringGenerator",
               name: "",
               description: "",
               examples: "",

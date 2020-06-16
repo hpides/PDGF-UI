@@ -10,6 +10,7 @@ import React from "react";
 import TableSubComponent from "./TableSubComponent";
 import Button from "@material-ui/core/Button";
 import DraggableCore from "react-draggable";
+import Input from "@material-ui/core/Input";
 import NumberFormat from 'react-number-format'
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +38,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "lightgreen",
   },
   closeIcon: {
-    width: "20px",
+    width: "25px",
+    height: "25px",
+    paddingBottom: "25px",
+    paddingRight: "15px",
   },
   sizeField: {
     width: "80px",
@@ -46,12 +50,13 @@ const useStyles = makeStyles((theme) => ({
   closeIconField: {
     width: "60px",
     border: "1px solid black",
-    textAlign: "right",
+    textAlign: "right",   
   },
   addButton: {
     margin: "3px",
     width: "150px",
     height: "34",
+    fontSize: "16px",
   },
   
   }));
@@ -69,7 +74,7 @@ export default function TableComponent(props){
           <tr className={classes.tr1}>
             <td className={classes.td} colSpan="2">
                    
-                <NumberFormat 
+                <Input
                     style={{fontSize: "20px", 
                             width: "", 
                             height: "44px", 
@@ -80,6 +85,7 @@ export default function TableComponent(props){
                             paddingLeft: "10px", 
                             borderRadius: "4px",
                             margin: "2px"}}
+                    type="text"
                     placeholder = "Enter Table Name"
                     value={props.data.tableName}
                     onChange={(event) => {console.log("Wert: " + event.target.value + "TableId: " + props.data.tableId); props.tableNameChangedHandler(event, props.data.tableId)}}
@@ -167,10 +173,14 @@ export default function TableComponent(props){
 
              
              <td className={classes.closeIconField}>
-                          <IconButton className={classes.closeIcon} aria-label="delete table" onClick={() => {props.deleteTableHandler(props.data.tableId)}}> 
-                            <CloseIcon />
-                          </IconButton>
-               </td>         
+                         
+                            
+                            <IconButton className={classes.closeIcon} aria-label="delete table" onClick={() => {props.deleteTableHandler(props.data.tableId)}}> 
+                                <CloseIcon />
+                            </IconButton>
+                           
+                          
+            </td>         
                    
           </tr>
           {props.data.tableItems.map(element => {return <TableSubComponent 
@@ -178,8 +188,8 @@ export default function TableComponent(props){
                                                             data ={element} 
                                                             fieldNameChangedHandler={props.fieldNameChangedHandler}
                                                             deleteTableRowHandler={props.deleteTableRowHandler}
-                                                            handleClickOpenGeneratorDialog = {props.handleClickOpenGeneratorDialog}
-                                                            handleCloseGeneratorDialog = {props.handleCloseGeneratorDialog}
+                                                            handleClickOpenGeneratorSelectionDialog = {props.handleClickOpenGeneratorSelectionDialog}
+                                                            handleCloseGeneratorSelectionDialog = {props.handleCloseGeneratorSelectionDialog}
                                                             isOpenGeneratorDialog = {props.isOpenGeneratorDialog}
                                                             setFieldInFocusHandler={props.setFieldInFocusHandler}
                                                             loadGeneratorToEditDialog={props.loadGeneratorToEditDialog}

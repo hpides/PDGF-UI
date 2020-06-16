@@ -35,10 +35,10 @@ export default function DialogFormDateTimeGenerator(props) {
 
     const intialGeneratorObject = {
         uid: "",
-        type: "dateTimeGenerator", 
+        generatorType: "dateTimeGenerator", 
         startDate: "",
         endDate: "",
-        disableRNG: "",
+        disableRng: "",
         hasAllDistinctValues: false,
         fixedStepSize: "",
         distributionVariables: {
@@ -66,7 +66,7 @@ export default function DialogFormDateTimeGenerator(props) {
               fromLeft: "true"
         },
         repoVariables: {
-              type: "dateTimeGenerator",
+              generatorType: "dateTimeGenerator",
               name: "",
               description: "",
               examples: "",
@@ -91,10 +91,10 @@ export default function DialogFormDateTimeGenerator(props) {
       setGeneratorObject(newGenerator);
     };
 
-    // Change Handler disableRNG
-    const disableRNGChangedHandler = (event) => {
+    // Change Handler disableRng
+    const disableRngChangedHandler = (event) => {
       const newGenerator = cloneDeep(generatorObject);
-      newGenerator.disableRNG = event.target.checked;
+      newGenerator.disableRng = event.target.checked;
       setGeneratorObject(newGenerator);
     };
 
@@ -268,8 +268,8 @@ export default function DialogFormDateTimeGenerator(props) {
                 <Grid  item xs={rightColumnWidth}>
                   <Checkbox 
                         inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={generatorObject.disableRNG}
-                        onChange={(event)=> {disableRNGChangedHandler(event)}}
+                        checked={generatorObject.disableRng}
+                        onChange={(event)=> {disableRngChangedHandler(event)}}
                         />
                 </Grid>
 

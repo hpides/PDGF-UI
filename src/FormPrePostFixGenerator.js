@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -31,7 +31,20 @@ export default function FormPrePostFixGenerator(props) {
     const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
     const fontSizeLeftColumn = "h5";
+    
+    
+    useEffect(()=> {
+        console.log("in useEffect! GeneratorObject right now: " + JSON.stringify(props.generatorObject));
+        const generatorRepo = JSON.parse(localStorage.getItem("generatorRepository"));
+        console.log("subGenerator: " + JSON.stringify(props.generatorObject.subGenerator));
+        //const index = generatorRepo.findIndex(x=>x.uid === props.generatorObject.subGenerator);
+        //console.log("index: " + index)
+        console.log("generatorRepo: " + JSON.stringify(generatorRepo));
+        const newGenerator = cloneDeep(props.generatorObject);
+        newGenerator.subGeneratorObject = generatorRepo[props.generatorObject.subGeneratorIndex];
+        props.setGeneratorObject(newGenerator);
 
+    }, [props.generatorObject.subGeneratorIndex]);   
   
     // Change Handler Input Fields
     const preFixChangedHandler = (event) => {
@@ -46,9 +59,10 @@ export default function FormPrePostFixGenerator(props) {
         props.setGeneratorObject(newGenerator);
     };
 
-    const underlyingGeneratorChangedHandler = (event) => {
+    const subGeneratorChangedHandler = (event) => {
+        console.log("in subGenChangedHander. Uid: " + event.target.value);
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.underlyingGenerator = event.target.value;
+        newGenerator.subGeneratorIndex = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
    
@@ -109,14 +123,17 @@ export default function FormPrePostFixGenerator(props) {
                     className={classes.select}                      
                     select
                     fullWidth
-                    value={props.generatorObject.underlyingGenerator}
-                    onChange={(event) => underlyingGeneratorChangedHandler(event)}
+                    value={props.generatorObject.subGeneratorIndex}
+                    onChange={(event) => subGeneratorChangedHandler(event)}
                     SelectProps={{
                         native: true,
                     }}> 
                       
-                        <option value={null} key={0}>None</option>
-                        {(JSON.parse(localStorage.getItem("generatorRepository")).map(generator => { return <option value={generator.uid} key={generator.uid}>{generator.repoVariables.name}</option>}))}
+                        <option value={null} key={-1}>None</option>
+                        {(JSON.parse(localStorage.getItem("generatorRepository")).map((generator, index) => { 
+                            return  <option value={index} key={generator.uid}>
+                                        {generator.repoVariables.name}
+                                    </option>}))}
                     
                 </TextField>
             </Grid>

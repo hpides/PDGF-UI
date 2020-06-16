@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   }, 
 });
 
-export default function FormReferenceGenerator(props) {
+export default function FormReferenceValueGenerator(props) {
     const classes = useStyles();
     const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
@@ -93,6 +93,7 @@ export default function FormReferenceGenerator(props) {
                         native: true,
                     }}
                     > 
+                    <option value="" key="-1">select</option>
                     {props.currentSchemaLocal.tables.map(table => { 
                     return <option key={table.tableId} value={table.tableId}> {table.tableName} </option>
                     })}
@@ -132,6 +133,7 @@ export default function FormReferenceGenerator(props) {
                         {/*props.currentSchemaLocal.tables.map(x => 
                         { console.log("x.tableId: " + x.tableId + "  type: " + typeof(x.tableId) + "  RefTableId: " + props.generatorObject.referenceTable + "  typ: " + typeof(props.generatorObject.referenceTable) + "  Vergleich:  " + (x.tableId === props.generatorObject.referenceTable))})*/}
 
+                    <option value="" key="-1">select</option>
                     {(props.currentSchemaLocal.tables.filter(x => { 
                         return (x.tableId === Number(props.generatorObject.referenceTable))}))[0].tableItems.map(
                             row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}
@@ -158,6 +160,7 @@ export default function FormReferenceGenerator(props) {
                         native: true,
                     }}
                     > 
+                        <option value="">select</option>
                         <option value="random">random</option>
                         <option value="randomShuffle">randomShuffle</option>
                         <option value="permutationRandom">permutationRandom</option>
@@ -188,6 +191,7 @@ export default function FormReferenceGenerator(props) {
                             native: true,
                         }}
                         > 
+                            <option value="">select</option>
                             <option value="historical">historical</option>
                             <option value="atInsert">atInsert</option>
                             <option value="fixedTimeFrame">fixedTimeFrame</option>

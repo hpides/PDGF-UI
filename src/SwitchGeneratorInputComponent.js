@@ -44,18 +44,18 @@ export default function SwitchGeneratorInputComponent(props){
 
 
        
-    const caseChangedHandler = (event) => {
+    const caseValueChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
         let index = newGenerator.caseOutcomeSets.findIndex(x => x.id === props.id);
-        newGenerator.caseOutcomeSets[index].value = event.target.value;
+        newGenerator.caseOutcomeSets[index].caseValue = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
     
     
-    const outcomeChangedHandler = (event) => {
+    const outcomeGeneratorChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
         let index = newGenerator.caseOutcomeSets.findIndex(x => x.id === props.id);
-        newGenerator.caseOutcomeSets[index].probability = event.target.value;
+        newGenerator.caseOutcomeSets[index].staticValue = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
     
@@ -88,16 +88,16 @@ export default function SwitchGeneratorInputComponent(props){
         <Grid  item className={classes.framed}xs={7}>
             <Input 
                 defaultValue="Enter Case" 
-                value={props.case} 
-                onChange={(event)=>{caseChangedHandler(event)}}
+                value={props.caseValue} 
+                onChange={(event)=>{caseValueChangedHandler(event)}}
             />
         </Grid>
 
         <Grid item className={classes.framed}xs={2}>
             <Input 
                 defaultValue="Enter Outcome" 
-                value={props.outcome} 
-                onChange={(event)=> {outcomeChangedHandler(event)}}
+                value={props.staticValue} 
+                onChange={(event)=> {outcomeGeneratorChangedHandler(event)}}
             />
         </Grid>
 

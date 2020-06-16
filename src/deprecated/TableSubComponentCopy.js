@@ -69,7 +69,7 @@ export default function TableSubComponent(props){
 
         <Grid item style={{width: "150px"}} className={classes.framed}xs={3}>
             <Button
-                onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorDialog() }}>
+                onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorSelectionDialog() }}>
                     Generator
             </Button> 
         </Grid>
@@ -134,7 +134,7 @@ export default function TableSubComponent(props){
 
         <Grid container item style={{width: "150px"}} className={classes.framed}xs={3}>
             <Button
-                onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorDialog() }}>
+                onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorSelectionDialog() }}>
                     Generator
             </Button> 
         </Grid>

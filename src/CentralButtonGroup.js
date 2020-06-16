@@ -5,7 +5,6 @@ import Button from "@material-ui/core/Button";
 import AlarmIcon from "@material-ui/icons/Alarm";
 import AppleIcon from "@material-ui/icons/Apple";
 import AllInboxIcon from "@material-ui/icons/AllInbox";
-import DragAndDropComponent from "./DragAndDropComponent";
 
 
 
@@ -87,9 +86,7 @@ export default function CentralButtonGroup2(props){
                         Create Schema with Editor
                     </Button>
                 </Box>
-                <Box style={{background: "white", padding: "20px"}}>
-                    <DragAndDropComponent/>
-                </Box>
+                
             </Box>
          </Box>   
     )

@@ -136,8 +136,8 @@ export default function TableComponent(props){
                                                             data ={element} 
                                                             fieldNameChangedHandler={props.fieldNameChangedHandler}
                                                             deleteTableRowHandler={props.deleteTableRowHandler}
-                                                            handleClickOpenGeneratorDialog = {props.handleClickOpenGeneratorDialog}
-                                                            handleCloseGeneratorDialog = {props.handleCloseGeneratorDialog}
+                                                            handleClickOpenGeneratorSelectionDialog = {props.handleClickOpenGeneratorSelectionDialog}
+                                                            handleCloseGeneratorSelectionDialog = {props.handleCloseGeneratorSelectionDialog}
                                                             isOpenGeneratorDialog = {props.isOpenGeneratorDialog}
                                                             setFieldInFocusHandler={props.setFieldInFocusHandler}
                                                             loadGeneratorToEditDialog={props.loadGeneratorToEditDialog}

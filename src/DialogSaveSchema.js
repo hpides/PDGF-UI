@@ -54,64 +54,68 @@ export default function DialogSaveSchema(props) {
         maxWidth="md"
         >
       <DialogTitle id="simple-dialog-title">Vor dem Speichern können Sie hier weitere Informationen zum Schema eingeben.</DialogTitle>
-      <div  style={{overflow: "auto", margin: "auto", padding: "0px", background: "inherit"}}>
-      
-            <Grid direction="row" container  style={{paddingLeft: "15px"}}>
+     
+      <Grid container className={classes.outerContainer}>
 
-                <Grid item xs={leftColumnWidth}>
-                    <Typography variant={fontSizeLeftColumn}>
-                      Schema Name:
-                    </Typography>
+                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                    <Grid item >
+                        <Typography variant={fontSizeLeftColumn}>
+                        Schema Name:
+                        </Typography>
+                    </Grid>
                 </Grid>
 
                 <Grid item xs={rightColumnWidth}>
-                <Input 
-                    className={classes.input} 
-                    type="text" 
-                    placeholder="Enter Schema Name" 
-                    value={props.schemaInfoObject.schemaName} 
-                    onChange={(event) => props.schemaNameChangedHandler(event)}/>
+                    <Input 
+                        className={classes.input} 
+                        type="text" 
+                        placeholder="Enter Schema Name" 
+                        value={props.schemaInfoObject.schemaName} 
+                        onChange={(event) => props.schemaNameChangedHandler(event)}/>
                 </Grid>
 
-
-                <Grid item xs={leftColumnWidth}>
-                    <Typography variant={fontSizeLeftColumn}>
-                        Description:
-                    </Typography>
-                </Grid>
-
-                <Grid item xs={rightColumnWidth}>
-                <Input 
-                    className={classes.input} 
-                    type="number" 
-                    placeholder="Enter Description" 
-                    multiline
-                    value={props.schemaInfoObject.description} 
-                    onChange={(event) => props.descriptionChangedHandler(event)}/>
-                </Grid>
-
-
-                <Grid item xs={leftColumnWidth}>
-                    <Typography variant={fontSizeLeftColumn}>
-                        Author:
-                    </Typography>
+                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                    <Grid item >
+                        <Typography variant={fontSizeLeftColumn}>
+                            Description:
+                        </Typography>
+                    </Grid>    
                 </Grid>
 
                 <Grid item xs={rightColumnWidth}>
-                <Input 
-                    className={classes.input} 
-                    type="text" 
-                    placeholder="Enter Author" 
-                    value={props.schemaInfoObject.author} 
-                    onChange={(event) => props.authorChangedHandler(event)}/>
+                    <Input 
+                        className={classes.input} 
+                        type="number" 
+                        placeholder="Enter Description" 
+                        multiline
+                        value={props.schemaInfoObject.description} 
+                        onChange={(event) => props.descriptionChangedHandler(event)}/>
+                </Grid>
+
+                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                    <Grid item >
+                        <Typography variant={fontSizeLeftColumn}>
+                            Author:
+                        </Typography>
+                    </Grid>
+                </Grid>
+
+                <Grid item xs={rightColumnWidth}>
+                    <Input 
+                        className={classes.input} 
+                        type="text" 
+                        placeholder="Enter Author" 
+                        value={props.schemaInfoObject.author} 
+                        onChange={(event) => props.authorChangedHandler(event)}/>
                 </Grid>
 
 
-
-                <Grid  item xs={leftColumnWidth}>
-                    <Typography variant={fontSizeLeftColumn}>
-                        Last Edited:
-                    </Typography>
+                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                    <Grid item >
+                        <Typography variant={fontSizeLeftColumn}>
+                            Last Edited:
+                        </Typography>
+                    </Grid>
                 </Grid>
 
                 <Grid  item xs={rightColumnWidth}>
@@ -123,11 +127,10 @@ export default function DialogSaveSchema(props) {
                 </Grid>
 
 
-            </Grid>       
+      </Grid>       
 
                
       
-      </div>
 
       <DialogActions>
           <Button onClick={()=>{props.handleCloseDialogSaveSchema()}} color="primary">

@@ -123,8 +123,8 @@ export default function CustomVariablesSubComponent(props) {
                                   borderRadius: "4px",
                                   margin: "2px"}}
                           placeholder = "Enter Variable Type"
-                          value={props.customVariable.type}
-                          onChange={(event)=> {props.customSystomVariableTypeChangedHandler(event, props.customVariable.variableId)}}
+                          value={props.customVariable.dataType}
+                          onChange={(event)=> {props.customSystemVariableDataTypeChangedHandler(event, props.customVariable.variableId)}}
                       /> 
               </Grid>    
         </Grid>
@@ -187,7 +187,7 @@ export default function CustomVariablesSubComponent(props) {
         id="type" 
         //defaultValue = "Variable Type" 
         value = {props.input.type}
-        onChange = {(event) => {props.customSystemVariableTypeChangedHandler(event, props.input.variableId)}}
+        onChange = {(event) => {props.customSystemVariableDataTypeChangedHandler(event, props.input.variableId)}}
         //variant="filled" 
         InputProps={{ 
           className: classes.input

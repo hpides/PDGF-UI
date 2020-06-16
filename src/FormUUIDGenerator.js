@@ -49,7 +49,7 @@ export default function FormUUIDGenerator(props) {
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                        No Input required. Just save now. 
+                        No Input required. Just save and continue. 
                     </Typography>
                 </Grid>
             </Grid>     

@@ -20,14 +20,14 @@ const useStyles = makeStyles({
     transform: 'scale(0.8)',
   },
   name: {
-    fontSize: 20,
+    fontSize: 28,
   },
   description: {
-    fontSize: 12,
+    fontSize: 18,
     fontStyle: "italic",
   },
   examples: {
-    fontSize: 12,
+    fontSize: 18,
   },
 
   container: {

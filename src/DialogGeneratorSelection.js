@@ -17,6 +17,12 @@ const useStyles = makeStyles({
     backgroundColor: blue[100],
     color: blue[600],
   },
+  button: {
+    margin: "3px",
+    width: "300px",
+    height: "34",
+    fontSize: "20px",
+  },
 });
 
 export default function DialogGeneratorSelection(props) {
@@ -39,7 +45,7 @@ export default function DialogGeneratorSelection(props) {
 
   return (
     <Dialog 
-        onClose={props.handleCloseGeneratorDialog} 
+        onClose={props.handleCloseGeneratorSelectionDialog} 
         aria-labelledby="simple-dialog-title" 
         open={props.isOpenGeneratorDialog}
         maxWidth="md"
@@ -55,7 +61,7 @@ export default function DialogGeneratorSelection(props) {
                     <Button
                         variant="contained"
                         color="white"
-                        onClick={()=>{props.handleClickOpenRawGeneratorDialog()}}
+                        onClick={()=>{props.handleClickOpenRawGeneratorSelectionDialog()}}
                         className={classes.button}
                         endIcon={<BuildIcon />}
                     >
@@ -76,7 +82,7 @@ export default function DialogGeneratorSelection(props) {
                                   generatorInRepo = {element} 
                                   loadSelectedSchema={props.loadSelectedGenerator}
                                   selectGeneratorHandler={props.selectGeneratorHandler}
-                                  handleCloseGeneratorDialog={props.handleCloseGeneratorDialog}
+                                  handleCloseGeneratorSelectionDialog={props.handleCloseGeneratorSelectionDialog}
                                   triggerReload={triggerReload}/> 
                             </Grid>}): 
                     <div> There are currently no Generator in the Repository </div>}  
@@ -87,7 +93,7 @@ export default function DialogGeneratorSelection(props) {
 
       <DialogActions>
         <div>
-            <Button onClick={()=>props.handleCloseDialogGeneratorSelection()} color="primary">
+            <Button className={classes.button} onClick={()=>props.handleCloseGeneratorSelectionDialog()} color="primary">
                 Cancel
             </Button>
         </div>

@@ -82,9 +82,9 @@ export default function DialogFormDictListGenerator(props) {
   };
 
     // Change Handler Input Fields
-    const disableRNGChangedHandler = (event) => {
+    const disableRngChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.disableRNG = event.target.checked;
+        newGenerator.disableRng = event.target.checked;
         props.setGeneratorObject(newGenerator);
     };
 
@@ -216,8 +216,8 @@ export default function DialogFormDictListGenerator(props) {
                 <Grid  item xs={rightColumnWidth}>
                   <Checkbox 
                         inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={props.generatorObject.disableRNG}
-                        onChange={(event)=> {disableRNGChangedHandler(event)}}
+                        checked={props.generatorObject.disableRng}
+                        onChange={(event)=> {disableRngChangedHandler(event)}}
                         />
                 </Grid>
                

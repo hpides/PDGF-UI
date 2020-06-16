@@ -54,7 +54,7 @@ export default function CustomVariablesContainer(props){
                                                                           input = {element} 
                                                                           customSystemVariableNameChangedHandler={props.customSystemVariableNameChangedHandler}
                                                                           customSystemVariableValueChangedHandler={props.customSystemVariableValueChangedHandler}
-                                                                          customSystemVariableTypeChangedHandler={props.customSystemVariableTypeChangedHandler}
+                                                                          customSystemVariableDataTypeChangedHandler={props.customSystemVariableDataTypeChangedHandler}
                                                                           deleteCustomSystemVariableHandler ={props.deleteCustomSystemVariableHandler}                                                                        
                                                                           />})}
                 </div> 

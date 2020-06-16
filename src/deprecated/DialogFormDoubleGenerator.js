@@ -36,7 +36,7 @@ export default function DialogFormDoubleGenerator(props) {
 
     const intialGeneratorObject = {
         uid: "",
-        type: "doubleGenerator", 
+        generatorType: "doubleGenerator", 
         minimum: "",
         maximum: "",
         decimalPlaces: "",
@@ -68,7 +68,7 @@ export default function DialogFormDoubleGenerator(props) {
               fromLeft: "true"
         },
         repoVariables: {
-              type: "doubleGenerator",
+              generatorType: "doubleGenerator",
               name: "",
               description: "",
               examples: "",

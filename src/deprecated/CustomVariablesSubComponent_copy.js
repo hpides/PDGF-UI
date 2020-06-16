@@ -76,7 +76,7 @@ export default function CustomVariablesSubComponent(props) {
         id="type" 
         //defaultValue = "Variable Type" 
         value = {props.input.type}
-        onChange = {(event) => {props.customSystemVariableTypeChangedHandler(event, props.input.variableId)}}
+        onChange = {(event) => {props.customSystemVariableDataTypeChangedHandler(event, props.input.variableId)}}
         //variant="filled" 
         InputProps={{ 
           className: classes.input

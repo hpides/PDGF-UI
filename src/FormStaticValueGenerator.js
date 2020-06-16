@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   }, 
 });
 
-export default function FormConstantValueGenerator(props) {
+export default function FormStaticValueGenerator(props) {
     const classes = useStyles();
     const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
@@ -33,9 +33,9 @@ export default function FormConstantValueGenerator(props) {
 
   
     // Change Handler Input Fields
-    const constantValueChangedHandler = (event) => {
+    const staticValueChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.constantValue = event.target.value;
+        newGenerator.staticValue = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
 
@@ -49,7 +49,7 @@ export default function FormConstantValueGenerator(props) {
           
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
-                    <Typography variant={fontSizeLeftColumn}>Constant Value:</Typography>
+                    <Typography variant={fontSizeLeftColumn}>Static Value:</Typography>
                 </Grid>
             </Grid>
 
@@ -57,10 +57,10 @@ export default function FormConstantValueGenerator(props) {
                 <Input 
                   className={classes.input} 
                   type="text" 
-                  placeholder="Enter Constant Value" 
+                  placeholder="Enter Static Value" 
                   fullWidth
-                  value={props.generatorObject.constantValue} 
-                  onChange={(event) => constantValueChangedHandler(event)}/>
+                  value={props.generatorObject.staticValue} 
+                  onChange={(event) => staticValueChangedHandler(event)}/>
             </Grid>
           
         

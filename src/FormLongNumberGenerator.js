@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   }, 
 });
 
-export default function DialogFormLongGenerator(props) {
+export default function DialogFormLongNumberGenerator(props) {
     const classes = useStyles();
     const leftColumnWidth = 5;
     const rightColumnWidth = 12 - leftColumnWidth; 
@@ -50,9 +50,9 @@ export default function DialogFormLongGenerator(props) {
     
 
     // Change Handler Input Fields
-    const hasAllDistinctValuesChangedHandler = (event) => {
+    const numberOfDistinctCharactersChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.hasAllDistinctValues = event.target.checked;
+        newGenerator.numberOfDistinctCharacters = event.target.checked;
         props.setGeneratorObject(newGenerator);
     };
 
@@ -162,10 +162,13 @@ export default function DialogFormLongGenerator(props) {
           </Grid>
 
           <Grid  item xs={rightColumnWidth}>
-            <Checkbox 
-                  inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                  checked={props.generatorObject.hasAllDistinctValues}
-                  onChange={(event)=> {hasAllDistinctValuesChangedHandler(event)}}
+                <Input 
+                  className={classes.input} 
+                  type="number" 
+                  fullWidth
+                  placeholder="Enter Number of Distinct Characters" 
+                  value={props.generatorObject.numberOfDistinctCharacters} 
+                  onChange={(event)=> {numberOfDistinctCharactersChangedHandler(event)}}
                   />
           </Grid>
           

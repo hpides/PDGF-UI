@@ -48,6 +48,7 @@ export default function DialogFormDictListGenerator(props) {
    
 
     const dictData2 = [
+      {value: "", label: "Select dictionary"},
       {value: "Vornamen", label: "Vornamen"},
       {value: "Nachnamen", label: "Nachnamen"},
       {value: "Strassennamen", label: "Strassennamen"},
@@ -85,16 +86,16 @@ export default function DialogFormDictListGenerator(props) {
 
    
     // Change Handler Input Fields
-    const hasAllDistinctValuesChangedHandler = (event) => {
+    const uniqueEntriesChangedHandler = (event) => {
       const newGenerator = cloneDeep(props.generatorObject);
-      newGenerator.hasAllDistinctValues = event.target.checked;
+      newGenerator.uniqueEntries = event.target.checked;
       props.setGeneratorObject(newGenerator);
   };
 
     // Change Handler Input Fields
-    const disableRNGChangedHandler = (event) => {
+    const disableRngChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.disableRNG = event.target.checked;
+        newGenerator.disableRng = event.target.checked;
         props.setGeneratorObject(newGenerator);
     };
 
@@ -215,7 +216,7 @@ export default function DialogFormDictListGenerator(props) {
                 <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                         <Grid item >
                             <Typography variant={fontSizeLeftColumn}>
-                                Distinct Values:
+                                Unique Entries:
                             </Typography>
                         </Grid>
                 </Grid>
@@ -223,8 +224,8 @@ export default function DialogFormDictListGenerator(props) {
                 <Grid  item xs={rightColumnWidth}>
                   <Checkbox 
                         inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={props.generatorObject.hasAllDistinctValues}
-                        onChange={(event)=> {hasAllDistinctValuesChangedHandler(event)}}
+                        checked={props.generatorObject.uniqueEntries}
+                        onChange={(event)=> {uniqueEntriesChangedHandler(event)}}
                         />
                 </Grid>
 
@@ -239,8 +240,8 @@ export default function DialogFormDictListGenerator(props) {
                 <Grid  item xs={rightColumnWidth}>
                   <Checkbox 
                         inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={props.generatorObject.disableRNG}
-                        onChange={(event)=> {disableRNGChangedHandler(event)}}
+                        checked={props.generatorObject.disableRng}
+                        onChange={(event)=> {disableRngChangedHandler(event)}}
                         />
                 </Grid>
                
