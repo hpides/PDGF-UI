@@ -65,7 +65,6 @@ export default function GeneratorFormNullValuesElement(props) {
                 <>                                         
                   <Grid container item xs={3} alignContent="center">
                      
-                     
                       <input
                         className={classes.input}
                         value={props.generatorObject.nullValues.percentNullValues}
@@ -81,6 +80,7 @@ export default function GeneratorFormNullValuesElement(props) {
                       />
 
                       <div style={{display: "flex", alignContent: "center", justifyContent: "center"}}><div>%</div></div>
+      
                   </Grid>
 
                   <Grid container item xs={8} alignContent="center">
