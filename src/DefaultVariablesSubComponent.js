@@ -41,7 +41,7 @@ export default function DefaultVariablesSubComponent(props) {
                                             paddingLeft: "10px",
                                             borderRadius: "4px",
                                             margin: "2px"}}
-                                    placeholder = "Enter Variable Value"
+                                    placeholder = "Enter_Variable_Value"
                                     value={props.defaultVariable.value}
                                     onChange={(event)=> {props.defaultVariableValueChangedHandler(event, props.defaultVariable.variableId)}}
                                 /> 

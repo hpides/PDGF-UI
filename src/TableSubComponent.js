@@ -86,7 +86,7 @@ export default function TableSubComponent(props){
         <td className={classes.fieldNameField}>     
             <CustomTooltip placement="left" arrow="true" title={tooltipVisible? `Enter the name of the field to be generated. Please do not use empty spaces and any special characters besides "-", "_"`:""}>
                 <input 
-                    placeholder="Enter field name"
+                    placeholder="Enter_field_name"
                     style={{fontSize: "16px", 
                             width: "", 
                             height: "36px", 
@@ -124,10 +124,10 @@ export default function TableSubComponent(props){
                 :
 
                     <div style={{display: "flex", justifyContent: "center", alignContent: "center"}}>
-                            <CustomTooltip   placement="bottom" title={tooltipVisible? "Press Button and get to the dialoge to select another generator.": ""}>
+                            <CustomTooltip   placement="bottom" title={tooltipVisible? "Press Button and get to the dialoge to select or create another generator.": ""}>
                                 <Button
                                      variant="outlined"
-                                    style={{marginLeft: "auto", marginRight: "auto", height: 36, margin: 3, lineHeight: 1.25}}
+                                    style={{marginLeft: "auto", marginRight: "auto", height: 36, margin: 3, lineHeight: 1.25, borderColor: "green", borderWidth: 2,}}
                                     onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorSelectionDialog() }}>
                                         Replace Generator
                                 </Button>

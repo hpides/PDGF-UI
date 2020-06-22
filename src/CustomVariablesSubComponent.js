@@ -63,7 +63,7 @@ export default function CustomVariablesSubComponent(props) {
                                         paddingLeft: "10px",
                                         borderRadius: "4px",
                                         margin: "2px"}}
-                                placeholder = "Enter Name"
+                                placeholder = "Enter_Name"
                                 value={props.customVariable.name}
                                 onChange={(event)=> {props.customSystemVariableNameChangedHandler(event, props.customVariable.variableId)}}
                             /> 
@@ -106,7 +106,7 @@ export default function CustomVariablesSubComponent(props) {
                                   paddingLeft: "10px",
                                   borderRadius: "4px",
                                   margin: "2px"}}
-                          placeholder = "Enter Value"
+                          placeholder = "Enter_Value"
                           value={props.customVariable.value}
                           onChange={(event)=> {props.customSystemVariableValueChangedHandler(event, props.customVariable.variableId)}}
                       /> 
@@ -135,7 +135,7 @@ export default function CustomVariablesSubComponent(props) {
                                   paddingLeft: "10px",
                                   borderRadius: "4px",
                                   margin: "2px"}}
-                          placeholder = "Enter Type"
+                          placeholder = "Enter_Type"
                           value={props.customVariable.dataType}
                           onChange={(event)=> {props.customSystemVariableDataTypeChangedHandler(event, props.customVariable.variableId)}}
                       /> 

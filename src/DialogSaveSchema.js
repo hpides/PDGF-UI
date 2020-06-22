@@ -69,7 +69,7 @@ export default function DialogSaveSchema(props) {
                     <Input 
                         className={classes.input} 
                         type="text" 
-                        placeholder="Enter Schema Name" 
+                        placeholder="Enter_Schema_Name" 
                         value={props.schemaInfoObject.schemaName} 
                         onChange={(event) => props.schemaNameChangedHandler(event)}/>
                 </Grid>

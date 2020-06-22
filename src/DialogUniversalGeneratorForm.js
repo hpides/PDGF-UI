@@ -20,7 +20,7 @@ import FormSwitchGenerator from "./FormSwitchGenerator";
 import FormSequentialGenerator from "./FormSequentialGenerator";
 import FormReferenceValueGenerator from "./FormReferenceValueGenerator";
 import FormProbabilityGenerator from "./FormProbabilityGenerator";
-import FormUuidGenerator from "./FormUuidGenerator";
+import FormUUIDGenerator from "./FormUUIDGenerator";
 import {emptyGenerator, commonGeneratorAttributes, specificGeneratorAttributes, rawGeneratorExplanations} from "./data";
 import GeneratorFormPaddingExpansion from "./GeneratorFormPaddingExpansion";
 import GeneratorFormRepoExpansion  from "./GeneratorFormRepoExpansion";
@@ -31,15 +31,10 @@ import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from '@material-ui/icons/Info';
 import Collapse from "@material-ui/core/Collapse";
 import {infoBlue} from "./styles";
+import {infoTextStyles} from "./styles";
 
 const useStyles = makeStyles({
-  infoTextBox: {
-    backgroundColor: "#385fe0",
-    color: "white",
-    borderRadius: 5,
-    marginTop: 10,
-    marginRigt: 20,
-    fontSize: 16,
+  infoTextBox: { ... infoTextStyles
   },    
 });
 
@@ -304,7 +299,7 @@ export default function DialogUniversalGeneratorForm(props) {
 
 
               case "uuidGenerator":
-                return <FormUuidGenerator 
+                return <FormUUIDGenerator 
                           generatorObject={generatorObject}
                           setGeneratorObject={setGeneratorObjectHandDown}/>
 
@@ -379,7 +374,7 @@ export default function DialogUniversalGeneratorForm(props) {
 
                     <Grid item>
                             <IconButton onClick={toggleInfoTextVisible}>
-                                <InfoIcon/>
+                                <InfoIcon style={{color: "#385fe0"}}/>
                             </IconButton>
                     </Grid>
                 </Grid>

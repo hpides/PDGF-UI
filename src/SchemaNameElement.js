@@ -56,7 +56,7 @@ export default function SchemaNameElement(props){
             <TextField 
                 className={classes.textField} 
                 variant="outlined" 
-                label="Schema Name"
+                label="Schema_Name"
                 value={props.schemaName}
                 onChange = {(event) => {props.schemaNameChangedHandler(event)}}
                 InputProps={{ classes: { root: classes.inputRoot } }}

@@ -77,7 +77,8 @@ export const infoTextStyles = {
     marginTop: 10,
     marginRigt: 20,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    fontSize: 18,
 };
 
 

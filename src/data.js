@@ -417,7 +417,7 @@ export const emptySchema = {
    tables: 
       [
          {
-            tableName: "Table1", 
+            tableName: "Table_1", 
             tableSize: 10, 
             tableId: 1,
             rowCounter: 1,

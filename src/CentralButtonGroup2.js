@@ -2,9 +2,9 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import AlarmIcon from "@material-ui/icons/Alarm";
-import AppleIcon from "@material-ui/icons/Apple";
-import AllInboxIcon from "@material-ui/icons/AllInbox";
+import EditIcon from "@material-ui/icons/Edit";
+import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
+import FolderOpenIcon from "@material-ui/icons/FolderOpen";
 import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +46,7 @@ export default function CentralButtonGroup2(props){
                         color="default"
                         onClick ={()=> {props.handleClickOpenDialogSchemaSelection(); props.handleCloseDialogStartPage()}}
                         className={classes.button}
-                        startIcon={<AppleIcon className={classes.icon}/>}
+                        startIcon={<BusinessCenterIcon className={classes.icon}/>}
                         >
                             Load Schema <br/> from Repo
                     </Button>
@@ -57,7 +57,7 @@ export default function CentralButtonGroup2(props){
                         variant="contained"
                         color="default"
                         className={classes.button}
-                        startIcon={<AllInboxIcon className={classes.icon}/>}
+                        startIcon={<FolderOpenIcon className={classes.icon}/>}
                         >
                             Load Schema <br/> from Disc
                     </Button>
@@ -68,7 +68,7 @@ export default function CentralButtonGroup2(props){
                     color="default"
                     className={classes.button}
                     onClick={()=> props.handleCloseDialogStartPage()}
-                    startIcon={<AlarmIcon className={classes.icon}/>}
+                    startIcon={<EditIcon className={classes.icon}/>}
                     >
                         Create Schema with Editor
                     </Button>

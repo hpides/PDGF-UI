@@ -195,7 +195,7 @@ export default function BodyEditor(props){
         let schemaNew = cloneDeep(currentSchemaLocal);
         let tableCounter = parseInt(schemaNew.uids.tableCounter);
         console.log("tableCounter: " + tableCounter);
-        let newTableName = "Table" + (tableCounter+1);
+        let newTableName = "Table_" + (tableCounter+1);
         let newTableJSON = {          
                 tableName: newTableName, 
                 tableSize: defaultTableSize, 
@@ -1189,7 +1189,7 @@ export default function BodyEditor(props){
                      <Grid container style={{flexDirection: "row", display: "flex", justifyContent: "flex-end", alignContent: "center", alignItems: "center", width: "180px"}} item>
                         <Grid item>
                             <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "Most of the key-words throughout the App have tooltips attached that will show when you hover over them. In these tooltips we explain terms and concepts, tell you what you can and should do and sometimes show you examples of usage. You can use these tooltips when you are new to the program or when you need to look after some information. When you don`t need them anymore, just click the checkbox and make them disappear.": ""}>
-                                <Typography>Show Tooltips: </Typography>
+                                <Typography>SHOW TOOLTIPS: </Typography>
                             </CustomTooltip>
                         </Grid>
                         <Grid item>

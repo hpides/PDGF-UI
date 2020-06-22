@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     fontSize:"38px",
   },
   subHeading: {
-    fontSize:"20px",
+    fontSize:"24px",
     marginBottom: 30,
   },
   text: {
