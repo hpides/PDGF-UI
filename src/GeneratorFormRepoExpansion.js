@@ -71,7 +71,7 @@ export default function GeneratorFormRepoExpansion(props) {
 
               <Collapse in={props.generatorObject.repoVariables.saveInRepo}>
                   <Grid  container className={classes.collapseContainer}>
-                          <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                          <Grid className={classes.innerContainer} container item xs={leftColumnWidth-1} >
                               <Grid item >
                                   <Typography variant={fontSizeSecondLevel}>
                                       Name:
@@ -79,7 +79,7 @@ export default function GeneratorFormRepoExpansion(props) {
                               </Grid>
                           </Grid>
 
-                          <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
+                          <Grid item xs={rightColumnWidth+1} style={{background: "inherit"}}>
                               <Input 
                                   placeholder="Enter Name" 
                                   className={classes.inputSecondLevel}
@@ -90,7 +90,7 @@ export default function GeneratorFormRepoExpansion(props) {
                                   />
                           </Grid>
 
-                          <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                          <Grid className={classes.innerContainer} container item xs={leftColumnWidth-1} >
                               <Grid item >
                                   <Typography variant={fontSizeSecondLevel}>
                                       Description:
@@ -98,7 +98,7 @@ export default function GeneratorFormRepoExpansion(props) {
                               </Grid>
                           </Grid>
 
-                          <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
+                          <Grid item xs={rightColumnWidth+1} style={{background: "inherit"}}>
                               <Input 
                                   placeholder="Enter Description" 
                                   multiline 
@@ -110,13 +110,13 @@ export default function GeneratorFormRepoExpansion(props) {
                               />
                           </Grid>
 
-                          <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                          <Grid className={classes.innerContainer} container item xs={leftColumnWidth-1} >
                               <Grid item >
                                   <Typography variant={fontSizeSecondLevel}>Examples:</Typography>
                               </Grid>
                           </Grid>
 
-                          <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
+                          <Grid item xs={rightColumnWidth+1} style={{background: "inherit"}}>
                                   <Input 
                                       placeholder="Enter Examples" 
                                       multiline 

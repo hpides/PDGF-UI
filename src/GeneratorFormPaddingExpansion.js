@@ -68,11 +68,11 @@ export default function GeneratorFormPaddingExpansion(props) {
           </Grid>  
 
 
-          <Grid item xs={rightColumnWidth-1}>
+          <Grid item xs={rightColumnWidth-1} style={{backgroundColor: "inherit"}}>
           <Collapse in={props.generatorObject.paddingVariables.withPadding}>
               <Grid  container className={classes.collapseContainer}>  
                   
-                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth-1} style={{backgroundColor: "inherit"}} >
                         <Grid item >
                             <Typography variant={fontSizeSecondLevel}>
                                 Size:
@@ -80,7 +80,7 @@ export default function GeneratorFormPaddingExpansion(props) {
                         </Grid>
                     </Grid>
                           
-                    <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
+                    <Grid item xs={rightColumnWidth+1} style={{backgroundColor: "inherit"}}>
                         <Input 
                           placeholder="Enter Size" 
                           className={classes.inputSecondLevel}
@@ -90,7 +90,7 @@ export default function GeneratorFormPaddingExpansion(props) {
                           />
                     </Grid>
 
-                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth-1} >
                         <Grid item >
                             <Typography variant={fontSizeSecondLevel}>
                                 Character:
@@ -98,7 +98,7 @@ export default function GeneratorFormPaddingExpansion(props) {
                         </Grid>
                     </Grid>
 
-                    <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
+                    <Grid item xs={rightColumnWidth+1} style={{backgroundColor: "inherit"}}>
                         <Input 
                           placeholder="Enter Fill Character" 
                           value={props.generatorObject.paddingVariables.fillCharacter}
@@ -107,7 +107,7 @@ export default function GeneratorFormPaddingExpansion(props) {
                           fullWidth/>
                     </Grid>
 
-                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth-1} >
                         <Grid item >
                             <Typography variant={fontSizeSecondLevel}>
                                 Direction:
@@ -115,7 +115,7 @@ export default function GeneratorFormPaddingExpansion(props) {
                         </Grid>
                     </Grid>
 
-                    <Grid container display="flex" flexDirection="row" justify="flex-start" item xs={rightColumnWidth} style={{background: "inherit"}}>
+                    <Grid container display="flex" flexDirection="row" justify="flex-start" item xs={rightColumnWidth+1} style={{background: "inherit"}}>
                         <Typography style={{fontSize: "16px"}}> From Left </Typography>           
                         <Switch
                             defaultChecked
