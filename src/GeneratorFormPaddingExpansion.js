@@ -82,7 +82,7 @@ export default function GeneratorFormPaddingExpansion(props) {
                           
                     <Grid item xs={rightColumnWidth+1} style={{backgroundColor: "inherit"}}>
                         <Input 
-                          placeholder="Enter Size" 
+                          placeholder="Enter string length after padding" 
                           className={classes.inputSecondLevel}
                           value={props.generatorObject.paddingVariables.numberCharacters}
                           onChange={event=> {props.numberCharactersChangedHandler(event)}}
@@ -100,7 +100,7 @@ export default function GeneratorFormPaddingExpansion(props) {
 
                     <Grid item xs={rightColumnWidth+1} style={{backgroundColor: "inherit"}}>
                         <Input 
-                          placeholder="Enter Fill Character" 
+                          placeholder="Enter the character to pad with" 
                           value={props.generatorObject.paddingVariables.fillCharacter}
                           multiline className={classes.inputSecondLevel}
                           onChange={event => {props.fillCharacterChangedHandler(event)}}

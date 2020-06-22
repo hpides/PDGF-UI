@@ -44,7 +44,7 @@ export default function FormIdGenerator(props) {
                     <input 
                         className={classes.input} 
                         type="number" 
-                        placeholder="Enter Minimum" 
+                        placeholder="Enter the lowest id-value (the starting point)" 
                         value={props.generatorObject.minimum} 
                         onChange={(event) => minimumChangedHandler(event)}/>
                 </Grid>

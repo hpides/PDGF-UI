@@ -131,7 +131,7 @@ export default function DialogFormDoubleNumberGenerator(props) {
                         className={classes.input} 
                         type="number" 
                         fullWidth
-                        placeholder="Enter Minimum" 
+                        placeholder="Enter the minimal value to potentially be in the set." 
                         value={props.generatorObject.minimum} 
                         onChange={(event) => minimumChangedHandler(event)}/>
                 </Grid>
@@ -150,7 +150,7 @@ export default function DialogFormDoubleNumberGenerator(props) {
                         className={classes.input} 
                         type="number" 
                         fullWidth
-                        placeholder="Enter Maximum" 
+                        placeholder="Enter the maximal value to potentially be in the set." 
                         value={props.generatorObject.maximum} 
                         onChange={(event) => maximumChangedHandler(event)}/>
                 </Grid>
@@ -167,7 +167,7 @@ export default function DialogFormDoubleNumberGenerator(props) {
                     className={classes.input} 
                     type="number" 
                     fullWidth
-                    placeholder="Enter Number of Decimal Places" 
+                    placeholder="Enter the number of decimal places to be shown" 
                     value={props.generatorObject.decimalPlaces} 
                     onChange={(event) => decimalPlacesChangedHandler(event)}/>
                 </Grid>
@@ -208,7 +208,7 @@ export default function DialogFormDoubleNumberGenerator(props) {
                     <input 
                         className={classes.input} 
                         type="number" 
-                        placeholder="Enter Number of Distinct Characters" 
+                        placeholder="Enter the maximal number of different numbers to be generated" 
                         value={props.generatorObject.numberOfDistinctCharacters} 
                         onChange={(event)=> {numberOfDistinctCharactersChangedHandler(event)}}
                     />

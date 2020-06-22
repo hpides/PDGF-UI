@@ -81,7 +81,7 @@ export default function GeneratorFormRepoExpansion(props) {
 
                           <Grid item xs={rightColumnWidth+1} style={{background: "inherit"}}>
                               <Input 
-                                  placeholder="Enter Name" 
+                                  placeholder="Enter a name for your generator" 
                                   className={classes.inputSecondLevel}
                                   value={props.generatorObject.repoVariables.name}
                                   onChange={event => {props.nameChangedHandler(event)}}
@@ -100,7 +100,7 @@ export default function GeneratorFormRepoExpansion(props) {
 
                           <Grid item xs={rightColumnWidth+1} style={{background: "inherit"}}>
                               <Input 
-                                  placeholder="Enter Description" 
+                                  placeholder="Give a short description of your generator" 
                                   multiline 
                                   className={classes.inputSecondLevel}
                                   value={props.generatorObject.repoVariables.description}

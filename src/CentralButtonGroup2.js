@@ -40,28 +40,6 @@ export default function CentralButtonGroup2(props){
     return(
             <Grid className={classes.container} >
                 
-                <Grid item  className={classes.boxElement}>
-                    <Button
-                        variant="contained"
-                        color="default"
-                        onClick ={()=> {props.handleClickOpenDialogSchemaSelection(); props.handleCloseDialogStartPage()}}
-                        className={classes.button}
-                        startIcon={<BusinessCenterIcon className={classes.icon}/>}
-                        >
-                            Load Schema <br/> from Repo
-                    </Button>
-                </Grid>
-                
-                <Grid item className={classes.boxElement}>
-                    <Button
-                        variant="contained"
-                        color="default"
-                        className={classes.button}
-                        startIcon={<FolderOpenIcon className={classes.icon}/>}
-                        >
-                            Load Schema <br/> from Disc
-                    </Button>
-                </Grid>
                 <Grid className={classes.boxElement}>
                     <Button
                     variant="contained"
@@ -73,6 +51,30 @@ export default function CentralButtonGroup2(props){
                         Create Schema with Editor
                     </Button>
                 </Grid>
+                
+                <Grid item  className={classes.boxElement}>
+                    <Button
+                        variant="contained"
+                        color="default"
+                        onClick ={()=> {props.handleClickOpenDialogSchemaSelection(); props.handleCloseDialogStartPage()}}
+                        className={classes.button}
+                        startIcon={<BusinessCenterIcon className={classes.icon}/>}
+                        >
+                            Use Schema <br/> from Repo
+                    </Button>
+                </Grid>
+                
+                <Grid item className={classes.boxElement}>
+                    <Button
+                        variant="contained"
+                        color="default"
+                        className={classes.button}
+                        startIcon={<FolderOpenIcon className={classes.icon}/>}
+                        >
+                            Use Schema <br/> from Disc
+                    </Button>
+                </Grid>
+                
             </Grid> 
     )
     
