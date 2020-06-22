@@ -54,7 +54,7 @@ export default function CustomVariablesSubComponent(props) {
             <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "Here you can enter the name of your system variable. But please don't use special characters or blanks!": ""}>
                 <input 
                                 style={{fontSize: "24px", 
-                                        width: "230px", 
+                                        width: "220px", 
                                         height: "38px", 
                                         outlineColor: "darkblue", 
                                         border: "none", 

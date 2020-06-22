@@ -70,7 +70,7 @@ export default function DialogRawGeneratorSelection(props) {
                 <Grid container xs={9} item justify="flex-start">
                     <CustomTooltip   placement="top" arrow="true" title={tooltipVisible? "If you click here, you will get to the base generator selection dialog. Base generators are blueprint of generators that you can customize by specifiying some attributes.":""} >  
                         <Grid item style={{fontSize: "30px"}}>
-                            Create a new Generator from Base Generators
+                            Use our Generator Blueprints to build your customized Generator
                         </Grid>
                     </CustomTooltip>
                     <Grid item>

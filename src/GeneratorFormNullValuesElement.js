@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   outerContainer: {
     paddingLeft: "15px",
     paddingRight: "30px",
+
   },
   innerContainer: {
     display: "flex",
@@ -40,7 +41,7 @@ export default function GeneratorFormNullValuesElement(props) {
   
   return (
     <>
-      <Grid  container className={classes.outerContainer}>
+      <Grid  container className={classes.outerContainer} style={{ marginTop: props.generatorObject.nullValues.withNullValues? "30px": "0px" }}>
           <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                   <Typography variant={fontSizeLeftColumn}>

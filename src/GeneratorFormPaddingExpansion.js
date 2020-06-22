@@ -51,7 +51,7 @@ export default function GeneratorFormPaddingExpansion(props) {
 
   return (
     <>
-      <Grid  container className={classes.outerContainer}>
+      <Grid  container className={classes.outerContainer} style={{ marginTop: props.generatorObject.paddingVariables.withPadding? "30px": "0px" }}>
           <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                       <Typography variant={fontSizeLeftColumn}>
