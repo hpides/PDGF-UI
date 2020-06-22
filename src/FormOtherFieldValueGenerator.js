@@ -4,32 +4,15 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from "@material-ui/core/TextField";
 import cloneDeep from 'lodash/cloneDeep';
+import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
 
-
-const useStyles = makeStyles({
-    input: {
-    fontSize: 22,
-  },
-  inputSelect: {
-    fontSize: 22,
-  },
-  outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
-    backgroundColor: "yellow",
-  }, 
-});
+const useStyles = makeStyles({ ... generatorFormStyles});
 
 export default function FormOtherFieldValueGenerator(props) {
-    const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
-    const fontSizeLeftColumn = "h5";
+  const classes = useStyles();
+  const leftColumnWidth = generatorFormsLeftColumnWidth;
+  const rightColumnWidth = generatorFormsRightColumnWidth; 
+  const fontSizeLeftColumn = generatorFormFontSizeLeftColumn;
 
   
     // Change Handler 
@@ -53,22 +36,17 @@ export default function FormOtherFieldValueGenerator(props) {
             </Grid>
 
             <Grid container item xs={rightColumnWidth}>
-                <TextField
+                <select
                     id="standard-select-currency-native"
                     className={classes.select}                      
-                    select
-                    fullWidth
                     value={props.generatorObject.referenceField}
                     onChange={(event) => referenceFieldChangedHandler(event)}
-                    SelectProps={{
-                        native: true,
-                    }}
                     > 
                         <option value=""  key="-1">select</option>
                         {(props.currentSchemaLocal.tables.filter(x => { 
                             return (x.tableId === props.fieldInFocus.tableId)}))[0].tableItems.map(
                                 row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}          
-                </TextField>
+                </select>
             </Grid>     
   
   </Grid>

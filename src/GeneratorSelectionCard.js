@@ -5,11 +5,15 @@ import Typography from '@material-ui/core/Typography';
 import DeleteIcon from "@material-ui/icons/Delete";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles({
     root: {
         minWidth: 275,
-        margin: 5,
+        height: "170px", 
+        width: "380px", 
+        margin: 10,
+        marginBottom: 10,
         background: "white",
         '&:hover': {
           background: "lightgrey",
@@ -21,14 +25,16 @@ const useStyles = makeStyles({
     transform: 'scale(0.8)',
   },
   name: {
-    fontSize: 28,
+    fontSize: 20,
+    fontWeight: 500,
+    lineHeight: 1.1,
   },
   description: {
-    fontSize: 18,
+    fontSize: 16,
     fontStyle: "italic",
   },
   examples: {
-    fontSize: 18,
+    fontSize: 16,
   },
 
   container: {
@@ -47,30 +53,39 @@ const useStyles = makeStyles({
     background: "inherit",
     padding: "5px"
   },
+  icon : {
+    width: 20,
+    height: 20,
+  },
+  iconButton: {
+    width: 25,
+    height: 25
+  },
 });
 
 export default function GeneratorSelectionCard(props) {
 const classes = useStyles();
   
 const deleteGeneratorFromRepo = (uid) => {
+  
   const newGeneratorRepository = JSON.parse(localStorage.getItem("generatorRepository"));
-  let index = newGeneratorRepository.findIndex(x => x.uid = uid);
+  let index = newGeneratorRepository.findIndex(x => x.uid === uid);
   newGeneratorRepository.splice(index, 1);
-  localStorage.setItem("generatorRepository", newGeneratorRepository);
+  localStorage.setItem("generatorRepository", JSON.stringify(newGeneratorRepository));
 }
 
 
   return (
-      <Box className={classes.root} onClick={()=>{props.selectGeneratorHandler(props.generatorInRepo.uid); props.handleCloseGeneratorSelectionDialog()}} style={{height: "170px", width: "200px", margin: "3px"}}>
+      <Paper className={classes.root} onClick={()=>{props.selectGeneratorHandler(props.generatorInRepo.uid); props.handleCloseGeneratorSelectionDialog()}}>
         <Grid container classeName={classes.container} direction="column" xs={12} style={{background: "inherit", padding: "4px",}}>
             <Grid container  className={classes.inner_container_top} xs={12} direction="row" justify="space-between" style={{background: "inherit"}}>
-                <Grid  item xs={9} style={{background: "inherit"}}>
+                <Grid  item xs={9} style={{background: "inherit", flexGrow: 1,}}>
                     <Typography className={classes.name} color="textSecondary">
                         {props.generatorInRepo.repoVariables.name}
                     </Typography >
                 </Grid>
-                <Grid item className={classes.inner_container_middle} xs={3} style={{background: "inherit"}}>
-                    <IconButton onClick={(event) => {event.stopPropagation(); deleteGeneratorFromRepo(props.generatorInRepo.uid); props.triggerReload()}}>
+                <Grid item className={classes.inner_container_middle}  style={{background: "inherit"}}>
+                    <IconButton className={classes.iconButton} onClick={(event) => {event.stopPropagation(); deleteGeneratorFromRepo(props.generatorInRepo.uid); props.triggerReload()}}>
                         <DeleteIcon className={classes.icon}/>
                     </IconButton>   
                 </Grid>
@@ -86,6 +101,6 @@ const deleteGeneratorFromRepo = (uid) => {
                 </Typography>
             </Grid>
         </Grid>
-      </Box>
+      </Paper>
   );
 }

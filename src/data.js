@@ -13,11 +13,49 @@ export const schemaDescription = {name: "Uni-Schema", description: "A schema tha
 
 export const schemaDescriptionShort = {name: "Uni-Schema", description: "A schema that describes all the constitutents", author: "Art Vandalay", date: "05/01/2020"}
 
+export const colors2 = [ '#e6194B', 
+                        '#3cb44b', 
+                        '#ffe119', 
+                        '#4363d8', 
+                        '#f58231', 
+                        '#911eb4', 
+                        '#42d4f4', 
+                        '#f032e6', 
+                        '#bfef45', 
+                        '#fabed4', 
+                        '#469990', 
+                        '#dcbeff', 
+                        '#9A6324', 
+                        '#fffac8', 
+                        '#800000', 
+                        '#aaffc3', 
+                        '#808000', 
+                        '#ffd8b1', 
+                        '#000075', 
+                        '#a9a9a9'];
+
+
+export const colors = [ '#e6194B', 
+'#ffe119', 
+'#f58231', 
+'#42d4f4', 
+'#f032e6', 
+'#bfef45',  
+'#469990', 
+'#9A6324', 
+'#aaffc3', 
+'#808000', 
+'#3cb44b', 
+];
+
+
+export const enterDelayTime = 700;
+
 
 
 export const defaultSystemVariables = [
-    {name: "Root-Seed", value: "123456789", type: "number"},
-    {name: "ScalingFactor", value: "1", type: "number"},
+    {name: "Root-Seed", value: "123456789", type: "number", tooltipName: "The root seed is the seed that is used to initialize the first random number generator. All the other seeds and calculations refer back to him. If you use the same root-seed you will always get the exact same data generated.", tooltipValue: "You are free to choose any value between 1 and 10.000.000."},
+    {name: "ScalingFactor", value: "1", type: "number", tooltipName: "The scaling factor is used to increase the number of data over all tables in a realistic way. For each table it is determined to which amount its will partizipate with the scaling. E.g. some tables will keep the same size while others will grow in same amount or even faster." , tooltipValue: "You are free to choose any value larger than 0."},
     ] ;
 
 
@@ -67,23 +105,73 @@ export const customSystemVariables = [
 
 
 export const rawGeneratorDescriptions = [
-   {name: "IdGenerator", description: "Generates consecutive Ids from 0 or any given minimum value.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "idGenerator",},
-   {name: "DoubleGenerator", description: "Generate a 64bit floating point values between min and max..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "doubleGenerator",},
-   {name: "LongNumberGenerator", description: "Generates a 64Bit integer value between min and max.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "longNumberGenerator",},
-   {name: "DateTimeGenerator", description: "Generates dates within a specified time range.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "dateTimeGenerator",},
-   {name: "RandomStringGenerator", description: "Generates strings in a size range with a specified set of characters.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "randomStringGenerator",},
-   {name: "RandomSentenceGenerator", description: "Generates a sentence within a size range with pseudo grammar.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "randomSentenceGenerator",},
-   {name: "DictListGenerator", description: "Uses a dictionary to generate single values or lists.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "dictListGenerator",},
-   {name: "ReferenceValueGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "referenceValueGenerator",},
-   {name: "IfGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "ifGenerator",},
-   {name: "StaticValueGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "staticValueGenerator",},
-   {name: "PrePostFixGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "prePostFixGenerator",},
-   {name: "SequentialGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "sequentialGenerator",},
-   {name: "SwitchGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "switchGenerator",},
-   {name: "Probability", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "probabilityGenerator",},
-   {name: "OtherFieldValueGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "otherFieldValueGenerator",},
-   {name: "UUIDGenerator", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt..", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "uuidGenerator",},
+   {name: "IdGenerator", 
+               description: "The Id Generator creates consecutives Ids from 0 (default) or any other natural number.", 
+               examples: "0,1,2,3,4,...", 
+               onClickFunction: "()=>handleClickOpenDummy01", uid: "idGenerator",},
+   {name: "DoubleNumberGenerator", description: "The double number generator generates a series of 64 bit floating point values from a specified range. Besides the range,  the number of distinct values to be used as well as the distribution of the generated values can be provided. ", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "doubleNumberGenerator",},
+   {name: "LongNumberGenerator", description: "The long number generator generates a series of 64 bit integer numbers from a specified range, whereby the range,  the distribution of values, the number of distinct values and  whether each value has to be unique, can be decided by the user.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "longNumberGenerator",},
+   {name: "DateTimeGenerator", description: "The dateTime generator generates a series of date values from a specified range, whereby the order (random or continously) and the  distance between the single elements can be determined by the user.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "dateTimeGenerator",},
+   {name: "RandomStringGenerator", description: "The random string generator generates a series of strings (combinations of letters) of a certain length range (determined by the min and max lenght attributes) using a specified set of characters.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "randomStringGenerator",},
+   {name: "RandomSentenceGenerator", description: "The random sentence generator generates a series of sentences within a defined size range (determined by the min and max lenght attributes) using a pseudo text grammar. ", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "randomSentenceGenerator",},
+   {name: "DictListGenerator", description: "The dictlist generator generates a series of single values or combination of single values (eg. lists) from a dictionary. Combination of values are of a defined size and are separated by a defined separator.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "dictListGenerator",},
+   {name: "ReferenceValueGenerator", description: "The reference generator produces a series of values from the value set (rows) of the referenced table and field (following a specified distribution).", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "referenceValueGenerator",},
+   {name: "IfGenerator", description: "The if generator generates a series of values depending on the outcome of one or more sub-generators. It returns the value specified in the then attribut if the if-expression is true and the value from the else-attribut otherwise.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "ifGenerator",},
+   {name: "StaticValueGenerator", description: "The static value generator produces the value specified in the static-value-attribute constantly (eg. for all rows).", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "staticValueGenerator",},
+   {name: "PrePostFixGenerator", description: "The pre-post-fix generator pre- or postfixes a generated value (of another generator) with a static string.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "prePostFixGenerator",},
+   {name: "SequentialGenerator", description: "The sequential generator runs multiple generators one after another and optionally chains interim results.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "sequentialGenerator",},
+   {name: "SwitchGenerator", description: "The switch generator generates a value based on the output of a sub-generator. For that reason the user provides a mapping of  concrete outputs of the sub-generator to the output of the switch-generator and a default value.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "switchGenerator",},
+   {name: "Probability", description: "The probability generator takes in a set of outputs and their respective probabilites and generates a series of values that reflect that probability function.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "probabilityGenerator",},
+   {name: "OtherFieldValueGenerator", description: "The other field value generator produces  a copy of the value of  a specified field in the same table.", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "otherFieldValueGenerator",},
+   {name: "UUIDGenerator", description: "The UUID generator generates a 128 bit universally unique identifier (UUID).", examples: "0,1,2,3,4,...", onClickFunction: "()=>handleClickOpenDummy01", uid: "uuidGenerator",},
 ];
+
+
+export const rawGeneratorExplanations = {
+   
+idGenerator: 
+`
+You can use the id-generator to produce consecutive ids from 0 (default) or any other natural number.
+
+By inserting 1 for the minimum, the generator will first produce the number one, than the number two, then the number three, … .
+
+Obligatory Fields: minimum
+
+Ids are e.g. used to give a key to the objects in a table. (E.g. invoice number, customer number) and link information from different tables together.`,
+ 
+doubleNumberGenerator:
+`You can use the double-number-generator to produce floating point numbers of practically every relevant size. 
+
+Use the attributes minimum and maximum to define the smallest and the largest value that the generator may produce. With the attribut distinct values you can you limit how many different values will be produced. If you don't want to produce every value in the range with the same probabiliy, you can specify the underlying distribution.
+
+Obligatory Fields: minimum, maximum.
+
+The double-number generator can be used to generate all kinds of values like e.g. prices, bank balances,  measurements, grades … . `,
+
+longNumberGenerator: 
+`You can use the long number generator to produce natural numbers of practically every relevant size. 
+
+Use the attributes minimum and maximum to define the smallest and the largest value that the generator may produce. With the attribut „distinct values“ you can you limit how many different values will be produced. By checking „unique“ you can make the generater produce each number only once. If you don't want to produce every value in the range with the same probabiliy, you can specify the underlying distribution.
+
+Obligatory fields: minimum, maximum.
+
+The longNumber generator can be used to generate a wide range of data (e.g. number of articles, hours, days worked …). Besides it can be used as  sub-generator for if- or switch-generators (randomly generating 0s and 1s for assigning  male and female objects. `
+};
+
+//to do weitere ergänzen, bzw für den Rest Platzhalter einfügen.
+
+
+
+
+export const infoTexts = {
+   dialogRawGeneratorSelection: "PDGF offers a wide variety of base generators for your data generation needs. Base generators are blueprints for special use cases that are easily customizable. If you need to generate ids the id-generator or the uuid-generator are at your service. For natural numbers there is the longNumber-generator and for floating point numbers the doubleNumber-generator. Dates can be easily generated with the dateTime-generator. When it comes to words you want to have a look at the randomString-generator and for sentences the randomSentence-generator helps you. With the dictList generator you can use dictionaries to generate real world data such as names, streets, cities etc. Learn more about these and many more complex generators in the descriptions below and on the dedicated generator pages.",
+   dialogGeneratorSelection: "In the list below you see all the generators that are currently saved in the in the generator repository. If you created a brilliant generator that you want to use in other schemas, you can save that generator in the generator repository. The repository is hosted in the local storage of your browser. It will stay there over several sessions until you clear your browser cache. If you want to save your generators more reliably, you can save them on your computer and upload them as needed. If you click on one of the buttons below, the specific generator will be copied to your schema. If you have to make some alterations, you can do so in the edit mode (just push the symbol with the wrench).",
+
+}
+
+
+
+
 
 
 
@@ -139,6 +227,24 @@ export const localeList = [
    "fr_FR",
    "ru_RU",
 ]
+
+export const chooseByOptionList = [
+   "random",
+   "randomShuffle",
+   "permutationRandom",
+   "sameChoiceAs",
+   "relativeRowMapping",
+   "relativeUnique",
+];
+
+export const selectFromOptionList = [
+   "historical",
+   "atInsert",
+   "fixedTimeFrame",
+   "sameTimeFrame",
+   "relativeTimeFrame",
+];
+
 
 
 
@@ -303,36 +409,36 @@ export const emptySchema = {
       tableCounter: 1,
    },
    info: {
-      schemaName: "Unnamed",
-      description: "You can enter a description of your schema here if you like.",
-      author: "john doe",
-      lastEdited: "today",
+      schemaName: "",
+      description: "",
+      author: "",
+      lastEdited: "",
    },
    tables: 
       [
          {
-            tableName: "Table 1", 
+            tableName: "Table1", 
             tableSize: 10, 
             tableId: 1,
             rowCounter: 1,
             tableItems: [
-               {tableId: 1, rowId: 1, fieldName: "Enter Field Name", generator: {}, isKey: false},
+               {tableId: 1, rowId: 1, fieldName: "", generator: {}, isKey: false},
             ],
          }
       ],
    functions: {},
    variables: {
       defaultVariables: [
-         {variableId: 1, name: "Root-Seed", value: "123456789", dataType: "long"},
-         {variableId: 2, name: "ScalingFactor", value: "1", dataType: "double"},
+         {variableId: 1, name: "Root-Seed", value: "123456789", dataType: "long", tooltipName: "The root seed is the seed that is used to initialize the first random number generator. All the other seeds and calculations refer back to him. If you use the same root-seed you will always get the exact same data generated.", tooltipValue: "You are free to choose any value between 1 and 10.000.000."},
+         {variableId: 2, name: "ScalingFactor", value: "1", dataType: "double", tooltipName: "The scaling factor is used to increase the number of data over all tables in a realistic way. For each table it is determined to which amount its will partizipate with the scaling. E.g. some tables will keep the same size while others will grow in same amount or even faster." , tooltipValue: "You are free to choose any value larger than 0."},
       ],
       customVariables:
          {variableCounter: 1,
          variableItems: [
             {variableId: 1, 
-            name: "Variable Name", 
-            value: "Enter Value", 
-            dataType: "Enter Type"},
+            name: "", 
+            value: "", 
+            dataType: ""},
          ],
       },
    }
@@ -341,9 +447,9 @@ export const emptySchema = {
 
 
 export const specificGeneratorAttributes = {
-   dateTimeGenerator: {fieldType: "DATE", startDate: "", endDate: "", diableRng: false, fixedStepSize: false},
+   dateTimeGenerator: {fieldType: "DATE", startDate: "", endDate: "", disableRng: false, fixedStepSize: false},
    dictListGenerator: {fieldType: "VARCHAR", dictionary: "", size: 1, separator: "", disableRng: false, distribution: "", uniqueEntries: false},
-   doubleGenerator: {fieldType: "DOUBLE", minD: "", maxD: "", decimalPlaces: "", locale: "en-US", distinctValues: "", distribution: ""},
+   doubleNumberGenerator: {fieldType: "DOUBLE", minD: "", maxD: "", decimalPlaces: "", locale: "en-US", distinctValues: "", distribution: ""},
    idGenerator: {fieldType: "NUMERIC",minimum: 0},
    ifGenerator: {fieldType: "",generators: [], if: "", then: "", else: ""},
    longNumberGenerator: {fieldType: "NUMERIC",minimum: "", maximum: "", numberOfDistinctCharacters:"", distribution: ""},
@@ -360,25 +466,39 @@ export const specificGeneratorAttributes = {
 }
 
 
+/*
+distributionVariables: {
+   type: "uniformDistribution",
+   normalDistribution: {
+     standardDeviation: "",
+     mean: "",
+   },
+   binomialDistribution: {
+     n: "",
+     p: "",
+   },
+   exponentialDistribution: {
+     lambda: "",
+   },
+   logarithmicDistribution: {
+     p: "",
+   },
+   },
+
+
+
+   distributionVariables: {type: "uniformDistribution", normalDistribution: {standardDeviation: "", mean: "",},binomialDistribution: {n: "",p: "",}, exponentialDistribution: {lambda: "",},logarithmicDistribution: {p: ""}, },
+
+
+
+*/
+
+
+
+
 
 export const commonGeneratorAttributes = {
-   distributionVariables: {
-      type: "uniformDistribution",
-      normalDistribution: {
-        standardDeviation: "",
-        mean: "",
-      },
-      binomialDistribution: {
-        n: "",
-        p: "",
-      },
-      exponentialDistribution: {
-        lambda: "",
-      },
-      logarithmicDistribution: {
-        p: "",
-      },
-      },
+   
       nullValues: {
          withNullValues: false,
          percentNullValues: 0,
@@ -435,7 +555,6 @@ export const emptyGenerator = {
    referenceField: "",
    preFix: "",
    postFix: "",
-   constantValue: "",
    probabilityList: [],
    disableShuffling: "",
    concatenateResults: false,
@@ -490,10 +609,6 @@ export const emptyGenerator = {
 
 /*
 
-
-constantValueGenerator : {
-   constantValue: "",
-}
 
 dateTimeGenerator : {
    startDate: "",

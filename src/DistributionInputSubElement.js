@@ -13,21 +13,24 @@ const useStyles = makeStyles({
     fontSize: 22,
   },
   outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
+    //paddingLeft: "15px",
+    //paddingRight: "30px",
+    display: "flex",
+    flexDirection: "row",
   },
   innerContainer: {
     display: "flex",
     justifyContent: "flex-end",
     alignContent: "center",
-    backgroundColor: "yellow",
+    marginRight: 20,
+    backgroundColor: "white",
   }, 
 });
 
 export default function DistributionInputSubElement(props){
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
+    const leftColumnWidth = 3;
+    const rightColumnWidth = 8; 
     const fontSizeLeftColumn = "h5"
 
         switch (props.generatorObject.distributionVariables.type) {
@@ -37,8 +40,7 @@ export default function DistributionInputSubElement(props){
             case 'exponentialDistribution':
                 return (
                     <>
-
-                      
+                        <Grid container className={classes.outerContainer}>  
                             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                                 <Grid item >
                                     <Typography>
@@ -54,7 +56,7 @@ export default function DistributionInputSubElement(props){
                                     value={props.generatorObject.distributionVariables.exponentialDistribution.lambda}
                                     onChange={(event)=>{props.expDLambdaValueChangedHandler(event)}}/>
                             </Grid>
-                
+                        </Grid>
                     </>);
            
        
@@ -88,7 +90,7 @@ export default function DistributionInputSubElement(props){
                             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                                 <Grid item >
                                     <Typography>
-                                        Standard Deviation:
+                                        Std. Deviation:
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -104,7 +106,7 @@ export default function DistributionInputSubElement(props){
                             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                                 <Grid item >
                                     <Typography>
-                                        Mean
+                                        Mean:
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -126,7 +128,7 @@ export default function DistributionInputSubElement(props){
                             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                                 <Grid item >
                                     <Typography>
-                                        p Value:
+                                        p-Value:
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -142,7 +144,7 @@ export default function DistributionInputSubElement(props){
                             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                                 <Grid item >
                                     <Typography>
-                                        n Value:
+                                        n-Value:
                                     </Typography>
                                 </Grid>
                             </Grid>

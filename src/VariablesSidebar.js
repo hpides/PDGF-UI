@@ -1,5 +1,6 @@
-import React, {useRef, useEffect, useState} from 'react'
+import React, {useRef, useEffect, useState, useContext} from 'react'
 import {makeStyles} from "@material-ui/core/styles";
+import {TooltipContext} from "./App";
 import DefaultVariablesSubComponent  from "./DefaultVariablesSubComponent";
 import CustomVariablesSubComponent  from "./CustomVariablesSubComponent";
 import Grid from "@material-ui/core/Grid";
@@ -7,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import CustomTooltip from "./CustomTooltip";
 
 const useStyles = makeStyles((theme)=>({
     addVariable: {
@@ -24,7 +26,8 @@ export default function VariablesSidebar(props) {
     const [addedCustomVariablesCounter, setAddedCustomVariablesCounter] =useState(0);
     const endOfContainerRef = useRef();
     useEffect(() => {endOfContainerRef.current.scrollIntoView()}, [addedCustomVariablesCounter]);
-    
+    const tooltipVisible = useContext(TooltipContext);
+
     return (
       <>  
 
@@ -39,8 +42,9 @@ export default function VariablesSidebar(props) {
                 style={{ 
                     height: "100%", 
                     width: "350px", 
-                    backgroundColor: "pink", 
-                    padding: "20px", 
+                    backgroundColor: "white", 
+                    padding: "10px", 
+                    paddingTop: 0,
                     borderColor: "white", 
                     borderStyle: "dashed", 
                     borderWidth: "1px", 
@@ -56,22 +60,25 @@ export default function VariablesSidebar(props) {
                         justify="center" 
                         alignContent="flex-start"
                         style={{ 
-                            maxHeight: "40%", 
+                            maxHeight: "36%", 
                             width: "350px", 
-                            backgroundColor: "pink", 
-                            padding: "0", 
+                            backgroundColor: "white", 
+                            padding: "5px", 
                             borderColor: "white", 
                             borderStyle: "dashed", 
                             borderWidth: "1px", 
                             flexGrow: 0,
-                            }}>   
+                            marginBottom: 10,
 
+                            }}>   
+                                <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "Default variables are variables that are defined by PDGF but whose values you can change.": ""}>
                                 <Typography variant="h4" align="left">Default Variables</Typography>
+                                </CustomTooltip>    
 
                                 <div 
                                     className="variablesSubSubContainer"
                                     style={{
-                                        height: "80%",
+                                        height: "100%",
                                         overflow: "auto",
                                         display: "flex",
                                         flexDirection: "column",
@@ -101,21 +108,22 @@ export default function VariablesSidebar(props) {
                         style={{ 
                             height: "60%", 
                             width: "350px", 
-                            backgroundColor: "pink", 
-                            padding: "0px", 
+                            backgroundColor: "white", 
+                            padding: "5px", 
                             borderColor: "white", 
-                            borderStyle: "dashed", 
+                            borderStyle: "solid", 
                             borderWidth: "1px", 
                             flexGrow: 1,
                             }}>   
 
 
-                            <Typography variant="h4" align="left">Custom Variables</Typography>
-
+                            <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "Custom variables are variables that you can defined by yourself to use in PDGF. For example you could ...": ""}>    
+                                <Typography variant="h4" align="left">Custom Variables</Typography>
+                            </CustomTooltip>
                                 <div 
                                     className="variablesSubSubContainer2"
                                     style={{
-                                        maxHeight: "80%",
+                                        maxHeight: "90%",
                                         overflow: "auto",
                                         overflowX: "hidden",
                                         display: "flex",
@@ -136,6 +144,7 @@ export default function VariablesSidebar(props) {
                                                                                                                                         />})}
                                             <div className="endOfContainerPointer" ref={endOfContainerRef}/>
 
+                                    
                                 </div>
 
                                 <div>
@@ -148,6 +157,10 @@ export default function VariablesSidebar(props) {
                                             Add Variable
                                     </Button>
                                 </div>  
+                            
+                            
+
+
                     </Grid>
 
 

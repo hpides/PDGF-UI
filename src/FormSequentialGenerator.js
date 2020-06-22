@@ -9,32 +9,18 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import SequentialGeneratorSelectionField from "./SequentialGeneratorSelectionField";
 import cloneDeep from 'lodash/cloneDeep';
 import Collapse from '@material-ui/core/Collapse';
+import Button from "@material-ui/core/Button";
+import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn, generatorFormFontSizeSecondLevel } from "./styles";
 
-const useStyles = makeStyles({
-    input: {
-    fontSize: 22,
-  },
-  inputSelect: {
-    fontSize: 22,
-  },
-  outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
-    backgroundColor: "yellow",
-  }, 
-});
+const useStyles = makeStyles({ ... generatorFormStyles});
 
 
 export default function FormSequentialGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
-    const fontSizeLeftColumn = "h5";
+    const leftColumnWidth = generatorFormsLeftColumnWidth;
+    const rightColumnWidth = generatorFormsRightColumnWidth; 
+    const fontSizeLeftColumn = generatorFormFontSizeLeftColumn;
+    const fontSizeSecondLevel = generatorFormFontSizeSecondLevel;
     
     // Change Handler Input Fields
     const concatenateResultsChangedHandler = (event) => {
@@ -68,63 +54,7 @@ export default function FormSequentialGenerator(props) {
    
         <Grid container className={classes.outerContainer}>
             
-            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                <Grid item >
-                    <Typography variant={fontSizeLeftColumn}>
-                        Concatenate Results:
-                    </Typography>
-                </Grid>
-            </Grid>
-
-            <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "blue"}}>
-                <Checkbox 
-                    inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                    checked={props.generatorObject.concatenateResults}
-                    onChange={(event)=> {concatenateResultsChangedHandler(event)}}
-                    />
-            </Grid>
-
-            <Collapse in={props.generatorObject.concatenateResults}>
-                <>
-                <Grid container className={classes.outerContainer}>
-                    
-                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                        <Grid item >
-                            <Typography variant={fontSizeLeftColumn}>
-                                Delimiter:
-                            </Typography>
-                        </Grid>
-                    </Grid>
-
-                    <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "lightgreen"}}>
-                        <Input 
-                            className={classes.input} 
-                            type="text" 
-                            placeholder="Enter Delimiter" 
-                            fullWidth
-                            value={props.generatorObject.delimiter} 
-                            onChange={(event) => delimiterChangedHandler(event)}/>
-                    </Grid>
-
-                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                        <Grid item >
-                            <Typography variant={fontSizeLeftColumn}>
-                                Delimit Empty Values:
-                            </Typography>
-                        </Grid>
-                    </Grid>
-
-                    <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "blue"}}>
-                        <Checkbox 
-                            inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                            checked={props.generatorObject.delimitEmptyValues}
-                            onChange={(event)=> {delimitEmptyValuesChangedHandler(event)}}
-                        />
-                    </Grid>
-                </Grid>
-
-                </>  
-            </Collapse>
+           
       
             <Grid container item xs={12}>
             {props.generatorObject.generatorList.map((generator, index) => <SequentialGeneratorSelectionField 
@@ -136,7 +66,18 @@ export default function FormSequentialGenerator(props) {
             )}
             </Grid>
 
-            <Grid container item xs={12}>
+            <Grid container item xs={11} justify="flex-end">
+               
+                <Button
+                    variant="outlined"
+                    color="inherit"
+                    className={classes.addButton}
+                    startIcon={<AddCircleIcon/>}
+                    onClick={() => {addGenerator()}}>
+                        Add Sub-Generator
+                </Button>
+               
+               {/*}
                 <div style={{display: "flex", flexDirection: "row", justifycontent: "flex-start", alignItems: "center"}}>
                       <IconButton onClick={() => {addGenerator()}}>
                           <AddCircleIcon/>
@@ -146,11 +87,80 @@ export default function FormSequentialGenerator(props) {
                           onClick={() => {addGenerator()}}>
                           Add Generator
                       </Typography>
-                </div>
+            </div> */}
+
             </Grid>  
 
 
-      </Grid>
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth}>
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Concat. Results:
+                    </Typography>
+                </Grid>
+            </Grid>
+
+            <Grid item xs={rightColumnWidth}>
+                <Checkbox 
+                    inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
+                    checked={props.generatorObject.concatenateResults}
+                    onChange={(event)=> {concatenateResultsChangedHandler(event)}}
+                    />
+            </Grid>
+
+        </Grid>
+
+            <Collapse in={props.generatorObject.concatenateResults}>
+                <>
+                <Grid container className={classes.outerContainer}>
+                    <Grid container className={classes.innerContainer} item xs={leftColumnWidth}>
+                        <Grid item >
+                            <div/>
+                        </Grid>
+                    </Grid>
+
+
+                    <Grid container  item xs={rightColumnWidth}>
+
+                        <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                            <Grid item >
+                                <Typography variant={fontSizeSecondLevel}>
+                                    Delimiter:
+                                </Typography>
+                            </Grid>
+                        </Grid>
+
+                        <Grid item xs={rightColumnWidth}>
+                            <input 
+                                className={classes.inputSecondLevel} 
+                                type="text" 
+                                placeholder="Enter Delimiter" 
+                                value={props.generatorObject.delimiter} 
+                                onChange={(event) => delimiterChangedHandler(event)}/>
+                        </Grid>
+
+                        <Grid className={classes.innerContainer} container item xs={leftColumnWidth} style={{alignContent: "center"}} >
+                            <Grid item >
+                                <Typography variant={fontSizeSecondLevel}>
+                                    Delimit Blanks:
+                                </Typography>
+                            </Grid>
+                            
+                        </Grid>
+
+                        <Grid container item xs={rightColumnWidth} style={{alignContent: "center"}}>
+                            <Checkbox 
+                                inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
+                                checked={props.generatorObject.delimitEmptyValues}
+                                onChange={(event)=> {delimitEmptyValuesChangedHandler(event)}}
+                            />
+                        </Grid>
+                    </Grid>    
+                </Grid>
+
+                </>  
+            </Collapse>
+
     </>
   );
 }

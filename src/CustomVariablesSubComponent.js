@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {TooltipContext} from "./App";
+import CustomTooltip from "./CustomTooltip";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
@@ -40,17 +42,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomVariablesSubComponent(props) {
   const classes = useStyles();
-
+  const tooltipVisible = useContext(TooltipContext);
   return (
       <>
  <div>
 
-<Grid container display="flex" flexDirection="column" justify="flex-start" style={{marginBottom: "20px"}}>
+<Grid container display="flex" flexDirection="column" justify="flex-start" style={{marginBottom: "20px", border: "1px black solid", borderRadius: "5px", padding: 10,}}>
         <Grid container display="flex" justify="flex-start" style={{alignItems: "center"}} item xs={12}>
             <Grid item > 
+                
+            <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "Here you can enter the name of your system variable. But please don't use special characters or blanks!": ""}>
                 <input 
                                 style={{fontSize: "24px", 
-                                        width: "200px", 
+                                        width: "230px", 
                                         height: "38px", 
                                         outlineColor: "darkblue", 
                                         border: "none", 
@@ -63,13 +67,18 @@ export default function CustomVariablesSubComponent(props) {
                                 value={props.customVariable.name}
                                 onChange={(event)=> {props.customSystemVariableNameChangedHandler(event, props.customVariable.variableId)}}
                             /> 
+              </CustomTooltip>
+
             </Grid>
-                      
+
+                   
             <Grid item>
-                <div style={{display: "flex", width: "30px", paddingLeft: "30px"}}>  
+                <div style={{display: "flex", width: "30px", paddingLeft: "10px"}}>  
+                <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "Press here to delete the variable.": ""}>  
                     <IconButton aria-label="delete table" onClick={() => {props.deleteCustomSystemVariableHandler(props.customVariable.variableId)}}> 
-                      <DeleteIcon style={{width: "36px", height: "36px"}}/>
+                      <DeleteIcon style={{width: "24px", height: "24px"}}/>
                     </IconButton> 
+                </CustomTooltip>
                 </div>
             </Grid>
 
@@ -77,16 +86,18 @@ export default function CustomVariablesSubComponent(props) {
 
         <Grid container display="flex" flexDirection="row" justify="space-between" item xs={12}>
                
-              <Grid item xs={4}>
+              <Grid item xs={3}>
+                <CustomTooltip  placement="left" arrow="true" title={tooltipVisible? "Enter the value of your variable. You might also write an expression that refers to .... like for example: .....": ""}>  
                   <Typography variant="h6">
                        Value:
                   </Typography>
+                </CustomTooltip>  
               </Grid>
                
-              <Grid item xs={8}>
+              <Grid item xs={9}>
                   <input 
                           style={{fontSize: "16px", 
-                                  width: "140px", 
+                                  width: "160px", 
                                   height: "22px", 
                                   outlineColor: "darkblue", 
                                   border: "none", 
@@ -95,7 +106,7 @@ export default function CustomVariablesSubComponent(props) {
                                   paddingLeft: "10px",
                                   borderRadius: "4px",
                                   margin: "2px"}}
-                          placeholder = "Enter Variable Value"
+                          placeholder = "Enter Value"
                           value={props.customVariable.value}
                           onChange={(event)=> {props.customSystemVariableValueChangedHandler(event, props.customVariable.variableId)}}
                       /> 
@@ -104,16 +115,18 @@ export default function CustomVariablesSubComponent(props) {
 
         <Grid container display="flex" flexDirection="row" justify="space-between" item xs={12}>
                
-               <Grid item xs={4}>
+               <Grid item xs={3}>
+                <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "Please specify here the type of your variable. If your variable always is a natural number, write LONG, if your number always is a floating number write DOUBLE, otherwise write VARCHAR.": ""}> 
                    <Typography variant="h6">
                        Type:
                    </Typography>
+                </CustomTooltip>
               </Grid>
                
-              <Grid item xs={8}>
+              <Grid item xs={9}>
                   <input 
                           style={{fontSize: "16px", 
-                                  width: "140px", 
+                                  width: "160px", 
                                   height: "22px", 
                                   outlineColor: "darkblue", 
                                   border: "none", 
@@ -122,7 +135,7 @@ export default function CustomVariablesSubComponent(props) {
                                   paddingLeft: "10px",
                                   borderRadius: "4px",
                                   margin: "2px"}}
-                          placeholder = "Enter Variable Type"
+                          placeholder = "Enter Type"
                           value={props.customVariable.dataType}
                           onChange={(event)=> {props.customSystemVariableDataTypeChangedHandler(event, props.customVariable.variableId)}}
                       /> 

@@ -8,31 +8,15 @@ import Checkbox from "@material-ui/core/Checkbox";
 import DistributionInputElement from "./DistributionInputElement";
 import {localeList} from "./data";
 import cloneDeep from 'lodash/cloneDeep';
+import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
 
-const useStyles = makeStyles({
-    input: {
-    fontSize: 22,
-  },
-  inputSelect: {
-    fontSize: 22,
-  },
-  outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
-    backgroundColor: "yellow",
-  }, 
-});
+const useStyles = makeStyles({ ... generatorFormStyles});
 
-export default function DialogFormDoubleGenerator(props) {
+export default function DialogFormDoubleNumberGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
-    const fontSizeLeftColumn = "h5";
+    const leftColumnWidth = generatorFormsLeftColumnWidth;
+    const rightColumnWidth = generatorFormsRightColumnWidth; 
+    const fontSizeLeftColumn = generatorFormFontSizeLeftColumn;
 
     
     
@@ -64,17 +48,11 @@ export default function DialogFormDoubleGenerator(props) {
       props.setGeneratorObject(newGenerator);
     };
 
-    // Change Handler Input Fields
-    const fixedStepSizeChangedHandler = (event) => {
-      const newGenerator = cloneDeep(props.generatorObject);
-      newGenerator.fixedStepSize = event.target.checked;
-      props.setGeneratorObject(newGenerator);
-    };
 
     // Change Handler Input Fields
-    const hasAllDistinctValuesChangedHandler = (event) => {
+    const numberOfDistinctCharactersChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.hasAllDistinctValues = event.target.checked;
+        newGenerator.numberOfDistinctCharacters = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
 
@@ -149,7 +127,7 @@ export default function DialogFormDoubleGenerator(props) {
                 </Grid>
 
                 <Grid  item xs={rightColumnWidth}>
-                    <Input 
+                    <input 
                         className={classes.input} 
                         type="number" 
                         fullWidth
@@ -168,7 +146,7 @@ export default function DialogFormDoubleGenerator(props) {
                 </Grid>
 
                 <Grid item xs={rightColumnWidth}>
-                    <Input 
+                    <input 
                         className={classes.input} 
                         type="number" 
                         fullWidth
@@ -185,11 +163,11 @@ export default function DialogFormDoubleGenerator(props) {
                 </Grid>
 
                 <Grid item xs={rightColumnWidth}>
-                  <Input 
+                  <input 
                     className={classes.input} 
                     type="number" 
                     fullWidth
-                    placeholder="Enter Number of Decima Places" 
+                    placeholder="Enter Number of Decimal Places" 
                     value={props.generatorObject.decimalPlaces} 
                     onChange={(event) => decimalPlacesChangedHandler(event)}/>
                 </Grid>
@@ -203,7 +181,7 @@ export default function DialogFormDoubleGenerator(props) {
                 </Grid>
 
                 <Grid  item xs={rightColumnWidth}>
-                  <TextField 
+                  <select
                     className={classes.input} 
                     type="text"
                     select 
@@ -214,25 +192,9 @@ export default function DialogFormDoubleGenerator(props) {
 
                       { localeList.map(locale => { 
                             return <option key={locale} value={locale}> {locale} </option>})}
-                  </TextField>    
+                  </select>    
                 </Grid>
 
-
-                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                    <Grid item >
-                        <Typography variant={fontSizeLeftColumn}>
-                            Fixed Step Size:
-                        </Typography>
-                    </Grid>
-                </Grid>
-
-                <Grid item xs={rightColumnWidth}>
-                  <Checkbox 
-                        inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={props.generatorObject.fixedStepSize}
-                        onChange={(event)=> {fixedStepSizeChangedHandler(event)}}
-                        />
-                </Grid>
 
                 <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                     <Grid item >
@@ -243,12 +205,15 @@ export default function DialogFormDoubleGenerator(props) {
                 </Grid>
 
                 <Grid  item xs={rightColumnWidth}>
-                  <Checkbox 
-                        inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
-                        checked={props.generatorObject.hasAllDistinctValues}
-                        onChange={(event)=> {hasAllDistinctValuesChangedHandler(event)}}
-                        />
+                    <input 
+                        className={classes.input} 
+                        type="number" 
+                        placeholder="Enter Number of Distinct Characters" 
+                        value={props.generatorObject.numberOfDistinctCharacters} 
+                        onChange={(event)=> {numberOfDistinctCharactersChangedHandler(event)}}
+                    />
                 </Grid>
+
                 
                 <Grid  item xs={12}>
                     <DistributionInputElement 

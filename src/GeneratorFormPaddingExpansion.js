@@ -23,20 +23,30 @@ const useStyles = makeStyles((theme) => ({
   outerContainer: {
     paddingLeft: "15px",
     paddingRight: "30px",
+    alignContent: "flex-start",
+    alignItems: "flex-start",
   },
   innerContainer: {
     display: "flex",
     justifyContent: "flex-end",
     alignContent: "center",
-    backgroundColor: "yellow",
+    marginRight: 20,
+    backgroundColor: "white",
   }, 
+  inputSecondLevel: {
+    fontSize: 16,
+  },
+  collapseContainer: {
+    width:"100%",
+  },
 }));
 
 export default function GeneratorFormPaddingExpansion(props) {
   const classes = useStyles();
-  const leftColumnWidth = 5;
-  const rightColumnWidth = 12 - leftColumnWidth; 
+  const leftColumnWidth = 3;
+  const rightColumnWidth = 8; 
   const fontSizeLeftColumn = "h5"
+  const fontSizeSecondLevel ="16px"
 
 
   return (
@@ -50,75 +60,89 @@ export default function GeneratorFormPaddingExpansion(props) {
                 </Grid>
           </Grid>
 
-          <Grid item xs={rightColumnWidth}>
+          <Grid item xs={1}>
               <Checkbox 
                 checked={props.generatorObject.paddingVariables.withPadding}
                 onChange={event => {props.withPaddingChangedHandler(event)}}
                 inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
           </Grid>  
 
+
+          <Grid item xs={rightColumnWidth-1}>
+          <Collapse in={props.generatorObject.paddingVariables.withPadding}>
+              <Grid  container className={classes.collapseContainer}>  
+                  
+                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                        <Grid item >
+                            <Typography variant={fontSizeSecondLevel}>
+                                Size:
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                          
+                    <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
+                        <Input 
+                          placeholder="Enter Size" 
+                          className={classes.inputSecondLevel}
+                          value={props.generatorObject.paddingVariables.numberCharacters}
+                          onChange={event=> {props.numberCharactersChangedHandler(event)}}
+                          fullWidth
+                          />
+                    </Grid>
+
+                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                        <Grid item >
+                            <Typography variant={fontSizeSecondLevel}>
+                                Character:
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
+                    <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
+                        <Input 
+                          placeholder="Enter Fill Character" 
+                          value={props.generatorObject.paddingVariables.fillCharacter}
+                          multiline className={classes.inputSecondLevel}
+                          onChange={event => {props.fillCharacterChangedHandler(event)}}
+                          fullWidth/>
+                    </Grid>
+
+                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                        <Grid item >
+                            <Typography variant={fontSizeSecondLevel}>
+                                Direction:
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
+                    <Grid container display="flex" flexDirection="row" justify="flex-start" item xs={rightColumnWidth} style={{background: "inherit"}}>
+                        <Typography style={{fontSize: "16px"}}> From Left </Typography>           
+                        <Switch
+                            defaultChecked
+                            color="default"
+                            value={props.generatorObject.paddingVariables.fromLeft}
+                            onChange={event => {props.fromLeftChangedHandler(event)}}
+                            inputProps={{ 'aria-label': 'checkbox with default color' }}
+                        />
+                        <Typography style={{fontSize: "16px"}}>From Right </Typography>
+                        
+                    </Grid>
+              </Grid>
+            
+      </Collapse>
+
+
+
+          </Grid>  
+
+
+
+
+
       </Grid>
 
 
-      <Collapse in={props.generatorObject.paddingVariables.withPadding}>
-          <Grid  container className={classes.outerContainer}>
-              <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                  <Grid item >
-                      <Typography variant={fontSizeLeftColumn}>
-                          Size:
-                      </Typography>
-                  </Grid>
-              </Grid>
-                    
-              <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
-                  <Input 
-                    placeholder="Enter Size" 
-                    className={classes.input}
-                    value={props.generatorObject.paddingVariables.numberCharacters}
-                    onChange={event=> {props.numberCharactersChangedHandler(event)}}
-                    fullWidth
-                    />
-              </Grid>
-
-              <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                  <Grid item >
-                      <Typography variant={fontSizeLeftColumn}>
-                          Character:
-                      </Typography>
-                  </Grid>
-              </Grid>
-
-              <Grid item xs={rightColumnWidth} style={{background: "inherit"}}>
-                  <Input 
-                    placeholder="Enter Fill Character" 
-                    value={props.generatorObject.paddingVariables.fillCharacter}
-                    multiline className={classes.input}
-                    onChange={event => {props.fillCharacterChangedHandler(event)}}
-                    fullWidth/>
-              </Grid>
-
-              <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                  <Grid item >
-                      <Typography variant={fontSizeLeftColumn}>
-                          Direction:
-                      </Typography>
-                  </Grid>
-              </Grid>
-
-              <Grid container display="flex" flexDirection="row" justify="flex-start" item xs={rightColumnWidth} style={{background: "inherit"}}>
-                  <Typography style={{fontSize: "20px"}}> From Left </Typography>           
-                  <Switch
-                      defaultChecked
-                      color="default"
-                      value={props.generatorObject.paddingVariables.fromLeft}
-                      onChange={event => {props.fromLeftChangedHandler(event)}}
-                      inputProps={{ 'aria-label': 'checkbox with default color' }}
-                  />
-                  <Typography style={{fontSize: "20px"}}>From Right </Typography>
-                  
-              </Grid>
-          </Grid>
-      </Collapse>
+      
     </>
   );
 }

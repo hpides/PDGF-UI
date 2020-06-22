@@ -1,51 +1,25 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {TooltipContext} from "./App";
+import CustomTooltip from "./CustomTooltip";
 import { makeStyles } from '@material-ui/core/styles';
-
 import Grid from '@material-ui/core/Grid';
-
-
 import Typography from '@material-ui/core/Typography';
-
-
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import Checkbox from "@material-ui/core/Checkbox";
-
-
-
 import DistributionInputElement from "./DistributionInputElement";
 import cloneDeep from 'lodash/cloneDeep';
+import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
 
+const useStyles = makeStyles({ ... generatorFormStyles});
 
-const useStyles = makeStyles({
-    input: {
-    fontSize: 22,
-  },
-  inputSelect: {
-    fontSize: 22,
-  },
-  select: {
-    fontSize: 22,
-  },
-  outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
-    backgroundColor: "yellow",
-  }, 
-});
 
 export default function DialogFormDictListGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
-    const fontSizeLeftColumn = "h5";
-
-   
+    const leftColumnWidth = generatorFormsLeftColumnWidth;
+    const rightColumnWidth = generatorFormsRightColumnWidth; 
+    const fontSizeLeftColumn = generatorFormFontSizeLeftColumn;
+    const tooltipVisible = useContext(TooltipContext);
 
     const dictData2 = [
       {value: "", label: "Select dictionary"},
@@ -149,51 +123,49 @@ export default function DialogFormDictListGenerator(props) {
     <>
     <Grid container className={classes.outerContainer}>
 
-                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                        <Grid item >
-                            <Typography variant={fontSizeLeftColumn}>Dictionary:</Typography>
-                        </Grid>
-                </Grid>
-
+                <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "Instead of creating randomStrings one can also draw entries from dictionaries that keep words from the domain in question (e.g. names, cities, streetnames...). A dictionary e.g. could contain 1000 male German surnames or 10.000 international street names. For a selection of often needed domaines, PDGF has dictionaries available. These dictionaries can be selected here.": ""}>
+                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                            <Grid item >
+                                <Typography variant={fontSizeLeftColumn}>Dictionary:</Typography>
+                            </Grid>
+                    </Grid>
+                </CustomTooltip>
 
                 <Grid  item xs={rightColumnWidth}>
-                    <TextField
+                    <select
                         id="standard-select-currency-native"
-                        className={classes.select}                      
-                        select
-                        fullWidth
+                        className={classes.inputSelect}                      
                         value={props.generatorObject.dictionary}
                         onChange={(event) => dictionaryChangedHandler(event)}
-                        SelectProps={{
-                            native: true,
-                        }}
                         > 
                         {dictData2.map((option) => (
                           <option key={option.value} value={option.value}>
                           {option.label}
                           </option>))}
                     
-                    </TextField>
+                    </select>
                 </Grid>
 
 
-
-                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                        <Grid item >
-                              <Typography variant={fontSizeLeftColumn}>Size:</Typography>
-                        </Grid>
-                </Grid>
+                <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "With the dictList generator you can either generate entries with a single value or with multiple values (lists). In case you want to generate lists, you have to specify in the size-attribute the number of elements that shall be in each list.": ""}> 
+                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                            <Grid item >
+                                  <Typography variant={fontSizeLeftColumn}>Size:</Typography>
+                            </Grid>
+                    </Grid>
+                </CustomTooltip>
 
                 <Grid  item xs={rightColumnWidth}>
-                  <Input 
-                    className={classes.input} 
-                    type="number" 
-                    fullWidth
-                    placeholder="Enter Number of Decima Places" 
+                  <input 
+                    className={classes.input}
+                    type="number"
+                    placeholder="Number of randomly picked dictionary entrys" 
                     value={props.generatorObject.size} 
                     onChange={(event) => sizeChangedHandler(event)}/>
                 </Grid>
 
+
+                <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "In case you generate a list of two or more elements, please enter here the string (combination of letters) you want to use to separate the individual elements. Use only numbers and letters and keep the length to less than x.": ""}></CustomTooltip>
                 <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                         <Grid item >
                             <Typography variant={fontSizeLeftColumn}>
@@ -203,11 +175,10 @@ export default function DialogFormDictListGenerator(props) {
                 </Grid>
 
                 <Grid  item xs={rightColumnWidth}>
-                  <Input 
+                  <input 
                     className={classes.input} 
                     type="text" 
-                    fullWidth
-                    placeholder="Enter Separator" 
+                    placeholder="Enter the string to be put between the drawn elements" 
                     value={props.generatorObject.separator} 
                     onChange={(event) => separatorChangedHandler(event)}/>
                 </Grid>

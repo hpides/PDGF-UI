@@ -7,32 +7,15 @@ import Checkbox from "@material-ui/core/checkbox";
 import cloneDeep from 'lodash/cloneDeep';
 import ProbabilityValueInputComponent from "./ProbabilityValueInputComponent";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
 
-
-const useStyles = makeStyles({
-    input: {
-    fontSize: 22,
-  },
-  inputSelect: {
-    fontSize: 22,
-  },
-  outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
-    backgroundColor: "yellow",
-  }, 
-});
+const useStyles = makeStyles({ ... generatorFormStyles});
 
 export default function FormProbabilityGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
-    const fontSizeLeftColumn = "h5";
+    const leftColumnWidth = generatorFormsLeftColumnWidth;
+    const rightColumnWidth = generatorFormsRightColumnWidth; 
+    const fontSizeLeftColumn = generatorFormFontSizeLeftColumn;
     const [idCounter, setIdCounter] = useState(0);
   
     // Change Handler Input Fields

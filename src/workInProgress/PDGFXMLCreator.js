@@ -407,14 +407,14 @@ const gen_uuidGenerator = (generator) => {
   
   
   
-  // refactor with exportSchemaAsJSON 
+  // refactor with exportCurrentSchemaAsJSON 
   const writeSchemaToDownloadFile = (schema) => {
     let blob = new Blob ([schema], {type: "text/plain;charset=utf-8"});
     saveAs(blob, "schema_pdgf.txt");
   }  
   
   
-  const exportSchemaAsJSON = () => {
+  const exportCurrentSchemaAsJSON = () => {
     let allDataObject = state;
     let json = JSON.stringify(allDataObject);
     let blob = new Blob ([json], {type: "text/plain;charset=utf-8"});

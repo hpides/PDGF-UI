@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useContext} from "react";
+import {TooltipContext} from "./App";
 import Button from "@material-ui/core/Button";
 import BuildIcon from "@material-ui/icons/Build";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -8,6 +9,8 @@ import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+import CustomTooltip from "./CustomTooltip";
+import {enterDelayTime} from "./data";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -56,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     tr3: {
-        backgroundColor: "lightblue",
+        backgroundColor: "rgb(245,245,245)",
       },
   }));
 
@@ -64,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TableSubComponent(props){
     const classes = useStyles();
+    const tooltipVisible = useContext(TooltipContext);
 
     return(
 
@@ -80,8 +84,9 @@ export default function TableSubComponent(props){
         </td>
 
         <td className={classes.fieldNameField}>     
-            <Tooltip placement="right" title='Enter the name of the field to be generated. Please do not use empty spaces and any special characters besides "-", "_"'>
+            <CustomTooltip placement="left" arrow="true" title={tooltipVisible? `Enter the name of the field to be generated. Please do not use empty spaces and any special characters besides "-", "_"`:""}>
                 <input 
+                    placeholder="Enter field name"
                     style={{fontSize: "16px", 
                             width: "", 
                             height: "36px", 
@@ -96,20 +101,41 @@ export default function TableSubComponent(props){
                     onChange={(event) =>
                     {props.fieldNameChangedHandler(event, props.data.tableId, props.data.rowId)}}
                 />
-            </Tooltip>
+            </CustomTooltip>
         </td>
 
 
-        <td className={classes.generatorButtonField}>           
-                <div style={{display: "flex", justifyContent: "center", alignContent: "center"}}>
-                        <Tooltip placement="right" title="Press Button and get to the dialoge to select or create your generator.">
-                            <Button
-                                style={{marginLeft: "auto", marginRight: "auto"}}
-                                onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorSelectionDialog() }}>
-                                    Select Generator
-                            </Button>
-                        </Tooltip>
-                </div>
+        <td className={classes.generatorButtonField}> 
+
+                {(Object.keys(props.data.generator).length===0)?      
+
+
+                    <div style={{display: "flex", justifyContent: "center", alignContent: "center"}}>
+                            <CustomTooltip   placement="bottom" arrow="true" title={tooltipVisible? "Press Button and get to the dialoge to select or create a generator for that row.": ""}>
+                                <Button
+                                    variant="outlined"
+                                    style={{marginLeft: "auto", marginRight: "auto", height: 36, margin: 3, lineHeight: 1.25}}
+                                    onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorSelectionDialog() }}>
+                                        Select Generator
+                                </Button>
+                            </CustomTooltip>
+                    </div>
+
+                :
+
+                    <div style={{display: "flex", justifyContent: "center", alignContent: "center"}}>
+                            <CustomTooltip   placement="bottom" title={tooltipVisible? "Press Button and get to the dialoge to select another generator.": ""}>
+                                <Button
+                                     variant="outlined"
+                                    style={{marginLeft: "auto", marginRight: "auto", height: 36, margin: 3, lineHeight: 1.25}}
+                                    onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorSelectionDialog() }}>
+                                        Replace Generator
+                                </Button>
+                            </CustomTooltip>
+                    </div>
+                }           
+
+
         </td>            
 
         <td className={classes.editGeneratorField}>
@@ -117,9 +143,9 @@ export default function TableSubComponent(props){
                         <IconButton
                             style={{marginLeft: "auto", marginRight: "auto"}}
                             onClick={() => {props.loadGeneratorToEditDialog(props.data.tableId, props.data.rowId, props.data.generator.generatorType)}}> 
-                                <Tooltip placement="right" title="Edit Generator. Only clickable when a Generator is attached to the field">
+                                <CustomTooltip placement="bottom" arrow="true" title={tooltipVisible? "Click here to get into edit mode and change the generator settings. If the symbol is red, you did not yet load a generator to that row. In that case edit mode cannot be accessed.": ""}>
                                     <BuildIcon  style={(Object.keys(props.data.generator).length===0)? {color: "red"}: undefined} className={classes.icon} />
-                                </Tooltip>
+                                </CustomTooltip>
                         </IconButton>    
                 </div>
         </td>
@@ -130,9 +156,9 @@ export default function TableSubComponent(props){
                     <IconButton 
                         style={{marginLeft: "auto", marginRight: "auto"}}
                         onClick={() => {props.deleteTableRowHandler(props.data.tableId, props.data.rowId)}}>
-                            <Tooltip placement="right" title="Delete Row">
+                            <CustomTooltip  placement="bottom" arrow="true" title={tooltipVisible? "Click here to delete this row.": ""}>
                                 <DeleteIcon className={classes.icon}/>
-                            </Tooltip>
+                            </CustomTooltip>
                     </IconButton>    
                 </div>
 

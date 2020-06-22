@@ -10,32 +10,16 @@ import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import TextField from "@material-ui/core/TextField";
+import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
 
 
-const useStyles = makeStyles({
-    input: {
-    fontSize: 22,
-  },
-  inputSelect: {
-    fontSize: 22,
-  },
-  outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
-    backgroundColor: "yellow",
-  }, 
-});
+const useStyles = makeStyles({ ... generatorFormStyles});
 
 export default function FormIfGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
-    const fontSizeLeftColumn = "h5";
+    const leftColumnWidth = generatorFormsLeftColumnWidth;
+    const rightColumnWidth = generatorFormsRightColumnWidth; 
+    const fontSizeLeftColumn =generatorFormFontSizeLeftColumn;
     const [optionLine1, setOptionLine1] = useState("write");
     const [optionLine2, setOptionLine2] = useState("write");
     
@@ -81,7 +65,7 @@ export default function FormIfGenerator(props) {
     
         <Grid container className={classes.outerContainer}>
 
-            <Grid item xs={12} style={{padding: "0px 0px",}}>
+            <Grid item xs={12}>
                 <Typography variant={fontSizeLeftColumn}>Select Generator:</Typography>
             </Grid>
 
@@ -100,12 +84,11 @@ export default function FormIfGenerator(props) {
             </Grid>
 
             <Grid item xs={rightColumnWidth}>
-                <Input 
+                <input 
                     className={classes.input} 
                     type="text" 
                     placeholder="Enter If-Condition" 
                     value={props.generatorObject.if} 
-                    fullWidth
                     multiline
                     onChange={(event) => ifChangedHandler(event)}/>
             </Grid>
@@ -122,25 +105,20 @@ export default function FormIfGenerator(props) {
                 <Grid xs={9}>
 
                     {(optionLine1==="write")? 
-                        <Input 
+                        <input 
                             className={classes.input} 
                             type="text" 
                             placeholder="Enter Output for if = true" 
                             value={props.generatorObject.then} 
-                            fullWidth
                             onChange={(event) => thenChangedHandlerA(event)}/>
 
                     : 
-                        <TextField
+                        <select
                             id="standard-select-currency-native"
-                            className={classes.select}                      
-                            select
-                            fullWidth
+                            className={classes.inputSelect}            
                             value={props.generatorObject.subGeneratorIndex}
                             onChange={(event) => thenChangedHandlerB(event)}
-                            SelectProps={{
-                                native: true,
-                            }}> 
+                            > 
                       
                                 <option value={null} key={-1}>None</option>
                                 {(JSON.parse(localStorage.getItem("generatorRepository")).map((generator, index) => { 
@@ -148,7 +126,7 @@ export default function FormIfGenerator(props) {
                                                 {generator.repoVariables.name}
                                             </option>}))}
                     
-                        </TextField>}
+                        </select>}
 
                 </Grid>
                 <Grid xs={3}>
@@ -185,11 +163,10 @@ export default function FormIfGenerator(props) {
                {}
 
                <Grid xs={9}>
-                    <Input 
+                    <input 
                         className={classes.input} 
                         type="text" 
                         placeholder="Enter Output for If=false" 
-                        fullWidth
                         value={props.generatorObject.else} 
                         onChange={(event) => elseChangedHandler(event)}/>
                 </Grid>

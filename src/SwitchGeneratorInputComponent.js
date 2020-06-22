@@ -73,20 +73,10 @@ export default function SwitchGeneratorInputComponent(props){
         container className={classes.container} 
         justify = "flex-start"
         styles={{display: "flex", flexDirection: "row", alignItems: "center"}} 
-        xs={12}>
-            
-        <Grid  item className={classes.framed} xs={2}>
-        <div style={{display: "flex", justifycontent: "center", width: "40px", height: "40px" }}>
-            <Input 
-                value={props.id} 
-                readOnly="readOnly"
-                maxLength={3}
-            />
-        </div>
-        </Grid>
+        >
 
         <Grid  item className={classes.framed}xs={7}>
-            <Input 
+            <input 
                 defaultValue="Enter Case" 
                 value={props.caseValue} 
                 onChange={(event)=>{caseValueChangedHandler(event)}}
@@ -94,7 +84,7 @@ export default function SwitchGeneratorInputComponent(props){
         </Grid>
 
         <Grid item className={classes.framed}xs={2}>
-            <Input 
+            <input 
                 defaultValue="Enter Outcome" 
                 value={props.staticValue} 
                 onChange={(event)=> {outcomeGeneratorChangedHandler(event)}}

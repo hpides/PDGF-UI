@@ -36,7 +36,7 @@ export default function DialogBlank(props) {
             <Grid container direction="row" style={{paddingLeft: "15px"}}>
 
                 <Grid  item xs={12}>
-                  <Typography variant="h5">You are here because some lazy, good for nothing bastard did not manage to </Typography>
+                  <Typography variant="h5"> </Typography>
                 </Grid>
 
                 

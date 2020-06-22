@@ -6,12 +6,15 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
-import React from "react";
+import React, {useContext} from "react";
+import {TooltipContext} from "./App";
+import CustomTooltip from "./CustomTooltip";
 import TableSubComponent from "./TableSubComponent";
 import Button from "@material-ui/core/Button";
 import DraggableCore from "react-draggable";
 import Input from "@material-ui/core/Input";
-import NumberFormat from 'react-number-format'
+import NumberFormat from 'react-number-format';
+import {colors} from "./data";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -31,11 +34,9 @@ const useStyles = makeStyles((theme) => ({
   td: {
     border: "1px solid black",
   },
-  tr1: {
-    backgroundColor: "red",
-  },
+  
   tr2: {
-    backgroundColor: "lightgreen",
+    backgroundColor: "inherit",
   },
   closeIcon: {
     width: "25px",
@@ -65,32 +66,35 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TableComponent(props){
     const classes = useStyles();
+    const tooltipVisible = useContext(TooltipContext);
 
     return(
       <div>
 
       <table className={classes.table}>
         <tbody>
-          <tr className={classes.tr1}>
+          <tr className={classes.tr1} style={{backgroundColor: `${colors[props.data.tableId]}`}}>
             <td className={classes.td} colSpan="2">
-                   
-                <Input
-                    style={{fontSize: "20px", 
-                            width: "", 
-                            height: "44px", 
-                            outlineColor: "darkblue", 
-                            border: "none", 
-                            background: "rgb(216, 72, 34)",
-                            boxShadow: "inset 2px 2px 3px rgba(0,0,0,0.2)", 
-                            paddingLeft: "10px", 
-                            borderRadius: "4px",
-                            margin: "2px"}}
-                    type="text"
-                    placeholder = "Enter Table Name"
-                    value={props.data.tableName}
-                    onChange={(event) => {console.log("Wert: " + event.target.value + "TableId: " + props.data.tableId); props.tableNameChangedHandler(event, props.data.tableId)}}
-                />  
 
+                <CustomTooltip   placement="left" arrow="true" title={tooltipVisible? "Here you can enter your own table name. But please remember to not use special characters or blanks!": ""}>
+                    <input
+                        style={{fontSize: "20px", 
+                                width: "", 
+                                height: "44px", 
+                                outlineColor: "darkblue", 
+                                border: "none", 
+                                background: "white",
+                                boxShadow: "inset 2px 2px 3px rgba(0,0,0,0.2)", 
+                                paddingLeft: "10px", 
+                                borderRadius: "4px",
+                                margin: "2px"}}
+                        type="text"
+                        placeholder = "Enter Table Name"
+                        value={props.data.tableName}
+                        onChange={(event) => {console.log("Wert: " + event.target.value + "TableId: " + props.data.tableId); props.tableNameChangedHandler(event, props.data.tableId)}}
+                        onClick={(event) => event.target.select()}
+                    />  
+                </CustomTooltip>
 
              {/*}      
                     <TextField 
@@ -115,28 +119,32 @@ export default function TableComponent(props){
             </td>
 
             <td colSpan="2">
-                        <div style={{display: "flex", flexDirection: "column"}}>
-                            <div> 
-                              <Typography style={{fontSize: "16"}}> 
-                                Table Size: 
-                              </Typography>
-                            </div>
+                  <div style={{display: "flex", flexDirection: "column"}}>
+                      <div> 
+                          <CustomTooltip   placement="top" arrow="true" title={tooltipVisible? "In the table size field you can enter either natural numbers or expressions. It is standard procedure to express size in relation to the system variabe scale factor: 10 * ${SF}, or 10 * ${log(SF). You can use basic operations without further declaration but for further functions have to specify the ....":""} >
+                                <Typography style={{fontSize: "16", marginLeft: 4,}}> 
+                                  Table Size: 
+                                </Typography>
+                          </CustomTooltip>
+                      </div>
 
-                            <div>
+                  <div>
                              
                             <NumberFormat thousandSeparator={'.'} decimalSeparator={null} style={{fontSize: "16px", 
                                         width: "", 
                                         height: "22px", 
                                         outlineColor: "darkblue", 
                                         border: "none", 
-                                        background: "rgb(216, 72, 34)",
+                                        background: "white",
                                         boxShadow: "inset 2px 2px 3px rgba(0,0,0,0.2)", 
                                         paddingLeft: "10px",
 
                                         borderRadius: "4px",
-                                        margin: "2px"}}
+                                        margin: "2px",
+                                        marginBottom: "5px",}}
                                         value={props.data.tableSize}
-                                        onChange={(event)=> {props.tableSizeChangedHandler(event, props.data.tableId)}} />
+                                        onChange={(event)=> {props.tableSizeChangedHandler(event, props.data.tableId)}}
+                                        onClick={(event) => event.target.select()} />
                              
                              
                   {/*}           
@@ -174,10 +182,11 @@ export default function TableComponent(props){
              
              <td className={classes.closeIconField}>
                          
-                            
+                      <CustomTooltip   placement="top" arrow="true" title={tooltipVisible? "Click here to delete the table and all its rows.": ""}> 
                             <IconButton className={classes.closeIcon} aria-label="delete table" onClick={() => {props.deleteTableHandler(props.data.tableId)}}> 
                                 <CloseIcon />
                             </IconButton>
+                      </CustomTooltip>
                            
                           
             </td>         
@@ -199,16 +208,16 @@ export default function TableComponent(props){
 
           <tr className={classes.tr2}>
             <td className={classes.td} colSpan="5">
-              
-            <Button
-                variant="outlined"
-                color="green"
-                className={classes.addButton}
-                startIcon={<AddCircleIcon/>}
-                onClick={() => {props.addTableRowHandler(props.data.tableId)}}>
-                    Add Field
-            </Button>
-
+                <CustomTooltip   placement="top" arrow="true" title={tooltipVisible? "Click here to add a new row (table field) to the table.":""} >  
+                    <Button
+                        variant="outlined"
+                        color="green"
+                        className={classes.addButton}
+                        startIcon={<AddCircleIcon/>}
+                        onClick={() => {props.addTableRowHandler(props.data.tableId)}}>
+                            Add Row
+                    </Button>
+                </CustomTooltip>
              </td>
             
             </tr>                                                  

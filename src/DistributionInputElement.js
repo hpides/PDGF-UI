@@ -14,22 +14,23 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 22,
     },
     outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
+    //paddingLeft: "15px",
+    //paddingRight: "30px",
     },
     innerContainer: {
     display: "flex",
     justifyContent: "flex-end",
     alignContent: "center",
-    backgroundColor: "yellow",
+    marginRight: 20,
+    backgroundColor: "white",
     }, 
     }));
 
 
 export default function DistributionInputElement(props){
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
+    const leftColumnWidth = 3;
+    const rightColumnWidth = 8; 
     const fontSizeLeftColumn = "h5"
 
 return (
@@ -39,39 +40,59 @@ return (
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography  variant={fontSizeLeftColumn}>
-                        Distribution
+                        Distribution:
                     </Typography>
                 </Grid>
             </Grid>
 
             <Grid item xs={rightColumnWidth}>
-                <Select
+                <select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     className={classes.select}
+                    style={{fontSize: "20px", 
+                            width: "100%", 
+                            height: "36px", 
+                            outlineColor: "darkblue", 
+                            borderStyle: "solid",
+                            borderWidth: "1px",
+                            borderColor: "black",
+                            background: "white",
+                            paddingLeft: "10px", 
+                            borderRadius: "4px",
+                            boxSizing: "border-box",
+                            margin: "2px"}}
+
                     fullWidth
                     value={props.generatorObject.distributionVariables.type}
                     onChange={(event) => props.distributionTypeChangedHandler(event)}
                 >
-                    <MenuItem value="uniformDistribution">Uniform Distribution</MenuItem>
-                    <MenuItem value="normalDistribution">Normal Distribution</MenuItem>
-                    <MenuItem value="binomialDistribution">Binomial Distribution</MenuItem>
-                    <MenuItem value="exponentialDistribution">Exponential Distribution</MenuItem>
-                    <MenuItem value="logarithmicDistribution">Logarithmic Distribution</MenuItem>
-                </Select>
+                    <option value="uniformDistribution">Uniform Distribution</option>
+                    <option value="normalDistribution">Normal Distribution</option>
+                    <option value="binomialDistribution">Binomial Distribution</option>
+                    <option value="exponentialDistribution">Exponential Distribution</option>
+                    <option value="logarithmicDistribution">Logarithmic Distribution</option>
+                </select>
             </Grid>
         
+            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                   <div/>
+                </Grid>
+            </Grid>
             
-            
-            <DistributionInputSubElement 
-                expDLambdaValueChangedHandler={props.expDLambdaValueChangedHandler}
-                logDPValueChangedHandler={props.logDPValueChangedHandler}
-                normalDStdDevValueChangedHandler={props.normalDStdDevValueChangedHandler}
-                normalDMeanValueChangedHandler={props.normalDMeanValueChangedHandler}
-                binomialDPValueChangedHandler={props.binomialDPValueChangedHandler}
-                binomialDNValueChangedHandler={props.binomialDNValueChangedHandler}
-                generatorObject={props.generatorObject}/>  
-        
+
+
+            <Grid item xs={rightColumnWidth}>
+                <DistributionInputSubElement 
+                    expDLambdaValueChangedHandler={props.expDLambdaValueChangedHandler}
+                    logDPValueChangedHandler={props.logDPValueChangedHandler}
+                    normalDStdDevValueChangedHandler={props.normalDStdDevValueChangedHandler}
+                    normalDMeanValueChangedHandler={props.normalDMeanValueChangedHandler}
+                    binomialDPValueChangedHandler={props.binomialDPValueChangedHandler}
+                    binomialDNValueChangedHandler={props.binomialDNValueChangedHandler}
+                    generatorObject={props.generatorObject}/>  
+            </Grid>
 
         </Grid>    
     </>

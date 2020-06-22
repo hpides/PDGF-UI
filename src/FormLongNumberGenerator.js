@@ -6,31 +6,15 @@ import Input from "@material-ui/core/Input";
 import Checkbox from "@material-ui/core/Checkbox";
 import DistributionInputElement from "./DistributionInputElement";
 import cloneDeep from 'lodash/cloneDeep';
+import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
 
-const useStyles = makeStyles({
-    input: {
-    fontSize: 22,
-  },
-  inputSelect: {
-    fontSize: 22,
-  },
-  outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
-    backgroundColor: "yellow",
-  }, 
-});
+const useStyles = makeStyles({ ... generatorFormStyles});
 
 export default function DialogFormLongNumberGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
-    const fontSizeLeftColumn = "h5";
+    const leftColumnWidth = generatorFormsLeftColumnWidth;
+    const rightColumnWidth = generatorFormsRightColumnWidth; 
+    const fontSizeLeftColumn = generatorFormFontSizeLeftColumn;
     console.log("generatorObject: " + props.generatorObject);
     
     // Change Handler Input Fields
@@ -52,7 +36,7 @@ export default function DialogFormLongNumberGenerator(props) {
     // Change Handler Input Fields
     const numberOfDistinctCharactersChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.numberOfDistinctCharacters = event.target.checked;
+        newGenerator.numberOfDistinctCharacters = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
 
@@ -126,10 +110,9 @@ export default function DialogFormLongNumberGenerator(props) {
           </Grid>
 
           <Grid  item xs={rightColumnWidth}>
-              <Input 
+              <input 
                   className={classes.input} 
-                  type="number" 
-                  fullWidth
+                  type="number"
                   placeholder="Enter Minimum" 
                   value={props.generatorObject.minimum} 
                   onChange={(event) => minimumChangedHandler(event)}/>
@@ -144,10 +127,9 @@ export default function DialogFormLongNumberGenerator(props) {
           </Grid>
 
           <Grid  item xs={rightColumnWidth}>
-              <Input 
+              <input 
                   className={classes.input} 
                   type="number" 
-                  fullWidth
                   placeholder="Enter Maximum" 
                   value={props.generatorObject.maximum} 
                   onChange={(event) => maximumChangedHandler(event)}/>
@@ -162,10 +144,9 @@ export default function DialogFormLongNumberGenerator(props) {
           </Grid>
 
           <Grid  item xs={rightColumnWidth}>
-                <Input 
+                <input 
                   className={classes.input} 
                   type="number" 
-                  fullWidth
                   placeholder="Enter Number of Distinct Characters" 
                   value={props.generatorObject.numberOfDistinctCharacters} 
                   onChange={(event)=> {numberOfDistinctCharactersChangedHandler(event)}}

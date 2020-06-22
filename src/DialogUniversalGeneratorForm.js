@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-//import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -8,7 +8,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import FormIdGenerator from "./FormIdGenerator";
 import FormLongNumberGenerator from "./FormLongNumberGenerator";
 import FormDateTimeGenerator from "./FormDateTimeGenerator";
-import FormDoubleGenerator from "./FormDoubleGenerator";
+import FormDoubleNumberGenerator from "./FormDoubleNumberGenerator";
 import FormDictListGenerator from "./FormDictListGenerator";
 import FormRandomStringGenerator from "./FormRandomStringGenerator";
 import FormRandomSentenceGenerator from "./FormRandomSentenceGenerator";
@@ -21,29 +21,46 @@ import FormSequentialGenerator from "./FormSequentialGenerator";
 import FormReferenceValueGenerator from "./FormReferenceValueGenerator";
 import FormProbabilityGenerator from "./FormProbabilityGenerator";
 import FormUuidGenerator from "./FormUuidGenerator";
-import {emptyGenerator, commonGeneratorAttributes, specificGeneratorAttributes} from "./data";
+import {emptyGenerator, commonGeneratorAttributes, specificGeneratorAttributes, rawGeneratorExplanations} from "./data";
 import GeneratorFormPaddingExpansion from "./GeneratorFormPaddingExpansion";
 import GeneratorFormRepoExpansion  from "./GeneratorFormRepoExpansion";
 import GeneratorFormNullValuesElement from "./GeneratorFormNullValuesElement";
 import Typography from "@material-ui/core/Typography";
 import cloneDeep from 'lodash/cloneDeep';
+import IconButton from "@material-ui/core/IconButton";
+import InfoIcon from '@material-ui/icons/Info';
+import Collapse from "@material-ui/core/Collapse";
+import {infoBlue} from "./styles";
 
-/*const useStyles = makeStyles({
-    input: {
-    fontSize: 22,
-  },
-  inputSelect: {
-    fontSize: 22,
-  },
+const useStyles = makeStyles({
+  infoTextBox: {
+    backgroundColor: "#385fe0",
+    color: "white",
+    borderRadius: 5,
+    marginTop: 10,
+    marginRigt: 20,
+    fontSize: 16,
+  },    
 });
-*/
+
 
 
 export default function DialogUniversalGeneratorForm(props) {
-  //const classes = useStyles();
-  
-  const emptyGenerator2 = {...specificGeneratorAttributes, ...commonGeneratorAttributes};   
-  //alert(emptyGenerator2); 
+  const classes = useStyles();
+  const [infoTextVisible, setInfoTextVisible]  = useState(false);
+
+  const toggleInfoTextVisible = () => {
+    setInfoTextVisible(!infoTextVisible);
+  };
+
+  const showInfoText = () => {
+      setInfoTextVisible(true);
+  };
+
+  const hideInfoText = () => {
+    setInfoTextVisible(false);
+  };
+
   const [generatorObject, setGeneratorObject]=useState(emptyGenerator);
 
   const addUidAndTypeToGenerator = () => {
@@ -64,14 +81,12 @@ export default function DialogUniversalGeneratorForm(props) {
     };
 
 
-
-
   useEffect(()=>{
     (props.universalGeneratorFormMode === "create")? addUidAndTypeToGenerator(): copyGeneratorToBeEdited();
 
   }, [props.selectedGeneratorType]);
 
-  useEffect(()=>{props.upgradeCopyGeneratorObject(generatorObject)});
+ // useEffect(()=>{props.upgradeCopyGeneratorObject(generatorObject)});
 
 
 
@@ -230,8 +245,8 @@ export default function DialogUniversalGeneratorForm(props) {
                         generatorObject={generatorObject}
                         setGeneratorObject={setGeneratorObjectHandDown}/> 
 
-            case "doubleGenerator":
-              return <FormDoubleGenerator 
+            case "doubleNumberGenerator":
+              return <FormDoubleNumberGenerator 
                         generatorObject={generatorObject}
                         setGeneratorObject={setGeneratorObjectHandDown}/> 
 
@@ -305,6 +320,42 @@ export default function DialogUniversalGeneratorForm(props) {
         }
     };
        
+    const typeTitleMapping = (type) =>{
+      switch(type){
+        case "dateTimeGenerator":
+          return "Date-Time-Generator";
+        case "dictListGenerator":
+          return "Dictionary-List-Generator";
+        case "doubleNumberGenerator":
+          return "DoubleNumber-Generator";
+        case "idGenerator":
+          return "ID-Generator";
+        case "ifGenerator":
+          return"If-Generator";
+        case "longNumberGenerator":
+            return"LongNumber-Generator";
+        case "otherFieldValueGenerator":
+          return"Other-FieldValue-Generator";
+        case "prePostFixGenerator":
+          return"Pre- and Postfix-Generator";
+        case "probabilityGenerator":
+          return"Probabiltiy-Generator";
+        case "randomSentenceGenerator":
+          return"Random-Sentence-Generator";
+        case "randomStringGenerator":
+          return"Random-String-Generator";
+        case "referenceValueGenerator":
+          return"Reference-Value-Generator";
+        case "sequentialGenerator":
+            return"Sequential-Generator";
+        case "staticValueGenerator":
+          return"Static-Value-Generator";
+        case "switchGenerator":
+          return"Switch-Generator";
+        case "uuidGenerator":
+          return"UUID-Generator";  
+      }
+    };
 
   return (
     <>
@@ -319,7 +370,28 @@ export default function DialogUniversalGeneratorForm(props) {
         maxWidth="md"
         >
       <DialogTitle disableTypography id="simple-dialog-title">
-        <Typography style={{fontSize: "30px"}}>{props.selectedGeneratorType}</Typography>
+         
+          <Grid container display="flex" direction="row" justify="space-between">
+                <Grid container xs={12} item justify="flex-start">
+                    <Grid item>
+                        <Typography style={{fontSize: "30px"}}>{typeTitleMapping(props.selectedGeneratorType)}</Typography>
+                    </Grid>
+
+                    <Grid item>
+                            <IconButton onClick={toggleInfoTextVisible}>
+                                <InfoIcon/>
+                            </IconButton>
+                    </Grid>
+                </Grid>
+         
+                <Grid item xs={12} >
+                    <Collapse in={infoTextVisible}>
+                      <div className={classes.infoTextBox} onClick={hideInfoText}>
+                      {rawGeneratorExplanations[props.selectedGeneratorType]}
+                      </div>
+                    </Collapse>
+                </Grid>
+          </Grid>
       </DialogTitle>
       
       <div  style={{overflow: "auto", margin: "auto", paddingLeft: "15px", background: "inherit"}}> 
@@ -328,6 +400,17 @@ export default function DialogUniversalGeneratorForm(props) {
           {renderSwitch()}
 
           <Grid direction="column" container item>
+                
+
+                <GeneratorFormNullValuesElement
+                    generatorObject={generatorObject}
+                    setGeneratorObject={setGeneratorObjectHandDown}
+                    withNullValuesChangedHandler={withNullValuesChangedHandler}
+                    handleNullValuesSliderChange={handleNullValuesSliderChange}
+                    handleNullValuesInputChange={handleNullValuesInputChange}
+                    handleBlur={handleBlur}
+                    />    
+
                 <GeneratorFormPaddingExpansion 
                     withPaddingChangedHandler={withPaddingChangedHandler}
                     numberCharactersChangedHandler={numberCharactersChangedHandler}
@@ -336,6 +419,8 @@ export default function DialogUniversalGeneratorForm(props) {
                     generatorObject={generatorObject}
                     /> 
 
+
+
                 <GeneratorFormRepoExpansion 
                     saveInRepoChangedHandler={saveInRepoChangedHandler}
                     nameChangedHandler={nameChangedHandler}
@@ -343,15 +428,6 @@ export default function DialogUniversalGeneratorForm(props) {
                     examplesChangedHandler={examplesChangedHandler}
                     generatorObject={generatorObject}
                     /> 
-
-                <GeneratorFormNullValuesElement
-                   generatorObject={generatorObject}
-                   setGeneratorObject={setGeneratorObjectHandDown}
-                   withNullValuesChangedHandler={withNullValuesChangedHandler}
-                   handleNullValuesSliderChange={handleNullValuesSliderChange}
-                   handleNullValuesInputChange={handleNullValuesInputChange}
-                   handleBlur={handleBlur}
-                   />    
 
             </Grid>           
       

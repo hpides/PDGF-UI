@@ -63,7 +63,7 @@ const dictData2 = [
                     <Grid container item xs={4} display="flex" justify="flex-end" alignContent= "center">
                           <Grid item style={{backgroundColor: "blue"}} >
                               <Typography variant={fontSizeLeftColumn}>
-                                  Dictionary x:
+                                  Dictionary:
                               </Typography>
                           </Grid>
                     </Grid>

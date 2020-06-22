@@ -5,31 +5,16 @@ import Typography from '@material-ui/core/Typography';
 import Input from "@material-ui/core/Input";
 import DistributionInputElement from "./DistributionInputElement";
 import cloneDeep from 'lodash/cloneDeep';
+import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
 
-const useStyles = makeStyles({
-    input: {
-    fontSize: 22,
-  },
-  inputSelect: {
-    fontSize: 22,
-  },
-  outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
-    backgroundColor: "yellow",
-  }, 
-});
+
+const useStyles = makeStyles({ ... generatorFormStyles});
 
 export default function DialogFormRandomStringGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
-    const fontSizeLeftColumn = "h5";
+    const leftColumnWidth = generatorFormsLeftColumnWidth;
+    const rightColumnWidth = generatorFormsRightColumnWidth; 
+    const fontSizeLeftColumn = generatorFormFontSizeLeftColumn;
 
 
     const minimumNumberOfCharactersChangedHandler = (event) => {
@@ -62,17 +47,16 @@ export default function DialogFormRandomStringGenerator(props) {
                 <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                     <Grid item >
                         <Typography variant={fontSizeLeftColumn}>
-                            Minimum Number of Characters:
+                            Min. String Length:
                         </Typography>
                     </Grid>
                 </Grid>
 
                 <Grid item xs={rightColumnWidth}>
-                    <Input 
+                    <input 
                         className={classes.input} 
                         type="number" 
-                        fullWidth
-                        placeholder="Enter # of characters" 
+                        placeholder="Enter minimum number of characters per string" 
                         value={props.generatorObject.minimum} 
                         onChange={(event) => minimumNumberOfCharactersChangedHandler(event)}/>
                 </Grid>
@@ -80,17 +64,16 @@ export default function DialogFormRandomStringGenerator(props) {
                 <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                     <Grid item >
                         <Typography variant={fontSizeLeftColumn}>
-                            Maximum Number of Characters:
+                            Max. String Lenght:
                         </Typography>
                     </Grid>
                 </Grid>
 
                 <Grid item xs={rightColumnWidth}>
-                    <Input 
+                    <input 
                         className={classes.input} 
                         type="number" 
-                        fullWidth
-                        placeholder="Enter # of distinct characters" 
+                        placeholder="Enter maximum number of characters per string" 
                         value={props.generatorObject.maximum} 
                         onChange={(event) => maximumNumberOfCharactersChangedHandler(event)}/>
                 </Grid>
@@ -99,17 +82,16 @@ export default function DialogFormRandomStringGenerator(props) {
                 <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                     <Grid item >
                         <Typography variant={fontSizeLeftColumn}>
-                            Characters:
+                            Alphabet:
                         </Typography>
                     </Grid>
                 </Grid>
 
                 <Grid item xs={rightColumnWidth}>
-                    <Input 
+                    <input 
                         className={classes.input} 
                         type="text" 
-                        fullWidth
-                        placeholder="Enter Character Set" 
+                        placeholder="Enter the character you want to use in string" 
                         value={props.generatorObject.characterSet} 
                         onChange={(event) => characterSetChangedHandler(event)}/>
                 </Grid>

@@ -27,14 +27,15 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
     alignContent: "center",
-    backgroundColor: "yellow",
+    marginRight: 20,
+    backgroundColor: "white",
   }, 
 }));
 
 export default function GeneratorFormNullValuesElement(props) {
   const classes = useStyles();
-  const leftColumnWidth = 5;
-  const rightColumnWidth = 12 - leftColumnWidth; 
+  const leftColumnWidth = 3;
+  const rightColumnWidth = 8; 
   const fontSizeLeftColumn = "h5"
   
   return (
@@ -49,54 +50,50 @@ export default function GeneratorFormNullValuesElement(props) {
           </Grid>
 
 
-          <Grid item xs={rightColumnWidth}>
+          <Grid container alignContent="center" item xs={1}>
                 <Checkbox 
                   checked={props.generatorObject.nullValues.withNullValues}
                   onChange={event => {props.withNullValuesChangedHandler(event)}}
                   inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
           </Grid>  
-      </Grid> 
+      
 
+          <Grid container item xs={rightColumnWidth-1} >
 
-      <Collapse in={props.generatorObject.nullValues.withNullValues}>
-          <Grid  container className={classes.outerContainer}>
-              <Grid item xs={leftColumnWidth}>
-              </Grid>
-
-              <Grid container display="flex" justify="space-between" alignItems="center" item xs={rightColumnWidth}>
-                                  
-                  <Grid item xs={3}>
-                      <TextField
+          { props.generatorObject.nullValues.withNullValues?    
+                <>                                         
+                  <Grid container item xs={3} alignContent="center">
+                     
+                     
+                      <input
                         className={classes.input}
                         value={props.generatorObject.nullValues.percentNullValues}
-                        margin="dense"
-                        variant="outlined"
                         onChange={props.handleNullValuesInputChange}
                         onBlur={props.handleBlur}
-                        styles={{ width: 40,}}
-                        inputProps={{
-                          step: 10,
-                          min: 0,
-                          max: 100,
-                          size: 3,
-                          type: 'number',
-                          'aria-labelledby': 'input-slider',
-                        }}
+                        step = "5"
+                        min = "0"
+                        max = "99"
+                        size = {3}
+                        maxLength = {3}
+                        style={{width: 40}} 
+                        type ="text"
                       />
+
+                      <div style={{display: "flex", alignContent: "center", justifyContent: "center"}}><div>%</div></div>
                   </Grid>
 
-                  <Grid item xs={9}>
+                  <Grid container item xs={8} alignContent="center">
                       <Slider
                           value={typeof props.generatorObject.nullValues.percentNullValues === 'number' ? props.generatorObject.nullValues.percentNullValues : 0}
                           onChange={props.handleNullValuesSliderChange}
                           aria-labelledby="input-slider"
                       />
                   </Grid>
-      
-              </Grid>
-          </Grid>
+                </>
+            : null}    
 
-      </Collapse>                                        
+          </Grid>
+      </Grid>                                       
     </>
   );
 }

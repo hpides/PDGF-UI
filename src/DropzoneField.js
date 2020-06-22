@@ -15,8 +15,7 @@ const baseStyle = {
   color: '#bdbdbd',
   outline: 'none',
   transition: 'border .24s ease-in-out',
-  width: 500,
-  height: 200,
+  height: 50,
 };
 
 const activeStyle = {

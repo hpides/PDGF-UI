@@ -5,33 +5,15 @@ import Typography from '@material-ui/core/Typography';
 import Input from "@material-ui/core/Input";
 import Checkbox from "@material-ui/core/Checkbox";
 import cloneDeep from 'lodash/cloneDeep';
+import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
 
-
-
-const useStyles = makeStyles({
-    input: {
-    fontSize: 22,
-  },
-  inputSelect: {
-    fontSize: 22,
-  },
-  outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
-    backgroundColor: "yellow",
-  }, 
-});
+const useStyles = makeStyles({ ... generatorFormStyles});
 
 export default function FormDateTimeGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
-    const fontSizeLeftColumn = "h5";
+    const leftColumnWidth = generatorFormsLeftColumnWidth;
+    const rightColumnWidth = generatorFormsRightColumnWidth; 
+    const fontSizeLeftColumn = generatorFormFontSizeLeftColumn;
 
 
     // Change Handler startDate
@@ -76,13 +58,13 @@ export default function FormDateTimeGenerator(props) {
             </Grid>
 
             <Grid item xs={rightColumnWidth}>
-                <Input 
-                    className={classes.input} 
+                <input 
+                    className={classes.input}
                     type="date" 
                     placeholder="Enter Start-Date" 
                     value={props.generatorObject.startDate} 
                     onChange={(event) => startDateChangedHandler(event)}
-                    fullWidth/>
+                />
             </Grid>
 
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
@@ -100,7 +82,7 @@ export default function FormDateTimeGenerator(props) {
                     placeholder="Enter End-Date" 
                     value={props.generatorObject.endDate} 
                     onChange={(event) => endDateChangedHandler(event)}
-                    fullWidth/>
+                />
             </Grid>
 
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >

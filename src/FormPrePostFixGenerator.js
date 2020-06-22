@@ -5,32 +5,17 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Input from "@material-ui/core/Input";
 import cloneDeep from 'lodash/cloneDeep';
+import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
 
 
-const useStyles = makeStyles({
-    input: {
-    fontSize: 22,
-  },
-  inputSelect: {
-    fontSize: 22,
-  },
-  outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
-    backgroundColor: "yellow",
-  }, 
-});
+const useStyles = makeStyles({ ... generatorFormStyles});
+
 
 export default function FormPrePostFixGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
-    const fontSizeLeftColumn = "h5";
+    const leftColumnWidth = generatorFormsLeftColumnWidth;
+    const rightColumnWidth = generatorFormsRightColumnWidth; 
+    const fontSizeLeftColumn = generatorFormFontSizeLeftColumn;
     
     
     useEffect(()=> {
@@ -81,10 +66,9 @@ export default function FormPrePostFixGenerator(props) {
             </Grid>
 
             <Grid  item xs={rightColumnWidth}>
-                <Input 
+                <input 
                     className={classes.input} 
                     type="text" 
-                    fullWidth
                     placeholder="Enter PreFix" 
                     value={props.generatorObject.preFix} 
                     onChange={(event) => preFixChangedHandler(event)}/>
@@ -100,10 +84,9 @@ export default function FormPrePostFixGenerator(props) {
             </Grid>
 
             <Grid  item xs={rightColumnWidth}>
-              <Input 
+              <input 
                 className={classes.input} 
                 type="text" 
-                fullWidth
                 placeholder="Enter PostFix" 
                 value={props.generatorObject.postFix} 
                 onChange={(event) => postFixChangedHandler(event)}/>
@@ -118,16 +101,12 @@ export default function FormPrePostFixGenerator(props) {
             </Grid>
 
             <Grid item xs={rightColumnWidth}>
-                <TextField
+                <select
                     id="standard-select-currency-native"
-                    className={classes.select}                      
-                    select
-                    fullWidth
+                    className={classes.inputSelect}                      
                     value={props.generatorObject.subGeneratorIndex}
                     onChange={(event) => subGeneratorChangedHandler(event)}
-                    SelectProps={{
-                        native: true,
-                    }}> 
+                    > 
                       
                         <option value={null} key={-1}>None</option>
                         {(JSON.parse(localStorage.getItem("generatorRepository")).map((generator, index) => { 
@@ -135,7 +114,7 @@ export default function FormPrePostFixGenerator(props) {
                                         {generator.repoVariables.name}
                                     </option>}))}
                     
-                </TextField>
+                </select>
             </Grid>
 
         </Grid>       

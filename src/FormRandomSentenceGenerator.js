@@ -5,31 +5,15 @@ import Typography from '@material-ui/core/Typography';
 import Input from "@material-ui/core/Input";
 import DistributionInputElement from "./DistributionInputElement";
 import cloneDeep from 'lodash/cloneDeep';
+import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
 
-const useStyles = makeStyles({
-    input: {
-    fontSize: 22,
-  },
-  inputSelect: {
-    fontSize: 22,
-  },
-  outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
-    backgroundColor: "yellow",
-  }, 
-});
+const useStyles = makeStyles({ ... generatorFormStyles});
 
 export default function DialogFormRandomSentenceGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
-    const fontSizeLeftColumn = "h5";
+    const leftColumnWidth = generatorFormsLeftColumnWidth;
+    const rightColumnWidth = generatorFormsRightColumnWidth; 
+    const fontSizeLeftColumn = generatorFormFontSizeLeftColumn;
 
     
     // Change Handler numberOfCharacters
@@ -118,16 +102,15 @@ export default function DialogFormRandomSentenceGenerator(props) {
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                        Minimum Number of Characters:
+                        Min. String Length:
                     </Typography>
                 </Grid>
             </Grid>
 
             <Grid item xs={rightColumnWidth}>
-                <Input 
+                <input 
                   className={classes.input} 
-                  type="number" 
-                  fullWidth
+                  type="number"
                   placeholder="Enter minimal number of characters" 
                   value={props.generatorObject.minimum} 
                   onChange={(event) => minimumNumberOfCharactersChangedHandler(event)}/>
@@ -136,16 +119,15 @@ export default function DialogFormRandomSentenceGenerator(props) {
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                       Maximum Number of Characters:
+                        Max. String Length:
                     </Typography>
                 </Grid>
             </Grid>
 
             <Grid  item xs={rightColumnWidth}>
-              <Input 
+              <input 
                 className={classes.input} 
                 type="number" 
-                fullWidth
                 placeholder="Enter maximum number characters" 
                 value={props.generatorObject.maximum} 
                 onChange={(event) => maximumNumberOfCharactersChangedHandler(event)}/>
@@ -155,17 +137,16 @@ export default function DialogFormRandomSentenceGenerator(props) {
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                       Number of distinct Characters:
+                       Alphabet Size:
                     </Typography>
                 </Grid>
             </Grid>
 
             <Grid  item xs={rightColumnWidth}>
-              <Input 
+              <input 
                 className={classes.input} 
                 type="number" 
-                fullWidth
-                placeholder="Enter maximum number characters" 
+                placeholder="Enter number of distinct characters" 
                 value={props.generatorObject.numberOfDistinctCharacters} 
                 onChange={(event) => numberOfDistinctCharactersChangedHandler(event)}/>
             </Grid>

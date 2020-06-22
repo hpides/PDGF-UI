@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from "@material-ui/core/TextField";
-import CloseIcon from "@material-ui/icons/Close";
+import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from '@material-ui/core/IconButton';
 import Input from "@material-ui/core/Input";
 import cloneDeep from 'lodash/cloneDeep';
@@ -17,12 +17,26 @@ const useStyles = makeStyles({
   inputSelect: {
     fontSize: 22,
   },
+  select: {
+    fontSize: 22,
+  },
+  outerContainer: {
+    paddingLeft: "15px",
+    paddingRight: "30px",
+  },
+  innerContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignContent: "center",
+    marginRight: 20,
+    backgroundColor: "white",
+  }, 
 });
 
 export default function SequentialGeneratorSelectionFields(props) {
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
+    const leftColumnWidth = 3;
+    const rightColumnWidth = 8; 
     const fontSizeLeftColumn = "h5";
 
     const [selectedValue, setSelectedValue] = useState(0);
@@ -54,33 +68,41 @@ export default function SequentialGeneratorSelectionFields(props) {
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                        Generator {props.index+1}:
+                        Sub-Generator {props.index+1}:
                     </Typography>
                 </Grid>
             </Grid>
 
             <Grid container display= "flex" flexDirection="row" justify="space-between" item xs={rightColumnWidth}>
-                <Grid item xs={10}>
-                    <TextField
+                <Grid item xs={11}>
+                    <select
                         id="some-id"
                         className={classes.select}                      
-                        select
-                        fullWidth
+                        style={{fontSize: "20px", 
+                            width: "100%", 
+                            height: "36px", 
+                            outlineColor: "darkblue", 
+                            borderStyle: "solid",
+                            borderWidth: "1px",
+                            borderColor: "black",
+                            background: "white",
+                            paddingLeft: "10px", 
+                            borderRadius: "4px",
+                            boxSizing: "border-box",
+                            margin: "2px"}}
                         value={selectedValue}
                         onChange={(event) => selectedGeneratorChangedHandler(event)}
-                        SelectProps={{
-                            native: true,
-                        }}> 
+                        > 
 
                         <option value="" key="-1">select</option>
                         {(JSON.parse(localStorage.getItem("generatorRepository")).map((generator, index) => { return <option value={index} key={generator.uid}>{generator.repoVariables.name}</option>}))}   
-                    </TextField>
+                    </select>
                 </Grid>
 
 
-                <Grid item xs={2}>
-                    <IconButton aria-label="delete table" onClick={() => {deleteGenerator()}}> 
-                        <CloseIcon />
+                <Grid item xs={1}>
+                    <IconButton aria-label="delete table" onClick={() => {deleteGenerator()}} style={{paddingLeft: 25,}}> 
+                        <DeleteIcon />
                     </IconButton>
                 </Grid>  
 

@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
+import {TooltipContext} from "./App";
+import CustomTooltip from "./CustomTooltip";
 import Grid from "@material-ui/core/Grid";
 import EditorButtonGroup from "./EditorButtonGroup";
-import DefaultVariablesComponent from "./deprecated/DefaultVariablesComponentb"
 import {emptySchema,  generatorDescriptions, rawGeneratorDescriptions, emptyGenerator} from "./data.js"; 
 import SchemaNameElement from "./SchemaNameElement";
 import TableComponent from "./TableComponent";
@@ -11,6 +12,8 @@ import DialogBlank from "./DialogBlank";
 import DialogSaveSchema from "./DialogSaveSchema";
 import DialogStartPage from "./DialogStartPage";
 import DialogUniversalGeneratorForm from "./DialogUniversalGeneratorForm";
+import Typography from "@material-ui/core/Typography";
+import Checkbox from "@material-ui/core/Checkbox";
 import cloneDeep from 'lodash/cloneDeep';
 import DialogSchemaSelection from "./DialogSchemaSelection";
 import "./CustomScrollbar.css";
@@ -22,14 +25,13 @@ import Hotkeys from "react-hot-keys";
 import {useHotkeys} from "react-hotkeys-hook";
 import VariablesSidebar from "./VariablesSidebar";
 import {saveAs} from 'file-saver';
-
-
-
-
+import format from "xml-formatter";
+import background from "./assets/graphPaper1.svg";
+import {infoBlue} from "./styles";
 
 
 export default function BodyEditor(props){
-    const [isOpenSideBarRight, setIsOpenSideBarRight] = useState(true);
+    const [isOpenSideBarRight, setIsOpenSideBarRight] = useState(false);
     const initialCurrentSchemaLocal = emptySchema;
     const [currentSchemaLocal, setCurrentSchemaLocal] = useState(initialCurrentSchemaLocal);
     const defaultTableSize = 10;
@@ -38,26 +40,44 @@ export default function BodyEditor(props){
     const [isOpenDialogSaveSchema, setIsOpenDialogSaveSchema] = useState(false);
     const [isOpenBlank, setIsOpenBlank] = useState(false);
     const [universalGeneratorFormMode, setUniversalGeneratorFormMode] = useState("create");
-    const [isOpenDialogStartPage, setIsOpenDialogStartPage] = useState(false);
+    const [isOpenDialogStartPage, setIsOpenDialogStartPage] = useState(true);
     const [isOpenDialogSchemaSelection, setIsOpenDialogSchemaSelection] = useState(false);
-    const [selectedGeneratorType, setSelectedGeneratorType] = useState("");
+    const [selectedGeneratorType, setSelectedGeneratorType] = useState("switchGenerator");
     const [fieldInFocus, setFieldInFocus] = useState({tableId: "", rowId: ""});
     const [isOpenDialogUniGenForm, setIsOpenDialogUniGenForm] = useState(false);
     const [copyGeneratorObject, setCopyGeneratorObject] = useState({emptyGenerator});
-    const [dragTableEnabled, setDragTableEnabled] = useState(true);
-    const [dragButtonGroupEnabled, setDragButtonGroupEnabled] = useState(true);
-    const [tableCounter, setTableCounter] = useState(1);
-
+    const [dragTableEnabled, setDragTableEnabled] = useState(false);
+    const [dragButtonGroupEnabled, setDragButtonGroupEnabled] = useState(false);
+    //  needed in conjunction with addTableHandler2 (hotkey-problem) const [tableCounter, setTableCounter] = useState(1);
+    const tooltipVisible = useContext(TooltipContext);
 
     const nodeRef = React.useRef(null);
 
 
-    useHotkeys("alt+a", (event)=>{addNewTableHandler2()} );
-    useHotkeys("ctrl+k", (event)=>{event.preventDefault(); resetEditor()} );
-    useHotkeys("ctrl+c", (event)=>{event.preventDefault(); addNewTableHandler2()} );
-    useEffect(() => increaseTableCounter(), [tableCounter]);
+    //useHotkeys("ctrl+a", (event)=>{event.preventDefault(); addNewTableHandler2()} );
+    useHotkeys("alt+r", (event)=>{event.preventDefault(); resetEditor()} );
+    useHotkeys("alt+x", (event)=> {createXmlForPDGF()});
+    useHotkeys("alt+s", (event)=>{alert(`
+    You can use the following short-keys:
+    [alt+s] = Show short-key map
+    [alt+r] = Reset Editor
+    [alt+a] = Add new table
+    [alt+b] = Add current schema to repository
+    [alt+x] = Save XML-schemaspecification on disc
+    [alt+t] = Save complete app state on disc
+    [alt+l] = Load schema from disc`)});
+    
+    //useHotkeys("ctrl+a", (event)=>{event.preventDefault(); addNewTableHandler()} );
+    //useHotkeys("ctrl+b", (event)=>{event.preventDefault(); addNewTableHandler()} );
+    //useHotkeys("ctrl+c", (event)=>{event.preventDefault(); addNewTableHandler2()} );
+    // => increaseTableCounter(), [tableCounter]);
+
+    
 
 
+
+
+    // files added function for dropzone (drag and drop of external files)
     const filesAddedHandler = (files) => {
         //alert("filesAddesHandlerCalled");
         let file = files[0];
@@ -82,14 +102,18 @@ export default function BodyEditor(props){
         console.log(files);
     }  
             
-        
     
+
+/* needed with addTableHandler2
+    // function to keep track of amount of tables generated (each table receives that number as uid) - potentially deprecated
     const increaseTableCounter = () => {
         const schemaNew = cloneDeep(currentSchemaLocal);
         schemaNew.uids.tableCounter = tableCounter;
         setCurrentSchemaLocal(schemaNew);
     }
+*/
 
+    // save the current schema with uid to local browser storage (and make it be accessible via schema selection dialog)
     const saveSchemaOnClickHandler = () => {
         addUidToSchema();
         saveSchemaInLocalStorage();
@@ -97,11 +121,13 @@ export default function BodyEditor(props){
     }
 
 
-
-    const upgradeCopyGeneratorObject = (generatorObject) => {
+    // probably deprecated -> also delete useState
+    /*const upgradeCopyGeneratorObject = (generatorObject) => {
         setCopyGeneratorObject(generatorObject);
-    }
+    }*/
    
+
+    // set up and open input mask for the selected generator type
     const openInputMaskForSelectedGenerator = (typOfSelectedGenerator) => {
         setSelectedGeneratorType(typOfSelectedGenerator);
         setUniversalGeneratorFormMode("create");
@@ -109,25 +135,28 @@ export default function BodyEditor(props){
         setIsOpenDialogUniGenForm(true);
     };
 
+    
 
+
+    // assigns a preconfigured generator to a field (by copying its specification to its generator attribut) 
     const selectGeneratorHandler = (uid) => {
-        console.log("uid passed: " + uid);
+        //console.log("uid passed: " + uid);
         const schemaNew = cloneDeep(currentSchemaLocal);
         const tableIndex = schemaNew.tables.findIndex(x => x.tableId === fieldInFocus.tableId);
-        console.log("tableIndex:   " + tableIndex);
+       // console.log("tableIndex:   " + tableIndex);
         const rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x=> x.rowId === fieldInFocus.rowId);
-        console.log("rowIndex:   " + rowIndex);
+        //console.log("rowIndex:   " + rowIndex);
         const generatorRepo = JSON.parse(localStorage.getItem("generatorRepository"));
-        console.log("generatorRepo: " + generatorRepo);
+        //console.log("generatorRepo: " + generatorRepo);
         const indexGenerator = generatorRepo.findIndex(x=> x.uid === uid);
-        console.log("generatorIndex:   " + indexGenerator);
+        //console.log("generatorIndex:   " + indexGenerator);
         schemaNew.tables[tableIndex].tableItems[rowIndex].generator = generatorRepo[indexGenerator];
         setCurrentSchemaLocal(schemaNew);
-        console.log("operation done!");
+        //console.log("operation done!");
     };
 
 
-
+    //reset the state of DialogUniversalGeneratorForm after finishing generation configuration prozess
     const resetGeneratorStateVariables = () => {
         setFieldInFocus({});
         setUniversalGeneratorFormMode("create");
@@ -136,35 +165,37 @@ export default function BodyEditor(props){
 
 
 
-    // set Focus on table rows
-
+    // fieldInFocus is the variable that keeps track from which table and which field in that table was initiated
+    // to be able to copy the configured generator back to the right field
     const setFieldInFocusHandler = (tableId, rowId) => {
         setFieldInFocus({tableId: tableId, rowId: rowId});
     };
     
-
+    // handler to open SchemaSelectionDialog
     const openDialogSchemaSelection = () => {
         setIsOpenDialogSchemaSelection(true);
     };
 
 
-    //  save generators
-
+    //  save current generator to field in focus in current schema
     const addGeneratorToSchema = (generatorObject) => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === fieldInFocus.tableId);
-        console.log("addGeneratorToSchema tableIndex: " + tableIndex);
+        //console.log("addGeneratorToSchema tableIndex: " + tableIndex);
         let rowIndex = schemaNew.tables[tableIndex].tableItems.findIndex(x => x.rowId === fieldInFocus.rowId);
         schemaNew.tables[tableIndex].tableItems[rowIndex].generator = generatorObject;
         setCurrentSchemaLocal(schemaNew);
     }
 
+    //Table management functions
 
+
+    // handles the necessary tasks that are needed to add a new table to the schema
     const addNewTableHandler = () => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let tableCounter = parseInt(schemaNew.uids.tableCounter);
         console.log("tableCounter: " + tableCounter);
-        let newTableName = "Table " + (tableCounter+1);
+        let newTableName = "Table" + (tableCounter+1);
         let newTableJSON = {          
                 tableName: newTableName, 
                 tableSize: defaultTableSize, 
@@ -175,8 +206,8 @@ export default function BodyEditor(props){
                         tableId: (tableCounter+1), 
                         rowId: 1, 
                         fieldName: "Enter Table Name", 
-                        generator: "Gen01", 
-                        isKey: "false"},
+                        generator: {}, 
+                        isKey: false},
                 ],
                 functions: {},
             };
@@ -186,9 +217,8 @@ export default function BodyEditor(props){
     };
 
 
-
+/* solution in process for hotkey fire only once problem i
     const addNewTableHandler2 = () => {
-        console.log("yoyo in da house!! - addNewTableHandler2");
         let schemaNew = cloneDeep(currentSchemaLocal);
         let t_count = tableCounter;
         console.log("tableCounter: " + t_count);
@@ -202,8 +232,8 @@ export default function BodyEditor(props){
                     {
                         tableId: (tableCounter+1), 
                         rowId: 1, 
-                        fieldName: "Enter Table Name", 
-                        generator: "Gen01", 
+                        fieldName: "", 
+                        generator: "", 
                         isKey: "false"},
                 ],
                 functions: {},
@@ -212,15 +242,10 @@ export default function BodyEditor(props){
         schemaNew.tables.push(newTableJSON);
         setCurrentSchemaLocal(schemaNew);
     };
+*/
 
 
-
-
-
-
-
-
-    
+    //handles the necessary tasks involved with deleting a table from a schema
     const deleteTableHandler = (tableId) => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let tables = schemaNew.tables;
@@ -229,16 +254,15 @@ export default function BodyEditor(props){
         setCurrentSchemaLocal(schemaNew);
     };
 
-
+    //handles the necessary tasks involved with adding a table field (aka "row" in the displayed table)
     const addTableRowHandler = (tableId) => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
         let rowCounter = schemaNew.tables[tableIndex].rowCounter;
-        
         let newRow = {
             tableId: tableId, 
             rowId: rowCounter + 1, 
-            fieldName: "Enter Field Name", 
+            fieldName: "", 
             generator: {}, 
             isKey: "false",
         };
@@ -250,7 +274,7 @@ export default function BodyEditor(props){
 
    
 
-
+    //handles the necessary tasks involved with deleting a field (aka "row" in the dipslay table)
     const deleteTableRowHandler = (tableId, rowId) => { 
         let schemaNew = cloneDeep(currentSchemaLocal);
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
@@ -259,7 +283,7 @@ export default function BodyEditor(props){
         setCurrentSchemaLocal(schemaNew);
     }
 
-
+    //handler for changes in table name
     const tableNameChangedHandler = (event, tableId) => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
@@ -268,7 +292,7 @@ export default function BodyEditor(props){
     };
 
 
-
+    // handler for changes in table size (e.g. number of rows to be generated in data generation step)
     const tableSizeChangedHandler = (event, tableId) => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
@@ -276,7 +300,7 @@ export default function BodyEditor(props){
         setCurrentSchemaLocal(schemaNew); 
     };
 
-
+    // handler for changes in a tables field name
     const fieldNameChangedHandler = (event, tableId, rowId) => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
@@ -286,6 +310,12 @@ export default function BodyEditor(props){
     };
 
 
+
+
+    // System variables management functions
+
+
+    // handler for changes in value of default system variable
     const defaultSystemVariableValueChangedHandler = (event, variableId) => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let variableIndex = schemaNew.variables.defaultVariables.findIndex( x => x.variableId === variableId);
@@ -293,7 +323,7 @@ export default function BodyEditor(props){
         setCurrentSchemaLocal(schemaNew);
     }
 
-
+    // handler for change in name of custom system variable
     const customSystemVariableNameChangedHandler = (event, variableId) => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let variableIndex = schemaNew.variables.customVariables.variableItems.findIndex( x => x.variableId === variableId);
@@ -301,7 +331,7 @@ export default function BodyEditor(props){
         setCurrentSchemaLocal(schemaNew);
     }
 
-
+    // handler for change in value of custom system variable
     const customSystemVariableValueChangedHandler = (event, variableId) => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let variableIndex = schemaNew.variables.customVariables.variableItems.findIndex( x => x.variableId === variableId);
@@ -309,7 +339,7 @@ export default function BodyEditor(props){
         setCurrentSchemaLocal(schemaNew);
     }
 
-
+    // handler for change in datatype of custom system variable
     const customSystemVariableDataTypeChangedHandler = (event, variableId) => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let variableIndex = schemaNew.variables.customVariables.variableItems.findIndex( x => x.variableId === variableId);
@@ -317,22 +347,22 @@ export default function BodyEditor(props){
         setCurrentSchemaLocal(schemaNew);
     }
 
-
+    // handler that takes care of necessary tasks involved with adding a custom variable
     const addCustomVariableHandler = () => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         const variableCounter = schemaNew.variables.customVariables.variableCounter
         const variableCounterNew = variableCounter +1;
         const extraInputElement =  {
-            name: "Enter Name", 
-            value: "Enter Value", 
-            dataType: "Enter Type",
+            name: "", 
+            value: "", 
+            dataType: "",
             variableId: variableCounterNew };
         schemaNew.variables.customVariables.variableItems.push(extraInputElement);
         schemaNew.variables.customVariables.variableCounter = variableCounterNew;
         setCurrentSchemaLocal(schemaNew);
     };
 
-
+    // handler that takes care of necessary tasks involved with deleting a custom system variable
     const deleteCustomSystemVariableHandler = (variableId) => {
         let schemaNew = cloneDeep(currentSchemaLocal);
         let customVariablesWithout = schemaNew.variables.customVariables.variableItems.filter(x => x.variableId !== variableId);
@@ -340,13 +370,17 @@ export default function BodyEditor(props){
         setCurrentSchemaLocal(schemaNew);
     }
 
-    // reset operation
+
+
+
+
+    // resets the editor (e.g. removes tables, variables, schemaName) by loading the empty schema
     const resetEditor = () => {
         setCurrentSchemaLocal(emptySchema);
     };
 
 
-    // Browser Store for Generator
+    // saves the generator in local browser storage and makes it available via generator selection dialog and in some meta generator forms.
     const saveGeneratorInLocalStorage =(generatorObject) => {
         if (localStorage.getItem("generatorRepository") === null) {
             let generatorRepository = [];
@@ -359,7 +393,7 @@ export default function BodyEditor(props){
         }
     }
 
-/*
+    
     const loadGeneratorFromLocalStorage = () => {
         let generatorReloadedStringified = localStorage.getItem('generatorRepo');
         console.log("generatorStringified: " + generatorReloadedStringified); 
@@ -368,7 +402,6 @@ export default function BodyEditor(props){
         setCurrentSchemaLocal(generatorReloaded);
     }
 
-*/
 
 
 
@@ -376,8 +409,8 @@ export default function BodyEditor(props){
 
 
 
-    // Browser Store operations
 
+    // save the current schema to local browser storage (and make it be accessible via schema selection dialog)
    const saveSchemaInLocalStorage = () => {
     let currentSchema = cloneDeep(currentSchemaLocal);
         let schemaRepositoryStringified = localStorage.getItem("schemaRepository");
@@ -393,6 +426,7 @@ export default function BodyEditor(props){
     
     };
   
+    // deletes schema from repo (function available in schema selection dialog)
     const deleteSchemaFromRepo = (schemaUid) => {
         console.log("deleteSchemaFromRepoCalled");
         console.log("SchemaUid: " + schemaUid);
@@ -404,18 +438,44 @@ export default function BodyEditor(props){
     };
 
 
-
-    //create and download file with schema JSON-object
-    const exportSchemaAsJSON = () => {
+    //create and download JSON-object file from current schema
+    const exportCurrentSchemaAsJSON = () => {
         let allDataObject = currentSchemaLocal;
         let json = JSON.stringify(allDataObject);
         let blob = new Blob ([json], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, `${currentSchemaLocal.info.schemaName}_${Date()}_schemaObject_pdgf.txt`);
-      }
+        saveAs(blob, `SchemaObject_${currentSchemaLocal.info.schemaName}_${Date()}_schemaObject_pdgfgui.txt`);
+      };
+
+    //create and download JSON-object file from  schema repository on local storage
+    const exportSchemaRepoAsJSON = () => {
+        let allDataObject = localStorage.getItem("schemaRepository");
+        let blob = new Blob ([allDataObject], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, `SchemaRepository_${Date()}_schemaRepoObject_pdgfgui.txt`);
+      };
+
+
+    //create and download JSON-object file from generator repository on local storage
+    const exportGeneratorRepoAsJSON = () => {
+        let allDataObject = localStorage.getItem("generatorRepository");
+        let blob = new Blob ([allDataObject], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, `GeneratorRepository_${Date()}_generatorRepoObject_pdgfgui.txt`);
+      };
+
+
+    //create and download JSON-object file from current schema, generator repository and schema repository.
+    const exportCompleteAppStateAsJSON = () => {
+        const generatorRepo = JSON.parse(localStorage.getItem("generatorRepository"));
+        const schemaRepo = JSON.parse(localStorage.getItem("schemaRepository"));
+        const currentSchema = currentSchemaLocal;
+        const completeState= {generatorRepo: generatorRepo, schemaRepo: schemaRepo, currentSchema: currentSchema};
+        let json = JSON.stringify(completeState);
+        let blob = new Blob ([json], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, `CompleteAppState_${Date()}_completeAppStateObject_pdgfgui.txt`);
+      };
+
 
 
     // DialogGenerator Selection Operations
-    
     const handleClickOpenGeneratorSelectionDialog = () => {
         setIsOpenRawGeneratorDialog(false); // maybe unexepected side effect ...
         setIsOpenGeneratorDialog(true);
@@ -423,6 +483,7 @@ export default function BodyEditor(props){
         return null;
     };
     
+    // handler for closing generator selection Dialog
     const handleCloseGeneratorSelectionDialog = () => {
         setIsOpenGeneratorDialog(false);
         return null;
@@ -430,64 +491,61 @@ export default function BodyEditor(props){
 
 
 
-    // RawDialogGenerator Selection Operations
-    
+    // handler for opening raw-generator selection Dialog
     const handleClickOpenRawGeneratorSelectionDialog = () => {
         setIsOpenGeneratorDialog(false); // maybe unexepected side effect ...
         setIsOpenRawGeneratorDialog(true);
         return null;
     };
     
+    // handler for closing raw-generator selection Dialog
     const handleCloseRawGeneratorSelectionDialog = () => {
         setIsOpenRawGeneratorDialog(false);
         return null;
     };
 
 
+    //  DialogBlank currently not used - potentially deprecated
+    const handleCloseBlank = () => {
+        setIsOpenBlank(false);
+        return null;
+    }
 
-    
-// DialogBlank
-    
-const handleCloseBlank = () => {
-    setIsOpenBlank(false);
-    return null;
-}
-
-    // DialogSaveSchema
-    
+    // handler for closing save schema dialog
     const handleCloseDialogSaveSchema = () => {
         setIsOpenDialogSaveSchema(false);
         return null;
     }
 
+    // handler for opening save schema dialog
     const handleClickOpenDialogSaveSchema = () => {
         setIsOpenDialogSaveSchema(true);
         return null;
     }
 
 
-    // Change Handler for DialogSaveSchema
+    // handler for name change in DialogSaveSchema
     const schemaNameChangedHandler = (event) => {
         const schemaNew = cloneDeep(currentSchemaLocal);
         schemaNew.info.schemaName = event.target.value;
         setCurrentSchemaLocal(schemaNew);
     };
 
- 
+    // handler for description change in DialogSaveSchema
     const descriptionChangedHandler = (event) => {
         const schemaNew = cloneDeep(currentSchemaLocal);
         schemaNew.info.description = event.target.value;
         setCurrentSchemaLocal(schemaNew);
     };
 
-   
+    // handler for author change in DialogSaveSchema
     const authorChangedHandler = (event) => {
         const schemaNew = cloneDeep(currentSchemaLocal);
         schemaNew.info.author = event.target.value;
         setCurrentSchemaLocal(schemaNew);
     };
 
-     
+     // handler for author change in DialogSaveSchema
      const lastEditedChangedHandler = (event) => {
         const schemaNew = cloneDeep(currentSchemaLocal);
         schemaNew.info.lastEdited = event.target.value;
@@ -495,29 +553,25 @@ const handleCloseBlank = () => {
     };
 
 
-    // DialogSaveSchema
-    
+    // handler for closing DialogSchemaSelection
     const handleCloseDialogSchemaSelection = () => {
         setIsOpenDialogSchemaSelection(false);
         return null;
     }
 
+    //handler for opening DialogSchemaSelection
     const handleClickOpenDialogSchemaSelection = () => {
         setIsOpenDialogSchemaSelection(true);
         return null;
     }
 
-
-
-    // toggle SideBar on right side
-
+    // toggle SideBar (container for system variables) on right side
     const toggleSidebarRight = () => {
         setIsOpenSideBarRight(!isOpenSideBarRight);
     }
 
 
     // createSchemaUid -> uid = Milli-Sekunden seit dem 01.01.2020
-
     const addUidToSchema = () => {
         const miliSecondsFrom1970To2020 = 1577785488*1000;
         const uid = Date.now() - miliSecondsFrom1970To2020; 
@@ -529,35 +583,37 @@ const handleCloseBlank = () => {
     };
 
 
-
-    // loadGeneratorToEditDialog
-   
+    // when user pushes in Editor view the edit button for a generator, the generator will be loade
+    // into the edit mask, so that the user can make changes. this function will be called on the push of the button.
+    // included is a check if a generator already has been choosen for that field.
     const loadGeneratorToEditDialog = (tableId, rowId, generatorType) => {
         let tableIndex = currentSchemaLocal.tables.findIndex( x => x.tableId === tableId);
         let rowIndex = currentSchemaLocal.tables[tableIndex].tableItems.findIndex(x => x.rowId === rowId);
-        console.log("GeneratorData: " + JSON.stringify(currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator));
+        //console.log("GeneratorData: " + JSON.stringify(currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator));
         (Object.keys(currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator).length !==0)? setUpEditDialog(tableId, rowId, generatorType) : console.log("You have first to select a generator before you can edit it!")
-        console.log("length generator object: " + Object.keys(currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator).length)};
+        //console.log("length generator object: " + Object.keys(currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator).length)
+    };
 
+    // gets called by loadGeneratorToEditDialog and sets up for editing a preexisting generator
     const setUpEditDialog = (tableId, rowId, generatorType) => {
-        console.log("Entered loadGeneratorToEditDialog");
+        //console.log("Entered loadGeneratorToEditDialog");
         setFieldInFocus({tableId: tableId, rowId: rowId});
-        console.log("field in focus: tableId: " + tableId + "   / rowId: " + rowId);
+        //console.log("field in focus: tableId: " + tableId + "   / rowId: " + rowId);
         setUniversalGeneratorFormMode("edit");
-        console.log("Mode set to: " + universalGeneratorFormMode);
+        //console.log("Mode set to: " + universalGeneratorFormMode);
         setSelectedGeneratorType(generatorType);
-        console.log("generator type set to: " + generatorType);
+        //console.log("generator type set to: " + generatorType);
         setIsOpenDialogUniGenForm(true);
-        console.log("isOpenDialogUniGenForm set to: " + isOpenDialogUniGenForm);
+        //console.log("isOpenDialogUniGenForm set to: " + isOpenDialogUniGenForm);
         return null;
     };
 
-
+    // handler for closing Start Page
     const handleCloseDialogStartPage = () => {
         setIsOpenDialogStartPage(false);
     }
 
-
+    // load a schema that has been selected in DialogSchemaSelection as current schema.
     const loadSelectedSchema = (schemaUID) => {
         setIsOpenDialogSchemaSelection(false);
         setIsOpenDialogStartPage(false);
@@ -567,15 +623,14 @@ const handleCloseBlank = () => {
     };
 
 
-
-    
+    // handler for closing DialogUniversalGeneratorForm
     const handleCloseDialogUniGenForm = () => {
         console.log("entered: in handleCloseDialogUniGenForm");
         setIsOpenDialogUniGenForm(false);
     };
 
 
-
+    // function for putting the highest z-index to the object just dragged
     const bringToFront = (event) => {
         let elems = document.getElementsByClassName('react-draggable');
         for(let i=0; i< elems.length; i++){
@@ -586,10 +641,10 @@ const handleCloseBlank = () => {
 
 
 
-
-
-    // Create PDGF-XML code
-
+ //Functions for creating XML-schema specification files for PDGF   
+   
+ 
+    // function for creating a PdGF xml-specification for the current Schema
     const createXmlForPDGF = () => {
         console.log("in create Xml for PDGF");
         const xmlVersionTag = String.raw`<?xml version="1.0" encoding="UTF-8" standalone="no"?>`;
@@ -612,8 +667,8 @@ const handleCloseBlank = () => {
         //let defaultSystemVariable1Tag = String.raw`<property name="def" type="double">${defaultSystemVariable1}</property>`;
         //let defaultSystemVariable2 = defaultScaleFactorTag;
         //let defaultSystemVariable2Tag = String.raw`<property name="SF" type="double">${defaultSystemVariable2}</property>`;
-        let stringFields = myTableAggregator(currentSchemaLocal.tables);
-        let customSystemVariables = createCustomSystemVariableTags(currentSchemaLocal.variables.customVariables.variableItems);
+        let xmlForTablesAndFields = myTableAggregator(currentSchemaLocal.tables);
+        let xmlForCustomSystemVariables = createCustomSystemVariableTags(currentSchemaLocal.variables.customVariables.variableItems);
     
       
       
@@ -623,11 +678,11 @@ const handleCloseBlank = () => {
                                 seedValueTag + "\r\n" +
                                 rngTypeTag + "\r\n" +
                                 scaleFactorTag + "\r\n" + 
-                                customSystemVariables + "\r\n\r\n" +
-                                stringFields + 
+                                xmlForCustomSystemVariables + "\r\n\r\n" +
+                                xmlForTablesAndFields + 
                                 xmlSchemaTagClose + "\r\n";
       
-      
+                        
         writeSchemaToDownloadFile(stringSchema);
       
         };
@@ -693,7 +748,7 @@ const handleCloseBlank = () => {
                 case 'dictListGenerator':
                     tempString = gen_dictListGenerator(generator);
                     return tempString;  
-                case 'doubleGenerator':
+                case 'doubleNumberGenerator':
                     tempString = gen_doubleNumberGenerator(generator);
                     return tempString;
                 case 'idGenerator':
@@ -817,6 +872,7 @@ const handleCloseBlank = () => {
       }
       
       
+
       const gen_ifGenerator = (generator) => {
         let subGenerator = generator.generator;
         let subGeneratorTag = createGeneratorXML(subGenerator);
@@ -881,7 +937,7 @@ const handleCloseBlank = () => {
           // eslint-disable-next-line
           let generatorTag ="<gen_PrePostfix>" + "\r\n\t" +
                                 `<prefix>${preFix}</prefix>` + "\r\n\t" +
-                                    `${subGeneratorTag}` + "\r\n\t" +
+                                    `${subGeneratorTag}` +
                                 `<postfix>${postFix}</postfix>` + "\r\n" +
                             "</gen_PrePostfix>" + "\r\n";
           return generatorTag;
@@ -1032,9 +1088,16 @@ const handleCloseBlank = () => {
     }  
       
       
+    //const gen_NullGenerator = ()
+
+
+
+
+
       
-      // refactor with exportSchemaAsJSON 
+      // refactor with exportCurrentSchemaAsJSON 
       const writeSchemaToDownloadFile = (schema) => {
+        //let formattedSchema = format(schema);
         let blob = new Blob ([schema], {type: "text/plain;charset=utf-8"});
         saveAs(blob, "schema_pdgf.txt");
       }  
@@ -1080,7 +1143,19 @@ const handleCloseBlank = () => {
         <>
         <div>
             
-            <Grid container className="outerContainer" display="flex" direction="row" justify="flex-start" alignContent="flex-start" spacing = {0} style={{background: "white", height: "90vh", marginTop: "30px"}}>
+            <Grid 
+                container 
+                className="outerContainer" 
+                display="flex" 
+                direction="row" 
+                justify="flex-start" 
+                alignContent="flex-start" 
+                spacing = {0} 
+                style={{
+                    background: "white", 
+                    height: "calc(100vh-96px", 
+                    paddingTop: "30px"}}>
+
                {/*first row*/}
                <Grid container className="firstRowContainer" item xs={12} justify="space-between" style={{height: "120px"}} >
                     <Grid item style={{backgroundColor: "white", paddingBottom: "20px", paddingLeft:"40px"}}>
@@ -1099,7 +1174,10 @@ const handleCloseBlank = () => {
                                     openDialogSchemaSelection={openDialogSchemaSelection}
                                     setIsOpenRawGeneratorDialog={setIsOpenRawGeneratorDialog}
                                     isOpenRawGeneratorDialog={isOpenRawGeneratorDialog}
-                                    exportSchemaAsJSON={exportSchemaAsJSON}
+                                    exportCurrentSchemaAsJSON={exportCurrentSchemaAsJSON}
+                                    exportGeneratorRepoAsJSON={exportGeneratorRepoAsJSON}
+                                    exportSchemaRepoAsJSON={exportSchemaRepoAsJSON}
+                                    exportCompleteAppStateAsJSON={exportCompleteAppStateAsJSON}
                                     createXmlForPDGF={createXmlForPDGF}/>
                             </div>
                         </DraggableCore>
@@ -1107,29 +1185,46 @@ const handleCloseBlank = () => {
                 </Grid>
 
                  {/*second row*/}
-                 <Grid container className="secondRowContainer" item xs={12} style={{height: "40px", display: "flex", flexDirection: "row", justifyContent: "flex-end", paddingRight: "45px"}} >
-                     {isOpenSideBarRight? 
-                     <div> 
-                        <Button
-                            variant="outlined"
-                            color="inherit"
-                            endIcon={<ExpandLessIcon/>}
-                            onClick={() => {setIsOpenSideBarRight(false)}}>
-                                Hide Variables
-                        </Button>
-                         
-                     </div> :
+                 <Grid container className="secondRowContainer" item xs={12} style={{height: "40px", display: "flex", flexDirection: "row", justifyContent: "flex-end", alignContent: "center", alignItems: "center", paddingRight: "45px"}} >
+                     <Grid container style={{flexDirection: "row", display: "flex", justifyContent: "flex-end", alignContent: "center", alignItems: "center", width: "180px"}} item>
+                        <Grid item>
+                            <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "Most of the key-words throughout the App have tooltips attached that will show when you hover over them. In these tooltips we explain terms and concepts, tell you what you can and should do and sometimes show you examples of usage. You can use these tooltips when you are new to the program or when you need to look after some information. When you don`t need them anymore, just click the checkbox and make them disappear.": ""}>
+                                <Typography>Show Tooltips: </Typography>
+                            </CustomTooltip>
+                        </Grid>
+                        <Grid item>
+                            <Checkbox 
+                                    checked={tooltipVisible}
+                                    style={{marginRight: "10px", color: "rgb(56,95,224"}}
+                                    onChange={(event)=> {props.tooltipVisibleHandler(event.target.checked)}}
+                                    
+                                    />
+                        </Grid>
+                     </Grid>
 
-                     <div>
-                         <Button
-                            variant="outlined"
-                            color="inherit"
-                            endIcon={<ExpandMoreIcon/>}
-                            onClick={() => {setIsOpenSideBarRight(true)}}>
-                            Show Variables
-                        </Button>
-                     </div> }
+                     <Grid item >
+                        {isOpenSideBarRight? 
+                        <div> 
+                            <Button
+                                variant="outlined"
+                                color="inherit"
+                                endIcon={<ExpandLessIcon/>}
+                                onClick={() => {setIsOpenSideBarRight(false)}}>
+                                    Hide Variables
+                            </Button>
+                            
+                        </div> :
 
+                        <div>
+                            <Button
+                                variant="outlined"
+                                color="inherit"
+                                endIcon={<ExpandMoreIcon/>}
+                                onClick={() => {setIsOpenSideBarRight(true)}}>
+                                Show Variables
+                            </Button>
+                        </div> }
+                     </Grid>
 
                  </Grid>
 
@@ -1142,8 +1237,10 @@ const handleCloseBlank = () => {
                     flexDirection="row" 
                     justify="space-between" 
                     style={{
-                        height: "80vh", 
-                        flexWrap: "nowrap"}}>  
+                        height: "calc(100vh - 256px)", 
+                        flexWrap: "nowrap",
+                        overflow: "hide",
+                          }}>  
                  
                         {(isOpenSideBarRight? (
 
@@ -1158,18 +1255,18 @@ const handleCloseBlank = () => {
                                 style={{ 
                                     height: "100%", 
                                     //width: "100%", 
-                                    backgroundColor: "yellow", 
+                                   // backgroundColor: "yellow", 
                                     padding: "20px", 
                                     borderColor: "white", 
                                     borderStyle: "dashed", 
                                     borderWidth: "1px", 
                                     flexWrap: "wrap", 
                                     flexGrow: "1",
-                                    overflow: "scroll", }}>
+                                    overflow: "scroll",
+                                    overflowX: "hidden", }}>
                             
                                 {currentSchemaLocal.tables.map(table => {return( 
-                                    <DraggableCore bounds="parent" onStart={bringToFront} style={{position: "relative"}}>
-                                        <div ref={nodeRef}>
+                                   
                                             <TableComponent
                                                 key={table.tableId} 
                                                 data={table} 
@@ -1185,8 +1282,7 @@ const handleCloseBlank = () => {
                                                 setFieldInFocusHandler={setFieldInFocusHandler}
                                                 loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
                                             />
-                                        </div>
-                                    </DraggableCore>
+                                       
                                     )})
                                 }
                             </Grid>):
@@ -1202,18 +1298,18 @@ const handleCloseBlank = () => {
                                 style={{ 
                                     height: "100%", 
                                     //width: "100%", 
-                                    backgroundColor: "yellow", 
+                                    // backgroundColor: "yellow", 
                                     padding: "20px", 
                                     borderColor: "white", 
                                     borderStyle: "dashed", 
                                     borderWidth: "1px", 
                                     flexWrap: "wrap", 
                                     flexGrow: "1",
-                                    overflow: "scroll", }}>
+                                    overflow: "scroll",
+                                    overflowX: "hidden", }}>
                                 
                                         {currentSchemaLocal.tables.map(table => {return( 
-                                            <DraggableCore bounds="parent" onStart={bringToFront} style={{position: "relative"}}>
-                                                <div ref={nodeRef}>
+                                            
                                                     <TableComponent
                                                         key={table.tableId} 
                                                         data={table} 
@@ -1229,8 +1325,7 @@ const handleCloseBlank = () => {
                                                         setFieldInFocusHandler={setFieldInFocusHandler}
                                                         loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
                                                     />
-                                                </div>
-                                            </DraggableCore>
+                                                
                                             )})
                                         }    
         
@@ -1278,6 +1373,7 @@ const handleCloseBlank = () => {
                 isOpenDialogSchemaSelection={ isOpenDialogSchemaSelection}
                 loadSelectedSchema={loadSelectedSchema}
                 deleteSchemaFromRepo={deleteSchemaFromRepo}
+                setCurrentSchemaLocal={setCurrentSchemaLocal}
                 />
 
     
@@ -1320,7 +1416,7 @@ const handleCloseBlank = () => {
                 saveGeneratorInLocalStorage={saveGeneratorInLocalStorage}
                 universalGeneratorFormMode={universalGeneratorFormMode}
                 fieldInFocus={fieldInFocus}
-                upgradeCopyGeneratorObject={upgradeCopyGeneratorObject}
+                //upgradeCopyGeneratorObject={upgradeCopyGeneratorObject}
                 resetGeneratorStateVariables={resetGeneratorStateVariables}
 
             />        

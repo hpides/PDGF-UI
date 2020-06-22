@@ -1,31 +1,38 @@
-import React from 'react'
+import React, {useContext} from 'react';
+import {TooltipContext} from "./App";
+import CustomTooltip from "./CustomTooltip";
 import { Typography } from '@material-ui/core';
 import Grid from "@material-ui/core/Grid";
 
 export default function DefaultVariablesSubComponent(props) {
+    const tooltipVisible = useContext(TooltipContext);
     return (
         <div>
 
-            <Grid container display="flex" flexDirection="column" justify="flex-start" style={{marginBottom: "20px"}}>
+            <Grid container display="flex" flexDirection="column" justify="flex-start" style={{marginBottom: "10px", padding: "5px" , border: "1px solid grey", borderRadius: "5px"}}>
                     <Grid item xs={12}>
-                        <Typography variant="h5">
-                            {props.defaultVariable.name}
-                        </Typography>
+                        <CustomTooltip placement="left" arrow="true" title={tooltipVisible? `${props.defaultVariable.tooltipName}`: ""}>
+                            <Typography variant="h5">
+                                {props.defaultVariable.name}
+                            </Typography>
+                        </CustomTooltip>
                     </Grid>
                                   
                    
                     <Grid container display="flex" justify="space-between" item xs={12}>
                            
-                           <Grid item xs={4}>
-                               <Typography variant="h6">
-                                   Value:
-                               </Typography>
+                           <Grid item xs={3}>
+                                <CustomTooltip placement="left" arrow="true" title={tooltipVisible? `${props.defaultVariable.tooltipValue}`: ""}>
+                                    <Typography variant="h6">
+                                        Value:
+                                    </Typography>
+                                </CustomTooltip>    
                            </Grid>
                            
-                            <Grid item xs={8}>
+                            <Grid item xs={9}>
                             <input 
                                     style={{fontSize: "16px", 
-                                            width: "140px", 
+                                            width: "160px", 
                                             height: "22px", 
                                             outlineColor: "darkblue", 
                                             border: "none", 

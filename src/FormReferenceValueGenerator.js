@@ -4,32 +4,16 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from "@material-ui/core/TextField";
 import cloneDeep from 'lodash/cloneDeep';
+import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
+import {chooseByOptionList, selectFromOptionList} from "./data";
 
-
-const useStyles = makeStyles({
-    input: {
-    fontSize: 22,
-  },
-  inputSelect: {
-    fontSize: 22,
-  },
-  outerContainer: {
-    paddingLeft: "15px",
-    paddingRight: "30px",
-  },
-  innerContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
-    backgroundColor: "yellow",
-  }, 
-});
+const useStyles = makeStyles({ ... generatorFormStyles});
 
 export default function FormReferenceValueGenerator(props) {
     const classes = useStyles();
-    const leftColumnWidth = 5;
-    const rightColumnWidth = 12 - leftColumnWidth; 
-    const fontSizeLeftColumn = "h5";
+    const leftColumnWidth = generatorFormsLeftColumnWidth;
+    const rightColumnWidth = generatorFormsRightColumnWidth; 
+    const fontSizeLeftColumn = generatorFormFontSizeLeftColumn;
 
     //const [selectedTable, setSelectedTable] = useState("Table1");
 
@@ -82,22 +66,17 @@ export default function FormReferenceValueGenerator(props) {
             </Grid>
 
             <Grid item xs={rightColumnWidth}>
-                <TextField
+                <select
                     id="standard-select-currency-native"
-                    className={classes.select}                      
-                    select
-                    fullWidth
+                    className={classes.inputSelect}                      
                     value={props.generatorObject.referenceTable}
                     onChange={(event) => referenceTableChangedHandler(event)}
-                    SelectProps={{
-                        native: true,
-                    }}
                     > 
-                    <option value="" key="-1">select</option>
-                    {props.currentSchemaLocal.tables.map(table => { 
-                    return <option key={table.tableId} value={table.tableId}> {table.tableName} </option>
-                    })}
-                </TextField>  
+                        <option value="" key="-1">select</option>
+                        {props.currentSchemaLocal.tables.map(table => { 
+                        return <option key={table.tableId} value={table.tableId}> {table.tableName} </option>
+                        })}
+                </select>  
             </Grid>
 
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
@@ -108,36 +87,20 @@ export default function FormReferenceValueGenerator(props) {
                 </Grid>
             </Grid>
 
-            <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
-                <TextField
+            <Grid item xs={rightColumnWidth}>
+                <select
                     id="standard-select-currency-native"
-                    className={classes.select}                      
-                    select
-                    fullWidth
+                    className={classes.inputSelect}                      
                     value={props.generatorObject.referenceField}
                     onChange={(event) => referenceFieldChangedHandler(event)}
-                    SelectProps={{
-                        native: true,
-                    }}
                     > 
-                    debbuger
-                    {/*{props.currentSchemaLocal.tables.filter(x => { return x.tableId === props.generatorObject.referenceTable})[0].tableItems.map(row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}
                     
-                    {console.log("currentSchemaLocal.tables: " + JSON.stringify(props.currentSchemaLocal.tables))}
-                    {console.log("referenceTable: " + props.generatorObject.referenceTable )}
-                    */} 
-                    {/*console.log("referenceTable: " + props.generatorObject.referenceTable)*/}
-                    {/*console.log("Tabellen SchemaLocal: " + JSON.stringify(props.currentSchemaLocal.tables))*/}
-                    {/*console.log("Tabellen SchemaLocal gefilter mit ReferenceTable: " + JSON.stringify(props.currentSchemaLocal.tables.filter(x => { 
-                        return (x.tableId === props.generatorObject.referenceTable)})))*/}
-                        {/*props.currentSchemaLocal.tables.map(x => 
-                        { console.log("x.tableId: " + x.tableId + "  type: " + typeof(x.tableId) + "  RefTableId: " + props.generatorObject.referenceTable + "  typ: " + typeof(props.generatorObject.referenceTable) + "  Vergleich:  " + (x.tableId === props.generatorObject.referenceTable))})*/}
 
                     <option value="" key="-1">select</option>
                     {(props.currentSchemaLocal.tables.filter(x => { 
                         return (x.tableId === Number(props.generatorObject.referenceTable))}))[0].tableItems.map(
                             row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}
-                </TextField>
+                </select>
             </Grid>
 
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
@@ -149,25 +112,15 @@ export default function FormReferenceValueGenerator(props) {
             </Grid>
 
             <Grid  item xs={rightColumnWidth}>
-                <TextField
+                <select
                     id="standard-select-currency-native"
-                    className={classes.select}                      
-                    select
-                    fullWidth
+                    className={classes.inputSelect}              
                     value={props.generatorObject.chooseBy}
                     onChange={(event) => chooseByChangedHandler(event)}
-                    SelectProps={{
-                        native: true,
-                    }}
                     > 
                         <option value="">select</option>
-                        <option value="random">random</option>
-                        <option value="randomShuffle">randomShuffle</option>
-                        <option value="permutationRandom">permutationRandom</option>
-                        <option value="sameChoiceAs">sameChoiceAs</option>
-                        <option value="relativeRowMapping">relativeRowMapping</option>
-                        <option value="relativeUnique">relativeUnique</option>                        
-                </TextField>
+                        {chooseByOptionList.map(opt => {return ( <option value={opt} key={opt}>{opt}</option>)})}                     
+                </select>
             </Grid>
 
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
@@ -179,26 +132,16 @@ export default function FormReferenceValueGenerator(props) {
             </Grid>
 
 
-            <Grid item xs={rightColumnWidth} style={{padding: "10px 0px",  background: "inherit"}}>
-                <TextField
+            <Grid item xs={rightColumnWidth}>
+                <select
                         id="standard-select-currency-native"
-                        className={classes.select}                      
-                        select
-                        fullWidth
+                        className={classes.inputSelect}        
                         value={props.generatorObject.selectFrom}
                         onChange={(event) => selectFromChangedHandler(event)}
-                        SelectProps={{
-                            native: true,
-                        }}
                         > 
                             <option value="">select</option>
-                            <option value="historical">historical</option>
-                            <option value="atInsert">atInsert</option>
-                            <option value="fixedTimeFrame">fixedTimeFrame</option>
-                            <option value="sameTimeFrame">sameTimeFrame</option>
-                            <option value="relativeTimeFrame">relativeTimeFrame</option>
-                    
-                </TextField>
+                            {selectFromOptionList.map(opt => { return (<option value={opt} key={opt}>{opt}</option>)})}                        
+                </select>
             </Grid>
       
       </Grid>

@@ -1,6 +1,6 @@
 * {
     scrollbar-with: thin;
-    scrollbar-color: blue orange;
+    scrollbar-color: grey lightgrey;
 }
 
 *::-webkit-scrollbar {
@@ -8,11 +8,11 @@
 }
 
 *::-webkit-scrollbar-track{
-    background: green;
+    background: lightgrey;
 }
 
 *::-webkit-scrollbar-thumb{
-    background-color: lightgreen;
+    background-color: inherit;
     border-radius: 20px;
     border: 3px solid grey;
 }

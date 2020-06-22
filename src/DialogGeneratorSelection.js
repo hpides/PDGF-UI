@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import {TooltipContext} from "./App";
+import CustomTooltip from "./CustomTooltip";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -6,27 +8,38 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from '@material-ui/core/Dialog';
-import { blue } from '@material-ui/core/colors';
+//import { blue } from '@material-ui/core/colors';
 import BuildIcon from "@material-ui/icons/Build";
 import GeneratorSelectionCard from "./GeneratorSelectionCard";
+import IconButton from "@material-ui/core/IconButton";
+import InfoIcon from '@material-ui/icons/Info';
+import Collapse from "@material-ui/core/Collapse";
+import {infoTexts} from "./data";
+import {infoTextStyles} from "./styles";
 //import cloneDeep from 'lodash/cloneDeep';
 
 
 const useStyles = makeStyles({
-  avatar: {
-    backgroundColor: blue[100],
-    color: blue[600],
+  infoTextBox: {
+    ...infoTextStyles
   },
-  button: {
-    margin: "3px",
-    width: "300px",
-    height: "34",
-    fontSize: "20px",
+  buttonTop: {
+    fontSize: 16,
+    width: 250,
+    height: 48,
+    marginRight: 20,
+  },
+  buttonBottom: {
+    fontSize: 16,
+    width: 250,
+    height: 48,
+    marginRight: 20,
   },
 });
 
 export default function DialogGeneratorSelection(props) {
   const classes = useStyles();
+  const tooltipVisible = useContext(TooltipContext);
   //const { onClose, selectedValue, isOpenSchemaDialog, schemaDescriptions } = props;
 
   //const handleClose = () => {
@@ -38,37 +51,73 @@ export default function DialogGeneratorSelection(props) {
   //};
 
   const [lastGeneratorDeletedAt, setLastGeneratorDeletedAt] = useState(0);
+  const [infoTextVisible, setInfoTextVisible]  = useState(false);
 
   const triggerReload = () => {
-    setLastGeneratorDeletedAt(Date.now);
-  }
+      setLastGeneratorDeletedAt(Date.now);
+  };
+
+
+  const toggleInfoTextVisible = () =>{
+      setInfoTextVisible(!infoTextVisible);
+  };
+
+  const showInfoText = () => {
+      setInfoTextVisible(true);
+  };
+
+  const hideInfoText = () => {
+    setInfoTextVisible(false);
+  };
 
   return (
     <Dialog 
         onClose={props.handleCloseGeneratorSelectionDialog} 
         aria-labelledby="simple-dialog-title" 
         open={props.isOpenGeneratorDialog}
-        maxWidth="md"
+        maxWidth="lg"
         fullWidth>
 
 
         <DialogTitle id="simple-dialog-title">
             <Grid container display="flex" direction="row" justify="space-between">
-                <Grid item xs={8} style={{fontSize: "30px"}}>
-                    Select Generator 
+                <Grid container xs={9} item justify="flex-start">
+                    <CustomTooltip   placement="top" arrow="true" title={tooltipVisible? "In the following Dialog you will find a selection of readily configured generators for immediate use. If you need to tweak them a little bit, you can do so in the edit mode. You can have your own generators in that selection, when you fill out the 'save-in-rep' attribute and save them in the schema repository.":""} >  
+                        <Grid item style={{fontSize: "30px"}}>
+                            Select a prefabricated Generator 
+                        </Grid>
+                    </CustomTooltip>    
+
+                    <Grid item>
+                        <IconButton 
+                            onClick={toggleInfoTextVisible}>
+                                <InfoIcon style={{color: "#385fe0"}}/>
+                        </IconButton>
+                    </Grid>
                 </Grid>
-                <Grid item xs={4}>
+
+                <Grid container justify="flex-end" item xs={3}>
                     <Button
                         variant="contained"
-                        color="white"
+                        color="inherit"
                         onClick={()=>{props.handleClickOpenRawGeneratorSelectionDialog()}}
-                        className={classes.button}
+                        className={classes.buttonTop}
                         endIcon={<BuildIcon />}
                     >
-                        <p> or <span style={{color: "blue"}}> Create your own!</span></p>
+                        <p> or <span style={{color: "#198f56"}}> Create your own!</span></p>
                     </Button>
                 </Grid>
+                <Grid item xs={12} >
+                    <Collapse in={infoTextVisible}>
+                        <div className={classes.infoTextBox} onClick={hideInfoText}>
+                            {infoTexts.dialogGeneratorSelection}
+                        </div>
+                    </Collapse>
+                </Grid>
+
             </Grid>
+
+            
         </DialogTitle>
         <DialogContent>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>    
@@ -93,7 +142,7 @@ export default function DialogGeneratorSelection(props) {
 
       <DialogActions>
         <div>
-            <Button className={classes.button} onClick={()=>props.handleCloseGeneratorSelectionDialog()} color="primary">
+            <Button className={classes.buttonBottom} onClick={()=>props.handleCloseGeneratorSelectionDialog()} color="primary">
                 Cancel
             </Button>
         </div>
