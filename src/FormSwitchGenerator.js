@@ -81,7 +81,7 @@ export default function FormSwitchGenerator(props) {
     const subGeneratorChangedHandler = (event) => {
       setIndexSelectedGenerator(event.target.value);
       const newGenerator = cloneDeep(props.generatorObject);
-      newGenerator.subGeneratorObject = JSON.parse(localStorage.getItem("generatorRepository"))[event.target.value];
+      newGenerator.subGeneratorObject = JSON.parse(localStorage.getItem("generatorRepository")||"[]")[event.target.value];
       props.setGeneratorObject(newGenerator);
   }; 
 
@@ -127,7 +127,7 @@ export default function FormSwitchGenerator(props) {
                 onChange={(event) => subGeneratorChangedHandler(event)}> 
                   
                     <option value={1} key={-1}>None</option>
-                    {(JSON.parse(localStorage.getItem("generatorRepository")).map((generator,index) => { return <option value={index} key={generator.uid}>{generator.repoVariables.name}</option>}))}
+                    {(JSON.parse(localStorage.getItem("generatorRepository")||"[]").map((generator,index) => { return <option value={index} key={generator.uid}>{generator.repoVariables.name}</option>}))}
                     
             </select>
             </Grid>

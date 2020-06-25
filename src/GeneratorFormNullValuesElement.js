@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Checkbox from "@material-ui/core/Checkbox";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import Slider from "@material-ui/core/slider";
+import Slider from "@material-ui/core/Slider";
 import Collapse from '@material-ui/core/Collapse';
 
 

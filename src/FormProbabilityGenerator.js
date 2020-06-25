@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import IconButton from "@material-ui/core/IconButton";
-import Checkbox from "@material-ui/core/checkbox";
+import { Checkbox } from "@material-ui/core";
 import cloneDeep from 'lodash/cloneDeep';
 import ProbabilityValueInputComponent from "./ProbabilityValueInputComponent";
 import AddCircleIcon from "@material-ui/icons/AddCircle";

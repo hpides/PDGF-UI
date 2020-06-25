@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdgfui-deployment
+  labels:
+    app: pdgfui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pdgfui
+  template:
+    metadata:
+      labels:
+        app: pdgfui
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+    spec:
+      containers:
+        - name: pdgfui
+          image: localhost:5000/pdgfui:${tag}
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "128m"
+            limits:
+              memory: "64Mi"
+              cpu: "128m"
+          ports:
+            - containerPort: 80
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pdgfui
+spec:
+  selector:
+    app: pdgfui
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: pdgfui-external
+#spec:
+#  selector:
+#    app: pdgfui
+#  type: NodePort
+#  ports:
+#    - protocol: TCP
+#      port: 80
+#      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: pdgfui-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "7200"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "7200"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "7200"
+    nginx.org/websocket-services: "pdgfui"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: pdgfui
+              servicePort: 80
+      host: pdgfui
+
