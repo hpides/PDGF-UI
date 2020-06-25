@@ -36,11 +36,11 @@ export default function BodyEditor(props){
     const [currentSchemaLocal, setCurrentSchemaLocal] = useState(initialCurrentSchemaLocal);
     const defaultTableSize = 10;
     const [isOpenGeneratorDialog, setIsOpenGeneratorDialog] = useState(false);
-    const [isOpenRawGeneratorDialog, setIsOpenRawGeneratorDialog] = useState(false);
+    const [isOpenRawGeneratorDialog, setIsOpenRawGeneratorDialog] = useState(true);
     const [isOpenDialogSaveSchema, setIsOpenDialogSaveSchema] = useState(false);
     const [isOpenBlank, setIsOpenBlank] = useState(false);
     const [universalGeneratorFormMode, setUniversalGeneratorFormMode] = useState("create");
-    const [isOpenDialogStartPage, setIsOpenDialogStartPage] = useState(true);
+    const [isOpenDialogStartPage, setIsOpenDialogStartPage] = useState(false);
     const [isOpenDialogSchemaSelection, setIsOpenDialogSchemaSelection] = useState(false);
     const [selectedGeneratorType, setSelectedGeneratorType] = useState("switchGenerator");
     const [fieldInFocus, setFieldInFocus] = useState({tableId: "", rowId: ""});
@@ -135,7 +135,6 @@ export default function BodyEditor(props){
         setIsOpenDialogUniGenForm(true);
     };
 
-    
 
 
     // assigns a preconfigured generator to a field (by copying its specification to its generator attribut) 
@@ -647,14 +646,15 @@ export default function BodyEditor(props){
     // function for creating a PdGF xml-specification for the current Schema
     const createXmlForPDGF = () => {
         console.log("in create Xml for PDGF");
-        const xmlVersionTag = String.raw`<?xml version="1.0" encoding="UTF-8" standalone="no"?>`;
+        const xmlVersionTag = String.raw`<?xml version="1.0" encoding="UTF-8"?>`;
         let schemaName = currentSchemaLocal.info.schemaName;
-        let xmlSchemaTagOpen = String.raw`<schema xmlns:doc="http://bankmark.de/pdgf/doc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name=${schemaName} xsi:noNamespaceSchemaLocation="structure/pdgfSchema.xsd">`;
+        //let xmlSchemaTagOpen = String.raw`<schema xmlns:doc="http://bankmark.de/pdgf/doc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name=${schemaName} xsi:noNamespaceSchemaLocation="structure/pdgfSchema.xsd">`;
+        let xmlSchemaTagOpen = String.raw`<schema name="${schemaName}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="structure/pdgfSchema.xsd">`
         let xmlSchemaTagClose = String.raw`</schema>`;
         const seedValue = currentSchemaLocal.variables.defaultVariables[0].value;
-        let seedValueTag = String.raw`<seed>${seedValue}</seed>`;
-        let rngType = `PdgfDefaultRandom`
-        let rngTypeTag = String.raw`<rng name=${rngType}/>`;
+        let seedValueTag = String.raw`<seed>${seedValue}L</seed>`;
+        let rngType = "PdgfDefaultRandom"
+        let rngTypeTag = String.raw`<rng name="${rngType}"/>`;
         let scaleFactor = currentSchemaLocal.variables.defaultVariables[1].value;
         let scaleFactorTag = String.raw`<property name="SF" type="double">${scaleFactor}</property>`;
         
@@ -705,7 +705,7 @@ export default function BodyEditor(props){
             let xmlStringTables = "";
             tables.forEach(table => {
                 let tableName = table.tableName;
-                let tableTagOpen = `<table name=${tableName}>`;
+                let tableTagOpen = `<table name="${tableName}">`;
                 let tableTagClose = `</table>`;
                 let tableSizeBeforeScaling = table.tableSize;
                 let tableSizeTag = `<size>${tableSizeBeforeScaling} * \${SF}</size>`;
@@ -727,7 +727,7 @@ export default function BodyEditor(props){
             let aggregatedFieldTag ="";
             table.tableItems.forEach(row => {
             let fieldName = row.fieldName;
-            let fieldTagOpen = String.raw`<field name=${fieldName} size="" type="${row.generator.fieldType}">`;
+            let fieldTagOpen = String.raw`<field name="${fieldName}" size="" type="${row.generator.fieldType}">`;
             let fieldTagClose = String.raw`</field>`;
             let tempString = fieldTagOpen + "\r\n" +
                             createGeneratorXML(row.generator) +
@@ -918,11 +918,9 @@ export default function BodyEditor(props){
     
       const gen_otherFieldValueGenerator = (generator) => {
       
-          //let referenceTable = generator.spec.referenceTable;
+          
           let referenceField = generator.referenceField;
-          //let chooseSelection = generator.spec.chooseSelection;
-          //let fromSelection = generator.spec.fromSelection;
-        
+      
           let generatorTag = `<gen_otherFieldValue>` + "\r\n\t" +
                                   `<reference field="${referenceField}"/>` + "\r\n" +
                             "</gen_otherFieldValue>" + "\r\n";
@@ -943,7 +941,25 @@ export default function BodyEditor(props){
           return generatorTag;
     }
     
-    // NOCH IN KONZEPTION ...
+
+    const gen_probabilityGenerator = (generator) => {
+        let disableShuffling = generator.disableShuffling;
+        let valueProbabilityRows = generator.valueProbabilitySets;
+        let generator_outer_open = `<gen_Probability>` + "\r\n" + "\r\n\t" ;
+        let generator_outer_close = `</gen_Probability>` + "\r\n";
+        let rngSwitch = generator.disableShuffling? (`<disableRng>true</disableRng>` + "\r\n" + "\r\n\t"): "" ;
+        let reducer = (acc, curr, index) => { return (acc.concat(`<probability value="${curr.probability}">` + "\r\n\t" + `<gen_Static_Value>`+ "\r\n\t\t" + `<value>${curr.value}</value>`+ "\r\n\t" + `</gen_Static_Value>` + "\r\n\t" + `</probability>`+ ((generator.valueProbabilitySets.length === index+1)? ("\r\n\r\n"): ("\r\n\r\n\t")) ))};
+        let subElementTags = generator.valueProbabilitySets.reduce(reducer, "");    
+        
+    
+        let generatorTag = generator_outer_open + rngSwitch + subElementTags + generator_outer_close;
+        return generatorTag;
+    
+    }
+    
+
+{/*}
+   // NOCH IN KONZEPTION ...
     const gen_probabilityGenerator = (generator) => {
         let disableShuffling = generator.spec.disableShuffling;
         let valueProbabilityRows = generator.spec.valueProbabilityRows;
@@ -980,6 +996,10 @@ export default function BodyEditor(props){
     }
     
     
+*/}
+
+
+
     const gen_randomSentenceGenerator = (generator) => {
       
         let min = generator.minimum;
@@ -1016,13 +1036,16 @@ export default function BodyEditor(props){
     //todo: currently only easy case
     const gen_referenceValueGenerator = (generator) => {
       
-        let referenceTable = generator.referenceTable;
+        let referenceTableId = generator.referenceTableId;
+        console.log("referenceTableId: " + referenceTableId);
+        console.log("tables: " + JSON.stringify(currentSchemaLocal.tables));
+        let referenceTableName = currentSchemaLocal.tables.filter(x => x.tableId===Number(referenceTableId))[0].tableName;
         let referenceField = generator.referenceField;
         let chooseSelection = generator.chooseBy;
         let fromSelection = generator.selectFrom;
       
         let generatorTag = `<gen_ReferenceValue choose="${chooseSelection}" from="${fromSelection}">` + "\r\n\t" +
-                                `<reference field="${referenceField}" table="${referenceTable}"/>` + "\r\n" +
+                                `<reference field="${referenceField}" table="${referenceTableName}"/>` + "\r\n" +
                             "</gen_ReferenceValue>" + "\r\n";
         return generatorTag;
       }
@@ -1036,7 +1059,7 @@ export default function BodyEditor(props){
         let subGeneratorTag = generator.generatorList.reduce(reducer, "");
         //    let a = createSubGeneratorTag(generator)});
         // eslint-disable-next-line
-        let generatorTag =`<gen_Sequential concatenateResults="${concatenateResults} delimiter="${delimiter}" delimitEmptyValues="${delimitEmptyValues}">` + "\r\n" +
+        let generatorTag =`<gen_Sequential concatenateResults="${concatenateResults}" delimiter="${delimiter}" delimitEmptyValues="${delimitEmptyValues}">` + "\r\n" +
                                 subGeneratorTag  + "\r\n" + 
                           "</gen_Sequential>" + "\r\n";
         return generatorTag;
@@ -1106,15 +1129,15 @@ export default function BodyEditor(props){
       const createDistributionTag = (generator) => {
         switch(generator.distributionVariables.type){
             case "uniformDistribution":
-                return `<distribution name="Uniform"/>` 
+                return "";
             case "normalDistribution":
-                return `<distribution mean="${generator.distributionVariables.normalDistribution.mean} name="Normal" sd="${generator.distributionVariables.normalDistribution.standardDeviation}"/>` 
+                return `<distribution mean="${generator.distributionVariables.normalDistribution.mean}" name="Normal" sd="${generator.distributionVariables.normalDistribution.standardDeviation}"/>` ;
             case "exponentialDistribution":
-                return `<distribution name="Exponential" lambda="${generator.distributionVariables.exponentialDistribution.lambda}"/>` 
+                return `<distribution name="Exponential" lambda="${generator.distributionVariables.exponentialDistribution.lambda}"/>` ;
             case "logarithmicDistribution":
-                return `<distribution name="Logarithmic" p="${generator.distributionVariables.logarithmicDistribution.p}"/>` 
+                return `<distribution name="Logarithmic" p="${generator.distributionVariables.logarithmicDistribution.p}"/>` ;
             case "binomialDistribution":
-                return `<distribution name="Binomial" n="${generator.distributionVariables.binomialDistribution.n}" p="${generator.distributionVariables.binomialDistribution.p}"/>` 
+                return `<distribution name="Binomial" n="${generator.distributionVariables.binomialDistribution.n}" p="${generator.distributionVariables.binomialDistribution.p}"/>` ;
         }
       }
     
@@ -1278,6 +1301,8 @@ export default function BodyEditor(props){
                                                 fieldNameChangedHandler ={fieldNameChangedHandler}
                                                 handleClickOpenGeneratorSelectionDialog = {handleClickOpenGeneratorSelectionDialog}
                                                 handleCloseGeneratorSelectionDialog = {handleCloseGeneratorSelectionDialog}
+                                                handleClickOpenRawGeneratorSelectionDialog ={handleClickOpenRawGeneratorSelectionDialog}
+                                                handleCloseRawGeneratorSelectionDialog = {handleCloseRawGeneratorSelectionDialog}
                                                 isOpenGeneratorDialog = {isOpenGeneratorDialog}
                                                 setFieldInFocusHandler={setFieldInFocusHandler}
                                                 loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
@@ -1321,6 +1346,8 @@ export default function BodyEditor(props){
                                                         fieldNameChangedHandler ={fieldNameChangedHandler}
                                                         handleClickOpenGeneratorSelectionDialog = {handleClickOpenGeneratorSelectionDialog}
                                                         handleCloseGeneratorSelectionDialog = {handleCloseGeneratorSelectionDialog}
+                                                        handleClickOpenRawGeneratorSelectionDialog ={handleClickOpenRawGeneratorSelectionDialog}
+                                                        handleCloseRawGeneratorSelectionDialog = {handleCloseRawGeneratorSelectionDialog}
                                                         isOpenGeneratorDialog = {isOpenGeneratorDialog}
                                                         setFieldInFocusHandler={setFieldInFocusHandler}
                                                         loadGeneratorToEditDialog = {loadGeneratorToEditDialog}
