@@ -238,7 +238,7 @@ const createXmlForPDGF = () => {
 
   const gen_otherFieldValueGenerator = (generator) => {
   
-      //let referenceTable = generator.spec.referenceTable;
+      //let referenceTableId = generator.spec.referenceTableId;
       let referenceField = generator.spec.referenceField;
       //let chooseSelection = generator.spec.chooseSelection;
       //let fromSelection = generator.spec.fromSelection;
@@ -336,13 +336,13 @@ const gen_randomSentenceGenerator = (generator) => {
 //todo: currently only easy case
 const gen_referenceValueGenerator = (generator) => {
   
-    let referenceTable = generator.referenceTable;
+    let referenceTableId = generator.referenceTableId;
     let referenceField = generator.referenceField;
     let chooseSelection = generator.chooseSelection;
     let fromSelection = generator.fromSelection;
   
     let generatorTag = `<gen_ReferenceValue choose="${chooseSelection}" from="${fromSelection}">` + "\r\n\t" +
-                            `<reference field="${referenceField}" table="${referenceTable}"/>` + "\r\n" +
+                            `<reference field="${referenceField}" table="${referenceTableId}"/>` + "\r\n" +
                         "</gen_ReferenceValue>" + "\r\n";
     return generatorTag;
   }

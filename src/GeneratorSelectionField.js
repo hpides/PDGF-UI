@@ -33,7 +33,7 @@ const useStyles = makeStyles({
   }, 
 });
 
-export default function SequentialGeneratorSelectionFields(props) {
+export default function GeneratorSelectionFields(props) {
     const classes = useStyles();
     const leftColumnWidth = 3;
     const rightColumnWidth = 8; 

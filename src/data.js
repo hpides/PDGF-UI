@@ -185,7 +185,31 @@ export const rawGeneratorList = [
    "Random-Sentence", 
    "Reference", 
    "Sequential",
-]
+];
+
+
+
+export const generatorFieldType = {
+   dateTimeGenerator: "DATE",
+   dictListGenerator: "VARCHAR",
+   doubleNumberGenerator: "DOUBLE",
+   idGenerator: "NUMERIC",
+   ifGenerator: "",
+   longNumberGenerator: "NUMERIC",
+   otherFieldValueGenerator: "",
+   prePostFixGenerator: "",
+   probabilityGenerator: "",
+   randomSentenceGenerator: "VARCHAR",
+   randomStringGenerator: "VARCHAR",
+   referenceValueGenerator: "",
+   sequentialGenerator: "VARCHAR",
+   staticValueGenerator: "",
+   switchGenerator: "",
+   uuidGenerator: "",
+};
+
+
+
 
 
 
@@ -435,10 +459,6 @@ export const emptySchema = {
       customVariables:
          {variableCounter: 1,
          variableItems: [
-            {variableId: 1, 
-            name: "", 
-            value: "", 
-            dataType: ""},
          ],
       },
    }
@@ -458,7 +478,7 @@ export const specificGeneratorAttributes = {
    probabilityGenerator: {fieldType: "", disableShuffling: false, probabilityValueSets: []},
    randomSentenceGenerator: {fieldType: "VARCHAR", minimumNumberOfCharacters: "", maximumNumberOfCharacters: "",  numberOfDistinctCharacters: "", unique: "", distribution: {}},
    randomStringGenerator: {fieldType: "VARCHAR", minimumNumberOfCharacters: "", maximumNumberOfCharacters: "", charachters: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W","X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]},
-   referenceValueGenerator: {fieldType: "", referenceTable: "", referenceField: "", chooseBy: "", selectFrom: ""},
+   referenceValueGenerator: {fieldType: "", referenceTableId: "", referenceField: "", chooseBy: "", selectFrom: ""},
    sequentialGenerator: {fieldType: "VARCHAR", concatenateResults: false, delimiter: "", delimitEmptyValues: true, generators: {}}, 
    staticValueGenerator: {fieldType: "", staticValue: ""},
    switchGenerator: {fieldType: "", generator: {}, caseSwitchSets: [], default: ""},
@@ -527,6 +547,7 @@ export const commonGeneratorAttributes = {
 
 
 export const emptyGenerator = {
+   fieldType: "",
    isRawGenerator: false,
    uid: "",
    uniqueEntries: false,
@@ -551,7 +572,7 @@ export const emptyGenerator = {
    if: "",
    else: "",
    then: "",
-   referenceTable: 1,
+   referenceTableId: 1,
    referenceField: "",
    preFix: "",
    postFix: "",
@@ -562,7 +583,7 @@ export const emptyGenerator = {
    delimitEmptyValues: true,
    subGenerator: "",
    subGeneratorObject: {},
-   valueProbabilitySets: [{id: 0, value: "another Value", probability: "another Probability",}],
+   valueProbabilitySets: [{id: 0, value: "", probability: "hey",}],
    caseOutcomeSets: [{id: 0, caseValue: "", outcomeGeneratorObject: "", generatorType: "staticValueGenerator", staticValue: ""}],
    staticValue: "",
    default: {generatorType: "staticValueGenerator", staticValue: ""},
@@ -701,7 +722,7 @@ randomStringGenerator: {
 
 referenceValueGenerator: {
    referenceField: "",
-   referenceTable: "",
+   referenceTableId: "",
    choose: "",
    from: "",
 

@@ -269,11 +269,7 @@
 
   const gen_otherFieldValueGenerator = (generator) => {
   
-      //let referenceTable = generator.spec.referenceTable;
-      let referenceField = generator.referenceField;
-      //let chooseSelection = generator.spec.chooseSelection;
-      //let fromSelection = generator.spec.fromSelection;
-    
+      let referenceField = generator.referenceField;  
       let generatorTag = `<gen_otherFieldValue>` +  `<reference field="${referenceField}"/>` </gen_otherFieldValue>"
       return generatorTag;
   }
@@ -364,13 +360,13 @@ const gen_randomSentenceGenerator = (generator) => {
 //todo: currently only easy case
 const gen_referenceValueGenerator = (generator) => {
   
-    let referenceTable = generator.referenceTable;
+    let referenceTableId = generator.referenceTableId;
     let referenceField = generator.referenceField;
     let chooseSelection = generator.chooseBy;
     let fromSelection = generator.selectFrom;
   
     let generatorTag = `<gen_ReferenceValue choose="${chooseSelection}" from="${fromSelection}">` +
-                            `<reference field="${referenceField}" table="${referenceTable}"/>` + 
+                            `<reference field="${referenceField}" table="${referenceTableId}"/>` + 
                         "</gen_ReferenceValue>";
     return generatorTag;
   }

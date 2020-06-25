@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
+import Collapse from '@material-ui/core/Collapse';
 import Checkbox from "@material-ui/core/Checkbox";
 import DistributionInputElement from "./DistributionInputElement";
 import cloneDeep from 'lodash/cloneDeep';
@@ -121,15 +122,18 @@ export default function DialogFormDictListGenerator(props) {
 
   return (
     <>
+    
     <Grid container className={classes.outerContainer}>
 
-                <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "Instead of creating randomStrings one can also draw entries from dictionaries that keep words from the domain in question (e.g. names, cities, streetnames...). A dictionary e.g. could contain 1000 male German surnames or 10.000 international street names. For a selection of often needed domaines, PDGF has dictionaries available. These dictionaries can be selected here.": ""}>
-                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                
+                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth}>
                             <Grid item >
-                                <Typography variant={fontSizeLeftColumn}>Dictionary:</Typography>
+                                <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "Instead of creating randomStrings one can also draw entries from dictionaries that keep words from the domain in question (e.g. names, cities, streetnames...). A dictionary e.g. could contain 1000 male German surnames or 10.000 international street names. For a selection of often needed domaines, PDGF has dictionaries available. These dictionaries can be selected here.": ""}>
+                                    <Typography variant={fontSizeLeftColumn}>Dictionary:</Typography>
+                                </CustomTooltip>
                             </Grid>
                     </Grid>
-                </CustomTooltip>
+                
 
                 <Grid  item xs={rightColumnWidth}>
                     <select
@@ -165,29 +169,38 @@ export default function DialogFormDictListGenerator(props) {
                 </Grid>
 
 
-                <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "In case you generate a list of two or more elements, please enter here the string (combination of letters) you want to use to separate the individual elements. Use only numbers and letters and keep the length to less than x.": ""}></CustomTooltip>
+                </Grid>            
+                <Collapse in={(props.generatorObject.size > 1)}>
+                <>
+                <Grid container className={classes.outerContainer}>
+                
+                    <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                            <Grid item >
+                                <CustomTooltip placement="left" arrow="true" title={tooltipVisible? "In case you generate a list of two or more elements, please enter here the string (combination of letters) you want to use to separate the individual elements. Use only numbers and letters and keep the length to less than x.": ""}>
+                                    <Typography variant={fontSizeLeftColumn}>
+                                        Separator:
+                                    </Typography>
+                                </CustomTooltip>
+                            </Grid>
+                    </Grid>
+
+                    <Grid  item xs={rightColumnWidth}>
+                    <input 
+                        className={classes.input} 
+                        type="text" 
+                        placeholder="Enter the string to be put between the drawn elements" 
+                        value={props.generatorObject.separator} 
+                        onChange={(event) => separatorChangedHandler(event)}/>
+                    </Grid>
+               </Grid>
+                </>
+                </Collapse>
+                <Grid container className={classes.outerContainer}>
+
                 <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                         <Grid item >
                             <Typography variant={fontSizeLeftColumn}>
-                                  Separator:
-                            </Typography>
-                        </Grid>
-                </Grid>
-
-                <Grid  item xs={rightColumnWidth}>
-                  <input 
-                    className={classes.input} 
-                    type="text" 
-                    placeholder="Enter the string to be put between the drawn elements" 
-                    value={props.generatorObject.separator} 
-                    onChange={(event) => separatorChangedHandler(event)}/>
-                </Grid>
-
-
-                <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
-                        <Grid item >
-                            <Typography variant={fontSizeLeftColumn}>
-                                Unique Entries:
+                                Unique Entries*:
                             </Typography>
                         </Grid>
                 </Grid>
@@ -203,7 +216,7 @@ export default function DialogFormDictListGenerator(props) {
                 <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                         <Grid item >
                             <Typography variant={fontSizeLeftColumn}>
-                                Disable RNG:
+                                Disable RNG*:
                             </Typography>
                         </Grid>    
                 </Grid>
@@ -228,7 +241,7 @@ export default function DialogFormDictListGenerator(props) {
                         generatorObject={props.generatorObject}/>
                 </Grid>
 
-          </Grid>
+        </Grid> 
     </>
   );
 }

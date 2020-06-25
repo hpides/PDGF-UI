@@ -199,7 +199,7 @@ export default function DialogFormDoubleNumberGenerator(props) {
                 <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                     <Grid item >
                         <Typography variant={fontSizeLeftColumn}>
-                            Distinct Values:
+                            Distinct Values*:
                         </Typography>
                     </Grid>
                 </Grid>

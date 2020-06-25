@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 export default function TableComponent(props){
     const classes = useStyles();
     const tooltipVisible = useContext(TooltipContext);
+    const leaveDelayTime = 5000;
 
     return(
       <div>
@@ -76,7 +77,7 @@ export default function TableComponent(props){
           <tr className={classes.tr1} style={{backgroundColor: `${colors[props.data.tableId]}`}}>
             <td className={classes.td} colSpan="2">
 
-                <CustomTooltip   placement="left" arrow="true" title={tooltipVisible? "Here you can enter your own table name. But please remember to not use special characters or blanks!": ""}>
+                <CustomTooltip leaveDelay={leaveDelayTime}  placement="left" arrow="true" title={tooltipVisible? "Here you can enter your own table name. But please remember to not use special characters or blanks!": ""}>
                     <input
                         style={{fontSize: "20px", 
                                 width: "", 
@@ -121,7 +122,7 @@ export default function TableComponent(props){
             <td colSpan="2">
                   <div style={{display: "flex", flexDirection: "column"}}>
                       <div> 
-                          <CustomTooltip   placement="top" arrow="true" title={tooltipVisible? "In the table size field you can enter either natural numbers or expressions. It is standard procedure to express size in relation to the system variabe scale factor: 10 * ${SF}, or 10 * ${log(SF). You can use basic operations without further declaration but for further functions have to specify the ....":""} >
+                          <CustomTooltip   leaveDelay={leaveDelayTime} placement="top" arrow="true" title={tooltipVisible? "In the table size field you can enter either natural numbers or expressions. It is standard procedure to express size in relation to the system variabe scale factor: 10 * ${SF}, or 10 * ${log(SF). You can use basic operations without further declaration but for further functions have to specify the ....":""} >
                                 <Typography style={{fontSize: "16", marginLeft: 4,}}> 
                                   Table Size: 
                                 </Typography>
@@ -129,7 +130,25 @@ export default function TableComponent(props){
                       </div>
 
                   <div>
-                             
+
+                  <input style={{fontSize: "16px", 
+                                        width: "", 
+                                        height: "22px", 
+                                        outlineColor: "darkblue", 
+                                        border: "none", 
+                                        background: "white",
+                                        boxShadow: "inset 2px 2px 3px rgba(0,0,0,0.2)", 
+                                        paddingLeft: "10px",
+
+                                        borderRadius: "4px",
+                                        margin: "2px",
+                                        marginBottom: "5px",}}
+                                        value={props.data.tableSize}
+                                        type="text"
+                                        onChange={(event)=> {props.tableSizeChangedHandler(event, props.data.tableId)}}
+                                        onClick={(event) => event.target.select()} />
+
+                           {/*}      
                             <NumberFormat thousandSeparator={'.'} decimalSeparator={null} style={{fontSize: "16px", 
                                         width: "", 
                                         height: "22px", 
@@ -147,7 +166,7 @@ export default function TableComponent(props){
                                         onClick={(event) => event.target.select()} />
                              
                              
-                  {/*}           
+                         
                               <input 
                                 style={{fontSize: "16px", 
                                         width: "", 
@@ -182,7 +201,7 @@ export default function TableComponent(props){
              
              <td className={classes.closeIconField}>
                          
-                      <CustomTooltip   placement="top" arrow="true" title={tooltipVisible? "Click here to delete the table and all its rows.": ""}> 
+                      <CustomTooltip   leaveDelay={leaveDelayTime} placement="top" arrow="true" title={tooltipVisible? "Click here to delete the table and all its rows.": ""}> 
                             <IconButton className={classes.closeIcon} aria-label="delete table" onClick={() => {props.deleteTableHandler(props.data.tableId)}}> 
                                 <CloseIcon />
                             </IconButton>
@@ -199,6 +218,8 @@ export default function TableComponent(props){
                                                             deleteTableRowHandler={props.deleteTableRowHandler}
                                                             handleClickOpenGeneratorSelectionDialog = {props.handleClickOpenGeneratorSelectionDialog}
                                                             handleCloseGeneratorSelectionDialog = {props.handleCloseGeneratorSelectionDialog}
+                                                            handleClickOpenRawGeneratorSelectionDialog ={props.handleClickOpenRawGeneratorSelectionDialog}
+                                                            handleCloseRawGeneratorSelectionDialog = {props.handleCloseRawGeneratorSelectionDialog}
                                                             isOpenGeneratorDialog = {props.isOpenGeneratorDialog}
                                                             setFieldInFocusHandler={props.setFieldInFocusHandler}
                                                             loadGeneratorToEditDialog={props.loadGeneratorToEditDialog}
@@ -208,7 +229,7 @@ export default function TableComponent(props){
 
           <tr className={classes.tr2}>
             <td className={classes.td} colSpan="5">
-                <CustomTooltip   placement="top" arrow="true" title={tooltipVisible? "Click here to add a new row (table field) to the table.":""} >  
+                <CustomTooltip  leaveDelay={leaveDelayTime} placement="top" arrow="true" title={tooltipVisible? "Click here to add a new row (table field) to the table.":""} >  
                     <Button
                         variant="outlined"
                         color="green"

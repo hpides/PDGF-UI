@@ -20,8 +20,9 @@ import FormSwitchGenerator from "./FormSwitchGenerator";
 import FormSequentialGenerator from "./FormSequentialGenerator";
 import FormReferenceValueGenerator from "./FormReferenceValueGenerator";
 import FormProbabilityGenerator from "./FormProbabilityGenerator";
+import FormProbabilityGenerator2 from "./FormProbabilityGenerator2";
 import FormUUIDGenerator from "./FormUUIDGenerator";
-import {emptyGenerator, commonGeneratorAttributes, specificGeneratorAttributes, rawGeneratorExplanations} from "./data";
+import {emptyGenerator, commonGeneratorAttributes, specificGeneratorAttributes, rawGeneratorExplanations, generatorFieldType} from "./data";
 import GeneratorFormPaddingExpansion from "./GeneratorFormPaddingExpansion";
 import GeneratorFormRepoExpansion  from "./GeneratorFormRepoExpansion";
 import GeneratorFormNullValuesElement from "./GeneratorFormNullValuesElement";
@@ -64,6 +65,7 @@ export default function DialogUniversalGeneratorForm(props) {
     const newGenerator = cloneDeep(generatorObject);
     newGenerator.uid = uid;
     newGenerator.generatorType = props.selectedGeneratorType;
+    newGenerator.fieldType = generatorFieldType[props.selectedGeneratorType];
     setGeneratorObject(newGenerator);
   };
 
@@ -209,7 +211,7 @@ export default function DialogUniversalGeneratorForm(props) {
 
 
     const renderSwitch = () => {
-        console.log("entered renderSwitch-Statement with generatorType: " + props.generatorType);
+
         switch (props.selectedGeneratorType) {
           
           case "idGenerator":
@@ -278,7 +280,7 @@ export default function DialogUniversalGeneratorForm(props) {
 
 
               case "probabilityGenerator":
-                return <FormProbabilityGenerator 
+                return <FormProbabilityGenerator2 
                           generatorObject={generatorObject}
                           setGeneratorObject={setGeneratorObjectHandDown}/>
                 
@@ -334,7 +336,7 @@ export default function DialogUniversalGeneratorForm(props) {
         case "prePostFixGenerator":
           return"Pre- and Postfix-Generator";
         case "probabilityGenerator":
-          return"Probabiltiy-Generator";
+          return"Probability-Generator";
         case "randomSentenceGenerator":
           return"Random-Sentence-Generator";
         case "randomStringGenerator":

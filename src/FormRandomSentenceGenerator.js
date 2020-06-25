@@ -137,7 +137,7 @@ export default function DialogFormRandomSentenceGenerator(props) {
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                       Alphabet Size:
+                       Distinct Values*:
                     </Typography>
                 </Grid>
             </Grid>
