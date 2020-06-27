@@ -3,7 +3,7 @@ import {TooltipContext} from "./App";
 import CustomTooltip from "./CustomTooltip";
 import Grid from "@material-ui/core/Grid";
 import EditorButtonGroup from "./EditorButtonGroup";
-import {emptySchema, emptyGenerator} from "./data.js"; 
+import {emptySchema, emptyGenerator, rawGeneratorDescriptions} from "./data.js"; 
 import SchemaNameElement from "./SchemaNameElement";
 import TableComponent from "./TableComponent";
 import DialogGeneratorSelection from "./DialogGeneratorSelection";
@@ -1388,6 +1388,7 @@ export default function BodyEditor(props){
             />                   
             <DialogRawGeneratorSelection  
                 isOpenRawGeneratorDialog={isOpenRawGeneratorDialog} 
+                data = {rawGeneratorDescriptions}
                 handleCloseRawGeneratorSelectionDialog={handleCloseRawGeneratorSelectionDialog} 
                 handleClickOpenGeneratorSelectionDialog={handleClickOpenGeneratorSelectionDialog} 
                 openInputMaskForSelectedGenerator={openInputMaskForSelectedGenerator}
