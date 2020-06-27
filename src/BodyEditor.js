@@ -3,7 +3,7 @@ import {TooltipContext} from "./App";
 import CustomTooltip from "./CustomTooltip";
 import Grid from "@material-ui/core/Grid";
 import EditorButtonGroup from "./EditorButtonGroup";
-import {emptySchema,  generatorDescriptions, rawGeneratorDescriptions, emptyGenerator} from "./data.js"; 
+import {emptySchema, emptyGenerator} from "./data.js"; 
 import SchemaNameElement from "./SchemaNameElement";
 import TableComponent from "./TableComponent";
 import DialogGeneratorSelection from "./DialogGeneratorSelection";
@@ -36,11 +36,11 @@ export default function BodyEditor(props){
     const [currentSchemaLocal, setCurrentSchemaLocal] = useState(initialCurrentSchemaLocal);
     const defaultTableSize = 10;
     const [isOpenGeneratorDialog, setIsOpenGeneratorDialog] = useState(false);
-    const [isOpenRawGeneratorDialog, setIsOpenRawGeneratorDialog] = useState(true);
+    const [isOpenRawGeneratorDialog, setIsOpenRawGeneratorDialog] = useState(false);
     const [isOpenDialogSaveSchema, setIsOpenDialogSaveSchema] = useState(false);
     const [isOpenBlank, setIsOpenBlank] = useState(false);
     const [universalGeneratorFormMode, setUniversalGeneratorFormMode] = useState("create");
-    const [isOpenDialogStartPage, setIsOpenDialogStartPage] = useState(false);
+    const [isOpenDialogStartPage, setIsOpenDialogStartPage] = useState(true);
     const [isOpenDialogSchemaSelection, setIsOpenDialogSchemaSelection] = useState(false);
     const [selectedGeneratorType, setSelectedGeneratorType] = useState("switchGenerator");
     const [fieldInFocus, setFieldInFocus] = useState({tableId: "", rowId: ""});
@@ -1383,14 +1383,12 @@ export default function BodyEditor(props){
             <DialogGeneratorSelection  
                 isOpenGeneratorDialog={isOpenGeneratorDialog} 
                 handleCloseGeneratorSelectionDialog={handleCloseGeneratorSelectionDialog} 
-                data={generatorDescriptions} 
                 handleClickOpenRawGeneratorSelectionDialog={handleClickOpenRawGeneratorSelectionDialog}
                 selectGeneratorHandler={selectGeneratorHandler} 
             />                   
             <DialogRawGeneratorSelection  
                 isOpenRawGeneratorDialog={isOpenRawGeneratorDialog} 
                 handleCloseRawGeneratorSelectionDialog={handleCloseRawGeneratorSelectionDialog} 
-                data={rawGeneratorDescriptions} 
                 handleClickOpenGeneratorSelectionDialog={handleClickOpenGeneratorSelectionDialog} 
                 openInputMaskForSelectedGenerator={openInputMaskForSelectedGenerator}
             />

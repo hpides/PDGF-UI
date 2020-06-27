@@ -10,7 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
-import Checkbox from "@material-ui/core/checkbox";
+import Checkbox from "@material-ui/core/Checkbox";
 
 
 const useStyles = makeStyles({
