@@ -40,7 +40,7 @@ return (
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography  variant={fontSizeLeftColumn}>
-                        Distribution:
+                        Distribution*:
                     </Typography>
                 </Grid>
             </Grid>

@@ -82,7 +82,7 @@ export default function DialogFormRandomStringGenerator(props) {
                 <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                     <Grid item >
                         <Typography variant={fontSizeLeftColumn}>
-                            Alphabet:
+                            Alphabet*:
                         </Typography>
                     </Grid>
                 </Grid>
@@ -91,7 +91,7 @@ export default function DialogFormRandomStringGenerator(props) {
                     <input 
                         className={classes.input} 
                         type="text" 
-                        placeholder="Enter the character you want to use in string" 
+                        placeholder="Enter the characters you want to use. (Default: a-zA-Z0-9)" 
                         value={props.generatorObject.characterSet} 
                         onChange={(event) => characterSetChangedHandler(event)}/>
                 </Grid>

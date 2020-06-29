@@ -83,7 +83,7 @@ export default function EditorButtonGroup(props) {
     <div className={classes.root}>
      {/*} <ButtonGroup color="primary" aria-label="outlined primary button group" size="large">*/}
         
-      <CustomTooltip title={tooltipVisible? "Press here if you want to add an empty table to the working space": ""}>
+      <CustomTooltip arrow="true" title={tooltipVisible? "Press here if you want to add an empty table to the working space": ""}>
         <Button
             classes={{ root: classes.button, label: classes.label }}
             className={classes.button}
@@ -96,7 +96,7 @@ export default function EditorButtonGroup(props) {
       </CustomTooltip>
 
 
-        <CustomTooltip title={tooltipVisible? "Press here if you want to save your current schema, the schema repository, the generator repository or the xml-specification for the current schema.": ""}>
+        <CustomTooltip arrow="true" title={tooltipVisible? "Press here if you want to save your current schema, the schema repository, the generator repository or the xml-specification for the current schema.": ""}>
         <Button
             classes={{}}classes={{ root: classes.button, label: classes.label }}
             className={classes.button}
@@ -127,7 +127,7 @@ export default function EditorButtonGroup(props) {
         
 
 
-        <CustomTooltip title={tooltipVisible? "Press here if you want to load a schema from the repository or you need to load externally saved schemas, generators or complete App States (schema repository, generator repository and current schema).": ""}>
+        <CustomTooltip arrow="true" title={tooltipVisible? "Press here if you want to load a schema from the repository or you need to load externally saved schemas, generators or complete App States (schema repository, generator repository and current schema).": ""}>
         <Button
             classes={{}}classes={{ root: classes.button, label: classes.label }}
             className={classes.button}
@@ -159,7 +159,7 @@ export default function EditorButtonGroup(props) {
         </Menu>
 
 
-        <CustomTooltip title={tooltipVisible? "Press here if you want to clear the working space. But be aware, once you reset, the current schema will be lost, unless you saved it to the repository or on disk.": ""}>
+        <CustomTooltip arrow="true" title={tooltipVisible? "Press here if you want to clear the working space. But be aware, once you reset, the current schema will be lost, unless you saved it to the repository or on disk.": ""}>
         <Button
             classes={{}}classes={{ root: classes.button, label: classes.label }}
             className={classes.button}

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Input from "@material-ui/core/Input";
+import Button from "@material-ui/core/Button";
 import IfGeneratorInputComponent from "./IfGeneratorInputComponent";
 import cloneDeep from 'lodash/cloneDeep';
 import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
@@ -10,8 +11,9 @@ import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import TextField from "@material-ui/core/TextField";
+import GeneratorSelectionField from "./GeneratorSelectionField";
 import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
-
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 const useStyles = makeStyles({ ... generatorFormStyles});
 
@@ -20,9 +22,7 @@ export default function FormIfGenerator(props) {
     const leftColumnWidth = generatorFormsLeftColumnWidth;
     const rightColumnWidth = generatorFormsRightColumnWidth; 
     const fontSizeLeftColumn =generatorFormFontSizeLeftColumn;
-    const [optionLine1, setOptionLine1] = useState("write");
-    const [optionLine2, setOptionLine2] = useState("write");
-    
+   
     // Change Handler dictionary
    
     const ifChangedHandler = (event) => {
@@ -31,49 +31,54 @@ export default function FormIfGenerator(props) {
         props.setGeneratorObject(newGenerator);
     };
 
-    const thenChangedHandlerA = (event) => {
+    const thenChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
         newGenerator.then = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
-
-    const thenChangedHandlerB = (event) => {
-        const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.then = event.target.value;
-        props.setGeneratorObject(newGenerator);
-    };
-
-
 
     const elseChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
         newGenerator.else = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
-
-    const option1ChangeHandler = (event, newValue)=>{
-        setOptionLine1(newValue);
-    }
-
-    const option2ChangeHandler = (event, newValue)=>{
-        setOptionLine2(newValue);
-    }
-  
+    
+    const addGenerator = () => {
+        const newGenerator = cloneDeep(props.generatorObject);
+        const newGeneratorSelection = {uid: ""};
+        newGenerator.generatorList.push(newGeneratorSelection);
+        props.setGeneratorObject(newGenerator); 
+      }
+     
 
   return (
     <>
     
         <Grid container className={classes.outerContainer}>
 
-            <Grid item xs={12}>
-                <Typography variant={fontSizeLeftColumn}>Select Generator:</Typography>
-            </Grid>
+            <Grid container item xs={12}>
+                {props.generatorObject.generatorList.map((generator, index) => <GeneratorSelectionField 
+                                                                                    generator={generator} 
+                                                                                    index={index}
+                                                                                    generatorObject={props.generatorObject}
+                                                                                    setGeneratorObject={props.setGeneratorObject}/>
+                
+                )}
+                </Grid> 
 
-            <Grid item xs={12} >
-                <IfGeneratorInputComponent
-                    generatorObject={props.generatorObject}
-                    setGeneratorObject={props.setGeneratorObject}/>
-            </Grid>
+                <Grid container item xs={11} justify="flex-end" style={{marginBottom: 30}}>
+                
+                    <Button
+                        variant="outlined"
+                        color="inherit"
+                        className={classes.addButton}
+                        startIcon={<AddCircleIcon/>}
+                        onClick={() => {addGenerator()}}>
+                            Add Sub-Generator
+                    </Button>
+            
+                </Grid>  
+
 
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
@@ -101,54 +106,17 @@ export default function FormIfGenerator(props) {
                 </Grid>
             </Grid>
 
-            <Grid  container item xs={rightColumnWidth}>
-                <Grid xs={9}>
-
-                    {(optionLine1==="write")? 
-                        <input 
-                            className={classes.input} 
-                            type="text" 
-                            placeholder="Enter Output for if = true" 
-                            value={props.generatorObject.then} 
-                            onChange={(event) => thenChangedHandlerA(event)}/>
-
-                    : 
-                        <select
-                            id="standard-select-currency-native"
-                            className={classes.inputSelect}            
-                            value={props.generatorObject.subGeneratorIndex}
-                            onChange={(event) => thenChangedHandlerB(event)}
-                            > 
-                      
-                                <option value={null} key={-1}>None</option>
-                                {(JSON.parse(localStorage.getItem("generatorRepository")).map((generator, index) => { 
-                                    return  <option value={index} key={generator.uid}>
-                                                {generator.repoVariables.name}
-                                            </option>}))}
-                    
-                        </select>}
-
-                </Grid>
-                <Grid xs={3}>
-
-                    <ToggleButtonGroup
-                        value={optionLine1}
-                        exclusive
-                        onChange={option1ChangeHandler}
-                        aria-label="text alignment"
-                    >
-
-                        <ToggleButton value="write">
-                            <FormatAlignLeftIcon />
-                        </ToggleButton>
-                        <ToggleButton value="select">
-                            <FormatAlignCenterIcon />
-                        </ToggleButton>
-
-                    </ToggleButtonGroup>    
-
-                </Grid>
+            <Grid item xs={rightColumnWidth}>
+                <input 
+                    className={classes.input} 
+                    type="text" 
+                    placeholder="Enter then-value" 
+                    value={props.generatorObject.then} 
+                    multiline
+                    onChange={(event) => thenChangedHandler(event)}/>
             </Grid>
+
+
 
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
@@ -158,37 +126,14 @@ export default function FormIfGenerator(props) {
                 </Grid>
             </Grid>
 
-            <Grid  container item xs={rightColumnWidth} >
-               
-               {}
-
-               <Grid xs={9}>
-                    <input 
-                        className={classes.input} 
-                        type="text" 
-                        placeholder="Enter Output for If=false" 
-                        value={props.generatorObject.else} 
-                        onChange={(event) => elseChangedHandler(event)}/>
-                </Grid>
-
-                <Grid xs={3}>
-                    <ToggleButtonGroup
-                        value={optionLine1}
-                        exclusive
-                        onChange={option1ChangeHandler}
-                        aria-label="text alignment"
-                    >
-
-                        <ToggleButton value="write">
-                            <FormatAlignLeftIcon />
-                        </ToggleButton>
-                        <ToggleButton value="select">
-                            <FormatAlignCenterIcon />
-                        </ToggleButton>
-
-                    </ToggleButtonGroup>    
-
-                </Grid>
+            <Grid item xs={rightColumnWidth}>
+                <input 
+                    className={classes.input} 
+                    type="text" 
+                    placeholder="Enter else-value" 
+                    value={props.generatorObject.else} 
+                    multiline
+                    onChange={(event) => elseChangedHandler(event)}/>
             </Grid>
 
         </Grid>

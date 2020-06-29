@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TableSubComponent(props){
     const classes = useStyles();
+    const leaveDelayTime = 5000;
     const tooltipVisible = useContext(TooltipContext);
 
     return(
@@ -84,7 +85,7 @@ export default function TableSubComponent(props){
         </td>
 
         <td className={classes.fieldNameField}>     
-            <CustomTooltip placement="left" arrow="true" title={tooltipVisible? `Enter the name of the field to be generated. Please do not use empty spaces and any special characters besides "-", "_"`:""}>
+            <CustomTooltip leaveDelay={leaveDelayTime} placement="left" arrow="true" title={tooltipVisible? `Enter the name of the field to be generated. Please do not use empty spaces and any special characters besides "-", "_"`:""}>
                 <input 
                     placeholder="Enter_field_name"
                     style={{fontSize: "16px", 
@@ -111,11 +112,11 @@ export default function TableSubComponent(props){
 
 
                     <div style={{display: "flex", justifyContent: "center", alignContent: "center"}}>
-                            <CustomTooltip   placement="bottom" arrow="true" title={tooltipVisible? "Press Button and get to the dialoge to select or create a generator for that row.": ""}>
+                            <CustomTooltip leaveDelay={leaveDelayTime}   placement="bottom" arrow="true" title={tooltipVisible? "Press Button and get to the dialoge to select or create a generator for that row.": ""}>
                                 <Button
                                     variant="outlined"
                                     style={{marginLeft: "auto", marginRight: "auto", height: 36, margin: 3, lineHeight: 1.25}}
-                                    onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorSelectionDialog() }}>
+                                    onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenRawGeneratorSelectionDialog()}}>
                                         Select Generator
                                 </Button>
                             </CustomTooltip>
@@ -124,11 +125,11 @@ export default function TableSubComponent(props){
                 :
 
                     <div style={{display: "flex", justifyContent: "center", alignContent: "center"}}>
-                            <CustomTooltip   placement="bottom" title={tooltipVisible? "Press Button and get to the dialoge to select or create another generator.": ""}>
+                            <CustomTooltip leaveDelay={leaveDelayTime}  placement="bottom" title={tooltipVisible? "Press Button and get to the dialoge to select or create another generator.": ""}>
                                 <Button
                                      variant="outlined"
                                     style={{marginLeft: "auto", marginRight: "auto", height: 36, margin: 3, lineHeight: 1.25, borderColor: "green", borderWidth: 2,}}
-                                    onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenGeneratorSelectionDialog() }}>
+                                    onClick ={ () => {props.setFieldInFocusHandler(props.data.tableId, props.data.rowId); props.handleClickOpenRawGeneratorSelectionDialog() }}>
                                         Replace Generator
                                 </Button>
                             </CustomTooltip>

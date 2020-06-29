@@ -19,6 +19,7 @@ export default function FormStaticValueGenerator(props) {
     const staticValueChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
         newGenerator.staticValue = event.target.value;
+        
         props.setGeneratorObject(newGenerator);
     };
 

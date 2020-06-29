@@ -88,7 +88,7 @@ export default function FormDateTimeGenerator(props) {
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn} fullWidth >
-                        Disable RNG:
+                        Disable RNG*:
                     </Typography>
                 </Grid>
             </Grid>
@@ -105,7 +105,7 @@ export default function FormDateTimeGenerator(props) {
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn} fullWidth>
-                        Fixed Step Size:
+                        Fixed Step Size*:
                     </Typography>
                 </Grid>
             </Grid>

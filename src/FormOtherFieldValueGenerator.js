@@ -17,8 +17,19 @@ export default function FormOtherFieldValueGenerator(props) {
   
     // Change Handler 
     const referenceFieldChangedHandler = (event) => {
+        
         const newGenerator = cloneDeep(props.generatorObject);
         newGenerator.referenceField = event.target.value;
+       
+        const tableIndex = props.currentSchemaLocal.tables.findIndex( x => x.tableId === props.fieldInFocus.tableId);
+        console.log("tableIndex: " + tableIndex);
+        const rowIndex = props.currentSchemaLocal.tables[tableIndex].tableItems.findIndex(x=> x.fieldName === event.target.value);
+        console.log("rowId: " + rowIndex);
+        const fieldType = props.currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator.fieldType;
+        console.log("fieldType: " + fieldType);
+        newGenerator.fieldType = fieldType;
+               
+        //newGenerator.fieldType = props.currentSchemaLocal.tables[props.fieldInFocus.tableId-1].tableItems.filter(x=> x.fieldName == event.target.value)[0].generator.fieldType.
         props.setGeneratorObject(newGenerator);
     };
 

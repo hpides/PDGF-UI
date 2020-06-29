@@ -71,17 +71,6 @@ export const customSystemVariables = [
     {name: "Umtauschkurs EUR-DM", value: "7.97", type: "double"} ];
 
 
-
- export const customSystemVariable = 
-    {name: "Umtauschkurs EUR-USD", value: "0.97", type: "double"};
-
-
- export const dummyText = {text: "Dumm Dummy Dummy"};
-
-
-
- export const generatorDescription = {name: "SimpleID", description: "Generates consecutive numbers from 0.", examples: "0,1,2,3,4,..."};
-
  export const generatorDescriptions =[
     {name: "SimpleID", description: "Generates consecutive numbers from 0.", examples: "0,1,2,3,4,..."},
     {name: "Address_German", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
@@ -185,7 +174,31 @@ export const rawGeneratorList = [
    "Random-Sentence", 
    "Reference", 
    "Sequential",
-]
+];
+
+
+
+export const generatorFieldType = {
+   dateTimeGenerator: "DATE",
+   dictListGenerator: "VARCHAR",
+   doubleNumberGenerator: "DOUBLE",
+   idGenerator: "NUMERIC",
+   ifGenerator: "",
+   longNumberGenerator: "NUMERIC",
+   otherFieldValueGenerator: "",
+   prePostFixGenerator: "",
+   probabilityGenerator: "",
+   randomSentenceGenerator: "VARCHAR",
+   randomStringGenerator: "VARCHAR",
+   referenceValueGenerator: "",
+   sequentialGenerator: "VARCHAR",
+   staticValueGenerator: "",
+   switchGenerator: "",
+   uuidGenerator: "",
+};
+
+
+
 
 
 
@@ -248,158 +261,6 @@ export const selectFromOptionList = [
 
 
 
- export const tableItemsLong = [
-    {fieldName: "Name", generator: "Gen01", isKey: true},
-    {fieldName: "Street", generator: "Gen", isKey: false},
-    {fieldName: "Postcode", generator: "Gen", isKey: false},
-    {fieldName: "Country", generator: "Gen", isKey: false},
-    {fieldName: "IBAN", generator: "Gen", isKey: false},
-    {fieldName: "Salary", generator: "Gen", isKey: false},
-    {fieldName: "Gender", generator: "Gen", isKey: false}
-   ];
-
-
-   export const tableItemsShort = [
-      {fieldName: "Name", generator: "Gen01", isKey: true},
-      {fieldName: "Street", generator: "Gen", isKey: false},
-      {fieldName: "Postcode", generator: "Gen", isKey: false},
-     ];   
-
-
-
-     export const tableDataShort = {
-        tableName: "", 
-        tableSize: "", 
-        tableItems: [
-         {fieldName: "Name", generator: "Gen01", isKey: true},
-         {fieldName: "Street", generator: "Gen", isKey: false},
-         {fieldName: "Postcode", generator: "Gen", isKey: false},
-        ]
-      };
-
-
-
-      export const tableDataLong = {
-         tableName: "TestItem", 
-         tableSize: "1", 
-         tableItems: [
-            {fieldName: "Name", generator: "Gen01", isKey: true},
-            {fieldName: "Street", generator: "Gen", isKey: false},
-            {fieldName: "Postcode", generator: "Gen", isKey: false},
-            {fieldName: "Country", generator: "Gen", isKey: false},
-            {fieldName: "IBAN", generator: "Gen", isKey: false},
-            {fieldName: "Salary", generator: "Gen", isKey: false},
-            {fieldName: "Gender", generator: "Gen", isKey: false},
-         ]
-      };
-
-
-
-      export const tableDataLong_1_Array = [{
-         tableName: "TestItem", 
-         tableSize: "1", 
-         tableItems: [
-            {fieldName: "Name", generator: "Gen01", isKey: true},
-            {fieldName: "Street", generator: "Gen", isKey: false},
-            {fieldName: "Postcode", generator: "Gen", isKey: false},
-            {fieldName: "Country", generator: "Gen", isKey: false},
-            {fieldName: "IBAN", generator: "Gen", isKey: false},
-            {fieldName: "Salary", generator: "Gen", isKey: false},
-            {fieldName: "Gender", generator: "Gen", isKey: false},
-         ]
-      }];
-
-
-      export const tableDataLong_2_Array = [{
-         tableName: "Table A", 
-         tableSize: "1", 
-         tableItems: [
-            {fieldName: "Name", generator: "Gen01", isKey: true},
-            {fieldName: "Street", generator: "Gen", isKey: false},
-            {fieldName: "Postcode", generator: "Gen", isKey: false},
-            {fieldName: "Country", generator: "Gen", isKey: false},
-            {fieldName: "IBAN", generator: "Gen", isKey: false},
-            {fieldName: "Salary", generator: "Gen", isKey: false},
-            {fieldName: "Gender", generator: "Gen", isKey: false},
-         ]
-         },
-         {
-         tableName: "Table B", 
-         tableSize: "22", 
-         tableItems: [
-            {fieldName: "Name", generator: "Gen01", isKey: true},
-            {fieldName: "Street", generator: "Gen", isKey: false},
-            {fieldName: "Postcode", generator: "Gen", isKey: false},
-            {fieldName: "Country", generator: "Gen", isKey: false},
-            {fieldName: "IBAN", generator: "Gen", isKey: false},
-            {fieldName: "Salary", generator: "Gen", isKey: false},
-            {fieldName: "Gender", generator: "Gen", isKey: false},
-         ]
-         }
-      ];
-
-
-
-
-      export const tableDataLong_5_Array = [{
-         tableName: "Table A", 
-         tableSize: "111", 
-         tableItems: [
-            {fieldName: "Name", generator: "Gen01", isKey: true},
-            {fieldName: "Street", generator: "Gen", isKey: false},
-            {fieldName: "Postcode", generator: "Gen", isKey: false},
-            {fieldName: "Country", generator: "Gen", isKey: false},
-            {fieldName: "IBAN", generator: "Gen", isKey: false},
-            {fieldName: "Salary", generator: "Gen", isKey: false},
-            {fieldName: "Gender", generator: "Gen", isKey: false},
-         ]
-         },
-         {
-         tableName: "Table B", 
-         tableSize: "222", 
-         tableItems: [
-            {fieldName: "Name", generator: "Gen01", isKey: true},
-            {fieldName: "Street", generator: "Gen", isKey: false},
-            {fieldName: "Postcode", generator: "Gen", isKey: false},
-            {fieldName: "Country", generator: "Gen", isKey: false},
-            {fieldName: "IBAN", generator: "Gen", isKey: false},
-            {fieldName: "Salary", generator: "Gen", isKey: false},
-            {fieldName: "Gender", generator: "Gen", isKey: false},
-         ]
-         },
-         {
-            tableName: "Table C", 
-            tableSize: "333", 
-            tableItems: [
-               {fieldName: "Name", generator: "Gen01", isKey: true},
-               {fieldName: "Street", generator: "Gen", isKey: false},
-               {fieldName: "Postcode", generator: "Gen", isKey: false},
-            ]
-            },
-            {
-            tableName: "Table D", 
-            tableSize: "444", 
-            tableItems: [
-               
-               {fieldName: "Salary", generator: "Gen", isKey: false},
-               {fieldName: "Gender", generator: "Gen", isKey: false},
-            ]
-            },
-            {
-               tableName: "Table E", 
-               tableSize: "555", 
-               tableItems: [
-                  {fieldName: "Name", generator: "Gen01", isKey: true},
-                  {fieldName: "Street", generator: "Gen", isKey: false},
-                  {fieldName: "Postcode", generator: "Gen", isKey: false},
-                  {fieldName: "Country", generator: "Gen", isKey: false},
-                  {fieldName: "IBAN", generator: "Gen", isKey: false},
-                  {fieldName: "Salary", generator: "Gen", isKey: false},
-                  {fieldName: "Gender", generator: "Gen", isKey: false},
-               ]
-               },
-      ];
-
 
 
 
@@ -435,10 +296,6 @@ export const emptySchema = {
       customVariables:
          {variableCounter: 1,
          variableItems: [
-            {variableId: 1, 
-            name: "", 
-            value: "", 
-            dataType: ""},
          ],
       },
    }
@@ -458,7 +315,7 @@ export const specificGeneratorAttributes = {
    probabilityGenerator: {fieldType: "", disableShuffling: false, probabilityValueSets: []},
    randomSentenceGenerator: {fieldType: "VARCHAR", minimumNumberOfCharacters: "", maximumNumberOfCharacters: "",  numberOfDistinctCharacters: "", unique: "", distribution: {}},
    randomStringGenerator: {fieldType: "VARCHAR", minimumNumberOfCharacters: "", maximumNumberOfCharacters: "", charachters: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W","X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]},
-   referenceValueGenerator: {fieldType: "", referenceTable: "", referenceField: "", chooseBy: "", selectFrom: ""},
+   referenceValueGenerator: {fieldType: "", referenceTableId: "", referenceField: "", chooseBy: "", selectFrom: ""},
    sequentialGenerator: {fieldType: "VARCHAR", concatenateResults: false, delimiter: "", delimitEmptyValues: true, generators: {}}, 
    staticValueGenerator: {fieldType: "", staticValue: ""},
    switchGenerator: {fieldType: "", generator: {}, caseSwitchSets: [], default: ""},
@@ -527,6 +384,7 @@ export const commonGeneratorAttributes = {
 
 
 export const emptyGenerator = {
+   fieldType: "",
    isRawGenerator: false,
    uid: "",
    uniqueEntries: false,
@@ -551,7 +409,7 @@ export const emptyGenerator = {
    if: "",
    else: "",
    then: "",
-   referenceTable: 1,
+   referenceTableId: 1,
    referenceField: "",
    preFix: "",
    postFix: "",
@@ -562,7 +420,7 @@ export const emptyGenerator = {
    delimitEmptyValues: true,
    subGenerator: "",
    subGeneratorObject: {},
-   valueProbabilitySets: [{id: 0, value: "another Value", probability: "another Probability",}],
+   valueProbabilitySets: [{id: 0, value: "", probability: "hey",}],
    caseOutcomeSets: [{id: 0, caseValue: "", outcomeGeneratorObject: "", generatorType: "staticValueGenerator", staticValue: ""}],
    staticValue: "",
    default: {generatorType: "staticValueGenerator", staticValue: ""},
@@ -701,7 +559,7 @@ randomStringGenerator: {
 
 referenceValueGenerator: {
    referenceField: "",
-   referenceTable: "",
+   referenceTableId: "",
    choose: "",
    from: "",
 

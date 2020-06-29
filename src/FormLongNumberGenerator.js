@@ -6,6 +6,7 @@ import Input from "@material-ui/core/Input";
 import Checkbox from "@material-ui/core/Checkbox";
 import DistributionInputElement from "./DistributionInputElement";
 import cloneDeep from 'lodash/cloneDeep';
+import Collapse from '@material-ui/core/Collapse';
 import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
 
 const useStyles = makeStyles({ ... generatorFormStyles});
@@ -32,6 +33,13 @@ export default function DialogFormLongNumberGenerator(props) {
     props.setGeneratorObject(newGenerator);
     };
     
+     // Change Handler Input Fields
+     const uniqueEntriesChangedHandler = (event) => {
+        const newGenerator = cloneDeep(props.generatorObject);
+        newGenerator.uniqueEntries = event.target.checked;
+        props.setGeneratorObject(newGenerator);
+    };
+
 
     // Change Handler Input Fields
     const numberOfDistinctCharactersChangedHandler = (event) => {
@@ -135,10 +143,33 @@ export default function DialogFormLongNumberGenerator(props) {
                   onChange={(event) => maximumChangedHandler(event)}/>
           </Grid>
 
+
           <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                        Distinct Values:
+                        Unique Entries:
+                    </Typography>
+                </Grid>
+          </Grid>
+
+          <Grid  item xs={rightColumnWidth}>
+                  <Checkbox 
+                        inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} 
+                        checked={props.generatorObject.uniqueEntries}
+                        onChange={(event)=> {uniqueEntriesChangedHandler(event)}}
+                        />
+            </Grid>
+    </Grid>
+
+    <Collapse in={(!props.generatorObject.uniqueEntries)}>
+        <>
+        <Grid container className={classes.outerContainer}>
+        
+
+          <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+                <Grid item >
+                    <Typography variant={fontSizeLeftColumn}>
+                        Distinct Values*:
                     </Typography>
                 </Grid>
           </Grid>
@@ -152,7 +183,12 @@ export default function DialogFormLongNumberGenerator(props) {
                   onChange={(event)=> {numberOfDistinctCharactersChangedHandler(event)}}
                   />
           </Grid>
-          
+          </Grid>
+          </>
+    </Collapse>
+    <Grid container className={classes.outerContainer}>     
+
+
           <Grid item xs={12}>
               <DistributionInputElement 
                   distributionTypeChangedHandler={distributionTypeChangedHandler}

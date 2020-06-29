@@ -82,6 +82,7 @@ export default function FormSwitchGenerator(props) {
       setIndexSelectedGenerator(event.target.value);
       const newGenerator = cloneDeep(props.generatorObject);
       newGenerator.subGeneratorObject = JSON.parse(localStorage.getItem("generatorRepository")||"[]")[event.target.value];
+      alert("genObjNew: " + JSON.stringify(newGenerator.subGeneratorObject));
       props.setGeneratorObject(newGenerator);
   }; 
 
@@ -92,6 +93,14 @@ export default function FormSwitchGenerator(props) {
       props.setGeneratorObject(newGenerator); 
       setCaseOutcomeSetIdCounter(caseOutcomeSetIdCounter +1);
     };
+
+
+    const deleteCaseOutcomeSet = (index) => {
+        const newGenerator = cloneDeep(props.generatorObject);
+        newGenerator.caseOutcomeSets.splice(index, 1);
+        props.setGeneratorObject(newGenerator); 
+        setCaseOutcomeSetIdCounter(caseOutcomeSetIdCounter -1);
+      };
 
     const caseValueChangedHandler = (event, index) => {
         const newGenerator = cloneDeep(props.generatorObject);
@@ -104,6 +113,10 @@ export default function FormSwitchGenerator(props) {
         newGenerator.caseOutcomeSets[index].staticValue = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
+
+
+
+
 
 
   return (
@@ -165,13 +178,13 @@ export default function FormSwitchGenerator(props) {
                                 <td className={classes.td2} colSpan="1">
                                     <input 
                                         value={set.staticValue} 
-                                        onClick={(event) => {staticValueChangedHandler(event, index)}} 
+                                        onChange={(event) => {staticValueChangedHandler(event, index)}} 
                                         placeholder="Output this Generator" 
                                         className={classes.tableInput}/>
                                 </td>
                                 <td className={classes.td3} colSpan="1">
                                     <div>  
-                                        <IconButton className={classes.IconButton}> 
+                                        <IconButton className={classes.IconButton} onClick={(index)=> deleteCaseOutcomeSet(index)}> 
                                             <DeleteIcon className={classes.IconButton}/>
                                         </IconButton> 
                                     </div>
@@ -186,7 +199,7 @@ export default function FormSwitchGenerator(props) {
                             <td className={classes.td2} colSpan="1">
                                 <input 
                                     value={props.generatorObject.default.staticValue} 
-                                    onClick={(event) => {defaultValueChangedHandler(event)}} 
+                                    onChange={(event) => {defaultValueChangedHandler(event)}} 
                                     placeholder="Enter Default Value" 
                                     className={classes.tableInput}/>
                             </td>

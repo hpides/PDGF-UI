@@ -6,7 +6,7 @@ import Input from "@material-ui/core/Input";
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import SequentialGeneratorSelectionField from "./SequentialGeneratorSelectionField";
+import GeneratorSelectionField from "./GeneratorSelectionField";
 import cloneDeep from 'lodash/cloneDeep';
 import Collapse from '@material-ui/core/Collapse';
 import Button from "@material-ui/core/Button";
@@ -57,7 +57,7 @@ export default function FormSequentialGenerator(props) {
            
       
             <Grid container item xs={12}>
-            {props.generatorObject.generatorList.map((generator, index) => <SequentialGeneratorSelectionField 
+            {props.generatorObject.generatorList.map((generator, index) => <GeneratorSelectionField 
                                                                                 generator={generator} 
                                                                                 index={index}
                                                                                 generatorObject={props.generatorObject}

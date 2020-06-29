@@ -19,10 +19,10 @@ export default function FormReferenceValueGenerator(props) {
 
   
     // Change Handler Input Fields
-    const referenceTableChangedHandler = (event) => {
+    const referenceTableIdChangedHandler = (event) => {
         //setSelectedTable(event.target.value);
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.referenceTable = event.target.value;
+        newGenerator.referenceTableId = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
 
@@ -30,6 +30,13 @@ export default function FormReferenceValueGenerator(props) {
     const referenceFieldChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
         newGenerator.referenceField = event.target.value;
+        const tableIndex = props.currentSchemaLocal.tables.findIndex(x=> x.tableId === props.generatorObject.referenceTableId);
+        console.log("tableIndex: " + tableIndex);
+        const rowIndex = props.currentSchemaLocal.tables[tableIndex].tableItems.findIndex(x=> x.fieldName == event.target.value);
+        console.log("rowIndex: " + rowIndex);
+        const fieldType = props.currentSchemaLocal.tables[tableIndex].tableItems[rowIndex].generator.fieldType;
+        console.log("fieldType: " + fieldType);
+        newGenerator.fieldType = fieldType;
         props.setGeneratorObject(newGenerator);
     };
 
@@ -69,8 +76,8 @@ export default function FormReferenceValueGenerator(props) {
                 <select
                     id="standard-select-currency-native"
                     className={classes.inputSelect}                      
-                    value={props.generatorObject.referenceTable}
-                    onChange={(event) => referenceTableChangedHandler(event)}
+                    value={props.generatorObject.referenceTableId}
+                    onChange={(event) => referenceTableIdChangedHandler(event)}
                     > 
                         <option value="" key="-1">select</option>
                         {props.currentSchemaLocal.tables.map(table => { 
@@ -98,7 +105,7 @@ export default function FormReferenceValueGenerator(props) {
 
                     <option value="" key="-1">select</option>
                     {(props.currentSchemaLocal.tables.filter(x => { 
-                        return (x.tableId === Number(props.generatorObject.referenceTable))}))[0].tableItems.map(
+                        return (x.tableId === Number(props.generatorObject.referenceTableId))}))[0].tableItems.map(
                             row => { return <option value={row.fieldName} key={row.rowId}>{row.fieldName}</option>})}
                 </select>
             </Grid>

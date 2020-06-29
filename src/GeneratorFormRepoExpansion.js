@@ -54,7 +54,7 @@ export default function GeneratorFormRepoExpansion(props) {
           <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
               <Grid item >
                   <Typography variant={fontSizeLeftColumn}>
-                      Save in Repo:
+                      Save in Repo*:
                   </Typography>
               </Grid>
           </Grid>
