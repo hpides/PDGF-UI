@@ -18,9 +18,10 @@ export default function DialogFormRandomSentenceGenerator(props) {
     
     // Change Handler numberOfCharacters
 
-    const minimumNumberOfCharactersChangedHandler = (event, newValue) => {
+    const minimumNumberOfCharactersChangedHandler = (event) => {
+        //alert("minNumberOfCharChanged");
         const newGenerator = cloneDeep(props.generatorObject);
-        newGenerator.minimum = newValue;
+        newGenerator.minimum = event.target.value;
         props.setGeneratorObject(newGenerator);
     };
 

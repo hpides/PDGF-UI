@@ -60,7 +60,7 @@ export default function FormPrePostFixGenerator(props) {
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth}>
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                        PreFix:
+                        PreFix*:
                     </Typography>
                 </Grid>
             </Grid>
@@ -78,7 +78,7 @@ export default function FormPrePostFixGenerator(props) {
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                        PostFix:
+                        PostFix*:
                     </Typography>
                 </Grid>
             </Grid>

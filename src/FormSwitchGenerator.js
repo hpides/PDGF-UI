@@ -69,7 +69,7 @@ export default function FormSwitchGenerator(props) {
     const rightColumnWidth = generatorFormsRightColumnWidth; 
     const fontSizeLeftColumn = generatorFormFontSizeLeftColumn;
     const [caseOutcomeSetIdCounter, setCaseOutcomeSetIdCounter] = useState(1);
-    const [indexSelectedGenerator, setIndexSelectedGenerator] = useState(0);
+    const [indexSelectedGenerator, setIndexSelectedGenerator] = useState();
 
     // Change Handler Input Fields
     const defaultValueChangedHandler = (event) => {
@@ -139,9 +139,11 @@ export default function FormSwitchGenerator(props) {
                 value={indexSelectedGenerator}
                 onChange={(event) => subGeneratorChangedHandler(event)}> 
                   
-                    <option value={1} key={-1}>None</option>
-                    {(JSON.parse(localStorage.getItem("generatorRepository")).map((generator,index) => { return <option value={index} key={generator.uid}>{generator.repoVariables.name}</option>}))}
-                    
+                    <option value={1} key={-1}>select</option>
+                    {localStorage.getItem("generatorRepository")?
+                    (JSON.parse(localStorage.getItem("generatorRepository")).map((generator,index) => { return <option value={index} key={generator.uid}>{generator.repoVariables.name}</option>})): null
+                    } 
+  
             </select>
             </Grid>
 

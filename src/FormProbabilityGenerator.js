@@ -74,7 +74,7 @@ export default function FormProbabilityGenerator(props) {
                   <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                       <Grid item >
                           <Typography variant={fontSizeLeftColumn}>
-                              Disable Shuffling:
+                              Disable Shuffling*:
                           </Typography>
                       </Grid>
                   </Grid>

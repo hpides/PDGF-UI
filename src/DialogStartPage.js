@@ -138,7 +138,7 @@ export default function DialogStartPage(props){
                           PDGF-GUI provides you with an easy and efficient way to to create your own schema-specifications to be run with PDGF.  
                       </Typography>
                       <Typography className={classes.paragraph}>
-                      For your smooth start with PDGF you can watch our short <span style={{color: "blue"}}>tutorial</span>, have a look at our <span  style={{color: "blue"}}>example schemas</span> or just start exploring with the <span  style={{color: "blue"}}>editor</span>. - There are info-texts and tooltips everywhere to make sure you don`t get lost. 
+                      For your smooth start with PDGF you can watch our short <span style={{color: "blue"}}>tutorial</span>, check out our <span style={{color: "blue"}}>interactive help system </span> and have a look at our <span  style={{color: "blue"}}>example schemas</span> or just start exploring with the <span  style={{color: "blue"}}>editor</span>. - There are info-texts and tooltips everywhere to make sure you don`t get lost. 
                       </Typography>
                   </Grid>
 

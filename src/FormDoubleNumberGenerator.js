@@ -208,7 +208,7 @@ export default function DialogFormDoubleNumberGenerator(props) {
                     <input 
                         className={classes.input} 
                         type="number" 
-                        placeholder="Enter the maximal number of different numbers to be generated" 
+                        placeholder="Enter a number to limit the output variability" 
                         value={props.generatorObject.numberOfDistinctCharacters} 
                         onChange={(event)=> {numberOfDistinctCharactersChangedHandler(event)}}
                     />

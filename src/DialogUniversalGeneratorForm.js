@@ -112,8 +112,9 @@ export default function DialogUniversalGeneratorForm(props) {
 
   const closeGeneratorFormAndResetState = () => {
     reSetGeneratorObject();
-    props.resetGeneratorStateVariables();
+    //props.resetGeneratorStateVariables();
     props.handleCloseDialogUniGenForm();
+    props.handleOpenDialogRawGeneratorSelection();
   }
 
 
@@ -190,13 +191,13 @@ export default function DialogUniversalGeneratorForm(props) {
   
      const handleNullValuesSliderChange = (event, newValue) => {
       const newGenerator = cloneDeep(generatorObject);
-      newGenerator.nullValues.percentNullValues = newValue;
+      newGenerator.nullValues.percentNullValues = newValue/100;
       setGeneratorObject(newGenerator);
     };
   
     const handleNullValuesInputChange = (event) => {
         const newGenerator = cloneDeep(generatorObject);
-        newGenerator.nullValues.percentNullValues = (event.target.value === '' ? '99' : Number(event.target.value));
+        newGenerator.nullValues.percentNullValues = (event.target.value === '' ? '99' : Number(event.target.value)/100);
         setGeneratorObject(newGenerator);
     };
   
@@ -253,7 +254,7 @@ export default function DialogUniversalGeneratorForm(props) {
                         setGeneratorObject={setGeneratorObjectHandDown}/>  
 
              case "referenceValueGenerator":
-              return <FormReferenceValueGenerator
+             return <FormReferenceValueGenerator
                         generatorObject={generatorObject}
                         setGeneratorObject={setGeneratorObjectHandDown}
                         currentSchemaLocal={props.currentSchemaLocal}/> 
@@ -369,15 +370,20 @@ export default function DialogUniversalGeneratorForm(props) {
       <DialogTitle disableTypography id="simple-dialog-title">
          
           <Grid container display="flex" direction="row" justify="space-between">
-                <Grid container xs={12} item justify="flex-start">
-                    <Grid item>
-                        <Typography style={{fontSize: "30px"}}>{typeTitleMapping(props.selectedGeneratorType)}</Typography>
-                    </Grid>
+                <Grid container xs={12} item justify="flex-between" flexDirection="row">
+                    <Grid container item display="flex" justify="flex-start" xs={9}>
+                        <Grid item>
+                            <Typography style={{fontSize: "30px"}}>{typeTitleMapping(props.selectedGeneratorType)}</Typography>
+                        </Grid>
 
-                    <Grid item>
-                            <IconButton onClick={toggleInfoTextVisible}>
-                                <InfoIcon style={{color: "#385fe0"}}/>
-                            </IconButton>
+                        <Grid item>
+                                <IconButton onClick={toggleInfoTextVisible}>
+                                    <InfoIcon style={{color: "#385fe0"}}/>
+                                </IconButton>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={3} container flexDirection ="flex-end" style={{paddingLeft: "50px"}}>
+                      <Typography align="right" style={{fontSize: "16px", width: "100%"}}>* optional value</Typography>
                     </Grid>
                 </Grid>
          
@@ -431,15 +437,14 @@ export default function DialogUniversalGeneratorForm(props) {
       </div>
 
       <DialogActions>
-          
-          <Button onClick={()=> {closeGeneratorFormAndResetState()}} color="primary">
-            Cancel
-          </Button>
-          <Button 
-              onClick={ ()=> {saveGeneratorAndResetState()}}
-              color="primary">
-            Save
-          </Button>
+                  <Button onClick={()=> {closeGeneratorFormAndResetState()}} color="primary">
+                      Cancel
+                  </Button>
+                  <Button 
+                      onClick={ ()=> {saveGeneratorAndResetState()}}
+                      color="primary">
+                      Save
+                  </Button>
       </DialogActions>  
 
     </Dialog>

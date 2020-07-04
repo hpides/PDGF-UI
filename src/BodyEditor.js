@@ -191,6 +191,7 @@ export default function BodyEditor(props){
 
     // handles the necessary tasks that are needed to add a new table to the schema
     const addNewTableHandler = () => {
+        if(currentSchemaLocal.tables.length<50){
         let schemaNew = cloneDeep(currentSchemaLocal);
         let tableCounter = parseInt(schemaNew.uids.tableCounter);
         console.log("tableCounter: " + tableCounter);
@@ -204,7 +205,7 @@ export default function BodyEditor(props){
                     {
                         tableId: (tableCounter+1), 
                         rowId: 1, 
-                        fieldName: "Enter Table Name", 
+                        fieldName: "", 
                         generator: {}, 
                         isKey: false},
                 ],
@@ -212,7 +213,10 @@ export default function BodyEditor(props){
             };
         schemaNew.uids.tableCounter = (tableCounter + 1);
         schemaNew.tables.push(newTableJSON);
-        setCurrentSchemaLocal(schemaNew);
+        setCurrentSchemaLocal(schemaNew); }
+        else {
+            alert("Number of tables is limited to 50.")
+        }
     };
 
 
@@ -255,19 +259,24 @@ export default function BodyEditor(props){
 
     //handles the necessary tasks involved with adding a table field (aka "row" in the displayed table)
     const addTableRowHandler = (tableId) => {
-        let schemaNew = cloneDeep(currentSchemaLocal);
-        let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
-        let rowCounter = schemaNew.tables[tableIndex].rowCounter;
-        let newRow = {
-            tableId: tableId, 
-            rowId: rowCounter + 1, 
-            fieldName: "", 
-            generator: {}, 
-            isKey: "false",
-        };
-        schemaNew.tables[tableIndex].tableItems.push(newRow);
-        schemaNew.tables[tableIndex].rowCounter = parseInt(rowCounter) + 1; 
-        setCurrentSchemaLocal(schemaNew);
+        if(currentSchemaLocal.tables[tableId-1].tableItems.length < 20){
+            let schemaNew = cloneDeep(currentSchemaLocal);
+            let tableIndex = schemaNew.tables.findIndex( x => x.tableId === tableId);
+            let rowCounter = schemaNew.tables[tableIndex].rowCounter;
+            let newRow = {
+                tableId: tableId, 
+                rowId: rowCounter + 1, 
+                fieldName: "", 
+                generator: {}, 
+                isKey: "false",
+            };
+            schemaNew.tables[tableIndex].tableItems.push(newRow);
+            schemaNew.tables[tableIndex].rowCounter = parseInt(rowCounter) + 1; 
+            setCurrentSchemaLocal(schemaNew);}
+        else {  
+            alert("The number of fields in a table is limited to 20")
+
+        }
 
     };
 
@@ -729,8 +738,16 @@ export default function BodyEditor(props){
             let fieldName = row.fieldName;
             let fieldTagOpen = String.raw`<field name="${fieldName}" size="" type="${row.generator.fieldType}">`;
             let fieldTagClose = String.raw`</field>`;
+            let paddingTagOpen = row.generator.paddingVariables.withPadding?  String.raw`<gen_Padding> <size>${row.generator.paddingVariables.numberCharacters}</size><character>${row.generator.paddingVariables.fillCharacter}</character><padToLeft>${row.generator.paddingVariables.fromLeft}</padToLeft>` : "";
+            let paddingTagClose = row.generator.paddingVariables.withPadding? String.raw`</gen_Padding>`: "";
+            let nullValueTagOpen = row. generator.nullValues.withNullValues? String.raw`<gen_Null probability ="${row.generator.nullValues.percentNullValues}">`: "";
+            let nullValueTagClose = row. generator.nullValues.withNullValues? String.raw`</gen_Null>`: "";
             let tempString = fieldTagOpen + "\r\n" +
+                            nullValueTagOpen + 
+                            paddingTagOpen + 
                             createGeneratorXML(row.generator) +
+                            paddingTagClose + 
+                            nullValueTagClose +
                             fieldTagClose + "\r\n\r\n";
             aggregatedFieldTag = aggregatedFieldTag.concat(tempString);
             });
@@ -844,7 +861,8 @@ export default function BodyEditor(props){
         console.log("entered gen_doubleNumber");
             let minimum = generator.minimum;
           let maximum = generator.maximum;
-          let distinctValues = generator.hasAllDistinctValues;
+          let distinctValues = generator.numberOfDistinctCharacters;
+          let distinctValueTag = distinctValues!=""? `<distinct>${distinctValues}</distinct>` + "\r\n\t" :"";
           let numberDecimalPlaces = generator.decimalPlaces;
           let locale = generator.locale;
           let distributionTag = createDistributionTag(generator);
@@ -852,7 +870,7 @@ export default function BodyEditor(props){
           let generatorTag = "<gen_DoubleNumber>" + "\r\n\t" +
                                   `<minD>${minimum}</minD>` + "\r\n\t" +
                                   `<maxD>${maximum}</maxD>` + "\r\n\t" +
-                                  `<distinct>${distinctValues}</distinct>` + "\r\n\t" +
+                                  distinctValueTag +
                                   `<decimalPlaces>${numberDecimalPlaces}</decimalPlaces>` + "\r\n\t" +
                                   `<locale>${locale}</locale>` + "\r\n\t" +
                                   `${distributionTag}` + "\r\n" +
@@ -904,14 +922,15 @@ export default function BodyEditor(props){
             let minimum = generator.minimum;
           let maximum = generator.maximum;
           let distinctValues = generator.numberOfDistinctCharacters;
+          let distinctValueTag = distinctValues!=""? `<distinct>${distinctValues}</distinct>` + "\r\n\t" :"";
           let distributionTag = createDistributionTag(generator);
           
-          let generatorTag =  "<gen_LongNumberGenerator>" + "\r\n\t" +
-                                  `<minD>${minimum}</minD>` + "\r\n\t" +
-                                  `<maxD>${maximum}</maxD>` + "\r\n\t" +
-                                  `<distinct>${distinctValues}</distinct>` + "\r\n\t" +
+          let generatorTag =  "<gen_LongNumber>" + "\r\n\t" +
+                                  `<min>${minimum}</min>` + "\r\n\t" +
+                                  `<max>${maximum}</max>` + "\r\n\t" +
+                                  distinctValueTag +
                                   `${distributionTag}` +  "\r\n" +
-                              "</gen_LongNumberGenerator>"+ "\r\n";
+                              "</gen_LongNumber>"+ "\r\n";
         return generatorTag;                              
       }
       
@@ -921,9 +940,9 @@ export default function BodyEditor(props){
           
           let referenceField = generator.referenceField;
       
-          let generatorTag = `<gen_otherFieldValue>` + "\r\n\t" +
+          let generatorTag = `<gen_OtherFieldValue>` + "\r\n\t" +
                                   `<reference field="${referenceField}"/>` + "\r\n" +
-                            "</gen_otherFieldValue>" + "\r\n";
+                            "</gen_OtherFieldValue>" + "\r\n";
           return generatorTag;
       }
     
@@ -1005,12 +1024,13 @@ export default function BodyEditor(props){
         let min = generator.minimum;
         let max = generator.maximum;
         let distinctCharacters = generator.numberOfDistinctCharacters;
+        let distinctCharacterTag = distinctCharacters!=""?  `<distinct>${distinctCharacters}</distinct>` + "\r\n\t" :"";
         let distributionTag = createDistributionTag(generator);
     
         let generatorTag =  "<gen_RandomSentence>" + "\r\n\t" +
                                 `<min>${min}</min>` + "\r\n\t" +
                                 `<max>${max}</max>` + "\r\n\t" +
-                                `<distinct>${distinctCharacters}</distinct>` + "\r\n\t" +
+                                distinctCharacterTag + 
                                 `${distributionTag}` + "\r\n" +
                             "</gen_RandomSentence>" + "\r\n";
         return generatorTag;
@@ -1121,8 +1141,8 @@ export default function BodyEditor(props){
       // refactor with exportCurrentSchemaAsJSON 
       const writeSchemaToDownloadFile = (schema) => {
         //let formattedSchema = format(schema);
-        let blob = new Blob ([schema], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "schema_pdgf.txt");
+        let blob = new Blob ([schema], {type: "application/xml;charset=utf-8"});
+        saveAs(blob, "schema_pdgf.xml");
       }  
       
     
@@ -1444,6 +1464,7 @@ export default function BodyEditor(props){
                 fieldInFocus={fieldInFocus}
                 //upgradeCopyGeneratorObject={upgradeCopyGeneratorObject}
                 resetGeneratorStateVariables={resetGeneratorStateVariables}
+                handleOpenDialogRawGeneratorSelection = {handleClickOpenRawGeneratorSelectionDialog}
 
             />        
 

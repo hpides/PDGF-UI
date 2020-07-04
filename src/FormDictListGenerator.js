@@ -10,6 +10,7 @@ import Collapse from '@material-ui/core/Collapse';
 import Checkbox from "@material-ui/core/Checkbox";
 import DistributionInputElement from "./DistributionInputElement";
 import cloneDeep from 'lodash/cloneDeep';
+import {dictListObj} from "./data";
 import {generatorFormStyles, generatorFormsLeftColumnWidth, generatorFormsRightColumnWidth, generatorFormFontSizeLeftColumn} from "./styles";
 
 const useStyles = makeStyles({ ... generatorFormStyles});
@@ -22,22 +23,7 @@ export default function DialogFormDictListGenerator(props) {
     const fontSizeLeftColumn = generatorFormFontSizeLeftColumn;
     const tooltipVisible = useContext(TooltipContext);
 
-    const dictData2 = [
-      {value: "", label: "Select dictionary"},
-      {value: "Vornamen", label: "Vornamen"},
-      {value: "Nachnamen", label: "Nachnamen"},
-      {value: "Strassennamen", label: "Strassennamen"},
-      {value: "Ort", label: "Ort"},
-      {value: "PLZ", label: "PLZ"},
-      {value: "Telefon-Nummern", label: "Telefon-Nummern"},
-      {value: "IBAN", label: "IBAN"},
-      {value: "Länder", label: "Länder"},
-      {value: "Sozialversicherungs-Nummern", label: "Sozialversicherungs-Nummern"},
-      {value: "Steuer-Nummern", label: "Steuer-Nummern"},
-      {value: "Bankunternehmen", label: "Bankunternehmen"},
-    ];
-
-    
+        
     // Change Handler dictionary
     const dictionaryChangedHandler = (event) => {
         const newGenerator = cloneDeep(props.generatorObject);
@@ -142,7 +128,8 @@ export default function DialogFormDictListGenerator(props) {
                         value={props.generatorObject.dictionary}
                         onChange={(event) => dictionaryChangedHandler(event)}
                         > 
-                        {dictData2.map((option) => (
+                        <option key="-1" value="">select</option>
+                        {dictListObj.map((option) => (
                           <option key={option.value} value={option.value}>
                           {option.label}
                           </option>))}

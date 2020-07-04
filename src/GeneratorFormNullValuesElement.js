@@ -67,7 +67,7 @@ export default function GeneratorFormNullValuesElement(props) {
                      
                       <input
                         className={classes.input}
-                        value={props.generatorObject.nullValues.percentNullValues}
+                        value={props.generatorObject.nullValues.percentNullValues*100}
                         onChange={props.handleNullValuesInputChange}
                         onBlur={props.handleBlur}
                         step = "5"
@@ -85,7 +85,7 @@ export default function GeneratorFormNullValuesElement(props) {
 
                   <Grid container item xs={8} alignContent="center">
                       <Slider
-                          value={typeof props.generatorObject.nullValues.percentNullValues === 'number' ? props.generatorObject.nullValues.percentNullValues : 0}
+                          value={typeof props.generatorObject.nullValues.percentNullValues === 'number' ? props.generatorObject.nullValues.percentNullValues*100 : 0}
                           onChange={props.handleNullValuesSliderChange}
                           aria-labelledby="input-slider"
                       />
