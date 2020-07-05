@@ -60,7 +60,7 @@ export default function GeneratorSelectionFields(props) {
     const rightColumnWidth = 8; 
     const fontSizeLeftColumn = "h5";
 
-    const [selectedValue, setSelectedValue] = useState(0);
+    const [selectedValue, setSelectedValue] = useState();
    
    /* useEffect(() => {
         const newGenerator = cloneDeep(props.generatorObject);

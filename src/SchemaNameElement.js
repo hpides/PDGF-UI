@@ -19,7 +19,8 @@
  * limitations under the License.
  */
 
-import React from "react";
+import React, {useContext} from "react";
+import {TooltipContext} from "./App";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -58,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SchemaNameElement(props){
     const classes = useStyles();
+    const tooltipVisible = useContext(TooltipContext);
     const toolTipSchemaName = `
         Here some infos about the Schema:
         Schema name:  ${props.schemaName}
@@ -73,22 +75,26 @@ export default function SchemaNameElement(props){
             </Grid>
             */}
             <Grid item >
+            <CustomTooltip  placement="bottom" arrow="true" title={tooltipVisible? "Please enter a Name for your Schema. But remember not use special characters or blanks.": ""}>   
             <form className={classes.root} noValidate autoComplete="off">
-            <TextField 
-                className={classes.textField} 
-                variant="outlined" 
-                label="Schema_Name"
-                value={props.schemaName}
-                onChange = {(event) => {props.schemaNameChangedHandler(event)}}
-                InputProps={{ classes: { root: classes.inputRoot } }}
-                InputLabelProps={{
-                    classes: {
-                      root: classes.labelRoot,
-                      focused: classes.labelFocused
-                    }
-                }}
-            />
+            
+                <TextField 
+                    className={classes.textField} 
+                    variant="outlined" 
+                    label="Schema_Name"
+                    value={props.schemaName}
+                    onChange = {(event) => {props.schemaNameChangedHandler(event)}}
+                    InputProps={{ classes: { root: classes.inputRoot } }}
+                    InputLabelProps={{
+                        classes: {
+                          root: classes.labelRoot,
+                          focused: classes.labelFocused
+                        }
+                    }}
+                />
+           
             </form>
+            </CustomTooltip>
             </Grid>
             <Grid item  >
               <CustomTooltip title={toolTipSchemaName} placement="right-start">

@@ -35,6 +35,7 @@ import HelpIcon from "@material-ui/icons/Help";
 import DeleteIcon from "@material-ui/icons/Delete";
 import LoadIcon from '@material-ui/icons/SystemUpdateAlt';
 import PanToolIcon from "@material-ui/icons/PanTool";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -140,6 +141,7 @@ export default function EditorButtonGroup(props) {
                 <MenuItem onClick={() => {handleCloseMenu(); props.handleClickOpenDialogSaveSchema()}}>Save Current Schema in Repo </MenuItem>
                 <MenuItem onClick={() => {props.exportCurrentSchemaAsJSON(); handleCloseMenu()}}>Save Current Schema on Disc</MenuItem>
                 <MenuItem onClick={() => {props.createXmlForPDGF(); handleCloseMenu()}}>Save PDGF-Schema Specification File</MenuItem> 
+                <Divider />
                 <MenuItem onClick={() => {props.exportSchemaRepoAsJSON(); handleCloseMenu()}}>Save Schema Repo on Disc</MenuItem>
                 <MenuItem onClick={() => {props.exportGeneratorRepoAsJSON(); handleCloseMenu()}}>Save Generator Repo on Disc</MenuItem>
                 <MenuItem onClick={() => {props.exportCompleteAppStateAsJSON(); handleCloseMenu()}}>Save complete App State on Disc</MenuItem>
@@ -174,6 +176,7 @@ export default function EditorButtonGroup(props) {
                     onClick={handleCloseMenu2}>
                       Load Schema from Disc 
                 </MenuItem>
+                <Divider />
                 <MenuItem onClick={handleCloseMenu2}>Load Generators from Disc</MenuItem>
                 <MenuItem onClick={handleCloseMenu2}>Load Complete App State from Disc</MenuItem>
 

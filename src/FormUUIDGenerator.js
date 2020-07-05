@@ -52,10 +52,10 @@ export default function FormUUIDGenerator(props) {
     <>
    
         <Grid container className={classes.outerContainer}>
-            <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
+            <Grid className={classes.innerContainer} style={{justifyContent: "center", marginBottom: "30px"}} container item xs={12} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                        No Input required. Just save and continue. 
+                        No input required. Just save and continue. 
                     </Typography>
                 </Grid>
             </Grid>     

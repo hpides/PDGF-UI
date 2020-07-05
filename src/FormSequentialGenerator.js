@@ -116,7 +116,7 @@ export default function FormSequentialGenerator(props) {
             <Grid className={classes.innerContainer} container item xs={leftColumnWidth}>
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                        Concat. Results:
+                        Concat. Results*:
                     </Typography>
                 </Grid>
             </Grid>

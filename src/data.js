@@ -71,25 +71,6 @@ export const customSystemVariables = [
     {name: "Umtauschkurs EUR-DM", value: "7.97", type: "double"} ];
 
 
- export const generatorDescriptions =[
-    {name: "SimpleID", description: "Generates consecutive numbers from 0.", examples: "0,1,2,3,4,..."},
-    {name: "Address_German", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "Street_German", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "Name_German", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "Address_US", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "Street_US", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "Name_US", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "Address_Chinese", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "Street_Chinese", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "Name_Chinese", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "IBAN", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "ISBN", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "Telephone_Intl", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "Adress_Intl", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "Name_Intl", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
-    {name: "Street_Intl", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", examples: "example1, example2, example3, example4"},
- ];
-
  
 
 
@@ -194,42 +175,31 @@ export const generatorFieldType = {
    sequentialGenerator: "VARCHAR",
    staticValueGenerator: "",
    switchGenerator: "",
-   uuidGenerator: "",
+   uuidGenerator: "VARCHAR",
 };
 
 
 
 
-
-
 export const dictListObj = [
-   {value: "Vornamen", label: "Vornamen"},
-   {value: "Nachnamen", label: "Nachnamen"},
-   {value: "Strassennamen", label: "Strassennamen"},
-   {value: "Ort", label: "Ort"},
-   {value: "PLZ", label: "PLZ"},
-   {value: "Telefon-Nummern", label: "Telefon-Nummern"},
-   {value: "IBAN", label: "IBAN"},
-   {value: "Länder", label: "Länder"},
-   {value: "Sozialversicherungs-Nummern", label: "Sozialversicherungs-Nummern"},
-   {value: "Steuer-Nummern", label: "Steuer-Nummern"},
-   {value: "Bankunternehmen", label: "Bankunternehmen"},
+   {value: "city", label: "City"},
+   {value: "country", label: "Country"},
+   {value: "degree", label: "Degree"},
+   {value: "Family-Names", label: "Family Names"},
+   {value: "female", label: "Female Name"},
+   {value: "Given-Names", label: "Given-Names"},
+   {value: "languages", label: "languages"},
+   {value: "lastnames", label: "lastnames"},
+   {value: "mail_provider", label: "mail_provider"},
+   {value: "male", label: "male"},
+   {value: "seminarnames", label: "seminarnames"},
+   {value: "state", label: "state"},
+   {value: "state_abbreviation", label: "state_abbreviation"},
+   {value: "usernames", label: "usernames"},
+   {value: "weekdays", label: "weekdays"},
 ]
 
 
-export const dictList = [
-   "Vornamen",
-   "Nachnamen",
-   "Strassennamen",
-   "Ort",
-   "PLZ",
-   "Telefon-Nummern",
-   "IBAN",
-   "Länder",
-   "Sozialversicherungs-Nummern",
-   "Steuer-Nummern",
-   "Bankunternehmen",
-]
 
 
 export const localeList = [
@@ -257,9 +227,6 @@ export const selectFromOptionList = [
    "sameTimeFrame",
    "relativeTimeFrame",
 ];
-
-
-
 
 
 

@@ -168,7 +168,7 @@ export default function DialogFormLongNumberGenerator(props) {
           <Grid className={classes.innerContainer} container item xs={leftColumnWidth} >
                 <Grid item >
                     <Typography variant={fontSizeLeftColumn}>
-                        Unique Entries:
+                        Unique Entries*:
                     </Typography>
                 </Grid>
           </Grid>
@@ -199,7 +199,7 @@ export default function DialogFormLongNumberGenerator(props) {
                 <input 
                   className={classes.input} 
                   type="number" 
-                  placeholder="Enter Number of Distinct Characters" 
+                  placeholder="Enter Number of Distinct Values" 
                   value={props.generatorObject.numberOfDistinctCharacters} 
                   onChange={(event)=> {numberOfDistinctCharactersChangedHandler(event)}}
                   />
