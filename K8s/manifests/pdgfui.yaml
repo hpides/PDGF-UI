@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
         - name: pdgfui
-          image: localhost:5000/pdgfui:${tag}
+          image: ${image}:${tag}
           resources:
             requests:
               memory: "64Mi"
